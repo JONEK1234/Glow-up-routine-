@@ -1,0 +1,8 @@
+{
+  "name": "Remix Glow-Up Routine Tracker",
+  "description": "Mobile-first personal growth and routine tracking app with looksmaxing guides, sequential Ordine section (Ice Routine, Eye Exercises, Mewing), daily checklists, and media hub.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
