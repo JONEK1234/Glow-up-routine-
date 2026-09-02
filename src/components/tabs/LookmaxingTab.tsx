@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Play, Pause, RotateCcw, CheckCircle2, Eye, Activity, ShieldAlert, Snowflake, Video, Image as ImageIcon, ExternalLink, X, ArrowLeft, Maximize2, Moon } from 'lucide-react';
+import { Sparkles, Play, Pause, RotateCcw, CheckCircle2, Eye, Activity, ShieldAlert, Snowflake, Video, Image as ImageIcon, ExternalLink, X, ArrowLeft, Maximize2, Moon, Sun } from 'lucide-react';
 
 export const LookmaxingTab: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<'mewing' | 'collo_mento' | 'body_posture' | 'eyes' | 'ice' | 'sleep'>('mewing');
+  const [activeSection, setActiveSection] = useState<'mewing' | 'collo_mento' | 'body_posture' | 'eyes' | 'ice' | 'lymphatic' | 'sleep'>('mewing');
 
   // Full menu for Chin Tucks, Neck Curls, Front Neck, Squeeze Occhi, Hunter Eyes & Spoon Method media
   const [isChinMediaOpen, setIsChinMediaOpen] = useState(false);
@@ -798,14 +798,15 @@ export const LookmaxingTab: React.FC = () => {
   return (
     <div className="space-y-4 pb-20 pt-2 animate-in fade-in duration-200">
       {/* Sub-navigation tabs */}
-      <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5 p-1.5 rounded-2xl glass-card border border-white/10">
+      <div className="grid grid-cols-4 sm:grid-cols-7 gap-1.5 p-1.5 rounded-2xl glass-card border border-white/10">
         {[
           { id: 'mewing', label: '👅 Mewing', desc: 'Mascella' },
-          { id: 'collo_mento', label: '🦒 Collo / Mento', desc: 'Esercizi' },
-          { id: 'body_posture', label: '🧍 Postura Corpo', desc: 'Allineamento' },
+          { id: 'collo_mento', label: '🦒 Collo', desc: 'Esercizi' },
+          { id: 'body_posture', label: '🧍 Postura', desc: 'Corpo' },
           { id: 'eyes', label: '👀 Occhi', desc: 'Orbicolari' },
-          { id: 'ice', label: '🧊 Ice Routine', desc: 'Crioterapia' },
-          { id: 'sleep', label: '🛌 Posizione Sonno', desc: 'Postura Notte' }
+          { id: 'ice', label: '🧊 Ghiaccio', desc: 'Ice Routine' },
+          { id: 'lymphatic', label: '🌅 Linfatico', desc: '5 min Viso' },
+          { id: 'sleep', label: '🛌 Sonno', desc: 'Postura Notte' }
         ].map(tab => (
           <button
             key={tab.id}
@@ -1409,13 +1410,166 @@ export const LookmaxingTab: React.FC = () => {
         </div>
       )}
 
-      {/* SECTION 6: POSIZIONE PER DORMIRE */}
+      {/* SECTION 6: MASSAGGIO LINFATICO DEL VISO AL MATTINO */}
+      {activeSection === 'lymphatic' && (
+        <div className="space-y-3">
+          <div className="p-4 rounded-3xl glass-card space-y-3">
+            {/* Title Header */}
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-bold text-gray-300 uppercase tracking-widest flex items-center gap-2">
+                <Sun className="w-4 h-4 text-amber-400" />
+                6. 🌅 Massaggio Linfatico del Viso al Mattino — 5 Minuti
+              </h3>
+            </div>
+
+            {/* Step-by-Step Massage Routine */}
+            <div className="space-y-2.5">
+              <span className="font-bold text-amber-300 uppercase tracking-wider text-[11px] block flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5" /> Sequenza dei 5 Passaggi del Massaggio:
+              </span>
+
+              {/* 1. Collo */}
+              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold text-white flex items-center gap-2">
+                    <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-[11px] font-black">
+                      1
+                    </span>
+                    Collo
+                  </h4>
+                  <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">
+                    5–10 volte per lato
+                  </span>
+                </div>
+                <p className="text-[11px] text-gray-300 leading-relaxed font-medium pl-7">
+                  Con le dita piatte, fai movimenti molto delicati dalla zona sotto le orecchie verso le clavicole. Ripeti 5–10 volte per lato.
+                </p>
+              </div>
+
+              {/* 2. Clavicole */}
+              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold text-white flex items-center gap-2">
+                    <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-[11px] font-black">
+                      2
+                    </span>
+                    Clavicole
+                  </h4>
+                  <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">
+                    5–10 volte
+                  </span>
+                </div>
+                <p className="text-[11px] text-gray-300 leading-relaxed font-medium pl-7">
+                  Appoggia delicatamente le dita sopra le clavicole e fai piccoli movimenti verso il basso. Ripeti 5–10 volte.
+                </p>
+              </div>
+
+              {/* 3. Mandibola */}
+              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold text-white flex items-center gap-2">
+                    <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-[11px] font-black">
+                      3
+                    </span>
+                    Mandibola
+                  </h4>
+                  <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">
+                    5–10 volte
+                  </span>
+                </div>
+                <p className="text-[11px] text-gray-300 leading-relaxed font-medium pl-7">
+                  Parti dal centro del mento e fai scorrere delicatamente le dita lungo la mandibola verso le orecchie. Ripeti 5–10 volte.
+                </p>
+              </div>
+
+              {/* 4. Guance */}
+              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold text-white flex items-center gap-2">
+                    <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-[11px] font-black">
+                      4
+                    </span>
+                    Guance
+                  </h4>
+                  <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">
+                    5–10 volte
+                  </span>
+                </div>
+                <p className="text-[11px] text-gray-300 leading-relaxed font-medium pl-7">
+                  Partendo dai lati del naso, fai scorrere le dita verso l'esterno, in direzione delle orecchie. Ripeti 5–10 volte.
+                </p>
+              </div>
+
+              {/* 5. Fronte */}
+              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold text-white flex items-center gap-2">
+                    <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-[11px] font-black">
+                      5
+                    </span>
+                    Fronte
+                  </h4>
+                  <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">
+                    5–10 volte
+                  </span>
+                </div>
+                <p className="text-[11px] text-gray-300 leading-relaxed font-medium pl-7">
+                  Dal centro della fronte, porta delicatamente le dita verso le tempie. Poi scendi lungo i lati del viso fino al collo e termina verso le clavicole.
+                </p>
+              </div>
+            </div>
+
+            {/* ⚠️ Importante Warning Box */}
+            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-1.5">
+              <span className="text-xs font-bold text-amber-300 flex items-center gap-1.5 uppercase tracking-wider">
+                <ShieldAlert className="w-4 h-4 text-amber-400" /> ⚠️ Importante
+              </span>
+              <p className="text-[11px] text-gray-200 leading-relaxed font-medium">
+                La pressione deve essere molto leggera e lenta: il drenaggio linfatico non richiede di massaggiare forte. Puoi farlo dopo aver lavato il viso, con un po' di crema o siero per far scorrere meglio le dita.
+              </p>
+            </div>
+
+            {/* Image Guide Banner at the End */}
+            <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-3">
+              <div className="flex items-center space-x-2.5">
+                <div className="p-2 rounded-xl bg-amber-500/10 text-amber-300">
+                  <ImageIcon className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider">Mappa Drenaggio Linfatico Viso</h4>
+                  <p className="text-[10px] text-gray-400">Clicca sull'immagine per ingrandirla a schermo intero</p>
+                </div>
+              </div>
+
+              <div
+                onClick={() => setFullscreenImage("https://i.ibb.co/kVHmVkPt/file-00000000f3d0821082fed711fb1298b6.png")}
+                className="group relative rounded-2xl overflow-hidden border border-white/10 bg-black/60 cursor-pointer transition-all hover:border-amber-500/50 hover:shadow-neon"
+              >
+                <img
+                  src="https://i.ibb.co/kVHmVkPt/file-00000000f3d0821082fed711fb1298b6.png"
+                  alt="Mappa Massaggio Linfatico Viso"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-64 object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-between p-3 pointer-events-none">
+                  <span className="text-xs font-bold text-white">Guida Visiva Punti & Direzioni Linfatiche</span>
+                  <span className="p-1.5 rounded-lg bg-black/60 text-amber-300 border border-white/20">
+                    <Maximize2 className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SECTION 7: POSIZIONE PER DORMIRE */}
       {activeSection === 'sleep' && (
         <div className="space-y-3">
           <div className="p-4 rounded-3xl glass-card space-y-3">
             <h3 className="text-xs font-bold text-gray-300 uppercase tracking-widest flex items-center gap-2">
               <Moon className="w-4 h-4 text-indigo-400" />
-              6. Posizione per Dormire & Postura Notturna
+              7. Posizione per Dormire & Postura Notturna
             </h3>
 
             {/* Back Sleeping Card */}
