@@ -1,5 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Play, Pause, RotateCcw, CheckCircle2, Eye, Activity, ShieldAlert, Snowflake, Video, Image as ImageIcon, ExternalLink, X, ArrowLeft, Maximize2, Moon, Sun } from 'lucide-react';
+import { Sparkles, Play, Pause, RotateCcw, CheckCircle2, Eye, Activity, ShieldAlert, Snowflake, Video, Image as ImageIcon, ExternalLink, X, ArrowLeft, Maximize2, Moon, Sun, ChevronLeft, ChevronRight, ArrowRight, Check, Dumbbell } from 'lucide-react';
+
+const POSTURE_EXERCISES = [
+  {
+    number: 1,
+    id: '9tiTuBLXAD8',
+    title: 'Esercizio Postura 1',
+    description: 'Apertura spalle, mobilità toracica e correzione postura curva.',
+    url: 'https://youtube.com/shorts/9tiTuBLXAD8?is=D2KKPRXHkbmOku8c',
+    embedUrl: 'https://www.youtube.com/embed/9tiTuBLXAD8?autoplay=1&mute=1&playsinline=1&rel=0'
+  },
+  {
+    number: 2,
+    id: 'XcbX2J0NzSE',
+    title: 'Esercizio Postura 2',
+    description: 'Decontrattura dorsale e raddrizzamento della parte alta della schiena.',
+    url: 'https://youtube.com/shorts/XcbX2J0NzSE?is=9srk9vHxBVFjOYio',
+    embedUrl: 'https://www.youtube.com/embed/XcbX2J0NzSE?autoplay=1&mute=1&playsinline=1&rel=0'
+  },
+  {
+    number: 3,
+    id: 'A1YWjYf6_C0',
+    title: 'Esercizio Postura 3',
+    description: 'Rinforzo scapolare e reset allineamento testa-collo.',
+    url: 'https://youtube.com/shorts/A1YWjYf6_C0?is=2e_TFrfMuUVxQsHT',
+    embedUrl: 'https://www.youtube.com/embed/A1YWjYf6_C0?autoplay=1&mute=1&playsinline=1&rel=0'
+  },
+  {
+    number: 4,
+    id: 'zd8ijbrigPU',
+    title: 'Esercizio Postura 4',
+    description: 'Estensione toracica e riallineamento scapole contro l\'incurvamento.',
+    url: 'https://youtube.com/shorts/zd8ijbrigPU?is=CBRmuiR4BpS6ZVwP',
+    embedUrl: 'https://www.youtube.com/embed/zd8ijbrigPU?autoplay=1&mute=1&playsinline=1&rel=0'
+  },
+  {
+    number: 5,
+    id: '9kxYxvy-03o',
+    title: 'Esercizio Postura 5',
+    description: 'Allungamento e apertura della catena cinetica anteriore.',
+    url: 'https://youtube.com/shorts/9kxYxvy-03o?is=1A9vQC3aYPEjkDz6',
+    embedUrl: 'https://www.youtube.com/embed/9kxYxvy-03o?autoplay=1&mute=1&playsinline=1&rel=0'
+  },
+  {
+    number: 6,
+    id: 'kdErBazxeew',
+    title: 'Esercizio Postura 6',
+    description: 'Fissaggio posturale e stabilità della colonna in posizione eretta.',
+    url: 'https://youtube.com/shorts/kdErBazxeew?is=i5A-lRBF5e3ixDF0',
+    embedUrl: 'https://www.youtube.com/embed/kdErBazxeew?autoplay=1&mute=1&playsinline=1&rel=0'
+  }
+];
 
 export const LookmaxingTab: React.FC = () => {
   const [activeSection, setActiveSection] = useState<'mewing' | 'collo_mento' | 'body_posture' | 'eyes' | 'ice' | 'lymphatic' | 'sleep'>('mewing');
@@ -14,6 +65,40 @@ export const LookmaxingTab: React.FC = () => {
   const [isSpoonMediaOpen, setIsSpoonMediaOpen] = useState(false);
   const [isIceMediaOpen, setIsIceMediaOpen] = useState(false);
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
+
+  // 6 Posture Exercises Sequence State
+  const [isPostureSequenceOpen, setIsPostureSequenceOpen] = useState(false);
+  const [currentPostureIndex, setCurrentPostureIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [completedPostureExercises, setCompletedPostureExercises] = useState<number[]>([]);
+
+  const handleNextPosture = () => {
+    if (currentPostureIndex < POSTURE_EXERCISES.length - 1) {
+      setCurrentPostureIndex(prev => prev + 1);
+    }
+  };
+
+  const handlePrevPosture = () => {
+    if (currentPostureIndex > 0) {
+      setCurrentPostureIndex(prev => prev - 1);
+    }
+  };
+
+  const handleTouchStartPosture = (e: React.TouchEvent) => {
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEndPosture = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diffX = touchStartX - touchEndX;
+    if (diffX > 45) {
+      handleNextPosture();
+    } else if (diffX < -45) {
+      handlePrevPosture();
+    }
+    setTouchStartX(null);
+  };
 
   // Exercise Counters & Timers
   // Chin Tucks state: completed sets (0, 1, or 2)
@@ -54,6 +139,222 @@ export const LookmaxingTab: React.FC = () => {
     }
     return () => clearInterval(interval);
   }, [isIceRunning, iceTimer]);
+
+  // 6 Esercizi Postura: Sequenza Guidata Swipe/Freccia
+  if (isPostureSequenceOpen) {
+    const currentEx = POSTURE_EXERCISES[currentPostureIndex];
+    const isFirst = currentPostureIndex === 0;
+    const isLast = currentPostureIndex === POSTURE_EXERCISES.length - 1;
+
+    return (
+      <div className="space-y-4 pb-24 pt-2 animate-in fade-in duration-200">
+        {/* Top bar with Back button & Step Badge */}
+        <div className="flex items-center justify-between">
+          <button
+            type="button"
+            onClick={() => setIsPostureSequenceOpen(false)}
+            className="flex items-center space-x-2 py-2 px-3.5 rounded-2xl bg-white/5 hover:bg-white/10 text-emerald-300 border border-white/10 text-xs font-bold uppercase tracking-wider transition-all active:scale-95 cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Torna a Postura</span>
+          </button>
+          <div className="flex items-center space-x-1.5 text-xs font-bold">
+            <span className="px-3 py-1 rounded-xl bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 shadow-sm">
+              Esercizio {currentPostureIndex + 1} di {POSTURE_EXERCISES.length}
+            </span>
+          </div>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="w-full bg-black/40 rounded-full h-1.5 border border-white/5 overflow-hidden">
+          <div
+            className="bg-gradient-to-r from-emerald-500 to-cyan-400 h-full transition-all duration-300 rounded-full"
+            style={{ width: `${((currentPostureIndex + 1) / POSTURE_EXERCISES.length) * 100}%` }}
+          />
+        </div>
+
+        {/* Main Card */}
+        <div className="p-4 sm:p-5 rounded-3xl glass-card relative overflow-hidden border border-emerald-500/30 space-y-4">
+          {/* Header info & Step Pills */}
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2.5">
+                <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  <Activity className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-base sm:text-lg font-extrabold text-white">
+                    {currentEx.title}
+                  </h2>
+                  <p className="text-[11px] text-emerald-400 font-semibold uppercase tracking-wider">
+                    Routine Postura • 1 dopo l'altro
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Step Pills 1 to 6 */}
+            <div className="grid grid-cols-6 gap-1.5 pt-1">
+              {POSTURE_EXERCISES.map((ex, idx) => {
+                const isActive = idx === currentPostureIndex;
+                const isCompleted = completedPostureExercises.includes(idx);
+                return (
+                  <button
+                    key={ex.id}
+                    type="button"
+                    onClick={() => setCurrentPostureIndex(idx)}
+                    className={`py-1.5 rounded-xl text-xs font-bold transition-all border flex items-center justify-center space-x-1 cursor-pointer ${
+                      isActive
+                        ? 'bg-emerald-500 text-black border-emerald-400 shadow-neon scale-105'
+                        : isCompleted
+                        ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                        : 'bg-black/40 text-gray-400 border-white/5 hover:bg-white/5'
+                    }`}
+                  >
+                    <span>{idx + 1}</span>
+                    {isCompleted && !isActive && <Check className="w-2.5 h-2.5 text-emerald-400" />}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Video Container with swipe touch detection & floating arrows */}
+          <div className="space-y-3">
+            <div
+              onTouchStart={handleTouchStartPosture}
+              onTouchEnd={handleTouchEndPosture}
+              className="relative w-full max-w-xs sm:max-w-sm mx-auto aspect-[9/16] max-h-[480px] rounded-3xl overflow-hidden border border-white/15 bg-black shadow-2xl flex items-center justify-center group"
+            >
+              <iframe
+                key={currentEx.id}
+                src={currentEx.embedUrl}
+                title={currentEx.title}
+                className="w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+
+              {/* Floating Prev Arrow on Left Side */}
+              {!isFirst && (
+                <button
+                  type="button"
+                  onClick={handlePrevPosture}
+                  aria-label="Esercizio precedente"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/80 hover:bg-black text-white hover:text-emerald-300 border border-white/20 shadow-lg backdrop-blur-md transition-all active:scale-95 cursor-pointer z-10"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+              )}
+
+              {/* Floating Next Arrow on Right Side (Freccia tipo swipe) */}
+              {!isLast && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!completedPostureExercises.includes(currentPostureIndex)) {
+                      setCompletedPostureExercises(prev => [...prev, currentPostureIndex]);
+                    }
+                    handleNextPosture();
+                  }}
+                  aria-label="Prossimo esercizio"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-emerald-500/90 hover:bg-emerald-400 text-black border border-emerald-300 shadow-neon backdrop-blur-md transition-all active:scale-95 cursor-pointer z-10 animate-pulse"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              )}
+            </div>
+
+            {/* Gesture / Swipe helper hint */}
+            <p className="text-[11px] text-emerald-400/90 text-center flex items-center justify-center gap-1.5 font-semibold">
+              <span>⚡ Avvio automatico attivo • Scorri (swipe) o premi la freccia per passare al prossimo</span>
+            </p>
+
+            {/* Objective description */}
+            <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block">
+                Focus Esercizio:
+              </span>
+              <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                {currentEx.description}
+              </p>
+            </div>
+
+            {/* Big Action Buttons */}
+            <div className="flex items-center space-x-2.5 pt-1">
+              <button
+                type="button"
+                disabled={isFirst}
+                onClick={handlePrevPosture}
+                className={`flex-1 py-3 px-3 rounded-2xl border text-xs font-bold flex items-center justify-center space-x-1.5 uppercase tracking-wider transition-all cursor-pointer ${
+                  isFirst
+                    ? 'bg-white/5 text-gray-600 border-white/5 opacity-40 cursor-not-allowed'
+                    : 'bg-white/10 hover:bg-white/15 text-white border-white/20 active:scale-98'
+                }`}
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span>Precedente</span>
+              </button>
+
+              {!isLast ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!completedPostureExercises.includes(currentPostureIndex)) {
+                      setCompletedPostureExercises(prev => [...prev, currentPostureIndex]);
+                    }
+                    handleNextPosture();
+                  }}
+                  className="flex-[2] py-3 px-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black border border-emerald-300 font-extrabold text-xs flex items-center justify-center space-x-2 uppercase tracking-wider shadow-neon active:scale-98 transition-all cursor-pointer group"
+                >
+                  <span>Prossimo Esercizio ({currentPostureIndex + 2}/6)</span>
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!completedPostureExercises.includes(currentPostureIndex)) {
+                      setCompletedPostureExercises(prev => [...prev, currentPostureIndex]);
+                    }
+                    setIsPostureSequenceOpen(false);
+                  }}
+                  className="flex-[2] py-3 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-cyan-400 hover:from-emerald-400 hover:to-cyan-300 text-black border border-emerald-300 font-extrabold text-xs flex items-center justify-center space-x-2 uppercase tracking-wider shadow-neon-lg active:scale-98 transition-all cursor-pointer"
+                >
+                  <Check className="w-4 h-4" />
+                  <span>Completa Routine Postura 🎉</span>
+                </button>
+              )}
+            </div>
+
+            {/* Direct Link to YouTube Shorts */}
+            <div className="flex items-center justify-between pt-1">
+              <a
+                href={currentEx.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-1.5 text-xs text-emerald-400 hover:underline font-semibold"
+              >
+                <span>Apri video su YouTube Shorts</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+
+              {isLast && (
+                <button
+                  type="button"
+                  onClick={() => setCurrentPostureIndex(0)}
+                  className="text-xs text-gray-400 hover:text-white flex items-center gap-1 font-medium cursor-pointer"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>Ricomincia dal 1°</span>
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (isChinMediaOpen) {
     return (
@@ -1094,6 +1395,40 @@ export const LookmaxingTab: React.FC = () => {
               <Activity className="w-4 h-4 text-emerald-400" />
               3. Postura del Corpo & Allineamento Colonna
             </h3>
+
+            {/* QUADRATO ESERCIZI POSTURA (6 VIDEO IN SEQUENZA CON SWIPE) */}
+            <div className="flex flex-col items-center justify-center pt-2 pb-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setCurrentPostureIndex(0);
+                  setIsPostureSequenceOpen(true);
+                }}
+                className="w-48 h-48 sm:w-56 sm:h-56 rounded-3xl glass-card border-2 border-emerald-400/60 hover:border-emerald-400 bg-gradient-to-br from-emerald-500/20 via-black/80 to-cyan-500/20 p-4 flex flex-col items-center justify-center text-center shadow-neon hover:shadow-neon-lg active:scale-95 transition-all cursor-pointer group relative overflow-hidden"
+              >
+                <div className="absolute -top-8 -right-8 w-28 h-28 bg-emerald-500/20 rounded-full blur-xl pointer-events-none group-hover:scale-125 transition-transform" />
+
+                <div className="p-3 rounded-2xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 shadow-neon mb-2 group-hover:scale-110 transition-transform">
+                  <Activity className="w-8 h-8" />
+                </div>
+
+                <span className="text-[10px] text-emerald-400 font-extrabold tracking-widest uppercase mb-1">
+                  6 Video Guidati
+                </span>
+
+                <h4 className="text-2xl sm:text-3xl font-black text-white tracking-wider uppercase group-hover:text-emerald-300 transition-colors">
+                  ESERCIZI
+                </h4>
+
+                <div className="mt-2.5 flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-bold group-hover:bg-emerald-500/30">
+                  <span>1° Video • Tocca qui</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </button>
+              <p className="text-[11px] text-gray-400 text-center mt-2.5 font-medium max-w-xs">
+                Clicca sul quadrato per iniziare il 1° video e scorrere con la freccia uno dopo l'altro
+              </p>
+            </div>
 
             {/* Scapular Retraction Card */}
             <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-2">
