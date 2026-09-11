@@ -64,9 +64,7 @@ export const DailyChecklistTab: React.FC = () => {
   };
 
   const resetToday = () => {
-    if (window.confirm('Vuoi davvero azzerare lo stato della checklist di oggi?')) {
-      setItems(prev => prev.map(i => ({ ...i, completed: false, timeCompleted: undefined })));
-    }
+    setItems(prev => prev.map(i => ({ ...i, completed: false, timeCompleted: undefined })));
   };
 
   const completedCount = items.filter(i => i.completed).length;

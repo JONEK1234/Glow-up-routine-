@@ -84,13 +84,11 @@ export const NoteTab: React.FC = () => {
 
   const handleDeleteNote = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (confirm('Vuoi eliminare questa nota?')) {
-      const updated = userNotes.filter(n => n.id !== id);
-      setUserNotes(updated);
-      storageHelper.saveUserNotes(updated);
-      if (selectedNote?.id === id) {
-        setSelectedNote(null);
-      }
+    const updated = userNotes.filter(n => n.id !== id);
+    setUserNotes(updated);
+    storageHelper.saveUserNotes(updated);
+    if (selectedNote?.id === id) {
+      setSelectedNote(null);
     }
   };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Flame, Calendar, Clock, Rocket, Zap, PartyPopper, RotateCcw, X, Info } from 'lucide-react';
+import { Flame, Calendar, Clock, Rocket, Zap, PartyPopper, RotateCcw, X, Info, AlertTriangle, Check } from 'lucide-react';
 import { storageHelper } from '../utils/storage';
 
 interface HeaderBarProps {
@@ -10,6 +10,8 @@ export const HeaderBar: React.FC<HeaderBarProps> = () => {
   const [startDate, setStartDate] = useState<string | null>(() => storageHelper.getOrdineStartDate());
   const [showStartModal, setShowStartModal] = useState<boolean>(false);
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
+  const [showResetConfirm, setShowResetConfirm] = useState<boolean>(false);
+  const [justReset, setJustReset] = useState<boolean>(false);
 
   // Poll/sync start date from storage periodically or on focus
   useEffect(() => {
@@ -40,18 +42,33 @@ export const HeaderBar: React.FC<HeaderBarProps> = () => {
   // Calculate elapsed days starting from 1D
   const daysElapsed = useMemo(() => {
     if (!startDate) return 1;
-    const start = new Date(startDate);
+    const parts = startDate.split('-');
+    let start: Date;
+    if (parts.length === 3) {
+      start = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+    } else {
+      start = new Date(startDate);
+    }
     start.setHours(0, 0, 0, 0);
+
     const now = new Date();
-    now.setHours(0, 0, 0, 0);
-    const diffTime = now.getTime() - start.getTime();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    today.setHours(0, 0, 0, 0);
+
+    const diffTime = today.getTime() - start.getTime();
     const days = Math.floor(diffTime / (1000 * 3600 * 24)) + 1;
     return days > 0 ? days : 1;
   }, [startDate]);
 
   const formatStartDateText = (startIso: string | null): string => {
     if (!startIso) return 'Non ancora avviato';
-    const dateObj = new Date(startIso);
+    const parts = startIso.split('-');
+    let dateObj: Date;
+    if (parts.length === 3) {
+      dateObj = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+    } else {
+      dateObj = new Date(startIso);
+    }
     return dateObj.toLocaleDateString('it-IT', {
       day: 'numeric',
       month: 'long',
@@ -59,23 +76,37 @@ export const HeaderBar: React.FC<HeaderBarProps> = () => {
     });
   };
 
+  const getTodayIso = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const handle1DClick = () => {
     if (!startDate) {
-      const todayIso = new Date().toISOString().split('T')[0];
+      const todayIso = getTodayIso();
       storageHelper.saveOrdineStartDate(todayIso);
       setStartDate(todayIso);
     }
+    setJustReset(false);
     setShowStartModal(true);
   };
 
-  const handleResetStartDate = () => {
-    if (window.confirm('Vuoi davvero riavviare il tuo percorso da 1D ad oggi?')) {
-      const todayIso = new Date().toISOString().split('T')[0];
-      storageHelper.saveOrdineStartDate(todayIso);
-      setStartDate(todayIso);
-      setShowInfoModal(false);
-      setShowStartModal(true);
-    }
+  const handleConfirmReset = () => {
+    const todayIso = getTodayIso();
+    storageHelper.saveOrdineStartDate(todayIso);
+    setStartDate(todayIso);
+    setShowResetConfirm(false);
+    setShowInfoModal(false);
+    setJustReset(true);
+    setShowStartModal(true);
+
+    // Notify other components if needed
+    try {
+      window.dispatchEvent(new Event('storage'));
+    } catch (e) {}
   };
 
   return (
@@ -142,7 +173,7 @@ export const HeaderBar: React.FC<HeaderBarProps> = () => {
             <div className="space-y-1">
               <div className="flex items-center justify-center space-x-1 text-[#00FFD1] text-[10px] font-black uppercase tracking-widest">
                 <PartyPopper className="w-3.5 h-3.5" />
-                <span>Routine Quotidiana Attiva</span>
+                <span>{justReset ? 'Percorso Riavviato da Oggi!' : 'Routine Quotidiana Attiva'}</span>
                 <PartyPopper className="w-3.5 h-3.5" />
               </div>
               <h3 className="text-xl font-black text-white uppercase tracking-wide">
@@ -157,7 +188,11 @@ export const HeaderBar: React.FC<HeaderBarProps> = () => {
             </div>
 
             <p className="text-xs text-gray-200 font-medium leading-relaxed">
-              Il tuo percorso è attivo! Oggi è <strong className="text-white">{todayFullText}</strong>. Ogni giorno il contatore avanzera automaticamente (<strong className="text-[#00FFD1]">1D, 2D, 3D... 365D</strong>).
+              {justReset ? (
+                <span>Hai riavviato con successo il percorso da oggi (<strong className="text-white">{todayFullText}</strong>). Il contatore è ripartito da <strong className="text-[#00FFD1]">1D</strong>!</span>
+              ) : (
+                <span>Il tuo percorso è attivo! Oggi è <strong className="text-white">{todayFullText}</strong>. Ogni giorno il contatore avanzerà automaticamente (<strong className="text-[#00FFD1]">1D, 2D, 3D... 365D</strong>).</span>
+              )}
             </p>
 
             <div className="p-3 rounded-2xl bg-white/5 border border-white/10 text-left text-[11px] space-y-1.5">
@@ -179,6 +214,21 @@ export const HeaderBar: React.FC<HeaderBarProps> = () => {
               <Zap className="w-4 h-4" />
               <span>Continua la Routine</span>
             </button>
+
+            {!justReset && (
+              <button
+                type="button"
+                onClick={() => {
+                  setShowStartModal(false);
+                  setShowResetConfirm(true);
+                  setShowInfoModal(true);
+                }}
+                className="text-[11px] text-gray-400 hover:text-rose-300 transition-colors flex items-center justify-center gap-1 mx-auto pt-1 cursor-pointer"
+              >
+                <RotateCcw className="w-3 h-3" />
+                <span>Riavvia percorso da oggi</span>
+              </button>
+            )}
           </div>
         </div>
       )}
@@ -237,19 +287,51 @@ export const HeaderBar: React.FC<HeaderBarProps> = () => {
               </div>
             </div>
 
-            <div className="flex flex-col gap-2 pt-1">
-              <button
-                type="button"
-                onClick={handleResetStartDate}
-                className="w-full py-2.5 px-3 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-1.5"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>Riavvia Percorso da Oggi (1D)</span>
-              </button>
+            <div className="space-y-2 pt-1">
+              {showResetConfirm ? (
+                <div className="p-3.5 rounded-2xl bg-rose-500/15 border border-rose-500/40 text-left space-y-2.5 animate-in fade-in duration-200">
+                  <div className="flex items-center space-x-2 text-rose-300 font-bold text-xs">
+                    <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
+                    <span>Confermi di voler riavviare il percorso?</span>
+                  </div>
+                  <p className="text-[11px] text-gray-200 leading-relaxed font-medium">
+                    La data d'inizio verrà impostata su oggi (<strong className="text-white">{todayFullText}</strong>) e il contatore tornerà a <strong className="text-[#00FFD1] font-mono">1D</strong>.
+                  </p>
+                  <div className="flex items-center gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={handleConfirmReset}
+                      className="flex-1 py-2 px-3 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-black text-xs transition-all active:scale-95 cursor-pointer shadow-md flex items-center justify-center space-x-1.5"
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                      <span>Sì, Riavvia da Oggi</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setShowResetConfirm(false)}
+                      className="py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-gray-300 text-xs font-semibold transition-all cursor-pointer"
+                    >
+                      Annulla
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setShowResetConfirm(true)}
+                  className="w-full py-2.5 px-3 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 hover:text-rose-200 border border-rose-500/40 text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-1.5 active:scale-95 shadow-sm"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-rose-400" />
+                  <span>Riavvia Percorso da Oggi (1D)</span>
+                </button>
+              )}
 
               <button
                 type="button"
-                onClick={() => setShowInfoModal(false)}
+                onClick={() => {
+                  setShowResetConfirm(false);
+                  setShowInfoModal(false);
+                }}
                 className="w-full py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all cursor-pointer"
               >
                 Chiudi
