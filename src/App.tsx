@@ -8,7 +8,7 @@ import { DebugConsole } from './components/DebugConsole';
 import { HomeRoutineTab } from './components/tabs/HomeRoutineTab';
 import { DailyChecklistTab } from './components/tabs/DailyChecklistTab';
 import { LookmaxingTab } from './components/tabs/LookmaxingTab';
-import { OrdineTab } from './components/tabs/OrdineTab';
+import { NoteTab } from './components/tabs/NoteTab';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('home');
@@ -42,7 +42,7 @@ export default function App() {
           {activeTab === 'home' && <HomeRoutineTab />}
           {activeTab === 'checklist' && <DailyChecklistTab />}
           {activeTab === 'lookmaxing' && <LookmaxingTab />}
-          {activeTab === 'ordine' && <OrdineTab />}
+          {activeTab === 'note' && <NoteTab />}
         </main>
 
         {/* Bottom Navigation */}

@@ -1,4 +1,13 @@
-export type NavTab = 'home' | 'checklist' | 'lookmaxing' | 'ordine';
+export type NavTab = 'home' | 'checklist' | 'lookmaxing' | 'note';
+
+export interface UserNote {
+  id: string;
+  title: string;
+  date: string;
+  category: 'asimmetria' | 'percorso' | 'allenamento' | 'dieta' | 'mentale' | 'generale';
+  content: string;
+  isPinned?: boolean;
+}
 
 export interface LogEntry {
   id: string;

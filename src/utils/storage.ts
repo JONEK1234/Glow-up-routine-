@@ -1,4 +1,4 @@
-import { ChecklistItem, ProgressPhoto, MediaLink, StoreProductVideo, WaterLog } from '../types';
+import { ChecklistItem, ProgressPhoto, MediaLink, StoreProductVideo, WaterLog, UserNote } from '../types';
 
 const STORAGE_KEYS = {
   WATER: 'glowup_water_log_v1',
@@ -8,7 +8,8 @@ const STORAGE_KEYS = {
   MEDIA_LINKS: 'glowup_links_v1',
   STORE_PRODUCTS: 'glowup_store_v1',
   STREAK: 'glowup_streak_v1',
-  ORDINE_START_DATE: 'glowup_ordine_start_date_v1'
+  ORDINE_START_DATE: 'glowup_ordine_start_date_v1',
+  USER_NOTES: 'glowup_user_notes_v1'
 };
 
 export const INITIAL_CHECKLIST: ChecklistItem[] = [
@@ -242,6 +243,20 @@ export const storageHelper = {
       } else {
         localStorage.removeItem(STORAGE_KEYS.ORDINE_START_DATE);
       }
+    } catch (e) {}
+  },
+
+  // User Notes
+  getUserNotes: (): UserNote[] => {
+    try {
+      const data = localStorage.getItem(STORAGE_KEYS.USER_NOTES);
+      if (data) return JSON.parse(data);
+    } catch (e) {}
+    return [];
+  },
+  saveUserNotes: (notes: UserNote[]) => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.USER_NOTES, JSON.stringify(notes));
     } catch (e) {}
   }
 };

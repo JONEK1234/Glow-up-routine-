@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavTab } from '../types';
-import { Home, CheckSquare, Sparkles, ListOrdered } from 'lucide-react';
+import { Home, CheckSquare, Sparkles, BookOpen } from 'lucide-react';
 
 interface BottomNavProps {
   activeTab: NavTab;
@@ -16,7 +16,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
     { id: 'home', label: 'Routine', icon: <Home className="w-5 h-5" /> },
     { id: 'checklist', label: 'Checklist', icon: <CheckSquare className="w-5 h-5" /> },
     { id: 'lookmaxing', label: 'Glow-Up', icon: <Sparkles className="w-5 h-5" /> },
-    { id: 'ordine', label: 'Ordine', icon: <ListOrdered className="w-5 h-5" /> }
+    { id: 'note', label: 'Note', icon: <BookOpen className="w-5 h-5" /> }
   ];
 
   return (

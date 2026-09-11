@@ -1,0 +1,1030 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  FileText, 
+  Plus, 
+  Trash2, 
+  ArrowLeft, 
+  Eye, 
+  Maximize2, 
+  X, 
+  ShieldAlert, 
+  AlertTriangle, 
+  Sparkles, 
+  Scale, 
+  ChevronRight, 
+  ChevronDown, 
+  Stethoscope, 
+  CheckCircle2, 
+  Clock, 
+  Calendar, 
+  Activity, 
+  Layers, 
+  Flame, 
+  Info,
+  ChevronLeft
+} from 'lucide-react';
+import { UserNote } from '../../types';
+import { storageHelper } from '../../utils/storage';
+
+const FACE_IMAGES = {
+  attuale: 'https://i.ibb.co/3VDsH13/20260911-184140.jpg',
+  definita: 'https://i.ibb.co/nspkJD8t/1789145825747.jpg'
+};
+
+const SCHEMA_IMAGES = [
+  {
+    title: 'Schema Analisi Strutturale 1',
+    url: 'https://i.ibb.co/r2gc2cRW/1789145830684.jpg',
+    desc: 'Tracciato asse facciale, deviazione mediana e proporzioni ossee'
+  },
+  {
+    title: 'Schema Analisi Strutturale 2',
+    url: 'https://i.ibb.co/tPKpnGjW/1789145833456.jpg',
+    desc: 'Mappatura discrepanza del palato e shift funzionale mandibolare'
+  }
+];
+
+export const NoteTab: React.FC = () => {
+  const [activeView, setActiveView] = useState<'list' | 'asimmetria' | 'ortodonzia'>('list');
+  const [userNotes, setUserNotes] = useState<UserNote[]>(() => storageHelper.getUserNotes());
+  const [fullscreenImg, setFullscreenImg] = useState<{ url: string; title: string } | null>(null);
+  const [faceComparisonMode, setFaceComparisonMode] = useState<'sideBySide' | 'toggle'>('sideBySide');
+  const [activeToggleFace, setActiveToggleFace] = useState<'attuale' | 'definita'>('attuale');
+  const [isOrtodonziaExpanded, setIsOrtodonziaExpanded] = useState(false);
+
+  // New Note Modal
+  const [isCreatingNote, setIsCreatingNote] = useState(false);
+  const [newNoteTitle, setNewNoteTitle] = useState('');
+  const [newNoteCategory, setNewNoteCategory] = useState<UserNote['category']>('percorso');
+  const [newNoteContent, setNewNoteContent] = useState('');
+
+  // Selected User Note Modal / Detail
+  const [selectedNote, setSelectedNote] = useState<UserNote | null>(null);
+
+  const handleCreateNote = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newNoteTitle.trim() || !newNoteContent.trim()) return;
+
+    const newNote: UserNote = {
+      id: 'note_' + Date.now(),
+      title: newNoteTitle.trim(),
+      date: new Date().toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' }),
+      category: newNoteCategory,
+      content: newNoteContent.trim()
+    };
+
+    const updated = [newNote, ...userNotes];
+    setUserNotes(updated);
+    storageHelper.saveUserNotes(updated);
+
+    setNewNoteTitle('');
+    setNewNoteContent('');
+    setIsCreatingNote(false);
+  };
+
+  const handleDeleteNote = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (confirm('Vuoi eliminare questa nota?')) {
+      const updated = userNotes.filter(n => n.id !== id);
+      setUserNotes(updated);
+      storageHelper.saveUserNotes(updated);
+      if (selectedNote?.id === id) {
+        setSelectedNote(null);
+      }
+    }
+  };
+
+  // FULLSCREEN IMAGE MODAL
+  const renderFullscreenModal = () => {
+    if (!fullscreenImg) return null;
+    return (
+      <div 
+        className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-md animate-in fade-in"
+        onClick={() => setFullscreenImg(null)}
+      >
+        <button
+          onClick={() => setFullscreenImg(null)}
+          className="absolute top-4 right-4 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all cursor-pointer"
+        >
+          <X className="w-6 h-6" />
+        </button>
+        <div className="max-w-md w-full max-h-[85vh] flex flex-col items-center">
+          <img
+            src={fullscreenImg.url}
+            alt={fullscreenImg.title}
+            className="w-full max-h-[75vh] object-contain rounded-2xl border border-white/20 shadow-2xl"
+            referrerPolicy="no-referrer"
+          />
+          <p className="mt-3 text-sm font-semibold text-center text-cyan-300">
+            {fullscreenImg.title}
+          </p>
+          <span className="text-[11px] text-gray-400 mt-1">Tocca ovunque per chiudere</span>
+        </div>
+      </div>
+    );
+  };
+
+  // -------------------------------------------------------------
+  // VIEW: LA MIA ASIMMETRIA (MENU DETTAGLIATO)
+  // -------------------------------------------------------------
+  if (activeView === 'asimmetria') {
+    return (
+      <div className="space-y-4 pb-24 pt-1 animate-in fade-in duration-200">
+        {renderFullscreenModal()}
+
+        {/* Top Back Navigation Bar */}
+        <div className="flex items-center justify-between sticky top-0 z-30 bg-[#0B0F17]/90 backdrop-blur-md py-2 -mx-4 px-4 border-b border-white/10">
+          <button
+            type="button"
+            onClick={() => setActiveView('list')}
+            className="flex items-center space-x-1.5 py-2 px-3 rounded-2xl bg-white/5 hover:bg-white/10 text-cyan-300 border border-white/10 text-xs font-bold uppercase tracking-wider transition-all active:scale-95 cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Tutte le Note</span>
+          </button>
+          <span className="text-[11px] font-bold text-gray-400 bg-black/40 px-3 py-1 rounded-xl border border-white/5">
+            Nota Guida • 8 Mesi
+          </span>
+        </div>
+
+        {/* Master Note Title Card */}
+        <div className="p-4 sm:p-5 rounded-3xl glass-card border border-[#00FFD1]/30 relative overflow-hidden space-y-2.5">
+          <div className="flex items-center space-x-2">
+            <span className="px-2.5 py-0.5 rounded-full bg-[#00FFD1]/10 text-[#00FFD1] text-[10px] font-extrabold uppercase tracking-widest border border-[#00FFD1]/30">
+              Nota di Riferimento
+            </span>
+            <span className="text-[10px] text-gray-400 font-semibold">Percorso Naturale</span>
+          </div>
+
+          <h1 className="text-base sm:text-lg font-black text-white leading-snug">
+            ANALISI E PIANO INTEGRATO PER LA SIMMETRIA FACCIALE (PERCORSO NATURALE)
+          </h1>
+
+          <p className="text-xs text-gray-300 leading-relaxed font-medium">
+            Questa nota riassume la tua struttura anatomica specifica, la meccanica del tuo morso e il piano d'azione naturale consolidato per i prossimi 8 mesi. L'obiettivo è massimizzare la definizione e l'armonia, sfruttando la tua base ossea esistente.
+          </p>
+        </div>
+
+        {/* BOX 1: CONFRONTO FOTOGRAFICO VISO ATTUALE VS VISO DEFINITO */}
+        <div className="p-4 rounded-3xl glass-card border border-white/10 space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <div className="p-1.5 rounded-xl bg-cyan-500/20 text-cyan-300">
+                <Eye className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-xs sm:text-sm font-extrabold text-white">
+                  Confronto Viso: Attuale vs Definito
+                </h3>
+                <p className="text-[10px] text-gray-400">Tocca una foto per ingrandirla a schermo intero</p>
+              </div>
+            </div>
+
+            {/* Mode switch (Affiancate / Toggle) */}
+            <div className="flex bg-black/40 p-0.5 rounded-xl border border-white/10 text-[10px]">
+              <button
+                type="button"
+                onClick={() => setFaceComparisonMode('sideBySide')}
+                className={`px-2 py-1 rounded-lg font-bold transition-all ${
+                  faceComparisonMode === 'sideBySide'
+                    ? 'bg-cyan-500 text-black shadow-sm'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                2 Foto
+              </button>
+              <button
+                type="button"
+                onClick={() => setFaceComparisonMode('toggle')}
+                className={`px-2 py-1 rounded-lg font-bold transition-all ${
+                  faceComparisonMode === 'toggle'
+                    ? 'bg-cyan-500 text-black shadow-sm'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                Switch
+              </button>
+            </div>
+          </div>
+
+          {faceComparisonMode === 'sideBySide' ? (
+            <div className="grid grid-cols-2 gap-2.5">
+              {/* Foto Attuale */}
+              <div 
+                onClick={() => setFullscreenImg({ url: FACE_IMAGES.attuale, title: 'Viso Attuale' })}
+                className="group relative rounded-2xl overflow-hidden border border-white/15 bg-black cursor-pointer aspect-[3/4]"
+              >
+                <img
+                  src={FACE_IMAGES.attuale}
+                  alt="Viso Attuale"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-2">
+                  <span className="text-[10px] font-bold text-white bg-black/60 px-2 py-0.5 rounded-md border border-white/10 w-fit backdrop-blur-sm">
+                    Faccia Attuale
+                  </span>
+                </div>
+                <div className="absolute top-2 right-2 p-1.5 rounded-lg bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Maximize2 className="w-3.5 h-3.5" />
+                </div>
+              </div>
+
+              {/* Foto Definita */}
+              <div 
+                onClick={() => setFullscreenImg({ url: FACE_IMAGES.definita, title: 'Viso Definito / Obiettivo' })}
+                className="group relative rounded-2xl overflow-hidden border border-cyan-400/30 bg-black cursor-pointer aspect-[3/4]"
+              >
+                <img
+                  src={FACE_IMAGES.definita}
+                  alt="Faccia Definita"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-2">
+                  <span className="text-[10px] font-bold text-cyan-300 bg-cyan-950/80 px-2 py-0.5 rounded-md border border-cyan-400/30 w-fit backdrop-blur-sm">
+                    Faccia Definita
+                  </span>
+                </div>
+                <div className="absolute top-2 right-2 p-1.5 rounded-lg bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Maximize2 className="w-3.5 h-3.5" />
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <div className="flex rounded-xl bg-black/40 p-1 border border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setActiveToggleFace('attuale')}
+                  className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                    activeToggleFace === 'attuale'
+                      ? 'bg-white/15 text-white shadow-sm'
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  Faccia Attuale
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveToggleFace('definita')}
+                  className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                    activeToggleFace === 'definita'
+                      ? 'bg-cyan-500 text-black shadow-sm font-extrabold'
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  Faccia Definita
+                </button>
+              </div>
+
+              <div
+                onClick={() => setFullscreenImg({
+                  url: activeToggleFace === 'attuale' ? FACE_IMAGES.attuale : FACE_IMAGES.definita,
+                  title: activeToggleFace === 'attuale' ? 'Faccia Attuale' : 'Faccia Definita'
+                })}
+                className="relative rounded-2xl overflow-hidden border border-white/20 bg-black cursor-pointer max-h-72 aspect-[3/4] mx-auto group"
+              >
+                <img
+                  src={activeToggleFace === 'attuale' ? FACE_IMAGES.attuale : FACE_IMAGES.definita}
+                  alt={activeToggleFace}
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute bottom-2 left-2 right-2 flex justify-between items-center px-2 py-1 rounded-lg bg-black/70 backdrop-blur-sm text-xs font-semibold text-white">
+                  <span>{activeToggleFace === 'attuale' ? 'Foto di partenza' : 'Modello di definizione target'}</span>
+                  <Maximize2 className="w-3.5 h-3.5 text-cyan-300" />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* PARTE 1: MAPPATURA ANATOMICA FACCIALE */}
+        <div className="p-4 rounded-3xl glass-card border border-white/10 space-y-3">
+          <div className="flex items-center space-x-2">
+            <div className="p-1.5 rounded-xl bg-purple-500/20 text-purple-300">
+              <Scale className="w-4 h-4" />
+            </div>
+            <div>
+              <h2 className="text-xs sm:text-sm font-extrabold text-white uppercase tracking-wider">
+                PARTE 1: MAPPATURA ANATOMICA FACCIALE
+              </h2>
+              <p className="text-[10px] text-gray-400">(Dalla Tua Prospettiva)</p>
+            </div>
+          </div>
+
+          <p className="text-xs text-gray-300 font-medium italic border-l-2 border-purple-400/50 pl-2.5 py-0.5">
+            La differenza visiva tra i due lati è determinata dalla larghezza della base ossea del palato.
+          </p>
+
+          <div className="space-y-3 pt-1">
+            {/* LATO DESTRO */}
+            <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-black text-emerald-300 uppercase tracking-wider">
+                  LATO DESTRO (Ampio / Piatto / Squadrato)
+                </span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold">
+                  Base Larga
+                </span>
+              </div>
+              <ul className="text-xs text-gray-200 space-y-1.5 list-disc pl-4 font-normal">
+                <li>
+                  <strong className="text-white">Arcata Palatina:</strong> Ampia ed espansa. Offre una base ossea strutturale più larga.
+                </li>
+                <li>
+                  <strong className="text-white">Comportamento dei Tessuti:</strong> La pelle e i muscoli si stendono su una superficie maggiore, creando una linea più dritta, tesa e squadrata.
+                </li>
+                <li>
+                  <strong className="text-white">Meccanica Mandibolare:</strong> Rappresenta la base su cui si estende la larghezza naturale dell'angolo della mascella.
+                </li>
+                <li>
+                  <strong className="text-emerald-300">Obiettivo Estetico:</strong> Far emergere l'angolo squadrato asciugando la copertura superficiale e dando un leggero stimolo muscolare extra.
+                </li>
+              </ul>
+            </div>
+
+            {/* LATO SINISTRO */}
+            <div className="p-3.5 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-black text-cyan-300 uppercase tracking-wider">
+                  LATO SINISTRO (Arrotondato / Ristretto / Pieno)
+                </span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-bold">
+                  Base Stretta
+                </span>
+              </div>
+              <ul className="text-xs text-gray-200 space-y-1.5 list-disc pl-4 font-normal">
+                <li>
+                  <strong className="text-white">Arcata Palatina:</strong> Stretta e compattata. Lo spazio osseo a disposizione è ridotto.
+                </li>
+                <li>
+                  <strong className="text-white">Comportamento dei Tessuti:</strong> I tessuti molli (grasso e ritenzione idrica) si raggruppano in meno spazio, creando l'effetto visivo pieno e arrotondato.
+                </li>
+                <li>
+                  <strong className="text-white">Meccanica Mandibolare:</strong> È il lato verso cui la mandibola scivola automaticamente a riposo per permettere ai denti di incastrarsi.
+                </li>
+                <li>
+                  <strong className="text-cyan-300">Obiettivo Estetico:</strong> Sgonfiare la superficie drenando i liquidi ed eliminando la massa grassa accumulata.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* PARTE 2: MECCANICA DELLA DEVIAZIONE FUNZIONALE */}
+        <div className="p-4 rounded-3xl glass-card border border-white/10 space-y-3">
+          <div className="flex items-center space-x-2">
+            <div className="p-1.5 rounded-xl bg-amber-500/20 text-amber-300">
+              <Activity className="w-4 h-4" />
+            </div>
+            <h2 className="text-xs sm:text-sm font-extrabold text-white uppercase tracking-wider">
+              PARTE 2: MECCANICA DELLA DEVIAZIONE FUNZIONALE
+            </h2>
+          </div>
+
+          <div className="space-y-2.5 text-xs text-gray-200 font-medium leading-relaxed">
+            <div className="p-3 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+              <span className="text-amber-300 font-bold block">Lo Scivolamento a Sinistra:</span>
+              <p>
+                Essendo il palato più stretto a sinistra, la mandibola fa un micro-scivolamento automatico verso quel lato per trovare un contatto stabile. Questo scivolamento "impacchetta" i tessuti molli della guancia sinistra, accentuando l'effetto rotondo.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+              <span className="text-emerald-300 font-bold block">Il Riallineamento verso Destra:</span>
+              <p>
+                Quando sposti il mento leggermente a destra, riallinei la struttura con il lato del palato più largo.
+              </p>
+            </div>
+
+            {/* Warning Box */}
+            <div className="p-3.5 rounded-2xl bg-rose-500/15 border border-rose-500/40 text-rose-200 space-y-1.5">
+              <div className="flex items-center space-x-1.5 font-bold text-rose-300">
+                <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
+                <span>⚠️ Nota Bene Fondamentale</span>
+              </div>
+              <p className="text-[11px] leading-relaxed text-rose-100">
+                Non forzare mai questo posizionamento con i muscoli durante il giorno. Mantenere la mascella "spostata" artificialmente sottopone l'articolazione (ATM) a tensioni dannose. La correzione scheletrica avviene solo via ortodonzia, non via muscoli.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* PARTE 3: SINTESI DELLA STRATEGIA NATURALE */}
+        <div className="p-4 rounded-3xl glass-card border border-white/10 space-y-2.5">
+          <div className="flex items-center space-x-2">
+            <div className="p-1.5 rounded-xl bg-cyan-500/20 text-cyan-300">
+              <Sparkles className="w-4 h-4" />
+            </div>
+            <h2 className="text-xs sm:text-sm font-extrabold text-white uppercase tracking-wider">
+              PARTE 3: SINTESI DELLA STRATEGIA NATURALE
+            </h2>
+          </div>
+
+          <p className="text-xs text-gray-300 font-medium leading-relaxed">
+            Il piano funziona perché un unico lavoro generale produce risultati diversi e complementari sui due lati:
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            <div className="p-3 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+              <span className="text-xs font-bold text-emerald-300 block">Sul Lato Destro (Ampio):</span>
+              <p className="text-xs text-gray-300">
+                Crei un leggero volume muscolare con la masticazione modulata, mentre la definizione fa emergere la base ossea già larga, rendendo la linea affilata e squadrata.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+              <span className="text-xs font-bold text-cyan-300 block">Sul Lato Sinistro (Ristretto):</span>
+              <p className="text-xs text-gray-300">
+                Non serve fare massa muscolare. Il deficit calorico e l'idratazione eliminano il grasso e i liquidi in eccesso, snellendo il profilo e appiattendo la guancia, avvicinandola all'aspetto del lato destro.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* PARTE 4: PROTOCOLLO D'AZIONE (I Prossimi 8 Mesi) */}
+        <div className="p-4 rounded-3xl glass-card border border-[#00FFD1]/30 space-y-3.5">
+          <div className="flex items-center space-x-2">
+            <div className="p-1.5 rounded-xl bg-[#00FFD1]/20 text-[#00FFD1]">
+              <Flame className="w-4 h-4" />
+            </div>
+            <h2 className="text-xs sm:text-sm font-extrabold text-white uppercase tracking-wider">
+              PARTE 4: PROTOCOLLO D'AZIONE (I Prossimi 8 Mesi)
+            </h2>
+          </div>
+
+          {/* 1. Definizione e Drenaggio */}
+          <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-2">
+            <div className="flex items-center space-x-2">
+              <span className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-xs font-black">1</span>
+              <span className="text-xs font-extrabold text-white uppercase tracking-wider">
+                Definizione e Drenaggio (Focus Principale)
+              </span>
+            </div>
+            <ul className="text-xs text-gray-300 space-y-1.5 list-disc pl-5 font-normal">
+              <li>Allenamento costante in palestra.</li>
+              <li>Leggero deficit calorico per abbassare la percentuale di grasso corporeo generale.</li>
+              <li>Bevi 2.5–3 litri d'acqua al giorno e controlla il sale per eliminare la ritenzione idrica, che gonfia soprattutto la guancia sinistra.</li>
+            </ul>
+          </div>
+
+          {/* 2. Masticazione Modulata */}
+          <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-2">
+            <div className="flex items-center space-x-2">
+              <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-xs font-black">2</span>
+              <span className="text-xs font-extrabold text-white uppercase tracking-wider">
+                Masticazione Modulata (+15% a Destra)
+              </span>
+            </div>
+            <ul className="text-xs text-gray-300 space-y-1.5 list-disc pl-5 font-normal">
+              <li>Mastica i pasti normali distribuendo il cibo su entrambi i lati.</li>
+              <li>Sposta circa il <strong>60% del lavoro sul lato destro</strong> (ampio) e il <strong>40% sul sinistro</strong> (un leggero extra di stimolo a destra).</li>
+              <li>Se usi la gomma da masticare, limita la sessione a un massimo di 15 minuti totali al giorno.</li>
+            </ul>
+          </div>
+
+          {/* 3. Postura Facciale e Cervicale */}
+          <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-2">
+            <div className="flex items-center space-x-2">
+              <span className="w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center text-xs font-black">3</span>
+              <span className="text-xs font-extrabold text-white uppercase tracking-wider">
+                Postura Facciale e Cervicale
+              </span>
+            </div>
+            <ul className="text-xs text-gray-300 space-y-1.5 list-disc pl-5 font-normal">
+              <li>Lingua sul palato a riposo (Mewing).</li>
+              <li><strong>2 serie da 25 Chin Tucks</strong> al giorno per allineare la testa e correggere la postura cervicale.</li>
+              <li><strong>2 serie da 15 Neck Curls</strong> al giorno (flessioni del collo a corpo libero, sdraiato su una superficie piana) per rafforzare i muscoli anteriori del collo.</li>
+              <li>Dormi a pancia in su per evitare compressioni asimmetriche sul cuscino.</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* BOX 2: SCHEMI E TRACCIATI ANALISI ANATOMICA (LE ALTRE 2 FOTO) */}
+        <div className="p-4 rounded-3xl glass-card border border-white/10 space-y-3">
+          <div className="flex items-center space-x-2">
+            <div className="p-1.5 rounded-xl bg-purple-500/20 text-purple-300">
+              <Layers className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="text-xs sm:text-sm font-extrabold text-white">
+                Schemi & Tracciati Analisi Anatomica
+              </h3>
+              <p className="text-[10px] text-gray-400">Analisi ortodontica, assi e tracciati di asimmetria</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2.5">
+            {SCHEMA_IMAGES.map((schema, index) => (
+              <div
+                key={index}
+                onClick={() => setFullscreenImg({ url: schema.url, title: schema.title })}
+                className="group relative rounded-2xl overflow-hidden border border-white/15 bg-black cursor-pointer aspect-[3/4]"
+              >
+                <img
+                  src={schema.url}
+                  alt={schema.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-end p-2">
+                  <span className="text-[9px] font-bold text-white bg-purple-900/60 px-1.5 py-0.5 rounded border border-purple-500/30 w-fit backdrop-blur-sm line-clamp-1">
+                    {schema.title}
+                  </span>
+                  <span className="text-[8px] text-gray-300 line-clamp-1 mt-0.5">
+                    {schema.desc}
+                  </span>
+                </div>
+                <div className="absolute top-2 right-2 p-1.5 rounded-lg bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Maximize2 className="w-3 h-3" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ------------------------------------------------------------- */}
+        {/* RIQUADRO: POSSIBILE PERCORSO ORTODONTICO (INTERATTIVO / ESPANDIBILE) */}
+        {/* ------------------------------------------------------------- */}
+        <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-cyan-400/50 bg-gradient-to-br from-cyan-950/40 via-black/80 to-emerald-950/30 space-y-4">
+          <button
+            type="button"
+            onClick={() => setIsOrtodonziaExpanded(!isOrtodonziaExpanded)}
+            className="w-full text-left flex items-start justify-between cursor-pointer group"
+          >
+            <div className="space-y-1.5 flex-1 pr-2">
+              <div className="flex items-center space-x-2">
+                <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-neon">
+                  <Stethoscope className="w-5 h-5" />
+                </div>
+                <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-[10px] font-extrabold uppercase tracking-widest border border-cyan-400/30">
+                  Cartella Clinica Specialistica
+                </span>
+              </div>
+              <h3 className="text-base sm:text-lg font-black text-white group-hover:text-cyan-300 transition-colors">
+                Possibile percorso ortodontico
+              </h3>
+              <p className="text-xs text-gray-300 font-medium leading-relaxed">
+                Tocca qui per consultare la diagnosi gnatologica, il protocollo clinico con bite ed espansore e il confronto con il percorso naturale.
+              </p>
+            </div>
+
+            <div className="p-2.5 rounded-2xl bg-white/5 group-hover:bg-cyan-500/20 text-cyan-300 border border-white/10 transition-all shrink-0 mt-1">
+              {isOrtodonziaExpanded ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+            </div>
+          </button>
+
+          {/* Expanded Content */}
+          {isOrtodonziaExpanded && (
+            <div className="pt-3 border-t border-white/10 space-y-4 animate-in fade-in duration-300">
+              {/* Header Reperto Clinico */}
+              <div className="p-3.5 rounded-2xl bg-black/60 border border-cyan-500/30 space-y-1">
+                <span className="text-[10px] font-extrabold text-cyan-400 uppercase tracking-wider block">
+                  REPERTO E NOTA CLINICA:
+                </span>
+                <h4 className="text-sm font-black text-white">
+                  DEVIAZIONE FUNZIONALE E ASIMMETRIA FACCIALE
+                </h4>
+              </div>
+
+              {/* Quadro Diagnostico */}
+              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-2">
+                <span className="text-xs font-black text-cyan-300 uppercase tracking-wider block">
+                  Quadro Diagnostico
+                </span>
+                <ul className="text-xs text-gray-200 space-y-2 font-medium">
+                  <li className="p-2.5 rounded-xl bg-white/5 border border-white/5">
+                    <strong className="text-white block mb-0.5">Eziologia:</strong>
+                    Asimmetria scheletrico-occlusale caratterizzata da discrepanza dell'arcata palatina (lato destro ampio ed espanso; lato sinistro ristretto e compresso).
+                  </li>
+                  <li className="p-2.5 rounded-xl bg-white/5 border border-white/5">
+                    <strong className="text-white block mb-0.5">Meccanica della Deviazione:</strong>
+                    Il palato stretto a sinistra genera un'interferenza occlusale. Per permettere il contatto tra i denti e la masticazione, la mandibola esegue un <em>lateral shift</em> (scivolamento funzionale) compensatorio verso sinistra.
+                  </li>
+                  <li className="p-2.5 rounded-xl bg-white/5 border border-white/5">
+                    <strong className="text-white block mb-0.5">Impatto sui Tessuti Molli:</strong>
+                    Il rientro e la deviazione verso sinistra causano il compattamento dei tessuti molli (effetto guancia piena/arrotondata). Sul lato destro, la base ossea più ampia stende i tessuti facendoli aderire al profilo (effetto teso/squadrato).
+                  </li>
+                </ul>
+              </div>
+
+              {/* Controindicazioni per Correzioni Volontarie */}
+              <div className="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30 space-y-2">
+                <div className="flex items-center space-x-1.5 text-rose-300 font-bold text-xs">
+                  <ShieldAlert className="w-4 h-4 shrink-0" />
+                  <span>Controindicazioni per Correzioni Volontarie</span>
+                </div>
+                <p className="text-xs text-gray-200 font-medium">
+                  Lo spostamento attivo e cosciente della mandibola verso destra durante la giornata è <strong>fortemente sconsigliato</strong>. Questa manovra forzata non modifica l'osso né l'arcata dentale, ma sottopone il condilo e l'articolazione temporo-mandibolare (ATM) a una leva innaturale, rischiando di generare:
+                </p>
+                <ul className="text-xs text-rose-200 space-y-1 list-disc pl-5 font-medium">
+                  <li>Infiammazione e contratture della muscolatura masticatoria e cervicale.</li>
+                  <li>Click, scatti o blocchi articolari in apertura/chiusura.</li>
+                  <li>Usura irregolare delle superfici dentali.</li>
+                </ul>
+              </div>
+
+              {/* Iter Terapeutico Clinico Specialistico */}
+              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-2">
+                <span className="text-xs font-black text-cyan-300 uppercase tracking-wider block">
+                  Iter Terapeutico Clinico Specialistico
+                </span>
+                <div className="space-y-2 text-xs text-gray-200">
+                  <div className="p-2.5 rounded-xl bg-white/5 border border-white/5">
+                    <strong className="text-cyan-300 block mb-0.5">1. Bite Gnatologico Deprogrammante:</strong>
+                    Placca in resina su misura che elimina i punti di incastro errati tra i denti. Azzera la memoria muscolare e permette alla mandibola di rilassarsi e riposizionarsi al centro in modo passivo.
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-white/5 border border-white/5">
+                    <strong className="text-cyan-300 block mb-0.5">2. Espansione del Palato (RPE/MSE):</strong>
+                    Trattamento ortodontico per allargare la base ossea dell'arcata superiore. Creando lo spazio fisico necessario, la mandibola si riallinea da sola al centro senza alcuno sforzo.
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-white/5 border border-white/5">
+                    <strong className="text-cyan-300 block mb-0.5">3. Ortodonzia di Rifinitura:</strong>
+                    Allineamento finale dei denti per stabilizzare la nuova chiusura centrata.
+                  </div>
+                </div>
+              </div>
+
+              {/* Integrazione Conservativa Non Invasiva */}
+              <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-2">
+                <span className="text-xs font-black text-emerald-300 uppercase tracking-wider block">
+                  Integrazione Conservativa Non Invasiva
+                </span>
+                <p className="text-xs text-gray-200">
+                  In assenza di un percorso ortodontico, il miglioramento visivo si ottiene tramite:
+                </p>
+                <ul className="text-xs text-gray-200 space-y-1.5 list-disc pl-5">
+                  <li>
+                    <strong className="text-white">Drenaggio Tessutale:</strong> Deficit calorico, idratazione costante (2.5-3L d'acqua) e controllo del sodio per svuotare l'accumulo di liquidi sulla guancia sinistra.
+                  </li>
+                  <li>
+                    <strong className="text-white">Stimolazione Muscolare Modulata:</strong> Masticazione fisiologica gestita al 60% a destra e 40% a sinistra per dare volume al massetere piatto senza sovraccaricare la cerniera articolare.
+                  </li>
+                </ul>
+              </div>
+
+              {/* Tempistiche Box */}
+              <div className="p-3.5 rounded-2xl bg-black/60 border border-white/10 space-y-1.5">
+                <div className="flex items-center space-x-1.5 text-xs font-bold text-amber-300">
+                  <Clock className="w-4 h-4 shrink-0" />
+                  <span>Tempistiche & Strategia Temporale</span>
+                </div>
+                <p className="text-xs text-gray-300 leading-relaxed font-medium">
+                  Un percorso ortodontico completo per adulti (bite, espansione e allineamento) richiede mediamente tra i <strong>18 e i 30 mesi</strong> (da 1,5 a 2,5 anni totali), poiché la risposta dell'osso maturo richiede tempi fisiologici graduali.
+                </p>
+                <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-200 border border-emerald-500/30 text-xs font-semibold">
+                  💡 Fare prima il percorso naturale per 12 mesi (fino a settembre) e poi valutare l'ortodonzia è una strategia eccellente e sensata.
+                </div>
+              </div>
+
+              {/* TABELLA CONFRONTO TRA I DUE PERCORSI */}
+              <div className="space-y-2 pt-1">
+                <span className="text-xs font-black text-white uppercase tracking-wider block">
+                  CONFRONTO TRA I DUE PERCORSI
+                </span>
+                
+                <div className="overflow-x-auto rounded-2xl border border-white/10 bg-black/60">
+                  <table className="w-full text-left text-[11px] border-collapse">
+                    <thead>
+                      <tr className="border-b border-white/10 bg-white/5">
+                        <th className="p-2.5 font-bold text-gray-300">Caratteristica</th>
+                        <th className="p-2.5 font-bold text-emerald-300">Percorso Naturale</th>
+                        <th className="p-2.5 font-bold text-cyan-300">Percorso Ortodontico</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5 text-gray-300">
+                      <tr>
+                        <td className="p-2.5 font-bold text-white">Tempistiche</td>
+                        <td className="p-2.5 text-emerald-200">8-12 mesi</td>
+                        <td className="p-2.5 text-cyan-200">18-30 mesi</td>
+                      </tr>
+                      <tr>
+                        <td className="p-2.5 font-bold text-white">Invasività</td>
+                        <td className="p-2.5 text-emerald-200">Zero (stile di vita & palestra)</td>
+                        <td className="p-2.5 text-cyan-200">Medio-alto (dispositivi e visite)</td>
+                      </tr>
+                      <tr>
+                        <td className="p-2.5 font-bold text-white">Su cosa agisce</td>
+                        <td className="p-2.5 text-emerald-200">Tessuto adiposo, liquidi, muscolo</td>
+                        <td className="p-2.5 text-cyan-200">Struttura ossea palato, denti, occlusione</td>
+                      </tr>
+                      <tr>
+                        <td className="p-2.5 font-bold text-white">Risultato Finale</td>
+                        <td className="p-2.5 text-emerald-200">Viso asciutto, definito e affilato naturale</td>
+                        <td className="p-2.5 text-cyan-200">Spostamento reale osso, centraggio mandibola</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* PERCHÉ TI CONVIENE FARE PRIMA IL NATURALE */}
+              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-2">
+                <span className="text-xs font-black text-cyan-300 uppercase tracking-wider block">
+                  PERCHÉ TI CONVIENE FARE PRIMA IL NATURALE
+                </span>
+                
+                <div className="space-y-2 text-xs text-gray-200">
+                  <div className="flex items-start space-x-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-white">Vedi il tuo vero potenziale senza spendere un euro:</strong>
+                      <p className="text-gray-300 mt-0.5">
+                        Riducendo il grasso e drenando i liquidi in questi 12 mesi, vedrai esattamente dove arriva il tuo corpo da solo. Spesso, sgonfiando la superficie, l'asimmetria visiva si riduce così tanto che l'impatto estetico finale potrebbe già soddisfarti appieno.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-white">Zero rischi e solo benefici di salute:</strong>
+                      <p className="text-gray-300 mt-0.5">
+                        L'allenamento in palestra, la postura corretta e la buona idratazione sono abitudini che ti faranno stare meglio a prescindere dal viso.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-white">Nessun conflitto tra i due metodi:</strong>
+                      <p className="text-gray-300 mt-0.5">
+                        Tutto quello che fai oggi non ostacola in alcun modo un eventuale apparecchio domani. Se a settembre del prossimo anno deciderai di andare dallo gnatologo, ti presenterai con un corpo già in forma e una postura nettamente migliore.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-white/10 text-xs text-cyan-200 font-medium mt-2">
+                  ✨ <strong>Conclusioni:</strong> Puntare al 100% sul percorso naturale per un anno ti permette di capire se hai davvero bisogno dell'ortodonzia o se la versione "asciutta" del tuo viso ti soddisfa già.
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // -------------------------------------------------------------
+  // VIEW: LISTA NOTE (HOME DELLE NOTE CON QUADRATINO ASIMMETRIA)
+  // -------------------------------------------------------------
+  return (
+    <div className="space-y-4 pb-24 pt-1 animate-in fade-in duration-200">
+      {renderFullscreenModal()}
+
+      {/* Header & Add Button */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-lg font-black text-white flex items-center gap-2">
+            <FileText className="w-5 h-5 text-cyan-300" />
+            <span>Note & Percorso</span>
+          </h1>
+          <p className="text-xs text-gray-400">Diario, analisi e appunti per il tuo cammino</p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setIsCreatingNote(true)}
+          className="flex items-center space-x-1.5 py-2 px-3.5 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold text-xs shadow-neon transition-all active:scale-95 cursor-pointer"
+        >
+          <Plus className="w-4 h-4" />
+          <span>Nuova Nota</span>
+        </button>
+      </div>
+
+      {/* ------------------------------------------------------------- */}
+      {/* IL QUADRATINO CHIAVE: "LA MIA ASIMMETRIA" (RICHIESTA SPECIFICA) */}
+      {/* ------------------------------------------------------------- */}
+      <div className="space-y-2">
+        <span className="text-[11px] font-bold text-cyan-300 uppercase tracking-wider block pl-1">
+          Nota Guida Fondamentale
+        </span>
+
+        <div
+          onClick={() => setActiveView('asimmetria')}
+          className="p-5 rounded-3xl glass-card border-2 border-cyan-400/70 hover:border-cyan-400 bg-gradient-to-br from-cyan-500/20 via-black/85 to-purple-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
+        >
+          <div className="absolute -top-12 -right-12 w-32 h-32 bg-cyan-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
+
+          <div className="flex items-start justify-between relative z-10">
+            <div className="space-y-2 flex-1 pr-3">
+              <div className="flex items-center space-x-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-cyan-400/20 text-cyan-300 text-[10px] font-black uppercase tracking-wider border border-cyan-400/40 shadow-sm">
+                  ★ Pinned Master Note
+                </span>
+                <span className="text-[10px] text-gray-400 font-semibold">8 Mesi Piano</span>
+              </div>
+
+              <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-cyan-300 transition-colors uppercase tracking-tight">
+                La mia asimmetria
+              </h2>
+
+              <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
+                Analisi della base ossea palatina, deviazione funzionale, piano naturale 60/40 masticazione, confronto foto attuali vs definite e iter ortodontico specialistico.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-cyan-500/20 group-hover:bg-cyan-500 text-cyan-300 group-hover:text-black border border-cyan-400/50 shadow-neon transition-all shrink-0 mt-1">
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
+            <span className="text-cyan-300 font-bold flex items-center gap-1.5">
+              <span>Tocca per aprire il piano completo</span>
+              <Sparkles className="w-3.5 h-3.5" />
+            </span>
+            <span className="text-[10px] text-gray-400 font-semibold">4 Parti + Foto & Clinica</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ------------------------------------------------------------- */}
+      {/* SEZIONE NOTE PERSONALI AGGIUNTE DALL'UTENTE */}
+      {/* ------------------------------------------------------------- */}
+      <div className="space-y-3 pt-2">
+        <div className="flex items-center justify-between pl-1">
+          <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+            Il Tuo Diario del Cammino ({userNotes.length})
+          </span>
+          <span className="text-[10px] text-gray-500">Salvate localmente</span>
+        </div>
+
+        {userNotes.length === 0 ? (
+          <div className="p-6 rounded-3xl glass-card border border-white/10 text-center space-y-2">
+            <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto text-gray-400">
+              <FileText className="w-6 h-6" />
+            </div>
+            <h3 className="text-sm font-bold text-white">Nessun'altra nota creata</h3>
+            <p className="text-xs text-gray-400 max-w-xs mx-auto">
+              Qui compariranno tutte le note che scriverai pian piano durante il tuo percorso. Tocca "+ Nuova Nota" in alto per iniziare.
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-2.5">
+            {userNotes.map((note) => (
+              <div
+                key={note.id}
+                onClick={() => setSelectedNote(note)}
+                className="p-4 rounded-2xl glass-card border border-white/10 hover:border-white/20 transition-all cursor-pointer group flex items-start justify-between"
+              >
+                <div className="space-y-1 flex-1 pr-3">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-cyan-300 border border-white/5 uppercase">
+                      {note.category}
+                    </span>
+                    <span className="text-[10px] text-gray-500 font-medium">{note.date}</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors">
+                    {note.title}
+                  </h3>
+                  <p className="text-xs text-gray-300 line-clamp-2 font-medium">
+                    {note.content}
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={(e) => handleDeleteNote(note.id, e)}
+                  title="Elimina nota"
+                  className="p-2 rounded-xl text-gray-500 hover:text-rose-400 hover:bg-rose-500/10 transition-all shrink-0 cursor-pointer"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* MODAL NUOVA NOTA */}
+      {isCreatingNote && (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-[#121824] border border-white/15 rounded-3xl p-5 w-full max-w-md space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between">
+              <h3 className="text-base font-black text-white flex items-center gap-2">
+                <Plus className="w-5 h-5 text-cyan-300" />
+                <span>Crea Nuova Nota</span>
+              </h3>
+              <button
+                type="button"
+                onClick={() => setIsCreatingNote(false)}
+                className="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/10"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateNote} className="space-y-3">
+              <div>
+                <label className="text-[11px] font-bold text-gray-300 uppercase tracking-wider block mb-1">
+                  Titolo Nota
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Es: Checkpoint Mese 1, Masticazione..."
+                  value={newNoteTitle}
+                  onChange={(e) => setNewNoteTitle(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-2xl bg-black/50 border border-white/15 text-white text-xs placeholder:text-gray-600 focus:border-cyan-400 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-[11px] font-bold text-gray-300 uppercase tracking-wider block mb-1">
+                  Categoria
+                </label>
+                <select
+                  value={newNoteCategory}
+                  onChange={(e) => setNewNoteCategory(e.target.value as any)}
+                  className="w-full px-3.5 py-2.5 rounded-2xl bg-black/50 border border-white/15 text-white text-xs focus:border-cyan-400 focus:outline-none"
+                >
+                  <option value="percorso">Percorso Generale</option>
+                  <option value="asimmetria">Asimmetria & Morso</option>
+                  <option value="allenamento">Allenamento & Postura</option>
+                  <option value="dieta">Dieta & Idratazione</option>
+                  <option value="mentale">Mindset & Riflessioni</option>
+                  <option value="generale">Altro</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="text-[11px] font-bold text-gray-300 uppercase tracking-wider block mb-1">
+                  Testo / Contenuto
+                </label>
+                <textarea
+                  required
+                  rows={6}
+                  placeholder="Scrivi qui le tue riflessioni, misurazioni, sensazioni o passaggi del cammino..."
+                  value={newNoteContent}
+                  onChange={(e) => setNewNoteContent(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-2xl bg-black/50 border border-white/15 text-white text-xs placeholder:text-gray-600 focus:border-cyan-400 focus:outline-none resize-none leading-relaxed"
+                />
+              </div>
+
+              <div className="flex space-x-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => setIsCreatingNote(false)}
+                  className="flex-1 py-2.5 rounded-2xl bg-white/10 hover:bg-white/15 text-gray-300 text-xs font-bold"
+                >
+                  Annulla
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 py-2.5 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold text-xs shadow-neon"
+                >
+                  Salva Nota
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL DETTAGLIO NOTA PERSONALE */}
+      {selectedNote && (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-[#121824] border border-white/15 rounded-3xl p-5 w-full max-w-md space-y-4 shadow-2xl max-h-[85vh] flex flex-col">
+            <div className="flex items-start justify-between border-b border-white/10 pb-3">
+              <div className="space-y-1">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 uppercase">
+                  {selectedNote.category}
+                </span>
+                <h3 className="text-base font-black text-white">
+                  {selectedNote.title}
+                </h3>
+                <span className="text-[10px] text-gray-500 font-medium block">{selectedNote.date}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedNote(null)}
+                className="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/10"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto pr-1 text-xs text-gray-200 whitespace-pre-wrap leading-relaxed">
+              {selectedNote.content}
+            </div>
+
+            <div className="pt-2 border-t border-white/10 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setSelectedNote(null)}
+                className="py-2 px-5 rounded-2xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold"
+              >
+                Chiudi
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
