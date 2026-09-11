@@ -1198,6 +1198,141 @@ export const LookmaxingTab: React.FC = () => {
                 </div>
               </div>
             </div>
+
+            {/* THUMB PULLING MEWING (ESERCIZIO AVANZATO CON VIDEO TIKTOK E PASSAGGI) */}
+            <div className="p-4 rounded-3xl bg-gradient-to-br from-cyan-950/40 via-black/70 to-purple-950/30 border border-cyan-400/40 space-y-4 shadow-xl">
+              <div className="flex items-start justify-between gap-2">
+                <div className="space-y-1">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-[10px] font-black uppercase tracking-wider border border-cyan-400/30 flex items-center gap-1">
+                      <Sparkles className="w-3 h-3" /> Esercizio Aggiunto
+                    </span>
+                    <span className="text-[10px] text-purple-300 font-bold bg-purple-500/20 px-2 py-0.5 rounded-full border border-purple-500/30">
+                      Espansione Palatina & Simmetria
+                    </span>
+                  </div>
+                  <h4 className="text-sm sm:text-base font-black text-white uppercase tracking-wide">
+                    Thumbpulling Mewing (Thumpulling)
+                  </h4>
+                  <p className="text-[11px] text-gray-300 font-medium leading-relaxed">
+                    Esercizio ortopedico di pressione manuale con i pollici sul palato duro per allargare l'arcata, stimolare la sutura palatina mediana e supportare l'avanzamento maxillo-facciale naturale.
+                  </p>
+                </div>
+              </div>
+
+              {/* Video Collegamento TikTok */}
+              <div className="p-3.5 rounded-2xl bg-black/70 border border-cyan-400/30 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2.5">
+                    <div className="p-2 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                      <Video className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-bold text-rose-400 uppercase tracking-widest block">Video Tutorial TikTok</span>
+                      <h5 className="text-xs font-bold text-white">Guida Visiva all'Esecuzione Corretta</h5>
+                    </div>
+                  </div>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/10 text-gray-300">TikTok</span>
+                </div>
+
+                <p className="text-[11px] text-gray-300 leading-relaxed font-normal">
+                  Guarda la dimostrazione pratica del posizionamento dei pollici e dell'angolo di spinta laterale al seguente link:
+                </p>
+
+                <a
+                  href="https://vm.tiktok.com/ZN8jNd7JF/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-[#00FFD1]/15 hover:bg-[#00FFD1]/25 text-cyan-200 border border-[#00FFD1]/40 transition-all group active:scale-98 cursor-pointer shadow-neon"
+                >
+                  <div className="flex items-center space-x-2.5">
+                    <div className="p-1.5 rounded-lg bg-[#00FFD1] text-black">
+                      <Play className="w-3.5 h-3.5 fill-black" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-black text-white block">Apri Video su TikTok</span>
+                      <span className="text-[10px] text-cyan-300 font-mono">https://vm.tiktok.com/ZN8jNd7JF/</span>
+                    </div>
+                  </div>
+                  <ExternalLink className="w-4 h-4 text-cyan-300 group-hover:translate-x-0.5 transition-transform" />
+                </a>
+              </div>
+
+              {/* Passaggi di Come Eseguirlo */}
+              <div className="space-y-2.5">
+                <span className="text-[11px] font-black text-cyan-300 uppercase tracking-wider block">
+                  📋 Come Eseguirlo - Passaggi Dettagliati:
+                </span>
+
+                <div className="space-y-2 text-xs">
+                  {/* Step 1 */}
+                  <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-start space-x-2.5">
+                    <span className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5">1</span>
+                    <div>
+                      <strong className="text-white block text-[11px]">Igiene e Unghie:</strong>
+                      <span className="text-gray-300 text-[11px] leading-relaxed">
+                        Lavati a fondo le mani con sapone igienizzante e acqua calda. Assicurati che le unghie dei pollici siano corte e lisce per non irritare la mucosa palatina.
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-start space-x-2.5">
+                    <span className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5">2</span>
+                    <div>
+                      <strong className="text-white block text-[11px]">Posizionamento dei Pollici (Premolari/Molari):</strong>
+                      <span className="text-gray-300 text-[11px] leading-relaxed">
+                        Inserisci entrambi i pollici all'interno della bocca. Poggia i polpastrelli piatti sulla volta del palato duro superiore, sui lati verso i premolari/molari. <strong className="text-rose-400">NON toccare e non premere MAI sugli incisivi (denti anteriori)</strong> per non causare sventagliamento dentale.
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Step 3 */}
+                  <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-start space-x-2.5">
+                    <span className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5">3</span>
+                    <div>
+                      <strong className="text-white block text-[11px]">Direzione della Forza (Laterale ed Espansiva):</strong>
+                      <span className="text-gray-300 text-[11px] leading-relaxed">
+                        Applica una pressione costante e controllata verso l'esterno (in direzione laterale, per allargare l'arcata verso le guance) e leggermente verso l'alto. Puoi appoggiare le dita esterne lungo la mandibola/mento per fare da perno stabile.
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Step 4 */}
+                  <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-start space-x-2.5">
+                    <span className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5">4</span>
+                    <div>
+                      <strong className="text-white block text-[11px]">Tenuta Statica e Respirazione Nasale:</strong>
+                      <span className="text-gray-300 text-[11px] leading-relaxed">
+                        Mantieni la spinta fissa per <strong>30-45 secondi</strong> senza scatti. Respira esclusivamente e profondamente dal naso. Esegui <strong>3-4 serie</strong> al giorno.
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Step 5 */}
+                  <div className="p-3 rounded-2xl bg-white/5 border border-white/10 flex items-start space-x-2.5">
+                    <span className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5">5</span>
+                    <div>
+                      <strong className="text-white block text-[11px]">Chiusura con Vacuum Mewing:</strong>
+                      <span className="text-gray-300 text-[11px] leading-relaxed">
+                        Rilascia delicatamente i pollici e fai subito un <em>suction hold (vacuum mewing)</em>: risucchia l'intera lingua sul palato per stabilizzare la stimolazione ossea.
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Step 6 Caution */}
+                  <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-start space-x-2.5">
+                    <span className="w-5 h-5 rounded-full bg-rose-500/20 text-rose-400 font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5">!</span>
+                    <div>
+                      <strong className="text-rose-300 block text-[11px]">Regola di Sicurezza (ATM):</strong>
+                      <span className="text-gray-300 text-[11px] leading-relaxed">
+                        Non applicare mai forza eccessiva tale da provocare dolore. Se senti tensione all'articolazione mandibolare o emicrania, fermati immediatamente.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}

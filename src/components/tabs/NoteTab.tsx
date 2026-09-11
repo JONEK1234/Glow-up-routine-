@@ -21,14 +21,35 @@ import {
   Layers, 
   Flame, 
   Info,
-  ChevronLeft
+  ChevronLeft,
+  ExternalLink,
+  Play
 } from 'lucide-react';
 import { UserNote } from '../../types';
 import { storageHelper } from '../../utils/storage';
 
+const FACE_PHOTOS = [
+  {
+    id: 'attuale',
+    title: 'Viso Attuale',
+    badge: '1/2 • Faccia Attuale',
+    tag: 'Base di Partenza',
+    desc: 'Viso iniziale: arcata destra espansa, arcata sinistra compressa',
+    url: 'https://i.ibb.co/3VDsH13/20260911-184140.jpg'
+  },
+  {
+    id: 'definita',
+    title: 'Viso Definito',
+    badge: '2/2 • Faccia Definita',
+    tag: 'Modello Target',
+    desc: 'Modello target: zigomi e masseteri cesellati, simmetria ed espansione',
+    url: 'https://i.ibb.co/nspkJD8t/1789145825747.jpg'
+  }
+];
+
 const FACE_IMAGES = {
-  attuale: 'https://i.ibb.co/3VDsH13/20260911-184140.jpg',
-  definita: 'https://i.ibb.co/nspkJD8t/1789145825747.jpg'
+  attuale: FACE_PHOTOS[0].url,
+  definita: FACE_PHOTOS[1].url
 };
 
 const SCHEMA_IMAGES = [
@@ -48,9 +69,76 @@ export const NoteTab: React.FC = () => {
   const [activeView, setActiveView] = useState<'list' | 'asimmetria' | 'ortodonzia'>('list');
   const [userNotes, setUserNotes] = useState<UserNote[]>(() => storageHelper.getUserNotes());
   const [fullscreenImg, setFullscreenImg] = useState<{ url: string; title: string } | null>(null);
-  const [faceComparisonMode, setFaceComparisonMode] = useState<'sideBySide' | 'toggle'>('sideBySide');
-  const [activeToggleFace, setActiveToggleFace] = useState<'attuale' | 'definita'>('attuale');
+  const [faceComparisonMode, setFaceComparisonMode] = useState<'swipe' | 'sideBySide'>('swipe');
+  const [activeFaceIndex, setActiveFaceIndex] = useState<number>(0);
+  const [swipeOffset, setSwipeOffset] = useState<number>(0);
+  const [isSwiping, setIsSwiping] = useState<boolean>(false);
   const [isOrtodonziaExpanded, setIsOrtodonziaExpanded] = useState(false);
+
+  const touchStartX = React.useRef<number | null>(null);
+  const touchStartY = React.useRef<number | null>(null);
+  const mouseStartX = React.useRef<number | null>(null);
+  const isMouseDown = React.useRef<boolean>(false);
+
+  // Swipe Handlers for mobile touch and desktop mouse drag
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    setIsSwiping(true);
+    setSwipeOffset(0);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const diffX = e.touches[0].clientX - touchStartX.current;
+    const diffY = e.touches[0].clientY - (touchStartY.current ?? e.touches[0].clientY);
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      setSwipeOffset(diffX);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current !== null) {
+      if (swipeOffset < -40) {
+        // Swiped left -> Next photo (definita)
+        setActiveFaceIndex(1);
+      } else if (swipeOffset > 40) {
+        // Swiped right -> Prev photo (attuale)
+        setActiveFaceIndex(0);
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+    setIsSwiping(false);
+    setSwipeOffset(0);
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    mouseStartX.current = e.clientX;
+    isMouseDown.current = true;
+    setIsSwiping(true);
+    setSwipeOffset(0);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isMouseDown.current || mouseStartX.current === null) return;
+    const diffX = e.clientX - mouseStartX.current;
+    setSwipeOffset(diffX);
+  };
+
+  const handleMouseUp = () => {
+    if (isMouseDown.current && mouseStartX.current !== null) {
+      if (swipeOffset < -40) {
+        setActiveFaceIndex(1);
+      } else if (swipeOffset > 40) {
+        setActiveFaceIndex(0);
+      }
+    }
+    isMouseDown.current = false;
+    mouseStartX.current = null;
+    setIsSwiping(false);
+    setSwipeOffset(0);
+  };
 
   // New Note Modal
   const [isCreatingNote, setIsCreatingNote] = useState(false);
@@ -95,17 +183,55 @@ export const NoteTab: React.FC = () => {
   // FULLSCREEN IMAGE MODAL
   const renderFullscreenModal = () => {
     if (!fullscreenImg) return null;
+
+    const currentFaceIndex = FACE_PHOTOS.findIndex(p => p.url === fullscreenImg.url);
+    const isFaceComparisonPhoto = currentFaceIndex !== -1;
+
     return (
       <div 
-        className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-md animate-in fade-in"
+        className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-md animate-in fade-in select-none"
         onClick={() => setFullscreenImg(null)}
       >
         <button
           onClick={() => setFullscreenImg(null)}
-          className="absolute top-4 right-4 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all cursor-pointer"
+          className="absolute top-4 right-4 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all cursor-pointer z-30"
+          title="Chiudi"
         >
           <X className="w-6 h-6" />
         </button>
+
+        {/* Previous & Next arrows for face comparison photos */}
+        {isFaceComparisonPhoto && (
+          <>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                const newIdx = currentFaceIndex === 0 ? 1 : 0;
+                setFullscreenImg({ url: FACE_PHOTOS[newIdx].url, title: FACE_PHOTOS[newIdx].title });
+                setActiveFaceIndex(newIdx);
+              }}
+              className="absolute left-3 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/70 hover:bg-black text-white border border-white/20 backdrop-blur-md cursor-pointer z-30 active:scale-90 transition-all"
+              title="Foto Precedente"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                const newIdx = currentFaceIndex === 1 ? 0 : 1;
+                setFullscreenImg({ url: FACE_PHOTOS[newIdx].url, title: FACE_PHOTOS[newIdx].title });
+                setActiveFaceIndex(newIdx);
+              }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/70 hover:bg-black text-white border border-white/20 backdrop-blur-md cursor-pointer z-30 active:scale-90 transition-all"
+              title="Foto Successiva"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </>
+        )}
+
         <div className="max-w-md w-full max-h-[85vh] flex flex-col items-center">
           <img
             src={fullscreenImg.url}
@@ -116,6 +242,13 @@ export const NoteTab: React.FC = () => {
           <p className="mt-3 text-sm font-semibold text-center text-cyan-300">
             {fullscreenImg.title}
           </p>
+          {isFaceComparisonPhoto && (
+            <div className="flex items-center gap-2 mt-1">
+              <span className={`w-2.5 h-2.5 rounded-full transition-all ${currentFaceIndex === 0 ? 'bg-cyan-400 shadow-[0_0_8px_rgba(0,255,209,0.8)]' : 'bg-white/20'}`} />
+              <span className={`w-2.5 h-2.5 rounded-full transition-all ${currentFaceIndex === 1 ? 'bg-cyan-400 shadow-[0_0_8px_rgba(0,255,209,0.8)]' : 'bg-white/20'}`} />
+              <span className="text-[11px] text-gray-400 ml-1">Tocca le frecce per alternare le 2 foto</span>
+            </div>
+          )}
           <span className="text-[11px] text-gray-400 mt-1">Tocca ovunque per chiudere</span>
         </div>
       </div>
@@ -178,8 +311,19 @@ export const NoteTab: React.FC = () => {
               </div>
             </div>
 
-            {/* Mode switch (Affiancate / Toggle) */}
+            {/* Mode switch (Swipe / 2 Affiancate) */}
             <div className="flex bg-black/40 p-0.5 rounded-xl border border-white/10 text-[10px]">
+              <button
+                type="button"
+                onClick={() => setFaceComparisonMode('swipe')}
+                className={`px-2 py-1 rounded-lg font-bold transition-all ${
+                  faceComparisonMode === 'swipe'
+                    ? 'bg-cyan-500 text-black shadow-sm'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                Swipe (1 Foto)
+              </button>
               <button
                 type="button"
                 onClick={() => setFaceComparisonMode('sideBySide')}
@@ -189,18 +333,7 @@ export const NoteTab: React.FC = () => {
                     : 'text-gray-400 hover:text-white'
                 }`}
               >
-                2 Foto
-              </button>
-              <button
-                type="button"
-                onClick={() => setFaceComparisonMode('toggle')}
-                className={`px-2 py-1 rounded-lg font-bold transition-all ${
-                  faceComparisonMode === 'toggle'
-                    ? 'bg-cyan-500 text-black shadow-sm'
-                    : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                Switch
+                2 Affiancate
               </button>
             </div>
           </div>
@@ -209,11 +342,11 @@ export const NoteTab: React.FC = () => {
             <div className="grid grid-cols-2 gap-2.5">
               {/* Foto Attuale */}
               <div 
-                onClick={() => setFullscreenImg({ url: FACE_IMAGES.attuale, title: 'Viso Attuale' })}
+                onClick={() => setFullscreenImg({ url: FACE_PHOTOS[0].url, title: FACE_PHOTOS[0].title })}
                 className="group relative rounded-2xl overflow-hidden border border-white/15 bg-black cursor-pointer aspect-[3/4]"
               >
                 <img
-                  src={FACE_IMAGES.attuale}
+                  src={FACE_PHOTOS[0].url}
                   alt="Viso Attuale"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   referrerPolicy="no-referrer"
@@ -230,11 +363,11 @@ export const NoteTab: React.FC = () => {
 
               {/* Foto Definita */}
               <div 
-                onClick={() => setFullscreenImg({ url: FACE_IMAGES.definita, title: 'Viso Definito / Obiettivo' })}
+                onClick={() => setFullscreenImg({ url: FACE_PHOTOS[1].url, title: FACE_PHOTOS[1].title })}
                 className="group relative rounded-2xl overflow-hidden border border-cyan-400/30 bg-black cursor-pointer aspect-[3/4]"
               >
                 <img
-                  src={FACE_IMAGES.definita}
+                  src={FACE_PHOTOS[1].url}
                   alt="Faccia Definita"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   referrerPolicy="no-referrer"
@@ -250,49 +383,146 @@ export const NoteTab: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-2.5">
+              {/* Quick tab switcher */}
               <div className="flex rounded-xl bg-black/40 p-1 border border-white/10">
                 <button
                   type="button"
-                  onClick={() => setActiveToggleFace('attuale')}
+                  onClick={() => setActiveFaceIndex(0)}
                   className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
-                    activeToggleFace === 'attuale'
+                    activeFaceIndex === 0
                       ? 'bg-white/15 text-white shadow-sm'
                       : 'text-gray-400 hover:text-white'
                   }`}
                 >
-                  Faccia Attuale
+                  1. Faccia Attuale
                 </button>
                 <button
                   type="button"
-                  onClick={() => setActiveToggleFace('definita')}
+                  onClick={() => setActiveFaceIndex(1)}
                   className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
-                    activeToggleFace === 'definita'
+                    activeFaceIndex === 1
                       ? 'bg-cyan-500 text-black shadow-sm font-extrabold'
                       : 'text-gray-400 hover:text-white'
                   }`}
                 >
-                  Faccia Definita
+                  2. Faccia Definita
                 </button>
               </div>
 
+              {/* Swipeable Photo Container */}
               <div
-                onClick={() => setFullscreenImg({
-                  url: activeToggleFace === 'attuale' ? FACE_IMAGES.attuale : FACE_IMAGES.definita,
-                  title: activeToggleFace === 'attuale' ? 'Faccia Attuale' : 'Faccia Definita'
-                })}
-                className="relative rounded-2xl overflow-hidden border border-white/20 bg-black cursor-pointer max-h-72 aspect-[3/4] mx-auto group"
+                className="relative rounded-2xl overflow-hidden border border-white/20 bg-black cursor-grab active:cursor-grabbing select-none touch-pan-y"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
               >
-                <img
-                  src={activeToggleFace === 'attuale' ? FACE_IMAGES.attuale : FACE_IMAGES.definita}
-                  alt={activeToggleFace}
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute bottom-2 left-2 right-2 flex justify-between items-center px-2 py-1 rounded-lg bg-black/70 backdrop-blur-sm text-xs font-semibold text-white">
-                  <span>{activeToggleFace === 'attuale' ? 'Foto di partenza' : 'Modello di definizione target'}</span>
-                  <Maximize2 className="w-3.5 h-3.5 text-cyan-300" />
+                {/* Horizontal carousel slide track */}
+                <div 
+                  className={`flex w-full ${isSwiping ? 'transition-none' : 'transition-transform duration-300 ease-out'}`}
+                  style={{
+                    transform: `translateX(calc(-${activeFaceIndex * 100}% + ${swipeOffset}px))`
+                  }}
+                >
+                  {FACE_PHOTOS.map((photo, idx) => (
+                    <div 
+                      key={photo.id}
+                      className="min-w-full w-full relative aspect-[3/4] max-h-[380px] bg-black flex items-center justify-center overflow-hidden"
+                    >
+                      <img
+                        src={photo.url}
+                        alt={photo.title}
+                        className="w-full h-full object-cover pointer-events-none"
+                        referrerPolicy="no-referrer"
+                      />
+
+                      {/* Top floating badge & maximize button */}
+                      <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-auto">
+                        <span className={`text-[10px] font-black px-2.5 py-1 rounded-lg backdrop-blur-md border shadow-lg ${
+                          idx === 0 
+                            ? 'bg-black/80 text-white border-white/20' 
+                            : 'bg-cyan-950/90 text-cyan-300 border-cyan-400/40'
+                        }`}>
+                          {photo.badge}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setFullscreenImg({ url: photo.url, title: photo.title });
+                          }}
+                          className="p-1.5 rounded-lg bg-black/70 text-white hover:text-cyan-300 border border-white/20 backdrop-blur-md cursor-pointer transition-all active:scale-90"
+                          title="Espandi a schermo intero"
+                        >
+                          <Maximize2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+
+                      {/* Bottom subtitle overlay */}
+                      <div className="absolute bottom-2.5 left-2.5 right-2.5 p-2 rounded-xl bg-black/80 backdrop-blur-md border border-white/15 text-left pointer-events-none">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-white">{photo.title}</span>
+                          <span className="text-[10px] text-cyan-300 font-bold">{photo.tag}</span>
+                        </div>
+                        <p className="text-[10px] text-gray-300 line-clamp-1 mt-0.5">{photo.desc}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
+
+                {/* Left Floating Arrow */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveFaceIndex(prev => (prev === 0 ? 1 : 0));
+                  }}
+                  className="absolute left-2.5 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/70 hover:bg-black text-white border border-white/20 backdrop-blur-md cursor-pointer z-10 active:scale-90 transition-all"
+                  title="Foto Precedente (o swipe a destra)"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+
+                {/* Right Floating Arrow */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveFaceIndex(prev => (prev === 1 ? 0 : 1));
+                  }}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/70 hover:bg-black text-white border border-white/20 backdrop-blur-md cursor-pointer z-10 active:scale-90 transition-all"
+                  title="Foto Successiva (o swipe a sinistra)"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Swipe Hint & Dots pagination */}
+              <div className="flex flex-col items-center gap-1.5 pt-0.5">
+                <div className="flex items-center space-x-2">
+                  {FACE_PHOTOS.map((p, i) => (
+                    <button
+                      key={p.id}
+                      type="button"
+                      onClick={() => setActiveFaceIndex(i)}
+                      className={`transition-all rounded-full cursor-pointer ${
+                        activeFaceIndex === i
+                          ? 'w-6 h-2 bg-cyan-400 shadow-[0_0_8px_rgba(0,255,209,0.8)]'
+                          : 'w-2 h-2 bg-white/20 hover:bg-white/40'
+                      }`}
+                      title={p.title}
+                    />
+                  ))}
+                </div>
+                <p className="text-[11px] text-gray-400 flex items-center justify-center gap-1 font-medium">
+                  <span>👈</span>
+                  <span>Scorri con il dito a destra o sinistra per cambiare foto</span>
+                  <span>👉</span>
+                </p>
               </div>
             </div>
           )}
@@ -492,7 +722,18 @@ export const NoteTab: React.FC = () => {
               </span>
             </div>
             <ul className="text-xs text-gray-300 space-y-1.5 list-disc pl-5 font-normal">
-              <li>Lingua sul palato a riposo (Mewing).</li>
+              <li>Lingua sul palato a riposo (Mewing quotidiano).</li>
+              <li>
+                <strong>Thumbpulling Mewing (Espansione Palatina):</strong> Pressione manuale dei pollici sul palato duro (premolari/molari) verso l'esterno per stimolare la sutura e allargare l'arcata. 
+                <a 
+                  href="https://vm.tiktok.com/ZN8jNd7JF/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 ml-1 text-cyan-300 hover:text-cyan-200 underline font-semibold"
+                >
+                  <Play className="w-3 h-3 fill-cyan-300" /> Video TikTok: vm.tiktok.com/ZN8jNd7JF/ <ExternalLink className="w-2.5 h-2.5" />
+                </a>
+              </li>
               <li><strong>2 serie da 25 Chin Tucks</strong> al giorno per allineare la testa e correggere la postura cervicale.</li>
               <li><strong>2 serie da 15 Neck Curls</strong> al giorno (flessioni del collo a corpo libero, sdraiato su una superficie piana) per rafforzare i muscoli anteriori del collo.</li>
               <li>Dormi a pancia in su per evitare compressioni asimmetriche sul cuscino.</li>
