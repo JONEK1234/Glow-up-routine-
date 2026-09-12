@@ -13,7 +13,9 @@ import {
   X,
   Maximize2,
   ShieldAlert,
-  ListOrdered
+  ListOrdered,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 
 export const OrdineTab: React.FC = () => {
@@ -31,6 +33,10 @@ export const OrdineTab: React.FC = () => {
 
   // Video toggles for Eye Exercises
   const [activeEyeVideo, setActiveEyeVideo] = useState<'squeeze' | 'one_eye' | 'w_eye' | 'spoon' | null>(null);
+
+  // 3 Esercizi Mascella state
+  const [showThreeJawExercises, setShowThreeJawExercises] = useState(false);
+  const [expandedJawExercise, setExpandedJawExercise] = useState<'side_kisses' | 'jaw_resistance' | 'open_close' | null>(null);
 
   // Ice Timer Effect
   useEffect(() => {
@@ -671,6 +677,320 @@ export const OrdineTab: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* PULSANTE & RIQUADRI: 3 ESERCIZI MASCELLA */}
+        <div className="pt-1 space-y-3">
+          <button
+            type="button"
+            onClick={() => setShowThreeJawExercises(prev => !prev)}
+            className="w-full p-4 rounded-3xl bg-gradient-to-r from-pink-950/60 via-purple-950/60 to-cyan-950/60 border border-pink-500/40 hover:border-pink-400 text-left transition-all active:scale-98 shadow-xl cursor-pointer group flex items-center justify-between"
+          >
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-2xl bg-pink-500/20 border border-pink-500/30 flex items-center justify-center text-pink-300 group-hover:scale-110 transition-transform">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs sm:text-sm font-black text-white uppercase tracking-wider">
+                    Guarda i 3 Esercizi Mascella
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-pink-500/20 text-pink-300 text-[10px] font-black uppercase border border-pink-500/30">
+                    Novità
+                  </span>
+                </div>
+                <span className="text-[11px] text-gray-400 block mt-0.5">
+                  Side Kisses • Jaw Resistance • Open and Close Mouth
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2 text-pink-400 font-bold text-xs shrink-0 ml-2">
+              <span>{showThreeJawExercises ? 'Nascondi' : 'Mostra'}</span>
+              {showThreeJawExercises ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            </div>
+          </button>
+
+          {showThreeJawExercises && (
+            <div className="space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
+              <div className="px-1 text-[11px] text-gray-400 font-medium flex items-center justify-between">
+                <span>Tocca un riquadro per leggere i passaggi e far partire subito il video:</span>
+              </div>
+
+              {/* RIQUADRO 1: SIDE KISSES */}
+              <div className={`rounded-3xl border transition-all duration-200 overflow-hidden shadow-xl ${
+                expandedJawExercise === 'side_kisses'
+                  ? 'bg-gradient-to-br from-pink-950/40 via-black/80 to-purple-950/40 border-pink-500/50 ring-1 ring-pink-500/30'
+                  : 'bg-black/60 border-pink-500/20 hover:border-pink-500/40'
+              }`}>
+                <button
+                  type="button"
+                  onClick={() => setExpandedJawExercise(prev => (prev === 'side_kisses' ? null : 'side_kisses'))}
+                  className="w-full p-4 text-left cursor-pointer flex items-center justify-between gap-3 transition-colors"
+                >
+                  <div className="flex items-center space-x-3 min-w-0">
+                    <div className="w-10 h-10 rounded-2xl bg-pink-500/20 border border-pink-500/30 flex items-center justify-center text-lg shrink-0">
+                      💋
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs sm:text-sm font-black text-white uppercase tracking-wide truncate">
+                          Side Kisses
+                        </span>
+                        <span className="text-[10px] text-pink-300 font-bold bg-pink-500/20 px-2 py-0.5 rounded-full border border-pink-500/30 shrink-0">
+                          Baci Laterali
+                        </span>
+                      </div>
+                      <span className="text-[11px] text-gray-400 block truncate mt-0.5">
+                        Labbra alternate dx/sx per tonificare e definire il contorno mandibolare
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-1.5 text-xs text-pink-400 font-bold shrink-0">
+                    <span className="hidden sm:inline text-[11px]">
+                      {expandedJawExercise === 'side_kisses' ? 'Chiudi' : 'Apri & Guarda Video'}
+                    </span>
+                    {expandedJawExercise === 'side_kisses' ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                  </div>
+                </button>
+
+                {/* Contenuto espanso Side Kisses */}
+                {expandedJawExercise === 'side_kisses' && (
+                  <div className="px-4 pb-4 space-y-3.5 border-t border-pink-500/20 pt-3.5 animate-in fade-in duration-200">
+                    <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                      Consiste nel portare le labbra alternate verso destra e sinistra, come se stessi dando un bacio lateralmente.
+                    </p>
+
+                    <div className="p-3.5 rounded-2xl bg-black/60 border border-white/10 space-y-2 text-xs">
+                      <span className="text-[11px] font-black text-pink-300 uppercase tracking-wider block">
+                        📋 Come Eseguirlo Passo Dopo Passo:
+                      </span>
+                      <ul className="list-disc list-inside text-[11px] text-gray-200 space-y-1.5 pl-1 font-medium">
+                        <li>Tieni la testa dritta e le spalle rilassate.</li>
+                        <li>Spingi leggermente le labbra verso destra, poi verso sinistra.</li>
+                        <li>Movimento lento e controllato, senza stringere i denti.</li>
+                        <li><strong className="text-pink-300">Dose consigliata:</strong> 10–15 ripetizioni per lato, per 1–2 serie.</li>
+                        <li className="text-rose-300 font-semibold list-none pt-1">
+                          ⚠️ <em>Interrompi se senti dolore o tensione nell’articolazione della mandibola.</em>
+                        </li>
+                      </ul>
+                    </div>
+
+                    {/* Video incorporato con autoplay immediato */}
+                    <div className="space-y-2 pt-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-bold text-pink-300 flex items-center gap-1.5">
+                          <Video className="w-3.5 h-3.5" /> Video Tutorial (Partenza Automatica):
+                        </span>
+                        <a
+                          href="https://youtube.com/shorts/CrE_4FNxBWo?is=9qjR64MKxe369PKW"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center space-x-1 text-[11px] text-pink-400 hover:underline font-semibold"
+                        >
+                          <span>YouTube Shorts</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
+                      <div className="rounded-2xl overflow-hidden border border-pink-500/30 bg-black aspect-video relative shadow-xl">
+                        <iframe
+                          src="https://www.youtube.com/embed/CrE_4FNxBWo?autoplay=1&mute=1&playsinline=1&rel=0"
+                          title="Side Kisses Video Tutorial"
+                          className="w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* RIQUADRO 2: JAW RESISTANCE */}
+              <div className={`rounded-3xl border transition-all duration-200 overflow-hidden shadow-xl ${
+                expandedJawExercise === 'jaw_resistance'
+                  ? 'bg-gradient-to-br from-amber-950/40 via-black/80 to-orange-950/40 border-amber-500/50 ring-1 ring-amber-500/30'
+                  : 'bg-black/60 border-amber-500/20 hover:border-amber-500/40'
+              }`}>
+                <button
+                  type="button"
+                  onClick={() => setExpandedJawExercise(prev => (prev === 'jaw_resistance' ? null : 'jaw_resistance'))}
+                  className="w-full p-4 text-left cursor-pointer flex items-center justify-between gap-3 transition-colors"
+                >
+                  <div className="flex items-center space-x-3 min-w-0">
+                    <div className="w-10 h-10 rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-lg shrink-0">
+                      ✊
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs sm:text-sm font-black text-white uppercase tracking-wide truncate">
+                          Jaw Resistance
+                        </span>
+                        <span className="text-[10px] text-amber-300 font-bold bg-amber-500/20 px-2 py-0.5 rounded-full border border-amber-500/30 shrink-0">
+                          Resistenza con Pugno
+                        </span>
+                      </div>
+                      <span className="text-[11px] text-gray-400 block truncate mt-0.5">
+                        Esercizio isometrico contro resistenza sotto il mento per controllo mandibolare
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-1.5 text-xs text-amber-400 font-bold shrink-0">
+                    <span className="hidden sm:inline text-[11px]">
+                      {expandedJawExercise === 'jaw_resistance' ? 'Chiudi' : 'Apri & Guarda Video'}
+                    </span>
+                    {expandedJawExercise === 'jaw_resistance' ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                  </div>
+                </button>
+
+                {/* Contenuto espanso Jaw Resistance */}
+                {expandedJawExercise === 'jaw_resistance' && (
+                  <div className="px-4 pb-4 space-y-3.5 border-t border-amber-500/20 pt-3.5 animate-in fade-in duration-200">
+                    <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                      Esercizio in cui fai resistenza con il pugno sotto/sul mento mentre provi ad aprire la bocca.
+                    </p>
+
+                    <div className="p-3.5 rounded-2xl bg-black/60 border border-white/10 space-y-2.5 text-xs">
+                      <span className="text-[11px] font-black text-amber-300 uppercase tracking-wider block">
+                        🔬 Spiegazione Scientifica & Muscoli Coinvolti:
+                      </span>
+                      <p className="text-[11px] text-gray-200 leading-relaxed font-medium">
+                        Scientificamente è un <strong>esercizio isometrico contro resistenza</strong>: i muscoli che aprono la mandibola devono contrarsi mentre la mano impedisce (o limita) il movimento.
+                      </p>
+                      <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200 space-y-1 font-medium">
+                        <span className="font-bold text-amber-300 block">In particolare coinvolge soprattutto:</span>
+                        <ul className="list-disc list-inside space-y-0.5 text-gray-200 pl-1">
+                          <li><strong>Pterigoideo laterale</strong></li>
+                          <li><strong>Digastrico</strong> e altri muscoli sopraioidei</li>
+                          <li><strong>Muscoli stabilizzatori</strong> della mandibola</li>
+                        </ul>
+                        <span className="block pt-1.5 text-gray-300">
+                          🎯 <strong>Obiettivo:</strong> Aumentare soprattutto controllo e resistenza muscolare.
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Video incorporato con autoplay immediato */}
+                    <div className="space-y-2 pt-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-bold text-amber-300 flex items-center gap-1.5">
+                          <Video className="w-3.5 h-3.5" /> Video Tutorial (Partenza Automatica):
+                        </span>
+                        <a
+                          href="https://youtube.com/shorts/eoAkczAnndI?is=1OELgppvKnu6GD-K"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center space-x-1 text-[11px] text-amber-400 hover:underline font-semibold"
+                        >
+                          <span>YouTube Shorts</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
+                      <div className="rounded-2xl overflow-hidden border border-amber-500/30 bg-black aspect-video relative shadow-xl">
+                        <iframe
+                          src="https://www.youtube.com/embed/eoAkczAnndI?autoplay=1&mute=1&playsinline=1&rel=0"
+                          title="Jaw Resistance Video Tutorial"
+                          className="w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* RIQUADRO 3: OPEN AND CLOSE MOUTH */}
+              <div className={`rounded-3xl border transition-all duration-200 overflow-hidden shadow-xl ${
+                expandedJawExercise === 'open_close'
+                  ? 'bg-gradient-to-br from-emerald-950/40 via-black/80 to-teal-950/40 border-teal-500/50 ring-1 ring-teal-500/30'
+                  : 'bg-black/60 border-teal-500/20 hover:border-teal-500/40'
+              }`}>
+                <button
+                  type="button"
+                  onClick={() => setExpandedJawExercise(prev => (prev === 'open_close' ? null : 'open_close'))}
+                  className="w-full p-4 text-left cursor-pointer flex items-center justify-between gap-3 transition-colors"
+                >
+                  <div className="flex items-center space-x-3 min-w-0">
+                    <div className="w-10 h-10 rounded-2xl bg-teal-500/20 border border-teal-500/30 flex items-center justify-center text-lg shrink-0">
+                      👄
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs sm:text-sm font-black text-white uppercase tracking-wide truncate">
+                          Open and Close Mouth
+                        </span>
+                        <span className="text-[10px] text-teal-300 font-bold bg-teal-500/20 px-2 py-0.5 rounded-full border border-teal-500/30 shrink-0">
+                          Apri e Chiudi
+                        </span>
+                      </div>
+                      <span className="text-[11px] text-gray-400 block truncate mt-0.5">
+                        Masticazione a vuoto a denti separati per masseteri e controllo mandibolare
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-1.5 text-xs text-teal-400 font-bold shrink-0">
+                    <span className="hidden sm:inline text-[11px]">
+                      {expandedJawExercise === 'open_close' ? 'Chiudi' : 'Apri & Guarda Video'}
+                    </span>
+                    {expandedJawExercise === 'open_close' ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                  </div>
+                </button>
+
+                {/* Contenuto espanso Open and Close Mouth */}
+                {expandedJawExercise === 'open_close' && (
+                  <div className="px-4 pb-4 space-y-3.5 border-t border-teal-500/20 pt-3.5 animate-in fade-in duration-200">
+                    <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                      Movimento apri–chiudi della bocca come se stessi masticando a vuoto, mantenendo i denti separati e senza mordere nulla.
+                    </p>
+
+                    <div className="p-3.5 rounded-2xl bg-black/60 border border-white/10 space-y-2 text-xs">
+                      <span className="text-[11px] font-black text-teal-300 uppercase tracking-wider block">
+                        💪 Muscoli Coinvolti & Benefici:
+                      </span>
+                      <p className="text-[11px] text-gray-200 leading-relaxed font-medium">
+                        Fa lavorare soprattutto i muscoli della masticazione, in particolare il <strong>massetere</strong> e il <strong>temporale</strong>, oltre ai muscoli che controllano l’apertura della mandibola. Quindi può allenare un po’ resistenza e controllo della mandibola.
+                      </p>
+                      <div className="p-2.5 rounded-xl bg-teal-500/10 border border-teal-500/20 text-[11px] text-teal-200 space-y-1 font-medium">
+                        <span className="font-bold text-teal-300 block">Consigli per l'esecuzione:</span>
+                        <ul className="list-disc list-inside space-y-0.5 text-gray-200 pl-1">
+                          <li>Masticazione morbida e controllata senza contrarre eccessivamente il collo.</li>
+                          <li>I denti devono rimanere costantemente separati senza toccarsi o serrare.</li>
+                          <li>Movimenti fluidi e simmetrici per bilanciare entrambi i lati del viso.</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    {/* Video incorporato con autoplay immediato */}
+                    <div className="space-y-2 pt-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-bold text-teal-300 flex items-center gap-1.5">
+                          <Video className="w-3.5 h-3.5" /> Video Tutorial (Partenza Automatica):
+                        </span>
+                        <a
+                          href="https://youtube.com/shorts/MTu9S2U-ny4?is=kio7dEySoJWXvPf1"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center space-x-1 text-[11px] text-teal-400 hover:underline font-semibold"
+                        >
+                          <span>YouTube Shorts</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
+                      <div className="rounded-2xl overflow-hidden border border-teal-500/30 bg-black aspect-video relative shadow-xl">
+                        <iframe
+                          src="https://www.youtube.com/embed/MTu9S2U-ny4?autoplay=1&mute=1&playsinline=1&rel=0"
+                          title="Open and Close Mouth Video Tutorial"
+                          className="w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
