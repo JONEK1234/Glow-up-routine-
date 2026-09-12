@@ -15,6 +15,7 @@ export const HomeRoutineTab: React.FC = () => {
   // Stretching accordion & lightbox state
   const [isStretchingOpen, setIsStretchingOpen] = useState<boolean>(false);
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
+  const [fullscreenTitle, setFullscreenTitle] = useState<string | null>(null);
 
   // Skincare steps completion state
   const [skincareDone, setSkincareDone] = useState<{ [key: string]: boolean }>({
@@ -523,12 +524,18 @@ export const HomeRoutineTab: React.FC = () => {
         {/* Fullscreen Lightbox Modal */}
         {fullscreenImage && (
           <div
-            onClick={() => setFullscreenImage(null)}
+            onClick={() => {
+              setFullscreenImage(null);
+              setFullscreenTitle(null);
+            }}
             className="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg flex items-center justify-center p-4 animate-in fade-in duration-200 cursor-zoom-out"
           >
             <button
               type="button"
-              onClick={() => setFullscreenImage(null)}
+              onClick={() => {
+                setFullscreenImage(null);
+                setFullscreenTitle(null);
+              }}
               className="absolute top-5 right-5 p-3 rounded-2xl bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all cursor-pointer z-10"
             >
               <X className="w-6 h-6" />
@@ -710,10 +717,37 @@ export const HomeRoutineTab: React.FC = () => {
 
           <div className="space-y-2">
             {[
-              { key: 'step1', num: '1', title: 'Detergente Delicato', note: 'Rimuove il sebo notturno senza alterare la barriera cutanea' },
-              { key: 'step_spoon', num: '2', title: 'Spoon Method (Cucchiai Freddi)', note: 'Decongestiona borse ed occhiaie per uno sguardo riposato ed energico' },
-              { key: 'step2', num: '3', title: 'Crema Idratante Leggera', note: 'Applica su pelle umida per trattenere l’idratazione' },
-              { key: 'step3', num: '4', title: 'Protezione Solare SPF 30-50', note: 'Indispensabile per prevenire macchie e invecchiamento' }
+              {
+                key: 'step1',
+                num: '1',
+                title: 'Detergente Delicato',
+                productLabel: 'Detergente',
+                note: 'Rimuove il sebo notturno senza alterare la barriera cutanea',
+                image: 'https://i.ibb.co/VYdfZy24/Screenshot-2026-09-12-16-02-46-987-com-amazon-m-Shop-android-shopping-edit.jpg'
+              },
+              {
+                key: 'step_spoon',
+                num: '2',
+                title: 'Spoon Method (Cucchiai Freddi)',
+                productLabel: 'Spoon Method',
+                note: 'Decongestiona borse ed occhiaie per uno sguardo riposato ed energico'
+              },
+              {
+                key: 'step2',
+                num: '3',
+                title: 'Crema Idratante Leggera',
+                productLabel: 'Crema Idratante',
+                note: 'Applica su pelle umida per trattenere l’idratazione',
+                image: 'https://i.ibb.co/vW8YMcm/Screenshot-2026-09-12-16-03-16-323-com-amazon-m-Shop-android-shopping-edit.jpg'
+              },
+              {
+                key: 'step3',
+                num: '4',
+                title: 'Protezione Solare SPF 30-50',
+                productLabel: 'Crema Solare',
+                note: 'Indispensabile per prevenire macchie e invecchiamento',
+                image: 'https://i.ibb.co/jPzRZth0/Screenshot-2026-09-12-16-04-07-095-com-amazon-m-Shop-android-shopping-edit.jpg'
+              }
             ].map(step => {
               const isDone = skincareDone[step.key];
               return (
@@ -727,11 +761,30 @@ export const HomeRoutineTab: React.FC = () => {
                   }`}
                 >
                   <div className="flex items-center space-x-3">
-                    <div className={`w-7 h-7 rounded-xl font-extrabold text-xs flex items-center justify-center shrink-0 ${
-                      isDone ? 'bg-neon text-black shadow-neon' : 'bg-white/10 text-gray-400'
-                    }`}>
-                      {isDone ? <Check className="w-4 h-4 stroke-[3]" /> : step.num}
-                    </div>
+                    {step.image ? (
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setFullscreenImage(step.image);
+                          setFullscreenTitle(step.productLabel);
+                        }}
+                        className="w-8 h-8 rounded-xl overflow-hidden border border-white/20 bg-black/60 shrink-0 cursor-zoom-in hover:scale-105 transition-transform"
+                        title="Tocca per ingrandire la foto"
+                      >
+                        <img
+                          src={step.image}
+                          alt={step.productLabel || step.title}
+                          referrerPolicy="no-referrer"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className={`w-8 h-8 rounded-xl font-extrabold text-xs flex items-center justify-center shrink-0 ${
+                        isDone ? 'bg-neon text-black shadow-neon' : 'bg-white/10 text-gray-400'
+                      }`}>
+                        {isDone ? <Check className="w-4 h-4 stroke-[3]" /> : step.num}
+                      </div>
+                    )}
                     <div>
                       <h5 className="text-xs font-bold text-white">{step.title}</h5>
                       <p className="text-[10px] text-gray-400 mt-0.5">{step.note}</p>
@@ -856,6 +909,44 @@ export const HomeRoutineTab: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Fullscreen Lightbox Modal per le foto Skincare & Routine */}
+      {fullscreenImage && (
+        <div
+          onClick={() => {
+            setFullscreenImage(null);
+            setFullscreenTitle(null);
+          }}
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-4 animate-in fade-in duration-200 cursor-zoom-out"
+        >
+          <div className="relative max-w-sm w-full max-h-[90vh] flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
+            <div className="w-full flex items-center justify-between pb-2">
+              <span className="text-sm text-cyan-300 font-extrabold tracking-wide">
+                {fullscreenTitle || 'Foto Prodotto'}
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  setFullscreenImage(null);
+                  setFullscreenTitle(null);
+                }}
+                className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <img
+              src={fullscreenImage}
+              alt={fullscreenTitle || 'Foto Prodotto'}
+              referrerPolicy="no-referrer"
+              className="max-w-full max-h-[80vh] object-contain rounded-2xl border border-white/15 shadow-2xl bg-black"
+            />
+            <p className="text-[11px] text-gray-400 mt-2 text-center">
+              Tocca la X o fuori dal riquadro per chiudere
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
