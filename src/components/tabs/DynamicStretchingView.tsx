@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Zap, Dumbbell, Video } from 'lucide-react';
+import { ArrowLeft, Zap, Dumbbell, Video, Image as ImageIcon, Maximize2, X } from 'lucide-react';
 
 interface DynamicStretchingViewProps {
   onClose: () => void;
@@ -93,6 +93,7 @@ const DYNAMIC_EXERCISES: DynamicExercise[] = [
 
 export const DynamicStretchingView: React.FC<DynamicStretchingViewProps> = ({ onClose }) => {
   const [showVideo, setShowVideo] = useState<boolean>(false);
+  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
 
   return (
     <div className="space-y-4 pb-20 pt-2 animate-in fade-in duration-200">
@@ -106,7 +107,7 @@ export const DynamicStretchingView: React.FC<DynamicStretchingViewProps> = ({ on
         <span>Torna alla Routine</span>
       </button>
 
-      {/* Main Header Card - identica struttura allo stretching statico */}
+      {/* Main Header Card */}
       <div className="p-5 rounded-3xl glass-card relative overflow-hidden border border-amber-500/30 space-y-2">
         <div className="flex items-center space-x-3">
           <div className="p-3 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/30">
@@ -121,7 +122,45 @@ export const DynamicStretchingView: React.FC<DynamicStretchingViewProps> = ({ on
         </div>
       </div>
 
-      {/* Exercises Section - identico allo stretching statico */}
+      {/* 📸 Guida Visiva Illustrata Card */}
+      <div className="p-4 sm:p-5 rounded-3xl glass-card border border-amber-500/30 space-y-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2.5">
+            <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400">
+              <ImageIcon className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-white uppercase tracking-wider">Guida Visiva & Posizioni</h3>
+              <p className="text-[10px] text-gray-400">Infografica illustrata degli esercizi dinamici</p>
+            </div>
+          </div>
+          <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">
+            Foto Guida
+          </span>
+        </div>
+
+        <div
+          onClick={() => setFullscreenImage("https://i.ibb.co/nssTP7kS/1790089349823.png")}
+          className="group relative rounded-2xl overflow-hidden border border-white/10 bg-black/60 cursor-pointer transition-all hover:border-amber-500/50"
+        >
+          <img
+            src="https://i.ibb.co/nssTP7kS/1790089349823.png"
+            alt="Guida Visiva Stretching Dinamico"
+            referrerPolicy="no-referrer"
+            className="w-full h-56 sm:h-72 object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-between p-3 pointer-events-none">
+            <span className="text-xs font-bold text-white flex items-center space-x-1.5">
+              <span>Ingrandisci Foto</span>
+            </span>
+            <span className="p-1.5 rounded-lg bg-black/60 text-amber-300 border border-white/20">
+              <Maximize2 className="w-4 h-4" />
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Exercises Section */}
       <div className="p-4 sm:p-5 rounded-3xl glass-card space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2.5">
@@ -175,7 +214,7 @@ export const DynamicStretchingView: React.FC<DynamicStretchingViewProps> = ({ on
                   <strong>Esecuzione:</strong> {exercise.execution}
                 </div>
 
-                {/* Video Tutorial con avvio immediato (senza scritte o link esterni YouTube) */}
+                {/* Video Tutorial con avvio immediato */}
                 {exercise.embedId && (
                   <div className="space-y-2 pt-1">
                     <button
@@ -205,6 +244,28 @@ export const DynamicStretchingView: React.FC<DynamicStretchingViewProps> = ({ on
           })}
         </div>
       </div>
+
+      {/* Fullscreen Lightbox Modal */}
+      {fullscreenImage && (
+        <div
+          onClick={() => setFullscreenImage(null)}
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg flex items-center justify-center p-4 animate-in fade-in duration-200 cursor-zoom-out"
+        >
+          <button
+            type="button"
+            onClick={() => setFullscreenImage(null)}
+            className="absolute top-5 right-5 p-3 rounded-2xl bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all cursor-pointer z-10"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          <img
+            src={fullscreenImage}
+            alt="Anteprima Stretching Dinamico"
+            referrerPolicy="no-referrer"
+            className="max-w-full max-h-[85vh] object-contain rounded-2xl border border-white/20 shadow-2xl"
+          />
+        </div>
+      )}
     </div>
   );
 };
