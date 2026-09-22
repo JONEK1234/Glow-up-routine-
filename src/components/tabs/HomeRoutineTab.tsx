@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { WaterLog } from '../../types';
 import { storageHelper } from '../../utils/storage';
-import { Droplets, Sun, Activity, Sparkles, Utensils, Moon, Play, Pause, RotateCcw, Check, ChevronRight, Plus, Trash2, Clock, Video, ArrowLeft, Dumbbell, Image as ImageIcon, Maximize2, X, ExternalLink } from 'lucide-react';
+import { Droplets, Sun, Activity, Sparkles, Utensils, Moon, Play, Pause, RotateCcw, Check, ChevronRight, Plus, Trash2, Clock, Video, ArrowLeft, Dumbbell, Image as ImageIcon, Maximize2, X, ExternalLink, Zap } from 'lucide-react';
+import { DynamicStretchingView } from './DynamicStretchingView';
 
 export const HomeRoutineTab: React.FC = () => {
   // Water state
@@ -14,6 +15,7 @@ export const HomeRoutineTab: React.FC = () => {
 
   // Stretching accordion & lightbox state
   const [isStretchingOpen, setIsStretchingOpen] = useState<boolean>(false);
+  const [isDynamicStretchingOpen, setIsDynamicStretchingOpen] = useState<boolean>(false);
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const [fullscreenTitle, setFullscreenTitle] = useState<string | null>(null);
 
@@ -97,6 +99,10 @@ export const HomeRoutineTab: React.FC = () => {
 
   const wakeTimes = getWakeTimes();
 
+  if (isDynamicStretchingOpen) {
+    return <DynamicStretchingView onClose={() => setIsDynamicStretchingOpen(false)} />;
+  }
+
   if (isStretchingOpen) {
     return (
       <div className="space-y-4 pb-20 pt-2 animate-in fade-in duration-200">
@@ -117,7 +123,7 @@ export const HomeRoutineTab: React.FC = () => {
               <Activity className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-lg font-extrabold text-white">Stretching Mattutino & Risveglio</h2>
+              <h2 className="text-lg font-extrabold text-white">Stretching Statico</h2>
               <p className="text-xs text-emerald-400 font-semibold uppercase tracking-wider">8 Esercizi Sequenziali con Foto & Guida</p>
             </div>
           </div>
@@ -826,11 +832,33 @@ export const HomeRoutineTab: React.FC = () => {
                 <Activity className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="text-sm font-bold text-white">Stretching & Risveglio Muscolare</h4>
+                <h4 className="text-sm font-bold text-white">Stretching Statico</h4>
                 <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Apri menu esercizi e video</p>
               </div>
             </div>
             <div className="p-1.5 rounded-xl bg-white/5 border border-white/10 text-gray-400 group-hover:text-emerald-400 transition-colors">
+              <ChevronRight className="w-4 h-4" />
+            </div>
+          </button>
+        </div>
+
+        {/* ⚡ STRETCHING DINAMICO CARD */}
+        <div className="p-4 rounded-3xl glass-card space-y-3">
+          <button
+            type="button"
+            onClick={() => setIsDynamicStretchingOpen(true)}
+            className="w-full flex items-center justify-between text-left focus:outline-none group cursor-pointer"
+          >
+            <div className="flex items-center space-x-2.5">
+              <div className="p-2 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/30 group-hover:scale-105 transition-transform">
+                <Zap className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-white">Stretching Dinamico</h4>
+                <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">5 Esercizi di mobilità e attivazione</p>
+              </div>
+            </div>
+            <div className="p-1.5 rounded-xl bg-white/5 border border-white/10 text-gray-400 group-hover:text-amber-400 transition-colors">
               <ChevronRight className="w-4 h-4" />
             </div>
           </button>
