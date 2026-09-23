@@ -23,10 +23,13 @@ import {
   Info,
   ChevronLeft,
   ExternalLink,
-  Play
+  Play,
+  Repeat,
+  Zap
 } from 'lucide-react';
 import { UserNote } from '../../types';
 import { storageHelper } from '../../utils/storage';
+import { MentoPosturaOcchiView } from './MentoPosturaOcchiView';
 
 const FACE_PHOTOS = [
   {
@@ -66,14 +69,36 @@ const SCHEMA_IMAGES = [
 ];
 
 export const NoteTab: React.FC = () => {
-  const [activeView, setActiveView] = useState<'list' | 'asimmetria' | 'ortodonzia'>('list');
+  const [activeView, setActiveView] = useState<'list' | 'asimmetria' | 'ortodonzia' | 'postura_occhi'>('list');
   const [userNotes, setUserNotes] = useState<UserNote[]>(() => storageHelper.getUserNotes());
   const [fullscreenImg, setFullscreenImg] = useState<{ url: string; title: string } | null>(null);
-  const [faceComparisonMode, setFaceComparisonMode] = useState<'swipe' | 'sideBySide'>('swipe');
+  const [faceComparisonMode, setFaceComparisonMode] = useState<'overlay' | 'sideBySide' | 'swipe'>('overlay');
   const [activeFaceIndex, setActiveFaceIndex] = useState<number>(0);
+  const [swapCount, setSwapCount] = useState<number>(0);
+  const [isAutoBlinking, setIsAutoBlinking] = useState<boolean>(false);
   const [swipeOffset, setSwipeOffset] = useState<number>(0);
   const [isSwiping, setIsSwiping] = useState<boolean>(false);
   const [isOrtodonziaExpanded, setIsOrtodonziaExpanded] = useState(false);
+
+  // Quick swap handler for overlay comparison
+  const handleToggleFace = () => {
+    setActiveFaceIndex(prev => (prev === 0 ? 1 : 0));
+    setSwapCount(c => c + 1);
+  };
+
+  // Optional automatic blinking timer
+  useEffect(() => {
+    let interval: any = null;
+    if (isAutoBlinking) {
+      interval = setInterval(() => {
+        setActiveFaceIndex(prev => (prev === 0 ? 1 : 0));
+        setSwapCount(c => c + 1);
+      }, 700);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isAutoBlinking]);
 
   const touchStartX = React.useRef<number | null>(null);
   const touchStartY = React.useRef<number | null>(null);
@@ -232,28 +257,82 @@ export const NoteTab: React.FC = () => {
           </>
         )}
 
-        <div className="max-w-md w-full max-h-[85vh] flex flex-col items-center">
-          <img
-            src={fullscreenImg.url}
-            alt={fullscreenImg.title}
-            className="w-full max-h-[75vh] object-contain rounded-2xl border border-white/20 shadow-2xl"
-            referrerPolicy="no-referrer"
-          />
-          <p className="mt-3 text-sm font-semibold text-center text-cyan-300">
+        <div 
+          className={`max-w-md w-full max-h-[85vh] flex flex-col items-center select-none ${
+            isFaceComparisonPhoto ? 'cursor-pointer' : ''
+          }`}
+          onClick={(e) => {
+            if (isFaceComparisonPhoto) {
+              e.stopPropagation();
+              const newIdx = currentFaceIndex === 0 ? 1 : 0;
+              setFullscreenImg({ url: FACE_PHOTOS[newIdx].url, title: FACE_PHOTOS[newIdx].title });
+              setActiveFaceIndex(newIdx);
+              setSwapCount(c => c + 1);
+            }
+          }}
+        >
+          <div className="relative w-full flex items-center justify-center">
+            <img
+              src={fullscreenImg.url}
+              alt={fullscreenImg.title}
+              className="w-full max-h-[70vh] object-contain rounded-2xl border-2 border-cyan-400/40 shadow-2xl active:scale-[0.99] transition-transform"
+              referrerPolicy="no-referrer"
+            />
+            {isFaceComparisonPhoto && (
+              <div className="absolute top-2 left-2 bg-black/80 backdrop-blur-md px-3 py-1 rounded-xl border border-white/20 text-[10px] font-black text-cyan-300 pointer-events-none">
+                {currentFaceIndex === 0 ? '1/2 • Faccia Attuale' : '2/2 • Faccia Definita'}
+              </div>
+            )}
+          </div>
+
+          <p className="mt-2.5 text-sm font-extrabold text-center text-cyan-300">
             {fullscreenImg.title}
           </p>
+
           {isFaceComparisonPhoto && (
-            <div className="flex items-center gap-2 mt-1">
-              <span className={`w-2.5 h-2.5 rounded-full transition-all ${currentFaceIndex === 0 ? 'bg-cyan-400 shadow-[0_0_8px_rgba(0,255,209,0.8)]' : 'bg-white/20'}`} />
-              <span className={`w-2.5 h-2.5 rounded-full transition-all ${currentFaceIndex === 1 ? 'bg-cyan-400 shadow-[0_0_8px_rgba(0,255,209,0.8)]' : 'bg-white/20'}`} />
-              <span className="text-[11px] text-gray-400 ml-1">Tocca le frecce per alternare le 2 foto</span>
+            <div className="flex flex-col items-center gap-2 mt-2 w-full">
+              <div className="flex items-center gap-2">
+                <span className={`w-2.5 h-2.5 rounded-full transition-all ${currentFaceIndex === 0 ? 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]' : 'bg-white/20'}`} />
+                <span className={`w-2.5 h-2.5 rounded-full transition-all ${currentFaceIndex === 1 ? 'bg-cyan-400 shadow-[0_0_8px_rgba(0,255,209,0.8)]' : 'bg-white/20'}`} />
+                <span className="text-[11px] text-gray-300 font-bold">
+                  {currentFaceIndex === 0 ? 'Attuale' : 'Definita'}
+                </span>
+              </div>
+
+              {/* Big floating button to swap in fullscreen */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  const newIdx = currentFaceIndex === 0 ? 1 : 0;
+                  setFullscreenImg({ url: FACE_PHOTOS[newIdx].url, title: FACE_PHOTOS[newIdx].title });
+                  setActiveFaceIndex(newIdx);
+                  setSwapCount(c => c + 1);
+                }}
+                className="w-full max-w-xs py-3 px-4 rounded-2xl bg-gradient-to-r from-cyan-400 to-emerald-400 hover:from-cyan-300 hover:to-emerald-300 text-black font-black text-xs uppercase tracking-wider flex items-center justify-center space-x-2 shadow-neon active:scale-95 transition-all cursor-pointer z-30"
+              >
+                <Repeat className="w-4 h-4 text-black" />
+                <span>⚡ Clicca per Scambiare ({currentFaceIndex === 0 ? 'Vedi Definita' : 'Vedi Attuale'})</span>
+              </button>
             </div>
           )}
-          <span className="text-[11px] text-gray-400 mt-1">Tocca ovunque per chiudere</span>
+
+          <span className="text-[10px] text-gray-400 mt-2 text-center">
+            {isFaceComparisonPhoto 
+              ? '👆 Tocca l\'immagine o il tasto a ripetizione per notare le differenze • Sfondo per chiudere' 
+              : 'Tocca ovunque per chiudere'}
+          </span>
         </div>
       </div>
     );
   };
+
+  // -------------------------------------------------------------
+  // VIEW: MENTO, POSTURA E OCCHI (RICHIESTA SPECIFICA UTENTE)
+  // -------------------------------------------------------------
+  if (activeView === 'postura_occhi') {
+    return <MentoPosturaOcchiView onBack={() => setActiveView('list')} />;
+  }
 
   // -------------------------------------------------------------
   // VIEW: LA MIA ASIMMETRIA (MENU DETTAGLIATO)
@@ -311,34 +390,182 @@ export const NoteTab: React.FC = () => {
               </div>
             </div>
 
-            {/* Mode switch (Swipe / 2 Affiancate) */}
-            <div className="flex bg-black/40 p-0.5 rounded-xl border border-white/10 text-[10px]">
+            {/* Mode switch (Sovrapponi / 2 Affiancate / Swipe) */}
+            <div className="flex bg-black/60 p-1 rounded-2xl border border-white/10 text-[10px] space-x-0.5">
               <button
                 type="button"
-                onClick={() => setFaceComparisonMode('swipe')}
-                className={`px-2 py-1 rounded-lg font-bold transition-all ${
-                  faceComparisonMode === 'swipe'
-                    ? 'bg-cyan-500 text-black shadow-sm'
-                    : 'text-gray-400 hover:text-white'
+                onClick={() => setFaceComparisonMode('overlay')}
+                className={`px-2.5 py-1 rounded-xl font-bold transition-all flex items-center space-x-1 cursor-pointer ${
+                  faceComparisonMode === 'overlay'
+                    ? 'bg-gradient-to-r from-cyan-400 to-emerald-400 text-black shadow-neon font-black'
+                    : 'text-gray-300 hover:text-white'
                 }`}
               >
-                Swipe (1 Foto)
+                <Repeat className="w-3 h-3" />
+                <span>Sovrapponi & Scambia</span>
               </button>
               <button
                 type="button"
                 onClick={() => setFaceComparisonMode('sideBySide')}
-                className={`px-2 py-1 rounded-lg font-bold transition-all ${
+                className={`px-2 py-1 rounded-xl font-bold transition-all cursor-pointer ${
                   faceComparisonMode === 'sideBySide'
-                    ? 'bg-cyan-500 text-black shadow-sm'
+                    ? 'bg-cyan-500 text-black shadow-sm font-black'
                     : 'text-gray-400 hover:text-white'
                 }`}
               >
                 2 Affiancate
               </button>
+              <button
+                type="button"
+                onClick={() => setFaceComparisonMode('swipe')}
+                className={`px-2 py-1 rounded-xl font-bold transition-all cursor-pointer ${
+                  faceComparisonMode === 'swipe'
+                    ? 'bg-cyan-500 text-black shadow-sm font-black'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                Swipe
+              </button>
             </div>
           </div>
 
-          {faceComparisonMode === 'sideBySide' ? (
+          {faceComparisonMode === 'overlay' ? (
+            <div className="space-y-3 pt-1">
+              {/* Status Header & Controls */}
+              <div className="flex items-center justify-between bg-black/50 p-2.5 rounded-2xl border border-white/10">
+                <div className="flex items-center space-x-2">
+                  <span className={`w-3 h-3 rounded-full transition-all ${
+                    activeFaceIndex === 0 
+                      ? 'bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.8)]' 
+                      : 'bg-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.8)]'
+                  }`} />
+                  <div>
+                    <span className="text-xs font-black text-white block">
+                      {activeFaceIndex === 0 ? '1. Faccia Attuale' : '2. Faccia Definita'}
+                    </span>
+                    <span className="text-[10px] text-gray-400 block -mt-0.5">
+                      {activeFaceIndex === 0 ? 'Base di partenza rilassata' : 'Target cesellato e simmetrico'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-1.5">
+                  {swapCount > 0 && (
+                    <span className="text-[10px] text-cyan-300 font-extrabold bg-cyan-950/80 px-2 py-0.5 rounded-lg border border-cyan-500/30">
+                      {swapCount} {swapCount === 1 ? 'scambio' : 'scambi'}
+                    </span>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setIsAutoBlinking(!isAutoBlinking)}
+                    className={`px-2.5 py-1 rounded-xl text-[10px] font-bold border transition-all flex items-center space-x-1 cursor-pointer ${
+                      isAutoBlinking
+                        ? 'bg-cyan-500 text-black border-cyan-400 shadow-neon animate-pulse font-extrabold'
+                        : 'bg-white/5 hover:bg-white/10 text-gray-300 border-white/10'
+                    }`}
+                    title="Alterna automaticamente le foto ogni 0.7 secondi"
+                  >
+                    <Sparkles className="w-3 h-3" />
+                    <span>{isAutoBlinking ? 'Stop' : 'Auto Lampeggio'}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* The Overlaid Photo Frame - click directly to swap! */}
+              <div
+                onClick={handleToggleFace}
+                className="group relative rounded-3xl overflow-hidden border-2 border-cyan-400/50 hover:border-cyan-300 bg-black cursor-pointer aspect-[3/4] max-h-[420px] max-w-sm mx-auto shadow-2xl transition-all active:scale-[0.99] select-none"
+                title="Tocca la foto per scambiarla all'istante"
+              >
+                {/* Base Image: Attuale */}
+                <img
+                  src={FACE_PHOTOS[0].url}
+                  alt="Faccia Attuale"
+                  className={`absolute inset-0 w-full h-full object-cover select-none pointer-events-none ${
+                    activeFaceIndex === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                  }`}
+                  referrerPolicy="no-referrer"
+                />
+
+                {/* Overlaid Image: Definita */}
+                <img
+                  src={FACE_PHOTOS[1].url}
+                  alt="Faccia Definita"
+                  className={`absolute inset-0 w-full h-full object-cover select-none pointer-events-none ${
+                    activeFaceIndex === 1 ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                  }`}
+                  referrerPolicy="no-referrer"
+                />
+
+                {/* Top Floating Badge & Fullscreen Button */}
+                <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-20 pointer-events-auto">
+                  <span className={`text-[10px] font-black px-3 py-1.5 rounded-xl backdrop-blur-md border shadow-lg transition-all ${
+                    activeFaceIndex === 0
+                      ? 'bg-black/85 text-amber-300 border-amber-500/40'
+                      : 'bg-cyan-950/90 text-cyan-300 border-cyan-400/50 shadow-neon'
+                  }`}>
+                    {activeFaceIndex === 0 ? '1/2 • Faccia Attuale' : '2/2 • Faccia Definita'}
+                  </span>
+
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setFullscreenImg({
+                        url: FACE_PHOTOS[activeFaceIndex].url,
+                        title: FACE_PHOTOS[activeFaceIndex].title
+                      });
+                    }}
+                    className="p-2 rounded-xl bg-black/70 hover:bg-black text-white hover:text-cyan-300 border border-white/20 backdrop-blur-md cursor-pointer transition-all active:scale-90"
+                    title="Espandi a schermo intero"
+                  >
+                    <Maximize2 className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Center hint when hovering or tapping */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="px-3.5 py-1.5 rounded-2xl bg-black/85 backdrop-blur-md text-white border border-cyan-400/40 text-xs font-bold shadow-xl flex items-center gap-1.5">
+                    <Repeat className="w-3.5 h-3.5 text-cyan-400" />
+                    <span>Tocca per scambiare</span>
+                  </span>
+                </div>
+
+                {/* Bottom overlay bar with description and switch indicator */}
+                <div className="absolute bottom-3 left-3 right-3 p-2.5 rounded-2xl bg-black/85 backdrop-blur-md border border-white/15 text-left z-20 pointer-events-none">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-extrabold text-white">
+                      {FACE_PHOTOS[activeFaceIndex].title}
+                    </span>
+                    <span className="text-[10px] text-cyan-300 font-bold">
+                      {FACE_PHOTOS[activeFaceIndex].tag}
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-gray-300 line-clamp-1 mt-0.5">
+                    {FACE_PHOTOS[activeFaceIndex].desc}
+                  </p>
+                </div>
+              </div>
+
+              {/* TASTO RICHIESTO DALL'UTENTE: PERMETTE DI SOVRAPPORRE / SCAMBIARE L'IMMAGINE */}
+              <div className="space-y-2 max-w-sm mx-auto">
+                <button
+                  type="button"
+                  onClick={handleToggleFace}
+                  className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-cyan-400 via-emerald-400 to-teal-400 hover:from-cyan-300 hover:to-emerald-300 text-black font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center space-x-2.5 shadow-[0_0_20px_rgba(6,182,212,0.4)] active:scale-95 transition-all cursor-pointer select-none"
+                >
+                  <Repeat className="w-5 h-5 text-black" />
+                  <span>
+                    ⚡ Clicca per Scambiare ({activeFaceIndex === 0 ? 'Passa a Faccia Definita' : 'Torna a Faccia Attuale'})
+                  </span>
+                </button>
+
+                <p className="text-[11px] text-gray-400 text-center font-medium">
+                  👆 Clicca a ripetizione il tasto o l'immagine per sovrapporle e vedere ogni minima differenza!
+                </p>
+              </div>
+            </div>
+          ) : faceComparisonMode === 'sideBySide' ? (
             <div className="grid grid-cols-2 gap-2.5">
               {/* Foto Attuale */}
               <div 
@@ -1078,6 +1305,53 @@ export const NoteTab: React.FC = () => {
               <Sparkles className="w-3.5 h-3.5" />
             </span>
             <span className="text-[10px] text-gray-400 font-semibold">4 Parti + Foto & Clinica</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ------------------------------------------------------------- */}
+      {/* CARD: "MENTO, POSTURA E OCCHI" (RICHIESTA SPECIFICA UTENTE) */}
+      {/* ------------------------------------------------------------- */}
+      <div className="space-y-2">
+        <span className="text-[11px] font-bold text-amber-300 uppercase tracking-wider block pl-1">
+          Nuova Nota Personale • Biomeccanica & Foto
+        </span>
+
+        <div
+          onClick={() => setActiveView('postura_occhi')}
+          className="p-5 rounded-3xl glass-card border-2 border-amber-400/70 hover:border-amber-400 bg-gradient-to-br from-amber-500/20 via-black/85 to-cyan-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
+        >
+          <div className="absolute -top-12 -right-12 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
+
+          <div className="flex items-start justify-between relative z-10">
+            <div className="space-y-2 flex-1 pr-3">
+              <div className="flex items-center space-x-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 text-[10px] font-black uppercase tracking-wider border border-amber-400/40 shadow-sm">
+                  ★ Note Scritte Da Me
+                </span>
+                <span className="text-[10px] text-gray-400 font-semibold">Foto & Sguardo</span>
+              </div>
+
+              <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-amber-300 transition-colors uppercase tracking-tight">
+                Mento, postura e occhi
+              </h2>
+
+              <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
+                Confronto foto postura normale vs corretta, visibilità sclera e palpebre (hooded eyes), retroposizione del capo (chin tuck), perché l'armonia batte la tensione e come la postura eretta espande la presenza del corpo.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-amber-500/20 group-hover:bg-amber-500 text-amber-300 group-hover:text-black border border-amber-400/50 shadow-neon transition-all shrink-0 mt-1">
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
+            <span className="text-amber-300 font-bold flex items-center gap-1.5">
+              <span>Tocca per aprire le note & confronto foto</span>
+              <Sparkles className="w-3.5 h-3.5" />
+            </span>
+            <span className="text-[10px] text-gray-400 font-semibold">Confronto Foto + Memorandum</span>
           </div>
         </div>
       </div>

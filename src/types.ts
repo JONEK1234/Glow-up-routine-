@@ -4,9 +4,18 @@ export interface UserNote {
   id: string;
   title: string;
   date: string;
-  category: 'asimmetria' | 'percorso' | 'allenamento' | 'dieta' | 'mentale' | 'generale';
+  category: 'asimmetria' | 'percorso' | 'allenamento' | 'dieta' | 'mentale' | 'generale' | 'postura';
   content: string;
   isPinned?: boolean;
+}
+
+export interface PostureComparisonData {
+  normalPhotoUrl: string;
+  normalPhotoUrl2?: string;
+  goodPhotoUrl: string;
+  goodPhotoUrl2?: string;
+  updatedAt?: string;
+  notes?: string;
 }
 
 export interface LogEntry {

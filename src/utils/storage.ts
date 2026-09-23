@@ -1,4 +1,4 @@
-import { ChecklistItem, ProgressPhoto, MediaLink, StoreProductVideo, WaterLog, UserNote } from '../types';
+import { ChecklistItem, ProgressPhoto, MediaLink, StoreProductVideo, WaterLog, UserNote, PostureComparisonData } from '../types';
 
 const STORAGE_KEYS = {
   WATER: 'glowup_water_log_v1',
@@ -9,7 +9,8 @@ const STORAGE_KEYS = {
   STORE_PRODUCTS: 'glowup_store_v1',
   STREAK: 'glowup_streak_v1',
   ORDINE_START_DATE: 'glowup_ordine_start_date_v1',
-  USER_NOTES: 'glowup_user_notes_v1'
+  USER_NOTES: 'glowup_user_notes_v1',
+  POSTURE_COMPARISON: 'glowup_posture_comparison_v1'
 };
 
 export const INITIAL_CHECKLIST: ChecklistItem[] = [
@@ -257,6 +258,26 @@ export const storageHelper = {
   saveUserNotes: (notes: UserNote[]) => {
     try {
       localStorage.setItem(STORAGE_KEYS.USER_NOTES, JSON.stringify(notes));
+    } catch (e) {}
+  },
+
+  // Posture Comparison (Normale vs Buona)
+  getPostureComparison: (): PostureComparisonData => {
+    try {
+      const data = localStorage.getItem(STORAGE_KEYS.POSTURE_COMPARISON);
+      if (data) return JSON.parse(data);
+    } catch (e) {}
+    return {
+      normalPhotoUrl: '',
+      normalPhotoUrl2: '',
+      goodPhotoUrl: '',
+      goodPhotoUrl2: '',
+      notes: ''
+    };
+  },
+  savePostureComparison: (data: PostureComparisonData) => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.POSTURE_COMPARISON, JSON.stringify(data));
     } catch (e) {}
   }
 };

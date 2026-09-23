@@ -2048,8 +2048,22 @@ export const LookmaxingTab: React.FC = () => {
 
               {/* Exercise 4 */}
               <div className="p-3 rounded-2xl bg-black/40 border border-white/5 flex items-center justify-between">
-                <span className="font-bold text-white text-xs">4. Rilassamento Sguardo Orizzonte</span>
+                <div>
+                  <span className="font-bold text-white text-xs block">4. Rilassamento Sguardo Orizzonte</span>
+                  <span className="text-[10px] text-gray-400 block">Decontrazione e ripasso totale della fronte</span>
+                </div>
                 <span className="font-extrabold text-purple-300 text-xs bg-purple-500/10 px-2 py-0.5 rounded-lg border border-purple-500/20">2 Minuti</span>
+              </div>
+
+              {/* Tip Fronte & Sguardo */}
+              <div className="p-3 rounded-2xl bg-purple-500/10 border border-purple-500/30 space-y-1">
+                <span className="text-[11px] font-extrabold text-purple-300 uppercase tracking-wider flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Regola Chiave • Ripassare la Fronte:</span>
+                </span>
+                <p className="text-gray-300 text-xs">
+                  Quando imposti lo sguardo all'orizzonte o alleni gli occhi, <strong className="text-white">ripassa e rilassa completamente anche la fronte</strong> (zero rughe e muscolo frontale spento). Solo spianando la fronte la palpebra superiore può scendere naturalmente a filo iride senza sforzo!
+                </p>
               </div>
             </div>
 
