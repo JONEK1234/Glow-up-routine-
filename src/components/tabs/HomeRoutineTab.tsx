@@ -24,7 +24,8 @@ export const HomeRoutineTab: React.FC = () => {
     step1: false,
     step_spoon: false,
     step2: false,
-    step3: false
+    step3: false,
+    step_shave: false
   });
 
   // Save water updates
@@ -741,10 +742,10 @@ export const HomeRoutineTab: React.FC = () => {
               {
                 key: 'step2',
                 num: '3',
-                title: 'Crema Idratante Leggera',
-                productLabel: 'Crema Idratante',
-                note: 'Applica su pelle umida per trattenere l’idratazione',
-                image: 'https://i.ibb.co/vW8YMcm/Screenshot-2026-09-12-16-03-16-323-com-amazon-m-Shop-android-shopping-edit.jpg'
+                title: 'Crema Garnier Salicilico Fresco & Opaco',
+                productLabel: 'Crema Garnier Salicilico Fresco & Opaco',
+                note: 'Applica su pelle umida per trattenere l’idratazione ed opacizzare',
+                image: 'https://i.ibb.co/mCmnyPkF/Picsart-26-09-25-21-51-33-055.jpg'
               },
               {
                 key: 'step3',
@@ -800,6 +801,59 @@ export const HomeRoutineTab: React.FC = () => {
                 </div>
               );
             })}
+
+            {/* Separatore visivo di stile senza testo */}
+            <div className="pt-2">
+              <div className="relative flex items-center justify-center my-1.5">
+                <div className="w-full border-t border-dashed border-white/10"></div>
+                <div className="absolute px-2 bg-[#0B0F17] flex items-center space-x-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-600/70"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-600/70"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-600/70"></span>
+                </div>
+              </div>
+
+              <div
+                onClick={() => toggleSkincare('step_shave')}
+                className={`p-3 rounded-2xl border border-dashed transition-all cursor-pointer flex items-center justify-between ${
+                  skincareDone['step_shave']
+                    ? 'bg-sky-500/15 border-sky-400/50 text-sky-200 shadow-[0_0_15px_rgba(56,189,248,0.2)]'
+                    : 'bg-slate-900/30 border-white/15 text-gray-300 hover:border-sky-400/30 hover:bg-slate-900/50'
+                }`}
+              >
+                <div className="flex items-center space-x-3">
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setFullscreenImage('https://i.ibb.co/DHHFmr0J/Picsart-26-09-25-21-59-59-666.jpg');
+                      setFullscreenTitle('NIVEA MEN Sensitive Gel da barba lenitivo');
+                    }}
+                    className="w-8 h-8 rounded-xl overflow-hidden border border-sky-400/30 bg-black/60 shrink-0 cursor-zoom-in hover:scale-105 transition-transform"
+                    title="Tocca per ingrandire la foto"
+                  >
+                    <img
+                      src="https://i.ibb.co/DHHFmr0J/Picsart-26-09-25-21-59-59-666.jpg"
+                      alt="NIVEA MEN Sensitive Gel da barba lenitivo"
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h5 className="text-xs font-bold text-white">NIVEA MEN Sensitive Gel da barba lenitivo</h5>
+                    <p className="text-[10px] text-gray-400 mt-0.5">Rasatura confortevole a zero irritazioni con formula lenitiva</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className={`w-5 h-5 rounded-lg flex items-center justify-center border transition-all ${
+                    skincareDone['step_shave']
+                      ? 'bg-sky-400 text-black border-sky-400 shadow-sm'
+                      : 'border-white/20 bg-white/5 text-transparent'
+                  }`}>
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

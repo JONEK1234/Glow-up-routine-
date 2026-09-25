@@ -1110,7 +1110,7 @@ export const LookmaxingTab: React.FC = () => {
           { id: 'body_posture', label: '🧍 Postura', desc: 'Corpo' },
           { id: 'eyes', label: '👀 Occhi', desc: 'Orbicolari' },
           { id: 'ice', label: '🧊 Ghiaccio', desc: 'Ice Routine' },
-          { id: 'lymphatic', label: '🌅 Linfatico', desc: '5 min Viso' },
+          { id: 'lymphatic', label: '🌅 Linfatico', desc: '3 min Viso' },
           { id: 'sleep', label: '🛌 Sonno', desc: 'Postura Notte' }
         ].map(tab => (
           <button
@@ -2212,149 +2212,176 @@ export const LookmaxingTab: React.FC = () => {
         </div>
       )}
 
-      {/* SECTION 6: MASSAGGIO LINFATICO DEL VISO AL MATTINO */}
+      {/* SECTION 6: ROUTINE DI MASSAGGIO DRENANTE FACCIALE (3 MINUTI) */}
       {activeSection === 'lymphatic' && (
         <div className="space-y-3">
-          <div className="p-4 rounded-3xl glass-card space-y-3">
+          <div className="p-4 rounded-3xl glass-card space-y-4">
             {/* Title Header */}
-            <div className="flex items-center justify-between">
-              <h3 className="text-xs font-bold text-gray-300 uppercase tracking-widest flex items-center gap-2">
-                <Sun className="w-4 h-4 text-amber-400" />
-                6. 🌅 Massaggio Linfatico del Viso al Mattino — 5 Minuti
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-black uppercase tracking-widest text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20">
+                  🌅 Sezione 6 • 3 Minuti al Giorno
+                </span>
+                <span className="text-[10px] font-bold text-gray-400">
+                  1 volta al dì (mattina o sera)
+                </span>
+              </div>
+              <h3 className="text-base sm:text-lg font-black text-white flex items-center gap-2">
+                <span>📝 Routine di Massaggio Drenante Facciale (3 minuti)</span>
               </h3>
-            </div>
-
-            {/* Step-by-Step Massage Routine */}
-            <div className="space-y-2.5">
-              <span className="font-bold text-amber-300 uppercase tracking-wider text-[11px] block flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5" /> Sequenza dei 5 Passaggi del Massaggio:
-              </span>
-
-              {/* 1. Collo */}
-              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold text-white flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-[11px] font-black">
-                      1
-                    </span>
-                    Collo
-                  </h4>
-                  <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">
-                    5–10 volte per lato
-                  </span>
-                </div>
-                <p className="text-[11px] text-gray-300 leading-relaxed font-medium pl-7">
-                  Con le dita piatte, fai movimenti molto delicati dalla zona sotto le orecchie verso le clavicole. Ripeti 5–10 volte per lato.
-                </p>
-              </div>
-
-              {/* 2. Clavicole */}
-              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold text-white flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-[11px] font-black">
-                      2
-                    </span>
-                    Clavicole
-                  </h4>
-                  <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">
-                    5–10 volte
-                  </span>
-                </div>
-                <p className="text-[11px] text-gray-300 leading-relaxed font-medium pl-7">
-                  Appoggia delicatamente le dita sopra le clavicole e fai piccoli movimenti verso il basso. Ripeti 5–10 volte.
-                </p>
-              </div>
-
-              {/* 3. Mandibola */}
-              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold text-white flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-[11px] font-black">
-                      3
-                    </span>
-                    Mandibola
-                  </h4>
-                  <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">
-                    5–10 volte
-                  </span>
-                </div>
-                <p className="text-[11px] text-gray-300 leading-relaxed font-medium pl-7">
-                  Parti dal centro del mento e fai scorrere delicatamente le dita lungo la mandibola verso le orecchie. Ripeti 5–10 volte.
-                </p>
-              </div>
-
-              {/* 4. Guance */}
-              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold text-white flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-[11px] font-black">
-                      4
-                    </span>
-                    Guance
-                  </h4>
-                  <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">
-                    5–10 volte
-                  </span>
-                </div>
-                <p className="text-[11px] text-gray-300 leading-relaxed font-medium pl-7">
-                  Partendo dai lati del naso, fai scorrere le dita verso l'esterno, in direzione delle orecchie. Ripeti 5–10 volte.
-                </p>
-              </div>
-
-              {/* 5. Fronte */}
-              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-bold text-white flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-[11px] font-black">
-                      5
-                    </span>
-                    Fronte
-                  </h4>
-                  <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">
-                    5–10 volte
-                  </span>
-                </div>
-                <p className="text-[11px] text-gray-300 leading-relaxed font-medium pl-7">
-                  Dal centro della fronte, porta delicatamente le dita verso le tempie. Poi scendi lungo i lati del viso fino al collo e termina verso le clavicole.
-                </p>
-              </div>
-            </div>
-
-            {/* ⚠️ Importante Warning Box */}
-            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 space-y-1.5">
-              <span className="text-xs font-bold text-amber-300 flex items-center gap-1.5 uppercase tracking-wider">
-                <ShieldAlert className="w-4 h-4 text-amber-400" /> ⚠️ Importante
-              </span>
-              <p className="text-[11px] text-gray-200 leading-relaxed font-medium">
-                La pressione deve essere molto leggera e lenta: il drenaggio linfatico non richiede di massaggiare forte. Puoi farlo dopo aver lavato il viso, con un po' di crema o siero per far scorrere meglio le dita.
+              <p className="text-xs text-gray-300 leading-relaxed bg-black/40 p-3 rounded-2xl border border-white/5 font-medium">
+                Da eseguire <strong className="text-amber-300">1 volta al giorno</strong> (la mattina per sgonfiare i tratti o la sera) su <strong className="text-white">pelle pulita</strong>, dopo aver applicato un velo di crema idratante o olio delicato per far scivolare le dita senza tirare la pelle.
               </p>
             </div>
 
-            {/* Image Guide Banner at the End */}
-            <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-3">
-              <div className="flex items-center space-x-2.5">
-                <div className="p-2 rounded-xl bg-amber-500/10 text-amber-300">
-                  <ImageIcon className="w-4 h-4" />
+            {/* The 4 Core Steps */}
+            <div className="space-y-3">
+              <span className="font-bold text-amber-300 uppercase tracking-wider text-[11px] block flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5" /> Sequenza dei 4 Passaggi di Drenaggio:
+              </span>
+
+              {/* Step 1 */}
+              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-2 hover:border-amber-500/30 transition-all">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-xs font-black">
+                      1
+                    </span>
+                    1. Drenaggio del Collo (Apertura stazioni linfatiche)
+                  </h4>
+                  <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2.5 py-0.5 rounded-lg border border-amber-500/20 whitespace-nowrap">
+                    5-10 volte
+                  </span>
                 </div>
-                <div>
-                  <h4 className="text-xs font-bold text-white uppercase tracking-wider">Mappa Drenaggio Linfatico Viso</h4>
-                  <p className="text-[10px] text-gray-400">Clicca sull'immagine per ingrandirla a schermo intero</p>
+                <div className="pl-8 space-y-1.5 text-xs text-gray-300">
+                  <p className="leading-relaxed">
+                    <strong className="text-amber-200">Come fare:</strong> Posiziona i palmi delle mani sui lati del collo. Fai scivolare le mani partendo dall'alto (sotto le orecchie) fino a scendere alla base del collo (sulle clavicole).
+                  </p>
+                  <div className="flex flex-wrap items-center gap-3 pt-0.5">
+                    <span className="text-[11px] text-amber-300/90 font-medium">
+                      🔁 <strong className="text-white">Ripetizioni:</strong> 5-10 volte con una pressione leggera.
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-gray-300 bg-white/5 p-2 rounded-xl border border-white/5 leading-snug">
+                    🎯 <strong className="text-amber-300">Scopo:</strong> Libera i canali del collo per permettere ai liquidi accumulati sul viso di defluire.
+                  </p>
                 </div>
               </div>
 
+              {/* Step 2 */}
+              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-2 hover:border-amber-500/30 transition-all">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-xs font-black">
+                      2
+                    </span>
+                    2. Definizione della Mascella (Jawline)
+                  </h4>
+                  <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2.5 py-0.5 rounded-lg border border-amber-500/20 whitespace-nowrap">
+                    10 volte per lato
+                  </span>
+                </div>
+                <div className="pl-8 space-y-1.5 text-xs text-gray-300">
+                  <p className="leading-relaxed">
+                    <strong className="text-amber-200">Come fare:</strong> Piega l'indice e il medio a forma di "nocche" o forbice su entrambe le mani. Inserisci l'osso della mascella tra le due dita e fai scivolare la mano dal mento verso i lobi delle orecchie.
+                  </p>
+                  <div className="flex flex-wrap items-center gap-3 pt-0.5">
+                    <span className="text-[11px] text-amber-300/90 font-medium">
+                      🔁 <strong className="text-white">Ripetizioni:</strong> 10 volte per lato.
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-gray-300 bg-white/5 p-2 rounded-xl border border-white/5 leading-snug">
+                    🎯 <strong className="text-amber-300">Scopo:</strong> Scarica i liquidi lungo la mandibola e fa risaltare l'angolo dell'osso.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-2 hover:border-amber-500/30 transition-all">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-xs font-black">
+                      3
+                    </span>
+                    3. Sgonfiare Zigomi e Zona Sotto-Oculare
+                  </h4>
+                  <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2.5 py-0.5 rounded-lg border border-amber-500/20 whitespace-nowrap">
+                    8-10 volte
+                  </span>
+                </div>
+                <div className="pl-8 space-y-1.5 text-xs text-gray-300">
+                  <p className="leading-relaxed">
+                    <strong className="text-amber-200">Come fare:</strong> Appoggia i polpastrelli degli indici o dei medi ai lati del naso (sotto gli occhi). Fai scivolare le dita verso l'esterno, passando sopra gli zigomi fino ad arrivare alle tempie.
+                  </p>
+                  <div className="flex flex-wrap items-center gap-3 pt-0.5">
+                    <span className="text-[11px] text-amber-300/90 font-medium">
+                      🔁 <strong className="text-white">Ripetizioni:</strong> 8-10 volte con una pressione molto delicata.
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-gray-300 bg-white/5 p-2 rounded-xl border border-white/5 leading-snug">
+                    🎯 <strong className="text-amber-300">Scopo:</strong> Riduce il gonfiore sotto gli occhi e dona risalto agli zigomi.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 4 */}
+              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-2 hover:border-amber-500/30 transition-all">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center text-xs font-black">
+                      4
+                    </span>
+                    4. Scarico Finale
+                  </h4>
+                  <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2.5 py-0.5 rounded-lg border border-amber-500/20 whitespace-nowrap">
+                    5 volte
+                  </span>
+                </div>
+                <div className="pl-8 space-y-1.5 text-xs text-gray-300">
+                  <p className="leading-relaxed">
+                    <strong className="text-amber-200">Come fare:</strong> Concludi facendo scivolare delicatamente le mani dalle tempie, lungo i lati del viso e giù lungo il collo fino alle clavicole.
+                  </p>
+                  <div className="flex flex-wrap items-center gap-3 pt-0.5">
+                    <span className="text-[11px] text-amber-300/90 font-medium">
+                      🔁 <strong className="text-white">Ripetizioni:</strong> 5 volte.
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-gray-300 bg-white/5 p-2 rounded-xl border border-white/5 leading-snug">
+                    🎯 <strong className="text-amber-300">Scopo:</strong> Incanala definitivamente tutti i liquidi trattati verso il sistema linfatico.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Nuova Immagine Ufficiale del Massaggio Drenante Facciale */}
+            <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2.5">
+                  <div className="p-2 rounded-xl bg-amber-500/10 text-amber-300">
+                    <ImageIcon className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-white uppercase tracking-wider">Mappa Massaggio Drenante Facciale</h4>
+                    <p className="text-[10px] text-gray-400">Tocca la foto per aprirla a tutto schermo</p>
+                  </div>
+                </div>
+                <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20">
+                  Nuova Guida Visiva
+                </span>
+              </div>
+
               <div
-                onClick={() => setFullscreenImage("https://i.ibb.co/kVHmVkPt/file-00000000f3d0821082fed711fb1298b6.png")}
+                onClick={() => setFullscreenImage("https://i.ibb.co/FkQbmyqs/file-000000007c0c820ab60f4439e933555a.png")}
                 className="group relative rounded-2xl overflow-hidden border border-white/10 bg-black/60 cursor-pointer transition-all hover:border-amber-500/50 hover:shadow-neon"
               >
                 <img
-                  src="https://i.ibb.co/kVHmVkPt/file-00000000f3d0821082fed711fb1298b6.png"
-                  alt="Mappa Massaggio Linfatico Viso"
+                  src="https://i.ibb.co/FkQbmyqs/file-000000007c0c820ab60f4439e933555a.png"
+                  alt="Routine Massaggio Drenante Facciale"
                   referrerPolicy="no-referrer"
-                  className="w-full h-64 object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-80 object-contain p-2 group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-between p-3 pointer-events-none">
-                  <span className="text-xs font-bold text-white">Guida Visiva Punti & Direzioni Linfatiche</span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent flex items-end justify-between p-3 pointer-events-none">
+                  <span className="text-xs font-bold text-white drop-shadow-md">Guida Punti & Direzioni del Massaggio Drenante</span>
                   <span className="p-1.5 rounded-lg bg-black/60 text-amber-300 border border-white/20">
                     <Maximize2 className="w-3.5 h-3.5" />
                   </span>
