@@ -17,7 +17,12 @@ import {
   Compass,
   Zap,
   Image as ImageIcon,
-  Repeat
+  Repeat,
+  ChevronDown,
+  ChevronUp,
+  Brain,
+  Users,
+  BookOpen
 } from 'lucide-react';
 import { storageHelper } from '../../utils/storage';
 import { PostureComparisonData } from '../../types';
@@ -176,6 +181,7 @@ export const MentoPosturaOcchiView: React.FC<MentoPosturaOcchiViewProps> = ({ on
   }, [isOverlayBlinking]);
 
   const [fullscreenImage, setFullscreenImage] = useState<{ url: string; title: string } | null>(null);
+  const [isTecnicheOpen, setIsTecnicheOpen] = useState(false);
 
   // Modals for URL input
   const [urlModalTarget, setUrlModalTarget] = useState<PhotoSlot | null>(null);
@@ -271,6 +277,241 @@ export const MentoPosturaOcchiView: React.FC<MentoPosturaOcchiViewProps> = ({ on
     }
   };
 
+  if (isTecnicheOpen) {
+    return (
+      <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">
+        {/* Top Navigation Bar */}
+        <div className="flex items-center justify-between sticky top-0 z-30 bg-[#0B0F17]/95 backdrop-blur-md py-2 -mx-4 px-4 border-b border-white/10">
+          <button
+            type="button"
+            onClick={() => setIsTecnicheOpen(false)}
+            className="flex items-center space-x-1.5 py-2 px-3 rounded-2xl bg-white/5 hover:bg-white/10 text-emerald-300 border border-white/10 text-xs font-bold uppercase tracking-wider transition-all active:scale-95 cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Mento, postura e occhi</span>
+          </button>
+          <span className="text-[11px] font-bold text-emerald-300 bg-emerald-500/10 px-3 py-1 rounded-xl border border-emerald-500/20 flex items-center gap-1">
+            <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+            3 Tecniche Scoperte
+          </span>
+        </div>
+
+        {/* Title Card */}
+        <div className="p-5 sm:p-6 rounded-3xl glass-card border border-emerald-500/40 relative overflow-hidden space-y-2 bg-gradient-to-br from-emerald-500/15 via-black/90 to-cyan-500/10 shadow-[0_0_25px_rgba(16,185,129,0.15)]">
+          <div className="flex items-center space-x-2">
+            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-black uppercase tracking-widest border border-emerald-500/30 flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-emerald-400" />
+              Pagina Dedicata • Tecniche Scoperte
+            </span>
+          </div>
+
+          <h1 className="text-xl sm:text-2xl font-black text-white leading-tight uppercase tracking-tight">
+            Appunti sulla Postura e Assetto Corporeo
+          </h1>
+
+          <p className="text-xs text-gray-300 font-medium leading-relaxed">
+            Tutte e 3 le tecniche integrate per allenare la memoria muscolare, valorizzare il lato a favore nelle interazioni sociali e mantenere una postura corretta a scuola al banco.
+          </p>
+        </div>
+
+        {/* TECNICA 1 */}
+        <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-emerald-500/40 space-y-4 shadow-[0_0_20px_rgba(16,185,129,0.15)]">
+          <div className="flex items-center space-x-3 border-b border-white/10 pb-3">
+            <span className="p-2.5 rounded-2xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              <Brain className="w-5 h-5" />
+            </span>
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400">
+                Tecnica 1 • Assetto & Corpo
+              </span>
+              <h3 className="text-base font-extrabold text-white">
+                Memoria Muscolare & Assetto Generale (In Piedi / In Movimento)
+              </h3>
+            </div>
+          </div>
+
+          {/* Principi Generali */}
+          <div className="space-y-2">
+            <span className="text-xs font-bold text-emerald-300 uppercase tracking-wider flex items-center gap-1">
+              <span>📌 Principi Generali:</span>
+            </span>
+            <p className="text-xs text-gray-200 leading-relaxed font-medium bg-white/[0.03] p-3 rounded-2xl border border-white/5">
+              La cosa importante è <strong className="text-white">allenare la memoria muscolare</strong>. Petto aperto, spalle rilassate, nuca dritta e mento leggermente rientrato. Questa è la mia struttura fissa.
+            </p>
+            <p className="text-xs text-gray-300 leading-relaxed font-medium pl-1">
+              Per impostare l'assetto della testa e della parte superiore del corpo, il movimento da fare è <strong className="text-emerald-300">aprire bene le spalle e portarle leggermente all'indietro</strong>. La posizione corretta non nasce dal contorcere il collo, ma dal mantenere il petto aperto e lo sguardo dritto: quando la colonna vertebrale è allineata, il blocco testa-collo trova da solo la configurazione ideale.
+            </p>
+          </div>
+
+          {/* Assetto della Testa */}
+          <div className="space-y-2 pt-2 border-t border-white/5">
+            <span className="text-xs font-bold text-emerald-300 uppercase tracking-wider flex items-center gap-1">
+              <span>🎯 Assetto della Testa (In Piedi / In Movimento):</span>
+            </span>
+            <div className="grid grid-cols-1 gap-2.5 text-xs text-gray-300">
+              <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
+                <strong className="text-white block font-bold text-xs flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400"></span> Nuca e Collo:
+                </strong>
+                <p className="text-[11px] leading-relaxed text-gray-300 pl-3.5">
+                  La nuca scivola leggermente all'indietro lungo l'asse della colonna, senza forza muscolare, come se ci fosse una spinta verso l'alto dalla cima del capo. Il collo rimane dritto, solido e ben connesso alle spalle.
+                </p>
+              </div>
+
+              <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
+                <strong className="text-white block font-bold text-xs flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400"></span> Mento e Jawline:
+                </strong>
+                <p className="text-[11px] leading-relaxed text-gray-300 pl-3.5">
+                  Il mento è parallelo al pavimento e leggermente rientrato (non alzato e non incassato). Questo crea una tensione pulita sotto la mandibola che fa risaltare la linea dell'osso.
+                </p>
+              </div>
+
+              <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
+                <strong className="text-white block font-bold text-xs flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400"></span> Sguardo e Profondità:
+                </strong>
+                <p className="text-[11px] leading-relaxed text-gray-300 pl-3.5">
+                  Lo sguardo punta fisso all'orizzonte. La micro-inclinazione del capo crea un'ombra naturale delle sopracciglia sugli occhi, con la palpebra superiore che copre appena la parte alta dell'iride per uno sguardo profondo, incorniciato e riposato.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* TECNICA 2 */}
+        <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-cyan-500/40 space-y-4 shadow-[0_0_20px_rgba(6,182,212,0.15)]">
+          <div className="flex items-center space-x-3 border-b border-white/10 pb-3">
+            <span className="p-2.5 rounded-2xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+              <Users className="w-5 h-5" />
+            </span>
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400">
+                Tecnica 2 • Interazioni Sociali
+              </span>
+              <h3 className="text-base font-extrabold text-white">
+                Il Lato a Favore (Destra) & Espressione con le Persone
+              </h3>
+            </div>
+          </div>
+
+          <div className="space-y-2.5 text-xs text-gray-300">
+            <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
+              <strong className="text-white block font-bold text-xs flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-cyan-400"></span> Micro-Inclinazione e Ciuffo:
+              </strong>
+              <p className="text-[11px] leading-relaxed text-gray-300 pl-3.5">
+                Il viso non resta bloccato a 0°. Mantiene un rilassamento dinamico verso la destra (il lato a favore), lasciando che il ciuffo incornici la fronte e valorizzi l'asimmetria del volto.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
+              <strong className="text-white block font-bold text-xs flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-cyan-400"></span> Espressione e Assetto con le Persone:
+              </strong>
+              <p className="text-[11px] leading-relaxed text-gray-300 pl-3.5">
+                Spalle aperte, torace espanso e muscoli del viso (fronte, bocca, mandibola) completamente decontratti.
+              </p>
+            </div>
+
+            {/* Da sottolineare bene box */}
+            <div className="p-4 rounded-2xl bg-cyan-950/40 border border-cyan-400/50 space-y-2 shadow-sm">
+              <span className="text-xs font-black text-cyan-300 flex items-center gap-1.5 uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-cyan-400" /> Da Sottolineare Bene:
+              </span>
+              <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                Quando si parla con le persone, il viso tende naturalmente a mostrare di più un determinato lato. Non si tratta di una posizione rigida da bloccare o tenere fissa, ma di <strong className="text-cyan-300">un'orientazione da ricordarsi di favorire un po' più verso destra durante le interazioni sociali</strong>.
+              </p>
+              <p className="text-[11px] text-cyan-200/90 leading-relaxed">
+                Più ci si ricorda di questa inclinazione nelle conversazioni di tutti i giorni, più la regolazione del lato diventerà automatica e uscirà naturale a lungo andare.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* TECNICA 3 */}
+        <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-amber-500/40 space-y-4 shadow-[0_0_20px_rgba(245,158,11,0.15)]">
+          <div className="flex items-center space-x-3 border-b border-white/10 pb-3">
+            <span className="p-2.5 rounded-2xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              <BookOpen className="w-5 h-5" />
+            </span>
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
+                Tecnica 3 • Scuola & Studio
+              </span>
+              <h3 className="text-base font-extrabold text-white">
+                Gestione della Postura da Seduto (A Scuola / Al Banco)
+              </h3>
+            </div>
+          </div>
+
+          <p className="text-xs text-gray-300 leading-relaxed font-medium">
+            Per evitare di cedere alla gravità o di afflosciarsi durante le ore di seduta, la struttura si mantiene attraverso alcune regole pratiche:
+          </p>
+
+          <div className="space-y-2.5 text-xs text-gray-300">
+            {/* Gestione del Bacino e Base */}
+            <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5">
+              <strong className="text-white block font-bold text-xs flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-amber-400"></span> Gestione del Bacino e Base:
+              </strong>
+              <ul className="list-disc list-inside text-[11px] leading-relaxed text-gray-300 space-y-1 pl-2">
+                <li>
+                  <strong className="text-amber-200">Come già faccio io:</strong> incollo i glutei allo schienale spingendo il bacino fino in fondo alla sedia (sedersi sulla punta curva la schiena a "C" e fa crollare la testa in avanti).
+                </li>
+                <li>
+                  <strong className="text-amber-200">Piante dei piedi:</strong> ben piantate a terra per scaricare il peso.
+                </li>
+              </ul>
+            </div>
+
+            {/* Posizionamento al Banco */}
+            <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5">
+              <strong className="text-white block font-bold text-xs flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-amber-400"></span> Posizionamento al Banco:
+              </strong>
+              <ul className="list-disc list-inside text-[11px] leading-relaxed text-gray-300 space-y-1 pl-2">
+                <li>
+                  <strong className="text-amber-200">Busto vicino al tavolo:</strong> evita di allungare le braccia o piegarsi in avanti.
+                </li>
+                <li>
+                  <strong className="text-amber-200">Avambracci appoggiati:</strong> scaricano il peso sul banco, rilassano i trapezii e tengono le spalle aperte.
+                </li>
+              </ul>
+            </div>
+
+            {/* Inclinazione Capo e Reset */}
+            <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5">
+              <strong className="text-white block font-bold text-xs flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-amber-400"></span> Inclinazione Capo e Reset:
+              </strong>
+              <ul className="list-disc list-inside text-[11px] leading-relaxed text-gray-300 space-y-1 pl-2">
+                <li>
+                  Evitare di piegare tutto il collo verso il basso per guardare i fogli; abbassare principalmente lo sguardo e inclinare la testa partendo solo dal mento.
+                </li>
+                <li>
+                  Usare i momenti di pausa o i cambi di spiegazione per fare un <strong className="text-amber-300">micro-reset</strong>: far scivolare la nuca di mezzo centimetro all'indietro e riaprire il petto.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Back Button */}
+        <div className="pt-2 text-center">
+          <button
+            type="button"
+            onClick={() => setIsTecnicheOpen(false)}
+            className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs transition-all shadow-lg hover:shadow-emerald-500/25 cursor-pointer flex items-center justify-center space-x-2 mx-auto"
+          >
+            <ArrowLeft className="w-4 h-4 stroke-[3]" />
+            <span>Torna a Mento, postura e occhi</span>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">
       {/* Hidden file input */}
@@ -320,6 +561,53 @@ export const MentoPosturaOcchiView: React.FC<MentoPosturaOcchiViewProps> = ({ on
           Le mie note personali su quello che ho capito e verificato confrontando le mie foto: come cambia la visibilità della sclera e l'effetto hooded eyes, la retroposizione del capo (chin tuck), perché l'armonia batte la tensione massima del mento e come la postura eretta espande la presenza del corpo.
         </p>
       </div>
+
+      {/* ------------------------------------------------------------- */}
+      {/* ✨ RIQUADRO / TASTO: TECNICHE SCOPERTE (APRE IL MENU SEZIONE DEDICATA) */}
+      {/* ------------------------------------------------------------- */}
+      <div
+        onClick={() => setIsTecnicheOpen(true)}
+        className="rounded-3xl glass-card border-2 border-emerald-400/50 bg-gradient-to-br from-emerald-950/40 via-black/90 to-cyan-950/30 shadow-[0_0_25px_rgba(16,185,129,0.2)] p-4 sm:p-5 hover:border-emerald-400/80 transition-all cursor-pointer group flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+      >
+        <div className="space-y-1.5 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-black uppercase tracking-wider border border-emerald-500/30 flex items-center gap-1 shadow-sm">
+              <Sparkles className="w-3 h-3 text-emerald-400" />
+              Tecniche Scoperte
+            </span>
+            <span className="text-[10px] font-bold text-gray-400 bg-white/5 px-2 py-0.5 rounded-md border border-white/10">
+              Menu Dedicato • 3 Tecniche
+            </span>
+          </div>
+
+          <h2 className="text-base sm:text-lg font-black text-white group-hover:text-emerald-300 transition-colors">
+            Appunti sulla Postura e Assetto Corporeo
+          </h2>
+
+          <p className="text-xs text-gray-300 font-medium leading-relaxed">
+            Tocca questo riquadro per aprire la sezione dedicata con tutte e 3 le tecniche scoperte: memoria muscolare in movimento, il lato a favore nelle interazioni sociali e l'assetto da seduto al banco.
+          </p>
+
+          <div className="flex flex-wrap gap-1.5 pt-1">
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+              <Brain className="w-3 h-3 text-emerald-400" /> 1. Memoria Muscolare
+            </span>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 flex items-center gap-1">
+              <Users className="w-3 h-3 text-cyan-400" /> 2. Lato Sociale a Favore
+            </span>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-1">
+              <BookOpen className="w-3 h-3 text-amber-400" /> 3. Da Seduto (Al Banco)
+            </span>
+          </div>
+        </div>
+
+        <div className="flex sm:flex-col items-center justify-center p-3 rounded-2xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shrink-0 group-hover:bg-emerald-400 group-hover:text-black transition-all shadow-md gap-1.5">
+          <span className="text-xs font-black uppercase tracking-wider">Apri Menu</span>
+          <span className="text-sm font-black">→</span>
+        </div>
+      </div>
+
+
 
       {/* ------------------------------------------------------------- */}
       {/* 📸 BOX CONFRONTO FOTOGRAFICO POSTURA NORMALE VS POSTURA BUONA */}
