@@ -25,11 +25,14 @@ import {
   ExternalLink,
   Play,
   Repeat,
-  Zap
+  Zap,
+  Moon,
+  Bed
 } from 'lucide-react';
 import { UserNote } from '../../types';
 import { storageHelper } from '../../utils/storage';
 import { MentoPosturaOcchiView } from './MentoPosturaOcchiView';
+import { SonnoPosizioniView } from './SonnoPosizioniView';
 
 const FACE_PHOTOS = [
   {
@@ -69,7 +72,7 @@ const SCHEMA_IMAGES = [
 ];
 
 export const NoteTab: React.FC = () => {
-  const [activeView, setActiveView] = useState<'list' | 'asimmetria' | 'ortodonzia' | 'postura_occhi'>('list');
+  const [activeView, setActiveView] = useState<'list' | 'asimmetria' | 'ortodonzia' | 'postura_occhi' | 'sonno_posizioni'>('list');
   const [userNotes, setUserNotes] = useState<UserNote[]>(() => storageHelper.getUserNotes());
   const [fullscreenImg, setFullscreenImg] = useState<{ url: string; title: string } | null>(null);
   const [faceComparisonMode, setFaceComparisonMode] = useState<'overlay' | 'sideBySide' | 'swipe'>('overlay');
@@ -332,6 +335,13 @@ export const NoteTab: React.FC = () => {
   // -------------------------------------------------------------
   if (activeView === 'postura_occhi') {
     return <MentoPosturaOcchiView onBack={() => setActiveView('list')} />;
+  }
+
+  // -------------------------------------------------------------
+  // VIEW: SONNO E POSIZIONI (RICHIESTA SPECIFICA UTENTE)
+  // -------------------------------------------------------------
+  if (activeView === 'sonno_posizioni') {
+    return <SonnoPosizioniView onBack={() => setActiveView('list')} />;
   }
 
   // -------------------------------------------------------------
@@ -1352,6 +1362,54 @@ export const NoteTab: React.FC = () => {
               <Sparkles className="w-3.5 h-3.5" />
             </span>
             <span className="text-[10px] text-gray-400 font-semibold">Confronto Foto + Memorandum</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ------------------------------------------------------------- */}
+      {/* CARD: "SONNO E POSIZIONI" (RICHIESTA SPECIFICA UTENTE)        */}
+      {/* ------------------------------------------------------------- */}
+      <div className="space-y-2">
+        <span className="text-[11px] font-bold text-indigo-300 uppercase tracking-wider block pl-1">
+          Nuova Nota Personale • Riposo & Allineamento Notturno
+        </span>
+
+        <div
+          onClick={() => setActiveView('sonno_posizioni')}
+          className="p-5 rounded-3xl glass-card border-2 border-indigo-400/70 hover:border-indigo-400 bg-gradient-to-br from-indigo-500/20 via-black/85 to-purple-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
+        >
+          <div className="absolute -top-12 -right-12 w-32 h-32 bg-indigo-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
+
+          <div className="flex items-start justify-between relative z-10">
+            <div className="space-y-2 flex-1 pr-3">
+              <div className="flex items-center space-x-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-indigo-400/20 text-indigo-300 text-[10px] font-black uppercase tracking-wider border border-indigo-400/40 shadow-sm flex items-center gap-1">
+                  <Moon className="w-3 h-3 text-indigo-400" />
+                  ★ Note Scritte Da Me
+                </span>
+                <span className="text-[10px] text-gray-400 font-semibold">Schiena & Fianco</span>
+              </div>
+
+              <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-indigo-300 transition-colors uppercase tracking-tight">
+                Sonno e posizioni
+              </h2>
+
+              <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
+                Tecniche posturali notturne: test pratici a pancia in su (respiro profondo, rilascio muscolare totale, deglutizione, cuscino) e assetto corretto di lato (linea naso-ombelico, spalla libera e cuscino tra le ginocchia).
+              </p>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-indigo-500/20 group-hover:bg-indigo-500 text-indigo-300 group-hover:text-black border border-indigo-400/50 shadow-neon transition-all shrink-0 mt-1">
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
+            <span className="text-indigo-300 font-bold flex items-center gap-1.5">
+              <span>Tocca per aprire le tecniche posturali del sonno</span>
+              <Sparkles className="w-3.5 h-3.5" />
+            </span>
+            <span className="text-[10px] text-gray-400 font-semibold">A Pancia in Su + Di Lato</span>
           </div>
         </div>
       </div>
