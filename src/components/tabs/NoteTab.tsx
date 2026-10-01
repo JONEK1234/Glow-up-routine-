@@ -29,7 +29,8 @@ import {
   Moon,
   Bed,
   Scissors,
-  Droplets
+  Droplets,
+  Dumbbell
 } from 'lucide-react';
 import { UserNote } from '../../types';
 import { storageHelper } from '../../utils/storage';
@@ -37,6 +38,7 @@ import { MentoPosturaOcchiView } from './MentoPosturaOcchiView';
 import { SonnoPosizioniView } from './SonnoPosizioniView';
 import { PeliIncarnitiVisoView } from './PeliIncarnitiVisoView';
 import { GiorniShampooTextureView } from './GiorniShampooTextureView';
+import { PalestraPerditaGrassoView } from './PalestraPerditaGrassoView';
 
 const FACE_PHOTOS = [
   {
@@ -76,7 +78,7 @@ const SCHEMA_IMAGES = [
 ];
 
 export const NoteTab: React.FC = () => {
-  const [activeView, setActiveView] = useState<'list' | 'asimmetria' | 'ortodonzia' | 'postura_occhi' | 'sonno_posizioni' | 'peli_incarniti' | 'shampoo_texture'>('list');
+  const [activeView, setActiveView] = useState<'list' | 'asimmetria' | 'ortodonzia' | 'postura_occhi' | 'sonno_posizioni' | 'peli_incarniti' | 'shampoo_texture' | 'palestra_grasso'>('list');
   const [userNotes, setUserNotes] = useState<UserNote[]>(() => storageHelper.getUserNotes());
   const [fullscreenImg, setFullscreenImg] = useState<{ url: string; title: string } | null>(null);
   const [faceComparisonMode, setFaceComparisonMode] = useState<'overlay' | 'sideBySide' | 'swipe'>('overlay');
@@ -360,6 +362,13 @@ export const NoteTab: React.FC = () => {
   // -------------------------------------------------------------
   if (activeView === 'shampoo_texture') {
     return <GiorniShampooTextureView onBack={() => setActiveView('list')} />;
+  }
+
+  // -------------------------------------------------------------
+  // VIEW: PALESTRA E ORGANIZZAZIONE PER PERDERE GRASSO
+  // -------------------------------------------------------------
+  if (activeView === 'palestra_grasso') {
+    return <PalestraPerditaGrassoView onBack={() => setActiveView('list')} />;
   }
 
   // -------------------------------------------------------------
@@ -1524,6 +1533,54 @@ export const NoteTab: React.FC = () => {
               <Sparkles className="w-3.5 h-3.5" />
             </span>
             <span className="text-[10px] text-gray-400 font-semibold">Tabella Lun-Dom + Spiegazioni</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ------------------------------------------------------------- */}
+      {/* CARD: "PALESTRA E ORGANIZZAZIONE PER PERDERE GRASSO"          */}
+      {/* ------------------------------------------------------------- */}
+      <div className="space-y-2">
+        <span className="text-[11px] font-bold text-orange-400 uppercase tracking-wider block pl-1">
+          Nuova Nota Personale • Allenamento & Ricomposizione Corporea
+        </span>
+
+        <div
+          onClick={() => setActiveView('palestra_grasso')}
+          className="p-5 rounded-3xl glass-card border-2 border-orange-500/70 hover:border-orange-400 bg-gradient-to-br from-orange-500/20 via-black/85 to-amber-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
+        >
+          <div className="absolute -top-12 -right-12 w-32 h-32 bg-orange-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
+
+          <div className="flex items-start justify-between relative z-10">
+            <div className="space-y-2 flex-1 pr-3">
+              <div className="flex items-center space-x-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-orange-400/20 text-orange-300 text-[10px] font-black uppercase tracking-wider border border-orange-400/40 shadow-sm flex items-center gap-1">
+                  <Dumbbell className="w-3 h-3 text-orange-400" />
+                  ★ Note Scritte Da Me
+                </span>
+                <span className="text-[10px] text-gray-400 font-semibold">Guida Completa 5 Pilastri</span>
+              </div>
+
+              <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-orange-300 transition-colors uppercase tracking-tight">
+                Palestra e organizzazione per perdere grasso
+              </h2>
+
+              <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
+                Tecnica dei pesi e buffer (3x12), deficit calorico naturale senza fame, protezione assoluta della massa magra, scaletta pratica della sessione passo-passo e gestione di proteine, carboidrati e glicemia.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-orange-500/20 group-hover:bg-orange-500 text-orange-300 group-hover:text-black border border-orange-400/50 shadow-neon transition-all shrink-0 mt-1">
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
+            <span className="text-orange-300 font-bold flex items-center gap-1.5">
+              <span>Tocca per aprire la guida su palestra e dimagrimento</span>
+              <Sparkles className="w-3.5 h-3.5" />
+            </span>
+            <span className="text-[10px] text-gray-400 font-semibold">Pesi + Deficit + Protezione Muscoli</span>
           </div>
         </div>
       </div>
