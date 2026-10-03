@@ -44,7 +44,7 @@ const FACE_PHOTOS = [
   {
     id: 'attuale',
     title: 'Viso Attuale',
-    badge: '1/2 • Faccia Attuale',
+    badge: '1/3 • Faccia Attuale',
     tag: 'Base di Partenza',
     desc: 'Viso iniziale: arcata destra espansa, arcata sinistra compressa',
     url: 'https://i.ibb.co/3VDsH13/20260911-184140.jpg'
@@ -52,16 +52,25 @@ const FACE_PHOTOS = [
   {
     id: 'definita',
     title: 'Viso Definito',
-    badge: '2/2 • Faccia Definita',
+    badge: '2/3 • Faccia Definita',
     tag: 'Modello Target',
     desc: 'Modello target: zigomi e masseteri cesellati, simmetria ed espansione',
     url: 'https://i.ibb.co/nspkJD8t/1789145825747.jpg'
+  },
+  {
+    id: 'differenze',
+    title: 'Nota le Differenze',
+    badge: '3/3 • Nota le Differenze',
+    tag: 'Foto Aggiuntiva',
+    desc: 'Confronto visivo diretto e analisi delle differenze di asimmetria',
+    url: 'https://i.ibb.co/XkXQvWwh/Picsart-26-10-03-19-38-11-847.jpg'
   }
 ];
 
 const FACE_IMAGES = {
   attuale: FACE_PHOTOS[0].url,
-  definita: FACE_PHOTOS[1].url
+  definita: FACE_PHOTOS[1].url,
+  differenze: FACE_PHOTOS[2].url
 };
 
 const SCHEMA_IMAGES = [
@@ -91,7 +100,7 @@ export const NoteTab: React.FC = () => {
 
   // Quick swap handler for overlay comparison
   const handleToggleFace = () => {
-    setActiveFaceIndex(prev => (prev === 0 ? 1 : 0));
+    setActiveFaceIndex(prev => (prev + 1) % FACE_PHOTOS.length);
     setSwapCount(c => c + 1);
   };
 
@@ -100,7 +109,7 @@ export const NoteTab: React.FC = () => {
     let interval: any = null;
     if (isAutoBlinking) {
       interval = setInterval(() => {
-        setActiveFaceIndex(prev => (prev === 0 ? 1 : 0));
+        setActiveFaceIndex(prev => (prev + 1) % FACE_PHOTOS.length);
         setSwapCount(c => c + 1);
       }, 700);
     }
@@ -398,23 +407,23 @@ export const NoteTab: React.FC = () => {
         <div className="p-4 sm:p-5 rounded-3xl glass-card border border-[#00FFD1]/30 relative overflow-hidden space-y-2.5">
           <div className="flex items-center space-x-2">
             <span className="px-2.5 py-0.5 rounded-full bg-[#00FFD1]/10 text-[#00FFD1] text-[10px] font-extrabold uppercase tracking-widest border border-[#00FFD1]/30">
-              Nota di Riferimento
+              Nota di Riferimento Aggiornata
             </span>
             <span className="text-[10px] text-gray-400 font-semibold">Percorso Naturale</span>
           </div>
 
           <h1 className="text-base sm:text-lg font-black text-white leading-snug">
-            ANALISI E PIANO INTEGRATO PER LA SIMMETRIA FACCIALE (PERCORSO NATURALE)
+            ANALISI E PIANO INTEGRATO PER LA SIMMETRIA FACCIALE (STRATEGIA INVERTITA)
           </h1>
 
           <p className="text-xs text-gray-300 leading-relaxed font-medium">
-            Questa nota riassume la tua struttura anatomica specifica, la meccanica del tuo morso e il piano d'azione naturale consolidato per i prossimi 8 mesi. L'obiettivo è massimizzare la definizione e l'armonia, sfruttando la tua base ossea esistente.
+            Questa nota riassume la tua struttura anatomica specifica, la diagnosi al tatto dei muscoli masseteri e il piano naturale aggiornato: la parte destra ha bisogno solo di dimagrimento per definirsi, mentre la parte sinistra (fina) deve essere stimolata con la masticazione per pareggiare lo spessore muscolare ed evitare che il dimagrimento accentui l'asimmetria.
           </p>
         </div>
 
         {/* BOX 1: CONFRONTO FOTOGRAFICO VISO ATTUALE VS VISO DEFINITO */}
         <div className="p-4 rounded-3xl glass-card border border-white/10 space-y-3">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
             <div className="flex items-center space-x-2">
               <div className="p-1.5 rounded-xl bg-cyan-500/20 text-cyan-300">
                 <Eye className="w-4 h-4" />
@@ -427,8 +436,8 @@ export const NoteTab: React.FC = () => {
               </div>
             </div>
 
-            {/* Mode switch (Sovrapponi / 2 Affiancate / Swipe) */}
-            <div className="flex bg-black/60 p-1 rounded-2xl border border-white/10 text-[10px] space-x-0.5">
+            {/* Mode switch (Sovrapponi / Affiancate / Swipe) */}
+            <div className="flex bg-black/60 p-1 rounded-2xl border border-white/10 text-[10px] space-x-0.5 self-start sm:self-auto">
               <button
                 type="button"
                 onClick={() => setFaceComparisonMode('overlay')}
@@ -439,23 +448,23 @@ export const NoteTab: React.FC = () => {
                 }`}
               >
                 <Repeat className="w-3 h-3" />
-                <span>Sovrapponi & Scambia</span>
+                <span>Sovrapponi</span>
               </button>
               <button
                 type="button"
                 onClick={() => setFaceComparisonMode('sideBySide')}
-                className={`px-2 py-1 rounded-xl font-bold transition-all cursor-pointer ${
+                className={`px-2.5 py-1 rounded-xl font-bold transition-all cursor-pointer ${
                   faceComparisonMode === 'sideBySide'
                     ? 'bg-cyan-500 text-black shadow-sm font-black'
                     : 'text-gray-400 hover:text-white'
                 }`}
               >
-                2 Affiancate
+                Affiancate
               </button>
               <button
                 type="button"
                 onClick={() => setFaceComparisonMode('swipe')}
-                className={`px-2 py-1 rounded-xl font-bold transition-all cursor-pointer ${
+                className={`px-2.5 py-1 rounded-xl font-bold transition-all cursor-pointer ${
                   faceComparisonMode === 'swipe'
                     ? 'bg-cyan-500 text-black shadow-sm font-black'
                     : 'text-gray-400 hover:text-white'
@@ -463,6 +472,36 @@ export const NoteTab: React.FC = () => {
               >
                 Swipe
               </button>
+            </div>
+          </div>
+
+          {/* TASTO RICHIESTO: "NOTA LE DIFFERENZE" (APRE LA FOTO AGGIUNTIVA) */}
+          <div
+            onClick={() => {
+              setActiveFaceIndex(2);
+              setFullscreenImg({
+                url: FACE_PHOTOS[2].url,
+                title: 'Nota le Differenze • Foto Analisi Asimmetria'
+              });
+            }}
+            className="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/70 via-teal-950/50 to-black/85 border-2 border-emerald-400/70 hover:border-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all flex items-center justify-between cursor-pointer group active:scale-[0.98]"
+          >
+            <div className="flex items-center space-x-3">
+              <span className="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 group-hover:bg-emerald-500 group-hover:text-black transition-all">
+                <Sparkles className="w-4 h-4 text-emerald-400 group-hover:text-black" />
+              </span>
+              <div className="text-left">
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400 block">
+                  Foto Aggiuntiva Ingrandibile
+                </span>
+                <h4 className="text-xs sm:text-sm font-black text-white group-hover:text-emerald-200 transition-colors">
+                  Tasto: Nota le differenze
+                </h4>
+              </div>
+            </div>
+            <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-emerald-400 text-black font-black text-xs shadow-neon group-hover:scale-105 transition-transform">
+              <Eye className="w-3.5 h-3.5" />
+              <span>Apri Foto</span>
             </div>
           </div>
 
@@ -474,14 +513,16 @@ export const NoteTab: React.FC = () => {
                   <span className={`w-3 h-3 rounded-full transition-all ${
                     activeFaceIndex === 0 
                       ? 'bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.8)]' 
-                      : 'bg-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.8)]'
+                      : activeFaceIndex === 1
+                      ? 'bg-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.8)]'
+                      : 'bg-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.8)]'
                   }`} />
                   <div>
                     <span className="text-xs font-black text-white block">
-                      {activeFaceIndex === 0 ? '1. Faccia Attuale' : '2. Faccia Definita'}
+                      {FACE_PHOTOS[activeFaceIndex].title}
                     </span>
                     <span className="text-[10px] text-gray-400 block -mt-0.5">
-                      {activeFaceIndex === 0 ? 'Base di partenza rilassata' : 'Target cesellato e simmetrico'}
+                      {FACE_PHOTOS[activeFaceIndex].desc}
                     </span>
                   </div>
                 </div>
@@ -534,14 +575,26 @@ export const NoteTab: React.FC = () => {
                   referrerPolicy="no-referrer"
                 />
 
+                {/* 3rd Image: Nota le Differenze */}
+                <img
+                  src={FACE_PHOTOS[2].url}
+                  alt="Nota le Differenze"
+                  className={`absolute inset-0 w-full h-full object-cover select-none pointer-events-none ${
+                    activeFaceIndex === 2 ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                  }`}
+                  referrerPolicy="no-referrer"
+                />
+
                 {/* Top Floating Badge & Fullscreen Button */}
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-20 pointer-events-auto">
                   <span className={`text-[10px] font-black px-3 py-1.5 rounded-xl backdrop-blur-md border shadow-lg transition-all ${
                     activeFaceIndex === 0
                       ? 'bg-black/85 text-amber-300 border-amber-500/40'
-                      : 'bg-cyan-950/90 text-cyan-300 border-cyan-400/50 shadow-neon'
+                      : activeFaceIndex === 1
+                      ? 'bg-cyan-950/90 text-cyan-300 border-cyan-400/50 shadow-neon'
+                      : 'bg-emerald-950/90 text-emerald-300 border-emerald-400/50 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
                   }`}>
-                    {activeFaceIndex === 0 ? '1/2 • Faccia Attuale' : '2/2 • Faccia Definita'}
+                    {FACE_PHOTOS[activeFaceIndex].badge}
                   </span>
 
                   <button
@@ -564,7 +617,7 @@ export const NoteTab: React.FC = () => {
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20 opacity-0 group-hover:opacity-100 transition-opacity">
                   <span className="px-3.5 py-1.5 rounded-2xl bg-black/85 backdrop-blur-md text-white border border-cyan-400/40 text-xs font-bold shadow-xl flex items-center gap-1.5">
                     <Repeat className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>Tocca per scambiare</span>
+                    <span>Tocca per scambiare ({activeFaceIndex + 1}/3)</span>
                   </span>
                 </div>
 
@@ -584,94 +637,135 @@ export const NoteTab: React.FC = () => {
                 </div>
               </div>
 
-              {/* TASTO RICHIESTO DALL'UTENTE: PERMETTE DI SOVRAPPORRE / SCAMBIARE L'IMMAGINE */}
+              {/* TASTI DI SCAMBIO & NOTA LE DIFFERENZE */}
               <div className="space-y-2 max-w-sm mx-auto">
-                <button
-                  type="button"
-                  onClick={handleToggleFace}
-                  className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-cyan-400 via-emerald-400 to-teal-400 hover:from-cyan-300 hover:to-emerald-300 text-black font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center space-x-2.5 shadow-[0_0_20px_rgba(6,182,212,0.4)] active:scale-95 transition-all cursor-pointer select-none"
-                >
-                  <Repeat className="w-5 h-5 text-black" />
-                  <span>
-                    ⚡ Clicca per Scambiare ({activeFaceIndex === 0 ? 'Passa a Faccia Definita' : 'Torna a Faccia Attuale'})
-                  </span>
-                </button>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={handleToggleFace}
+                    className="py-3 px-3 rounded-2xl bg-gradient-to-r from-cyan-400 via-emerald-400 to-teal-400 hover:from-cyan-300 hover:to-emerald-300 text-black font-black text-xs uppercase tracking-wider flex items-center justify-center space-x-1.5 shadow-[0_0_15px_rgba(6,182,212,0.3)] active:scale-95 transition-all cursor-pointer select-none"
+                  >
+                    <Repeat className="w-4 h-4 text-black shrink-0" />
+                    <span>Scambia ({activeFaceIndex === 0 ? '1➔2' : activeFaceIndex === 1 ? '2➔3' : '3➔1'})</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveFaceIndex(2);
+                      setSwapCount(c => c + 1);
+                    }}
+                    className={`py-3 px-3 rounded-2xl font-black text-xs uppercase tracking-wider flex items-center justify-center space-x-1.5 transition-all active:scale-95 cursor-pointer select-none ${
+                      activeFaceIndex === 2
+                        ? 'bg-emerald-400 text-black shadow-[0_0_20px_rgba(16,185,129,0.5)] font-extrabold ring-2 ring-emerald-300'
+                        : 'bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 shadow-sm'
+                    }`}
+                  >
+                    <Sparkles className="w-4 h-4 shrink-0" />
+                    <span>Nota le differenze</span>
+                  </button>
+                </div>
+
+                {/* 3 mini tabs per selezionare direttamente 1, 2 o 3 */}
+                <div className="grid grid-cols-3 gap-1.5 bg-black/60 p-1.5 rounded-2xl border border-white/10 text-[10px]">
+                  <button
+                    type="button"
+                    onClick={() => setActiveFaceIndex(0)}
+                    className={`py-1.5 px-1.5 rounded-xl font-bold transition-all text-center cursor-pointer ${
+                      activeFaceIndex === 0
+                        ? 'bg-amber-400 text-black font-black shadow-sm'
+                        : 'text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    1. Attuale
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveFaceIndex(1)}
+                    className={`py-1.5 px-1.5 rounded-xl font-bold transition-all text-center cursor-pointer ${
+                      activeFaceIndex === 1
+                        ? 'bg-cyan-400 text-black font-black shadow-sm'
+                        : 'text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    2. Definita
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveFaceIndex(2)}
+                    className={`py-1.5 px-1.5 rounded-xl font-bold transition-all text-center cursor-pointer flex items-center justify-center gap-1 ${
+                      activeFaceIndex === 2
+                        ? 'bg-emerald-400 text-black font-black shadow-sm'
+                        : 'text-emerald-300 hover:text-white'
+                    }`}
+                  >
+                    <Sparkles className="w-2.5 h-2.5 text-emerald-400" />
+                    3. Differenze
+                  </button>
+                </div>
 
                 <p className="text-[11px] text-gray-400 text-center font-medium">
-                  👆 Clicca a ripetizione il tasto o l'immagine per sovrapporle e vedere ogni minima differenza!
+                  👆 Tocca il tasto <strong>"Nota le differenze"</strong> o l'immagine per confrontare i dettagli!
                 </p>
               </div>
             </div>
           ) : faceComparisonMode === 'sideBySide' ? (
-            <div className="grid grid-cols-2 gap-2.5">
-              {/* Foto Attuale */}
-              <div 
-                onClick={() => setFullscreenImg({ url: FACE_PHOTOS[0].url, title: FACE_PHOTOS[0].title })}
-                className="group relative rounded-2xl overflow-hidden border border-white/15 bg-black cursor-pointer aspect-[3/4]"
-              >
-                <img
-                  src={FACE_PHOTOS[0].url}
-                  alt="Viso Attuale"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-2">
-                  <span className="text-[10px] font-bold text-white bg-black/60 px-2 py-0.5 rounded-md border border-white/10 w-fit backdrop-blur-sm">
-                    Faccia Attuale
-                  </span>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              {FACE_PHOTOS.map((photo, pIdx) => (
+                <div 
+                  key={photo.id}
+                  onClick={() => setFullscreenImg({ url: photo.url, title: photo.title })}
+                  className={`group relative rounded-2xl overflow-hidden border bg-black cursor-pointer aspect-[3/4] transition-all ${
+                    pIdx === 2 
+                      ? 'border-emerald-400/60 shadow-[0_0_15px_rgba(16,185,129,0.25)] ring-1 ring-emerald-400/40' 
+                      : 'border-white/15'
+                  }`}
+                >
+                  <img
+                    src={photo.url}
+                    alt={photo.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent flex flex-col justify-end p-2">
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border w-fit backdrop-blur-sm ${
+                      pIdx === 0
+                        ? 'text-white bg-black/60 border-white/10'
+                        : pIdx === 1
+                        ? 'text-cyan-300 bg-cyan-950/80 border-cyan-400/30'
+                        : 'text-emerald-300 bg-emerald-950/80 border-emerald-400/40 font-black'
+                    }`}>
+                      {photo.title}
+                    </span>
+                  </div>
+                  <div className="absolute top-2 right-2 p-1.5 rounded-lg bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Maximize2 className="w-3.5 h-3.5" />
+                  </div>
                 </div>
-                <div className="absolute top-2 right-2 p-1.5 rounded-lg bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Maximize2 className="w-3.5 h-3.5" />
-                </div>
-              </div>
-
-              {/* Foto Definita */}
-              <div 
-                onClick={() => setFullscreenImg({ url: FACE_PHOTOS[1].url, title: FACE_PHOTOS[1].title })}
-                className="group relative rounded-2xl overflow-hidden border border-cyan-400/30 bg-black cursor-pointer aspect-[3/4]"
-              >
-                <img
-                  src={FACE_PHOTOS[1].url}
-                  alt="Faccia Definita"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-2">
-                  <span className="text-[10px] font-bold text-cyan-300 bg-cyan-950/80 px-2 py-0.5 rounded-md border border-cyan-400/30 w-fit backdrop-blur-sm">
-                    Faccia Definita
-                  </span>
-                </div>
-                <div className="absolute top-2 right-2 p-1.5 rounded-lg bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Maximize2 className="w-3.5 h-3.5" />
-                </div>
-              </div>
+              ))}
             </div>
           ) : (
             <div className="space-y-2.5">
-              {/* Quick tab switcher */}
-              <div className="flex rounded-xl bg-black/40 p-1 border border-white/10">
-                <button
-                  type="button"
-                  onClick={() => setActiveFaceIndex(0)}
-                  className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
-                    activeFaceIndex === 0
-                      ? 'bg-white/15 text-white shadow-sm'
-                      : 'text-gray-400 hover:text-white'
-                  }`}
-                >
-                  1. Faccia Attuale
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveFaceIndex(1)}
-                  className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
-                    activeFaceIndex === 1
-                      ? 'bg-cyan-500 text-black shadow-sm font-extrabold'
-                      : 'text-gray-400 hover:text-white'
-                  }`}
-                >
-                  2. Faccia Definita
-                </button>
+              {/* Quick tab switcher for all 3 photos */}
+              <div className="flex rounded-xl bg-black/40 p-1 border border-white/10 text-xs">
+                {FACE_PHOTOS.map((p, i) => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => setActiveFaceIndex(i)}
+                    className={`flex-1 py-1.5 font-bold rounded-lg transition-all text-center cursor-pointer ${
+                      activeFaceIndex === i
+                        ? i === 2
+                          ? 'bg-emerald-400 text-black shadow-sm font-extrabold'
+                          : i === 1
+                          ? 'bg-cyan-500 text-black shadow-sm font-extrabold'
+                          : 'bg-white/15 text-white shadow-sm'
+                        : 'text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    {i + 1}. {p.title}
+                  </button>
+                ))}
               </div>
 
               {/* Swipeable Photo Container */}
@@ -709,7 +803,9 @@ export const NoteTab: React.FC = () => {
                         <span className={`text-[10px] font-black px-2.5 py-1 rounded-lg backdrop-blur-md border shadow-lg ${
                           idx === 0 
                             ? 'bg-black/80 text-white border-white/20' 
-                            : 'bg-cyan-950/90 text-cyan-300 border-cyan-400/40'
+                            : idx === 1
+                            ? 'bg-cyan-950/90 text-cyan-300 border-cyan-400/40'
+                            : 'bg-emerald-950/90 text-emerald-300 border-emerald-400/40'
                         }`}>
                           {photo.badge}
                         </span>
@@ -743,7 +839,7 @@ export const NoteTab: React.FC = () => {
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    setActiveFaceIndex(prev => (prev === 0 ? 1 : 0));
+                    setActiveFaceIndex(prev => (prev === 0 ? FACE_PHOTOS.length - 1 : prev - 1));
                   }}
                   className="absolute left-2.5 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/70 hover:bg-black text-white border border-white/20 backdrop-blur-md cursor-pointer z-10 active:scale-90 transition-all"
                   title="Foto Precedente (o swipe a destra)"
@@ -756,7 +852,7 @@ export const NoteTab: React.FC = () => {
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    setActiveFaceIndex(prev => (prev === 1 ? 0 : 1));
+                    setActiveFaceIndex(prev => (prev === FACE_PHOTOS.length - 1 ? 0 : prev + 1));
                   }}
                   className="absolute right-2.5 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/70 hover:bg-black text-white border border-white/20 backdrop-blur-md cursor-pointer z-10 active:scale-90 transition-all"
                   title="Foto Successiva (o swipe a sinistra)"
@@ -792,6 +888,76 @@ export const NoteTab: React.FC = () => {
           )}
         </div>
 
+        {/* ============================================================= */}
+        {/* BOX IN EVIDENZA: LA DIAGNOSI DEL TATTO & TEST DEI MASSETERI  */}
+        {/* ============================================================= */}
+        <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-emerald-400/60 bg-gradient-to-br from-emerald-950/40 via-black/85 to-cyan-950/30 shadow-[0_0_25px_rgba(16,185,129,0.2)] space-y-3.5">
+          <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                <Sparkles className="w-4 h-4 text-emerald-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400 block">
+                  Autodiagnosi Fondamentale
+                </span>
+                <h2 className="text-sm sm:text-base font-black text-white">
+                  La Tecnica del Tatto: Test dei Muscoli Masseteri
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              Stringi i Denti
+            </span>
+          </div>
+
+          <div className="p-3 rounded-2xl bg-black/60 border border-white/10 text-xs text-gray-200 leading-relaxed space-y-1">
+            <strong className="text-emerald-300 block font-bold">👉 Come eseguire il test:</strong>
+            <p className="text-[11px] text-gray-300">
+              Appoggia i polpastrelli delle dita sulle guance, all'altezza degli angoli della mandibola, e <strong>stringi con forza i denti</strong> per sentire la consistenza e durezza dei muscoli masseteri sui due lati.
+            </p>
+          </div>
+
+          {/* Risultato del test */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            {/* Lato Destro */}
+            <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 space-y-1.5">
+              <div className="flex items-center justify-between">
+                <strong className="text-amber-300 font-extrabold uppercase text-[11px]">
+                  Lato Destro: "Muro Duro" & Riempito
+                </strong>
+                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300">
+                  Dominatore
+                </span>
+              </div>
+              <p className="text-[11px] text-gray-300 leading-relaxed">
+                Quella sensazione di <strong>muro solido e riempito</strong> a destra indica che su quel lato c'è già una maggiore massa muscolare (ipertrofia del massetere) unita alla base ossea del palato più grande.
+              </p>
+              <p className="text-[11px] text-amber-200 font-semibold leading-relaxed">
+                ⚠️ <strong>Cosa NON fare:</strong> Continuare a stimolarlo con la masticazione andrebbe solo ad appesantire quel lato, allargando ulteriormente la guancia e aumentando lo squilibrio visivo. Ha bisogno del solo dimagrimento per asciugarsi!
+              </p>
+            </div>
+
+            {/* Lato Sinistro */}
+            <div className="p-3.5 rounded-2xl bg-cyan-950/20 border border-cyan-500/30 space-y-1.5">
+              <div className="flex items-center justify-between">
+                <strong className="text-cyan-300 font-extrabold uppercase text-[11px]">
+                  Lato Sinistro: "Fino" & Cedevole
+                </strong>
+                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300">
+                  Lagging (Indietro)
+                </span>
+              </div>
+              <p className="text-[11px] text-gray-300 leading-relaxed">
+                A sinistra la sensazione è più <strong>cedevole e fina</strong>: c'è semplicemente meno tono/spessore muscolare sopra l'osso, arrivando subito a percepire la struttura scheletrica senza il cuscinetto denso che hai a destra.
+              </p>
+              <p className="text-[11px] text-cyan-200 font-semibold leading-relaxed">
+                💡 <strong>La Strategia Invertita:</strong> Se la parte fina subisce solo il dimagrimento senza essere muscolarmente tonificata, si svuota ed evidenzia ancora di più l'asimmetria! Per questo DEVE essere la parte sinistra ad essere stimolata con la masticazione per addensarsi e pareggiare il destro.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* PARTE 1: MAPPATURA ANATOMICA FACCIALE */}
         <div className="p-4 rounded-3xl glass-card border border-white/10 space-y-3">
           <div className="flex items-center space-x-2">
@@ -807,7 +973,7 @@ export const NoteTab: React.FC = () => {
           </div>
 
           <p className="text-xs text-gray-300 font-medium italic border-l-2 border-purple-400/50 pl-2.5 py-0.5">
-            La differenza visiva tra i due lati è determinata dalla larghezza della base ossea del palato.
+            La combinazione tra base ossea del palato e tono dei muscoli masseteri determina l'aspetto dei due lati.
           </p>
 
           <div className="space-y-3 pt-1">
@@ -815,10 +981,10 @@ export const NoteTab: React.FC = () => {
             <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-black text-emerald-300 uppercase tracking-wider">
-                  LATO DESTRO (Ampio / Piatto / Squadrato)
+                  LATO DESTRO (Ampio / "Muro Duro" / Ipertrofico)
                 </span>
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold">
-                  Base Larga
+                  Base Larga + Muscolo Già Tonico
                 </span>
               </div>
               <ul className="text-xs text-gray-200 space-y-1.5 list-disc pl-4 font-normal">
@@ -826,13 +992,13 @@ export const NoteTab: React.FC = () => {
                   <strong className="text-white">Arcata Palatina:</strong> Ampia ed espansa. Offre una base ossea strutturale più larga.
                 </li>
                 <li>
-                  <strong className="text-white">Comportamento dei Tessuti:</strong> La pelle e i muscoli si stendono su una superficie maggiore, creando una linea più dritta, tesa e squadrata.
+                  <strong className="text-white">Muscolo Massetere:</strong> Già ipertrofico, compatto e contratto (sensazione di "muro duro" al tatto).
                 </li>
                 <li>
-                  <strong className="text-white">Meccanica Mandibolare:</strong> Rappresenta la base su cui si estende la larghezza naturale dell'angolo della mascella.
+                  <strong className="text-white">Comportamento dei Tessuti:</strong> La pelle è tesa su una superficie maggiore, creando una linea più dritta e squadrata.
                 </li>
                 <li>
-                  <strong className="text-emerald-300">Obiettivo Estetico:</strong> Far emergere l'angolo squadrato asciugando la copertura superficiale e dando un leggero stimolo muscolare extra.
+                  <strong className="text-emerald-300">Obiettivo Estetico:</strong> NON ingrossarlo ulteriormente con la masticazione (riposo relativo 35-40%). Ha solo bisogno del dimagrimento corporeo per asciugare il velo superficiale e definire la mascella già solida.
                 </li>
               </ul>
             </div>
@@ -841,10 +1007,10 @@ export const NoteTab: React.FC = () => {
             <div className="p-3.5 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-black text-cyan-300 uppercase tracking-wider">
-                  LATO SINISTRO (Arrotondato / Ristretto / Pieno)
+                  LATO SINISTRO (Ristretto / "Fino" / Cedevole)
                 </span>
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-bold">
-                  Base Stretta
+                  Base Stretta + Muscolo da Sviluppare
                 </span>
               </div>
               <ul className="text-xs text-gray-200 space-y-1.5 list-disc pl-4 font-normal">
@@ -852,13 +1018,13 @@ export const NoteTab: React.FC = () => {
                   <strong className="text-white">Arcata Palatina:</strong> Stretta e compattata. Lo spazio osseo a disposizione è ridotto.
                 </li>
                 <li>
-                  <strong className="text-white">Comportamento dei Tessuti:</strong> I tessuti molli (grasso e ritenzione idrica) si raggruppano in meno spazio, creando l'effetto visivo pieno e arrotondato.
+                  <strong className="text-white">Muscolo Massetere:</strong> Fino, cedevole e meno spesso ("lagging" nello sviluppo rispetto al destro).
                 </li>
                 <li>
-                  <strong className="text-white">Meccanica Mandibolare:</strong> È il lato verso cui la mandibola scivola automaticamente a riposo per permettere ai denti di incastrarsi.
+                  <strong className="text-white">Meccanica Mandibolare:</strong> È il lato verso cui la mandibola scivola a riposo per trovare contatto dentale stabile.
                 </li>
                 <li>
-                  <strong className="text-cyan-300">Obiettivo Estetico:</strong> Sgonfiare la superficie drenando i liquidi ed eliminando la massa grassa accumulata.
+                  <strong className="text-cyan-300">Obiettivo Estetico Chiave:</strong> Stimolare l'ipertrofia del massetere sinistro con la masticazione mirata (60-65%) per addensarlo e riempire la zona, evitando che il dimagrimento svuoti la guancia mettendo in risalto l'asimmetria.
                 </li>
               </ul>
             </div>
@@ -904,46 +1070,46 @@ export const NoteTab: React.FC = () => {
           </div>
         </div>
 
-        {/* PARTE 3: SINTESI DELLA STRATEGIA NATURALE */}
+        {/* PARTE 3: SINTESI DELLA STRATEGIA NATURALE (FOCUS INVERTITO) */}
         <div className="p-4 rounded-3xl glass-card border border-white/10 space-y-2.5">
           <div className="flex items-center space-x-2">
             <div className="p-1.5 rounded-xl bg-cyan-500/20 text-cyan-300">
               <Sparkles className="w-4 h-4" />
             </div>
             <h2 className="text-xs sm:text-sm font-extrabold text-white uppercase tracking-wider">
-              PARTE 3: SINTESI DELLA STRATEGIA NATURALE
+              PARTE 3: SINTESI DELLA STRATEGIA NATURALE (FOCUS INVERTITO)
             </h2>
           </div>
 
           <p className="text-xs text-gray-300 font-medium leading-relaxed">
-            Il piano funziona perché un unico lavoro generale produce risultati diversi e complementari sui due lati:
+            La strategia da applicare da oggi è chiara e bilancia in modo complementare i due lati:
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
             <div className="p-3 rounded-2xl bg-black/40 border border-white/5 space-y-1">
-              <span className="text-xs font-bold text-emerald-300 block">Sul Lato Destro (Ampio):</span>
+              <span className="text-xs font-bold text-amber-300 block">Sul Lato Destro ("Muro Duro"): Riposo Relativo (35-40%)</span>
               <p className="text-xs text-gray-300">
-                Crei un leggero volume muscolare con la masticazione modulata, mentre la definizione fa emergere la base ossea già larga, rendendo la linea affilata e squadrata.
+                Masticando meno a destra permetti al muscolo massetere di non ingrossarsi ulteriormente, mantenendo la sua forma attuale. Il deficit calorico e la palestra asciugheranno il grasso facciale facendolo emergere pulito e definito.
               </p>
             </div>
 
             <div className="p-3 rounded-2xl bg-black/40 border border-white/5 space-y-1">
-              <span className="text-xs font-bold text-cyan-300 block">Sul Lato Sinistro (Ristretto):</span>
+              <span className="text-xs font-bold text-cyan-300 block">Sul Lato Sinistro ("Fino"): Lavoro Mirato (60-65%)</span>
               <p className="text-xs text-gray-300">
-                Non serve fare massa muscolare. Il deficit calorico e l'idratazione eliminano il grasso e i liquidi in eccesso, snellendo il profilo e appiattendo la guancia, avvicinandola all'aspetto del lato destro.
+                Concentrando la maggior parte della masticazione sul lato sinistro, dai uno stimolo di lavoro al massetere per farlo addensare, diventare duro al tatto e "riempire" quella zona rendendola compatta come il lato destro, evitando che il dimagrimento svuoti la guancia.
               </p>
             </div>
           </div>
         </div>
 
-        {/* PARTE 4: PROTOCOLLO D'AZIONE (I Prossimi 8 Mesi) */}
+        {/* PARTE 4: PROTOCOLLO D'AZIONE (I Prossimi 8 Mesi - Obiettivo Giugno) */}
         <div className="p-4 rounded-3xl glass-card border border-[#00FFD1]/30 space-y-3.5">
           <div className="flex items-center space-x-2">
             <div className="p-1.5 rounded-xl bg-[#00FFD1]/20 text-[#00FFD1]">
               <Flame className="w-4 h-4" />
             </div>
             <h2 className="text-xs sm:text-sm font-extrabold text-white uppercase tracking-wider">
-              PARTE 4: PROTOCOLLO D'AZIONE (I Prossimi 8 Mesi)
+              PARTE 4: PROTOCOLLO D'AZIONE (Obiettivo Giugno)
             </h2>
           </div>
 
@@ -952,28 +1118,40 @@ export const NoteTab: React.FC = () => {
             <div className="flex items-center space-x-2">
               <span className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-xs font-black">1</span>
               <span className="text-xs font-extrabold text-white uppercase tracking-wider">
-                Definizione e Drenaggio (Focus Principale)
+                Definizione e Drenaggio (Palestra & Deficit)
               </span>
             </div>
             <ul className="text-xs text-gray-300 space-y-1.5 list-disc pl-5 font-normal">
-              <li>Allenamento costante in palestra.</li>
-              <li>Leggero deficit calorico per abbassare la percentuale di grasso corporeo generale.</li>
-              <li>Bevi 2.5–3 litri d'acqua al giorno e controlla il sale per eliminare la ritenzione idrica, che gonfia soprattutto la guancia sinistra.</li>
+              <li>Allenamento costante in palestra con i pesi e tapis roulant per la ricomposizione corporea.</li>
+              <li>Leggero deficit calorico per abbassare la percentuale di grasso corporeo generale e sfinare il viso.</li>
+              <li>Bevi 2.5–3 litri d'acqua al giorno e controlla il sale per drenare i liquidi e togliere la ritenzione idrica.</li>
             </ul>
           </div>
 
-          {/* 2. Masticazione Modulata */}
-          <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 space-y-2">
-            <div className="flex items-center space-x-2">
-              <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-xs font-black">2</span>
-              <span className="text-xs font-extrabold text-white uppercase tracking-wider">
-                Masticazione Modulata (+15% a Destra)
+          {/* 2. Masticazione Modulata Invertita */}
+          <div className="p-3.5 rounded-2xl bg-black/40 border border-emerald-500/30 space-y-2.5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-xs font-black">2</span>
+                <span className="text-xs font-extrabold text-white uppercase tracking-wider">
+                  Masticazione Cosciente Invertita (60-65% a SINISTRA)
+                </span>
+              </div>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">
+                Focus Lato Fino
               </span>
             </div>
             <ul className="text-xs text-gray-300 space-y-1.5 list-disc pl-5 font-normal">
-              <li>Mastica i pasti normali distribuendo il cibo su entrambi i lati.</li>
-              <li>Sposta circa il <strong>60% del lavoro sul lato destro</strong> (ampio) e il <strong>40% sul sinistro</strong> (un leggero extra di stimolo a destra).</li>
-              <li>Se usi la gomma da masticare, limita la sessione a un massimo di 15 minuti totali al giorno.</li>
+              <li>
+                <strong className="text-white">Focus sul Lato Sinistro:</strong> Durante i pasti quotidiani, concentra circa il <strong>60-65% della masticazione sul lato SINISTRO</strong> per dare stimolo di ipertrofia e densità al massetere lagging.
+              </li>
+              <li>
+                <strong className="text-white">Riposo Relativo a Destra:</strong> Mastica a destra solo per il <strong>35-40%</strong>, permettendo al massetere destro di non allargarsi ulteriormente.
+              </li>
+              <li>
+                <strong className="text-cyan-300">Il Controllo Settimanale al Tatto:</strong> Ogni 2-3 settimane, rifai il test con le dita sugli angoli della mascella mentre stringi i denti. Appena senti che la parte sinistra comincia a diventare solida e "dura" quasi quanto la destra, hai raggiunto l'equilibrio: a quel punto torni al 50/50 naturale su entrambi i lati.
+              </li>
+              <li>Se usi la gomma da masticare, limita la sessione a massimo 15 minuti totali al giorno masticando principalmente a sinistra.</li>
             </ul>
           </div>
 
@@ -1002,6 +1180,22 @@ export const NoteTab: React.FC = () => {
               <li><strong>2 serie da 15 Neck Curls</strong> al giorno (flessioni del collo a corpo libero, sdraiato su una superficie piana) per rafforzare i muscoli anteriori del collo.</li>
               <li>Dormi a pancia in su per evitare compressioni asimmetriche sul cuscino.</li>
             </ul>
+          </div>
+
+          {/* 4. Risultato Finale entro Giugno */}
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-cyan-950/40 to-black/80 border-2 border-emerald-400/40 space-y-2">
+            <div className="flex items-center space-x-2">
+              <Zap className="w-4 h-4 text-emerald-400" />
+              <span className="text-xs font-black text-emerald-300 uppercase tracking-wider">
+                Il Risultato Finale entro Giugno
+              </span>
+            </div>
+            <p className="text-xs text-gray-200 leading-relaxed font-medium">
+              Mentre riequilibri il volume dei due muscoli masseteri tramite la masticazione guidata a sinistra, il deficit calorico e l'allenamento in palestra faranno scendere la percentuale di grasso corporeo totale.
+            </p>
+            <p className="text-xs text-emerald-200/90 leading-relaxed font-medium">
+              🎯 Riducendo il velo di grasso su tutto il viso, la combinazione di <strong>due masseteri finalmente simmetrici e duri</strong> con una pelle ben adesa all'osso ti regalerà quella linea della mascella (<strong>jawline</strong>) pulita, affilata e definita che stai cercando.
+            </p>
           </div>
         </div>
 
@@ -1327,7 +1521,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Analisi della base ossea palatina, deviazione funzionale, piano naturale 60/40 masticazione, confronto foto attuali vs definite e iter ortodontico specialistico.
+                Test al tatto dei masseteri (denti stretti), strategia invertita (60-65% a sinistra per tonificare il lato fino, riposo a destra) e dimagrimento per la jawline simmetrica entro giugno.
               </p>
             </div>
 

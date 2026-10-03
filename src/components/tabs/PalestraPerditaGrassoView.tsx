@@ -18,7 +18,8 @@ import {
   Layers,
   ChevronDown,
   RefreshCw,
-  Droplet
+  Droplet,
+  Moon
 } from 'lucide-react';
 
 interface PalestraPerditaGrassoViewProps {
@@ -26,7 +27,7 @@ interface PalestraPerditaGrassoViewProps {
 }
 
 export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni'>('tutte');
+  const [activeTab, setActiveTab] = useState<'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2'>('tutte');
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">
@@ -64,27 +65,53 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           Tutto il sistema integrato: tecnica dei pesi e buffer, deficit calorico sostenibile senza fame, protezione totale della massa magra, scaletta pratica della sessione passo-passo e gestione di proteine, carboidrati e glicemia.
         </p>
 
-        {/* Tasto Informazioni Rapido (Richiesto) */}
-        <div
-          onClick={() => setActiveTab('informazioni')}
-          className="p-3.5 rounded-2xl bg-gradient-to-r from-purple-950/50 via-indigo-950/40 to-black/70 border border-purple-500/40 hover:border-purple-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-purple-500/20"
-        >
-          <div className="flex items-center space-x-3">
-            <span className="p-2 rounded-xl bg-purple-500/20 text-purple-300 border border-purple-500/30 group-hover:bg-purple-500 group-hover:text-black transition-all">
-              <Info className="w-4 h-4" />
-            </span>
-            <div>
-              <span className="text-[10px] font-black uppercase tracking-wider text-purple-400 flex items-center gap-1">
-                <Sparkles className="w-3 h-3" /> Approfondimento Scientifico
+        {/* Tasti Informazioni Rapidi */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          {/* 1# Informazioni */}
+          <div
+            onClick={() => setActiveTab('informazioni')}
+            className="p-3.5 rounded-2xl bg-gradient-to-r from-purple-950/50 via-indigo-950/40 to-black/70 border border-purple-500/40 hover:border-purple-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-purple-500/20"
+          >
+            <div className="flex items-center space-x-2.5">
+              <span className="p-2 rounded-xl bg-purple-500/20 text-purple-300 border border-purple-500/30 group-hover:bg-purple-500 group-hover:text-black transition-all shrink-0">
+                <Info className="w-4 h-4" />
               </span>
-              <h3 className="text-xs sm:text-sm font-extrabold text-white group-hover:text-purple-200 transition-colors">
-                Tasto Informazioni: Solo Palestra vs Pesi + Stretching • Flessioni & Verticale
-              </h3>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-purple-400 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" /> 1# Informazioni
+                </span>
+                <h3 className="text-xs font-extrabold text-white group-hover:text-purple-200 transition-colors line-clamp-1">
+                  Stretching vs Rigidità • Flessioni & Verticale
+                </h3>
+              </div>
             </div>
+            <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/30 group-hover:bg-purple-500 group-hover:text-black transition-all shrink-0">
+              Apri ➔
+            </span>
           </div>
-          <span className="text-xs font-bold px-3 py-1 rounded-xl bg-purple-500/20 text-purple-300 border border-purple-500/30 group-hover:bg-purple-500 group-hover:text-black transition-all shrink-0">
-            Leggi ➔
-          </span>
+
+          {/* 2# Informazioni */}
+          <div
+            onClick={() => setActiveTab('informazioni2')}
+            className="p-3.5 rounded-2xl bg-gradient-to-r from-blue-950/50 via-indigo-950/40 to-black/70 border border-blue-500/40 hover:border-blue-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-blue-500/20"
+          >
+            <div className="flex items-center space-x-2.5">
+              <span className="p-2 rounded-xl bg-blue-500/20 text-blue-300 border border-blue-500/30 group-hover:bg-blue-500 group-hover:text-black transition-all shrink-0">
+                <Moon className="w-4 h-4" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-blue-400 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" /> 2# Informazioni
+                </span>
+                <h3 className="text-xs font-extrabold text-white group-hover:text-blue-200 transition-colors line-clamp-1">
+                  Muscoli a Riposo • Grasso • Notte & GH
+                </h3>
+              </div>
+            </div>
+            <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-blue-500/20 text-blue-300 border border-blue-500/30 group-hover:bg-blue-500 group-hover:text-black transition-all shrink-0">
+              Apri ➔
+            </span>
+          </div>
         </div>
 
         {/* Tab Filters */}
@@ -163,14 +190,26 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           <button
             type="button"
             onClick={() => setActiveTab('informazioni')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'informazioni'
                 ? 'bg-purple-500 text-white shadow-md shadow-purple-500/30 font-extrabold'
                 : 'bg-purple-500/10 text-purple-300 hover:text-white border border-purple-500/30'
             }`}
           >
             <Info className="w-3.5 h-3.5 text-purple-400" />
-            6. Informazioni
+            6. 1# Info
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('informazioni2')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'informazioni2'
+                ? 'bg-blue-500 text-white shadow-md shadow-blue-500/30 font-extrabold'
+                : 'bg-blue-500/10 text-blue-300 hover:text-white border border-blue-500/30'
+            }`}
+          >
+            <Moon className="w-3.5 h-3.5 text-blue-400" />
+            7. 2# Info
           </button>
         </div>
       </div>
@@ -838,6 +877,183 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
                 </ul>
                 <p className="text-[11px] text-emerald-300 pl-3 font-medium">
                   🎯 In questo modo lasci <strong>martedì e giovedì come veri giorni di riposo e scarico</strong>, senza la sensazione di dover fare per forza sforzi quando ti senti i muscoli sfiniti.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 7: 2# INFORMAZIONI - METABOLISMO, GRASSO & NOTTE      */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'informazioni2') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                <Moon className="w-4 h-4 text-blue-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-blue-400">
+                  Pilastro 7 • 2# Informazioni (Approfondimento Fisiologico)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  2# Informazioni: Muscoli a Riposo, Riserva di Grasso & Ricostruzione Notturna
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-blue-500/15 text-blue-300 border border-blue-500/30">
+              Biochimica & Sonno
+            </span>
+          </div>
+
+          <p className="text-xs text-gray-300 leading-relaxed font-medium pl-1">
+            Il corpo non usa mai i muscoli fermi come "riserva di cibo" per alimentare quelli che stanno lavorando. A livello fisiologico e ormonale, il processo funziona in modo molto preciso e coordinato:
+          </p>
+
+          {/* PARTE 1: MUSCOLI A RIPOSO & DEFICIT CALORICO */}
+          <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-blue-500/30 space-y-4 shadow-[0_0_20px_rgba(59,130,246,0.1)]">
+            <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-blue-400"></span>
+              <h3 className="text-sm sm:text-base font-extrabold text-white">
+                1. Perché il Corpo NON Brucia i Muscoli a Riposo
+              </h3>
+            </div>
+
+            <div className="space-y-3 text-xs text-gray-300">
+              {/* Punto 1: Durante l'allenamento */}
+              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5">
+                <strong className="text-blue-300 block font-bold text-xs flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                  Cosa succede durante l'allenamento (es. Lunedì: alleni il petto):
+                </strong>
+                <ul className="list-disc list-inside text-[11px] text-gray-300 pl-3 space-y-1">
+                  <li>
+                    I muscoli del petto usano lo <strong>zucchero (glicogeno)</strong> immagazzinato direttamente al loro interno per sostenere lo sforzo.
+                  </li>
+                  <li>
+                    I muscoli che riposano (es. le gambe) <strong>rimangono intatti</strong>. Non cedono le loro proteine né la loro energia al petto. Il corpo non "smantella" le gambe per far funzionare le braccia!
+                  </li>
+                </ul>
+              </div>
+
+              {/* Punto 2: Da dove prende l'energia in deficit */}
+              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5">
+                <strong className="text-amber-300 block font-bold text-xs flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                  Da dove prende il corpo l'energia in deficit calorico?
+                </strong>
+                <p className="text-[11px] text-gray-300 pl-3 leading-relaxed">
+                  Quando sei in deficit calorico ed esegui i pesi, entra in gioco la biochimica degli ormoni (come il <strong>glucagone</strong> e l'<strong>adrenalina</strong>):
+                </p>
+                <div className="pl-3 space-y-1 text-[11px] text-gray-300">
+                  <div>
+                    • <strong className="text-white">Il segnale al tessuto adiposo:</strong> Quando il corpo nota che le calorie del cibo sono finite e serve energia per recuperare e vivere, invia un segnale cellulare a tutto il grasso corporeo (pancia, fianchi, viso, cosce).
+                  </div>
+                  <div>
+                    • <strong className="text-white">La liberazione dei grassi:</strong> Le cellule di grasso (adipociti) aprono le riserve e rilasciano nel sangue i trigliceridi sotto forma di <em>acidi grassi liberi</em>.
+                  </div>
+                  <div>
+                    • <strong className="text-white">Il carburante per la ricostruzione:</strong> Questi acidi grassi viaggiano nel sangue e vengono "bruciati" dai mitocondri per fornire al corpo l'energia necessaria a riparare i muscoli del petto appena allenati.
+                  </div>
+                </div>
+              </div>
+
+              {/* Punto 3: Perché NON brucia gli altri muscoli */}
+              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5">
+                <strong className="text-emerald-300 block font-bold text-xs flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  Perché il corpo NON brucia gli altri muscoli?
+                </strong>
+                <p className="text-[11px] text-gray-300 pl-3 leading-relaxed">
+                  Il corpo brucerebbe proteine muscolari come carburante solo in casi estremi (digiuno prolungato per giorni o diete drastiche senza proteine). Nel tuo caso questo non accade perché:
+                </p>
+                <ul className="list-disc list-inside text-[11px] text-gray-300 pl-3 space-y-1">
+                  <li>
+                    <strong className="text-white">Lo stimolo dei pesi protegge i muscoli:</strong> Sollevando i carichi (anche a zone divise), dai un segnale continuo al cervello che tutti i muscoli ti servono.
+                  </li>
+                  <li>
+                    <strong className="text-white">Le proteine della dieta li nutrono:</strong> Le proteine che mangi a pranzo e cena forniscono gli amminoacidi per riparare le fibre usate.
+                  </li>
+                  <li>
+                    <strong className="text-white">Il grasso fa da scudo:</strong> Avendo una riserva di grasso da smaltire, il corpo sceglie sempre la via più efficiente e naturale: conservare il tessuto muscolare nobile e bruciare l'adipe in eccesso.
+                  </li>
+                </ul>
+              </div>
+
+              {/* Box di Sintesi Parte 1 */}
+              <div className="p-3.5 rounded-2xl bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-black/70 border border-blue-500/40 text-xs text-blue-200 leading-relaxed font-semibold">
+                🛡️ <strong>In Sintesi:</strong> Quando alleni un muscolo in deficit calorico, il corpo protegge quel muscolo e anche quelli che riposano, mentre attinge l'energia che gli manca direttamente dai depositi di grasso distribuiti su tutto il corpo.
+              </div>
+            </div>
+          </div>
+
+          {/* PARTE 2: COSA SUCCEDE DURANTE LA NOTTE */}
+          <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-blue-500/30 space-y-4 shadow-[0_0_20px_rgba(59,130,246,0.1)]">
+            <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-indigo-400"></span>
+              <h3 className="text-sm sm:text-base font-extrabold text-white">
+                2. Cosa Succede di Notte: La Vera Trasformazione (Sonno & GH)
+              </h3>
+            </div>
+
+            <p className="text-xs text-gray-300 leading-relaxed">
+              La notte è il momento in cui avviene la vera trasformazione: durante il sonno profondo il corpo rilascia l'<strong>GH (ormone della crescita)</strong> e avvia la riparazione dei muscoli allenati di giorno.
+            </p>
+            <p className="text-xs text-indigo-200/90 leading-relaxed font-medium bg-indigo-950/20 p-3 rounded-2xl border border-indigo-500/20">
+              Avendo mangiato la pasta a pranzo e il secondo a cena in regime di deficit calorico, ecco cosa succede fisiologicamente durante la notte step-by-step:
+            </p>
+
+            <div className="space-y-3 text-xs text-gray-300">
+              {/* Step 1: I mattoni */}
+              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5">
+                <strong className="text-blue-300 block font-bold text-xs flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                  1. I mattoni per ricostruire: Le proteine della cena
+                </strong>
+                <p className="text-[11px] text-gray-300 pl-3 leading-relaxed">
+                  A cena hai fornito le proteine (carne, pesce, uova o formaggio magro). Durante la digestione notturna, queste proteine vengono scisse in <strong>amminoacidi</strong>, che entrano nel flusso sanguigno.
+                </p>
+                <div className="pl-3 space-y-1 text-[11px] text-gray-300">
+                  <div>• I muscoli che hai allenato in palestra (es. petto o gambe) hanno delle micro-lesioni provocate dai pesi.</div>
+                  <div>• Il corpo preleva questi amminoacidi dal sangue e li invia direttamente nelle fibre muscolari danneggiate per ricucirle, rendendole più forti, sode e toniche rispetto al giorno prima.</div>
+                </div>
+              </div>
+
+              {/* Step 2: L'energia per il cantiere */}
+              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5">
+                <strong className="text-amber-300 block font-bold text-xs flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                  2. L'energia per il cantiere: Il grasso corporeo
+                </strong>
+                <p className="text-[11px] text-gray-300 pl-3 leading-relaxed">
+                  Ricostruire e riparare il tessuto muscolare è un lavoro pesante che richiede molta energia (calorie).
+                </p>
+                <div className="pl-3 space-y-1 text-[11px] text-gray-300">
+                  <div>• Poiché sei in deficit calorico (pasta a pranzo e secondo a cena non sono stati "troppi", ma calcolati giusti), il cibo consumato durante il giorno è già stato speso per le attività e l'allenamento.</div>
+                  <div>• Le calorie nel sangue non bastano a coprire tutta l'energia necessaria al "cantiere" notturno e al funzionamento degli organi vitali (cuore, cervello, polmoni).</div>
+                  <div>• Di conseguenza, il cervello invia il segnale alle cellule adipose (il grasso della pancia, del viso, ecc.): <strong>liberare i trigliceridi</strong>.</div>
+                  <div>• Il corpo "brucia" questo grasso come carburante per alimentare il processo di ricostruzione muscolare e per tenerti in vita mentre dormi.</div>
+                </div>
+              </div>
+
+              {/* Box di Riepilogo Notturno */}
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-indigo-950/40 via-blue-950/40 to-black/80 border-2 border-blue-400/40 space-y-2">
+                <span className="text-[11px] font-black uppercase tracking-wider text-blue-300 flex items-center gap-1.5">
+                  <Zap className="w-4 h-4 text-blue-400" />
+                  Cosa succede mentre dormi:
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+                  <div className="p-2.5 rounded-xl bg-black/50 border border-white/5">
+                    <strong className="text-white block mb-0.5">Dai muscoli:</strong> Vengono usati gli amminoacidi della cena per riparare e tonificare la massa magra.
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-black/50 border border-white/5">
+                    <strong className="text-white block mb-0.5">Dal grasso:</strong> Vengono prelevate le calorie mancanti per fornire l'energia alla riparazione.
+                  </div>
+                </div>
+                <p className="text-xs text-gray-200 leading-relaxed font-medium pt-1">
+                  🌅 <strong>Il risultato al risveglio:</strong> il muscolo è più tonico e compatto, mentre una piccola quota di grasso corporeo è stata consumata definitivamente. È proprio così che, giorno dopo giorno, ci si ritrova più magri e definiti!
                 </p>
               </div>
             </div>
