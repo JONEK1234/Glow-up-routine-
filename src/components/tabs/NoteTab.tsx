@@ -1817,7 +1817,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Rasoio King C. Gillette Double Edge, lamette platino (15 €) su Amazon con protocollo anti-peli incarniti, e federa 100% pura seta Mulberry 22 Momme a 49 € su Offtopic.
+                I 3 regali ufficiali: Rasoio King C. Gillette + lamette platino (15 €) su Amazon, federa 100% pura seta Mulberry 22 Momme (49 €) su Offtopic e il diffusore per phon (fisica dei micro-flussi e fissaggio dei legami a idrogeno).
               </p>
             </div>
 
@@ -1828,10 +1828,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-emerald-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire la lista acquisti e regali di Natale</span>
+              <span>Tocca per aprire la lista dei 3 regali di Natale</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">Amazon 15€ + Offtopic 49€</span>
+            <span className="text-[10px] text-gray-400 font-semibold">Rasoio + Seta 49€ + Diffusore</span>
           </div>
         </div>
       </div>

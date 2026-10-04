@@ -15,7 +15,12 @@ import {
   Layers,
   ShoppingBag,
   ShieldCheck,
-  Check
+  Check,
+  Wind,
+  Flame,
+  Zap,
+  Atom,
+  Waves
 } from 'lucide-react';
 
 interface CoseDaComprareRegaliViewProps {
@@ -23,7 +28,7 @@ interface CoseDaComprareRegaliViewProps {
 }
 
 export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutti' | 'rasatura' | 'seta' | 'guida'>('tutti');
+  const [activeTab, setActiveTab] = useState<'tutti' | 'rasatura' | 'seta' | 'diffusore'>('tutti');
   const [fullscreenImage, setFullscreenImage] = useState<{ url: string; title: string } | null>(null);
 
   return (
@@ -75,7 +80,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
         </button>
         <span className="text-[11px] font-bold text-emerald-300 bg-emerald-500/10 px-3 py-1 rounded-xl border border-emerald-500/20 flex items-center gap-1.5">
           <Gift className="w-3.5 h-3.5 text-emerald-400" />
-          I Miei Regali di Natale
+          I Miei Regali di Natale (3 Oggetti)
         </span>
       </div>
 
@@ -86,7 +91,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
             <Gift className="w-3 h-3 text-emerald-400" />
             ★ Wishlist Ufficiale
           </span>
-          <span className="text-[10px] text-gray-400 font-semibold">Amazon & Offtopic</span>
+          <span className="text-[10px] text-gray-400 font-semibold">I 3 Regali Scelti Per Me</span>
         </div>
 
         <h1 className="text-xl sm:text-2xl font-black text-white leading-tight uppercase tracking-tight flex items-center gap-2">
@@ -94,7 +99,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
         </h1>
 
         <p className="text-xs text-gray-300 leading-relaxed font-medium">
-          La lista aggiornata, pulita e con i link diretti per consultare le schede prodotto, prezzi fissi e immagini ufficiali: il set rasatura di sicurezza anti-peli incarniti su Amazon e la federa in pura seta Mulberry 22 Momme su Offtopic.
+          La lista completa e dettagliata con link diretti, prezzi e schede tecniche: il set rasatura di sicurezza King C. Gillette con lamette platino su Amazon (15 €), la federa in pura seta Mulberry 22 Momme su Offtopic (49 €) e il diffusore per phon per il volume e il fissaggio dei legami a idrogeno.
         </p>
 
         {/* Tab Filters */}
@@ -108,7 +113,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
                 : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
             }`}
           >
-            Tutti i Regali (3)
+            Tutti i 3 Regali
           </button>
           <button
             type="button"
@@ -120,19 +125,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
             }`}
           >
             <Scissors className="w-3.5 h-3.5" />
-            1. Rasoio & Lamette (Amazon)
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('guida')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-              activeTab === 'guida'
-                ? 'bg-amber-500 text-black shadow-md shadow-amber-500/30 font-extrabold'
-                : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
-            }`}
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            2. Come Usarli Insieme
+            1. Rasoio, Lamette & Guida (Amazon)
           </button>
           <button
             type="button"
@@ -144,7 +137,19 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
             }`}
           >
             <Bed className="w-3.5 h-3.5" />
-            3. Federa Pura Seta 49€ (Offtopic)
+            2. Federa Pura Seta 49€ (Offtopic)
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('diffusore')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'diffusore'
+                ? 'bg-purple-500 text-white shadow-md shadow-purple-500/30 font-extrabold'
+                : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
+            }`}
+          >
+            <Wind className="w-3.5 h-3.5" />
+            3. Il Diffusore (Volume & Fisica)
           </button>
         </div>
       </div>
@@ -161,7 +166,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
               </span>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400">
-                  Da comprare su Amazon
+                  Da comprare su Amazon • Regalo 1
                 </span>
                 <h2 className="text-base sm:text-lg font-black text-white">
                   1. Rasoio di Sicurezza & Lamette Ricambio
@@ -317,85 +322,74 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
                 </a>
               </div>
             </div>
-          </div>
-        </div>
-      )}
 
-      {/* ============================================================= */}
-      {/* SEZIONE 2: COME USARLI INSIEME (PROTOCOLLO RASATURA)          */}
-      {/* ============================================================= */}
-      {(activeTab === 'tutti' || activeTab === 'guida') && (
-        <div className="space-y-4 animate-in fade-in duration-200">
-          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
-            <div className="flex items-center space-x-2">
-              <span className="p-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                <Sparkles className="w-4 h-4" />
-              </span>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
-                  Protocollo Pratico
-                </span>
-                <h2 className="text-base sm:text-lg font-black text-white">
-                  Come Usarli Insieme
-                </h2>
-              </div>
-            </div>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30">
-              4 Fasi
-            </span>
-          </div>
-
-          <div className="p-4 sm:p-5 rounded-3xl bg-black/80 border border-amber-500/30 space-y-3.5 shadow-[0_0_20px_rgba(245,158,11,0.1)]">
-            <p className="text-xs text-amber-200 leading-relaxed font-semibold bg-amber-950/30 p-3 rounded-2xl border border-amber-500/30">
-              Segui rigorosamente questi 4 passaggi per ottenere una rasatura perfetta senza peli incarniti né bruciori:
-            </p>
-
-            <div className="space-y-2.5 text-xs">
-              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 flex items-start gap-3">
-                <span className="w-6 h-6 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center font-black text-xs shrink-0 mt-0.5">
-                  1
+            {/* GUIDA PRATICA: COME USARLI INSIEME (PROTOCOLLO RASATURA) */}
+            <div className="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/30 space-y-3 mt-2">
+              <div className="flex items-center space-x-2">
+                <span className="p-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  <Sparkles className="w-4 h-4" />
                 </span>
                 <div>
-                  <h4 className="font-bold text-white text-xs">Inserisci la lametta</h4>
-                  <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
-                    Inserisci una lametta nuova (Astra Platinum o King C. Gillette) nel rasoio di sicurezza King C. Gillette e serra la testa senza forzare.
-                  </p>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
+                    Protocollo Pratico Rasatura
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-black text-white">
+                    Come Usare Rasoio & Lamette Insieme
+                  </h4>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 flex items-start gap-3">
-                <span className="w-6 h-6 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center font-black text-xs shrink-0 mt-0.5">
-                  2
-                </span>
-                <div>
-                  <h4 className="font-bold text-white text-xs">Prepara la pelle</h4>
-                  <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
-                    Bagna il viso con abbondante acqua tiepida per ammorbidire il pelo e applica la crema/gel Nivea Men Sensitive creando un film protettivo scivoloso.
-                  </p>
-                </div>
-              </div>
+              <p className="text-[11px] text-amber-200 leading-relaxed font-semibold bg-black/40 p-2.5 rounded-xl border border-amber-500/20">
+                Segui rigorosamente questi 4 passaggi per ottenere una rasatura perfetta senza peli incarniti né bruciori:
+              </p>
 
-              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 flex items-start gap-3">
-                <span className="w-6 h-6 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center font-black text-xs shrink-0 mt-0.5">
-                  3
-                </span>
-                <div>
-                  <h4 className="font-bold text-white text-xs">Solo a favore di pelo (Zero pressione)</h4>
-                  <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
-                    Raditi <strong className="text-white">solo a favore di pelo</strong>, senza fare pressione (lascia che sia il peso del metallo a scorrere da solo). Mai fare contropelo aggressivo.
-                  </p>
+              <div className="space-y-2 text-xs">
+                <div className="p-3 rounded-xl bg-black/50 border border-white/5 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-black text-[11px] shrink-0 mt-0.5">
+                    1
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-white text-xs">Inserisci la lametta</h5>
+                    <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
+                      Inserisci una lametta nuova (Astra Platinum o King C. Gillette) nel rasoio di sicurezza King C. Gillette e serra la testa senza forzare.
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 flex items-start gap-3">
-                <span className="w-6 h-6 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center font-black text-xs shrink-0 mt-0.5">
-                  4
-                </span>
-                <div>
-                  <h4 className="font-bold text-white text-xs">Risciacquo e bottiglia di ghiaccio</h4>
-                  <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
-                    Risciacqua con acqua fresca e usa la <strong className="text-white">bottiglietta di ghiaccio</strong> (avvolta nella maglietta di cotone) per chiudere i pori e lenire istantaneamente la pelle.
-                  </p>
+                <div className="p-3 rounded-xl bg-black/50 border border-white/5 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-black text-[11px] shrink-0 mt-0.5">
+                    2
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-white text-xs">Prepara la pelle</h5>
+                    <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
+                      Bagna il viso con abbondante acqua tiepida per ammorbidire il pelo e applica la crema/gel Nivea Men Sensitive creando un film protettivo scivoloso.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/50 border border-white/5 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-black text-[11px] shrink-0 mt-0.5">
+                    3
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-white text-xs">Solo a favore di pelo (Zero pressione)</h5>
+                    <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
+                      Raditi <strong className="text-white">solo a favore di pelo</strong>, senza fare pressione (lascia che sia il peso del metallo a scorrere da solo). Mai fare contropelo aggressivo.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/50 border border-white/5 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-black text-[11px] shrink-0 mt-0.5">
+                    4
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-white text-xs">Risciacquo e bottiglia di ghiaccio</h5>
+                    <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
+                      Risciacqua con acqua fresca e usa la <strong className="text-white">bottiglietta di ghiaccio</strong> (avvolta nella maglietta di cotone) per chiudere i pori e lenire istantaneamente la pelle.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -404,7 +398,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
       )}
 
       {/* ============================================================= */}
-      {/* SEZIONE 3: FEDERA IN PURA SETA MULBERRY 22 MOMME (OFFTOPIC)   */}
+      {/* SEZIONE 2: FEDERA IN PURA SETA MULBERRY 22 MOMME (OFFTOPIC)   */}
       {/* ============================================================= */}
       {(activeTab === 'tutti' || activeTab === 'seta') && (
         <div className="space-y-4 animate-in fade-in duration-200">
@@ -415,10 +409,10 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
               </span>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-sky-400">
-                  Offtopic Brand • Prezzo Fisso 49 €
+                  Offtopic Brand • Prezzo Fisso 49 € • Regalo 2
                 </span>
                 <h2 className="text-base sm:text-lg font-black text-white">
-                  3. Federa in 100% Pura Seta Mulberry (Offtopic)
+                  2. Federa in 100% Pura Seta Mulberry (Offtopic)
                 </h2>
               </div>
             </div>
@@ -596,6 +590,222 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
                 </p>
                 <p>
                   • <strong className="text-white">Rotazione col cotone:</strong> Quando la lavi e la lasci asciugare all'ombra, usane una classica in 100% Cotone pulito, così mantieni sempre la regola di non dormire mai più notti consecutive sul sudore residuo.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 3: IL DIFFUSORE (FISICA, VOLUME & LEGAMI DI IDROGENO) */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutti' || activeTab === 'diffusore') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                <Wind className="w-4 h-4" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-purple-400">
+                  Accessorio Phon • Fisica & Struttura Capello • Regalo 3
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  3. Il Diffusore per Phon
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/40">
+              Volume & Piega Duratura
+            </span>
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-purple-400/50 space-y-4 bg-gradient-to-br from-purple-950/30 via-black/85 to-black shadow-[0_0_25px_rgba(168,85,247,0.15)]">
+            <div className="space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-purple-400 flex items-center gap-1">
+                <Atom className="w-3.5 h-3.5" />
+                Spiegazione Scientifica & Funzionamento Meccanico
+              </span>
+              <h3 className="text-lg font-black text-white">
+                Fisica del Diffusore e Controllo della Struttura del Capello
+              </h3>
+              <p className="text-xs text-purple-200 leading-relaxed font-medium bg-purple-950/30 p-3 rounded-2xl border border-purple-500/30">
+                Dal punto di vista della fisica e della struttura del capello, il diffusore lavora su tre principi chiave: <strong className="text-white">distribuzione dell'aria</strong>, <strong className="text-white">controllo del calore</strong> e <strong className="text-white">fissaggio dei legami di idrogeno</strong>.
+              </p>
+            </div>
+
+            {/* PUNTO 1: COME FUNZIONA LA FISICA DEL DIFFUSORE */}
+            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-2.5">
+              <div className="flex items-center space-x-2">
+                <span className="w-6 h-6 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center font-black text-xs shrink-0">
+                  1
+                </span>
+                <h4 className="text-xs sm:text-sm font-black text-white">
+                  Come funziona la fisica del diffusore
+                </h4>
+              </div>
+
+              <div className="space-y-2 text-xs pl-8">
+                <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                  <strong className="text-cyan-300 block font-bold text-xs flex items-center gap-1.5">
+                    <Wind className="w-3.5 h-3.5 text-cyan-400" />
+                    Riduzione della pressione e della velocità dell'aria:
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Il beccuccio stretto del phon concentra l'aria ad alta velocità, sparandola in un'unica direzione. Il diffusore, invece, trasforma quel getto in una <strong>griglia di micro-flussi d'aria</strong>. Questo evita che il vento "spuzzi" le ciocche e separi i capelli in modo caotico, mantenendo la struttura naturale del riccio o della piega.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                  <strong className="text-amber-300 block font-bold text-xs flex items-center gap-1.5">
+                    <Flame className="w-3.5 h-3.5 text-amber-400" />
+                    Calore diffuso (non concentrato):
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    La tazza del diffusore trattiene il calore e lo distribuisce in modo omogeneo su un'area molto più ampia. Questo evita i "punti caldi" che rischiano di bruciare la fibra capillare o di disidratare e irritare il cuoio capelluto.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* PUNTO 2: PERCHÉ DÀ PIÙ VOLUME */}
+            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-2.5">
+              <div className="flex items-center space-x-2">
+                <span className="w-6 h-6 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center font-black text-xs shrink-0">
+                  2
+                </span>
+                <h4 className="text-xs sm:text-sm font-black text-white">
+                  Perché dà più volume?
+                </h4>
+              </div>
+
+              <div className="space-y-2 text-xs pl-8">
+                <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                  <strong className="text-white block font-bold text-xs flex items-center gap-1.5">
+                    <Layers className="w-3.5 h-3.5 text-purple-400" />
+                    Azione meccanica sui dentini (i "pin"):
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Quando appoggi la tazza del diffusore alla testa o sollevi le ciocche dal basso verso l'alto, i dentini tengono i capelli sollevati staccando le radici dal cuoio capelluto.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                  <strong className="text-white block font-bold text-xs flex items-center gap-1.5">
+                    <Zap className="w-3.5 h-3.5 text-purple-400" />
+                    Asciugatura "in sospensione":
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Se asciughi i capelli a testa in giù o di lato col diffusore, l'aria calda fissa la forma del capello mentre la gravità tiene le radici sollevate. Quando ti tiri su, la radice rimane "impostata" verso l'alto anziché appiattirsi sulla testa.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* PUNTO 3: LA PIEGA DURA DAVVERO DI PIÙ? */}
+            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-2.5">
+              <div className="flex items-center space-x-2">
+                <span className="w-6 h-6 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center font-black text-xs shrink-0">
+                  3
+                </span>
+                <h4 className="text-xs sm:text-sm font-black text-white">
+                  La piega dura davvero di più?
+                </h4>
+              </div>
+
+              <div className="space-y-2 text-xs pl-8">
+                <p className="text-[11px] text-emerald-300 font-bold">
+                  Sì, la piega dura decisamente di più, e c'è una precisa motivazione chimica:
+                </p>
+
+                <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                  <strong className="text-sky-300 block font-bold text-xs flex items-center gap-1.5">
+                    <Atom className="w-3.5 h-3.5 text-sky-400" />
+                    I Legami a Idrogeno:
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    La forma dei capelli è regolata da legami chimici temporanei chiamati legami a idrogeno. Quando i capelli sono bagnati, questi legami si rompono. Quando il capello si asciuga, i legami si riformano fissando la posizione in cui il capello si trova in quel momento.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                  <strong className="text-amber-300 block font-bold text-xs flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />
+                    Asciugatura profonda e uniforme:
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Il diffusore permette di asciugare completamente la radice e l'interno della chioma senza bruciare le punte. Se lasci i capelli umidi all'interno (cosa che succede spesso col phon normale se non vuoi bruciarti), l'umidità residua spezza di nuovo i legami a idrogeno durante la giornata, facendo afflosciare la piega dopo poche ore.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                  <strong className="text-emerald-300 block font-bold text-xs flex items-center gap-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                    Zero effetto crespo:
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Poiché l'aria non strofina le cuticole (lo strato esterno del capello), la superficie rimane liscia e chiusa, proteggendo la piega dall'umidità esterna.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* BOX: IN SINTESI */}
+            <div className="p-3.5 rounded-2xl bg-purple-950/40 border border-purple-500/40 text-xs text-purple-200 leading-relaxed space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-purple-300 flex items-center gap-1">
+                <Sparkles className="w-3.5 h-3.5" /> In Sintesi
+              </span>
+              <p className="text-[11px] text-gray-200">
+                Il diffusore non è solo un accessorio "per capelli ricci": usato a <strong>temperatura media e velocità moderata</strong>, solleva la radice alla base, fissa i legami del capello nella posizione desiderata e garantisce che il volume duri tutta la giornata (specie se poi lo abbini alla polverina sulle radici a capelli asciutti).
+              </p>
+            </div>
+
+            {/* BOX SPECIFICO: I DENTI / PIN ARROTONDATI */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-cyan-950/40 via-purple-950/30 to-black/70 border border-cyan-400/40 space-y-3">
+              <div className="flex items-center space-x-2">
+                <span className="p-1.5 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                  <ShieldCheck className="w-4 h-4 text-cyan-400" />
+                </span>
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-cyan-300">
+                    Dettaglio Meccanico Essenziale
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-black text-white">
+                    Perché i Denti (Pin) Devono Essere Arrotondati in Cima?
+                  </h4>
+                </div>
+              </div>
+
+              <p className="text-[11px] text-gray-300 leading-relaxed">
+                Si chiamano <strong>denti, pioli o pin</strong>, e il fatto che siano arrotondati in cima è un dettaglio fondamentale per due motivi fisici e pratici:
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-black/50 border border-white/5 space-y-1">
+                  <strong className="text-cyan-300 font-bold text-xs flex items-center gap-1.5">
+                    <span className="w-5 h-5 rounded-md bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[10px] font-black">1</span>
+                    Comfort e salute della cute
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    I denti toccano direttamente il cuoio capelluto quando appoggi la tazza per sollevare le radici. Se fossero piatti, spigolosi o stampati male con bave di plastica, graffierebbero la pelle a ogni movimento. La forma sferica e liscia ti permette di fare un vero e proprio massaggio alla radice senza irritare la cute.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/50 border border-white/5 space-y-1">
+                  <strong className="text-purple-300 font-bold text-xs flex items-center gap-1.5">
+                    <span className="w-5 h-5 rounded-md bg-purple-500/20 text-purple-300 flex items-center justify-center text-[10px] font-black">2</span>
+                    Separazione fluida dei capelli
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    La punta arrotondata scivola tra le ciocche senza fare attrito, senza tirare i capelli e senza spezzare le fibre. Questo ti permette di infilare la tazza alla base del ciuffo, dare forma e sfilare il diffusore in totale fluidità.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 text-center">
+                <p className="text-[11px] font-bold text-emerald-300">
+                  ✨ Quel design a punte arrotondate è la forma migliore per dare volume alla radice in totale comfort.
                 </p>
               </div>
             </div>
