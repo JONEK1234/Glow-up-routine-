@@ -41,6 +41,7 @@ import { PeliIncarnitiVisoView } from './PeliIncarnitiVisoView';
 import { GiorniShampooTextureView } from './GiorniShampooTextureView';
 import { PalestraPerditaGrassoView } from './PalestraPerditaGrassoView';
 import { CoseDaComprareRegaliView } from './CoseDaComprareRegaliView';
+import { MasticazioneMasseteriView } from './MasticazioneMasseteriView';
 
 const FACE_PHOTOS = [
   {
@@ -89,7 +90,7 @@ const SCHEMA_IMAGES = [
 ];
 
 export const NoteTab: React.FC = () => {
-  const [activeView, setActiveView] = useState<'list' | 'asimmetria' | 'ortodonzia' | 'postura_occhi' | 'sonno_posizioni' | 'peli_incarniti' | 'shampoo_texture' | 'palestra_grasso' | 'regali_natale'>('list');
+  const [activeView, setActiveView] = useState<'list' | 'asimmetria' | 'ortodonzia' | 'postura_occhi' | 'sonno_posizioni' | 'peli_incarniti' | 'shampoo_texture' | 'palestra_grasso' | 'regali_natale' | 'asimmetria_masticazione'>('list');
   const [userNotes, setUserNotes] = useState<UserNote[]>(() => storageHelper.getUserNotes());
   const [fullscreenImg, setFullscreenImg] = useState<{ url: string; title: string } | null>(null);
   const [faceComparisonMode, setFaceComparisonMode] = useState<'overlay' | 'sideBySide' | 'swipe'>('overlay');
@@ -390,6 +391,13 @@ export const NoteTab: React.FC = () => {
   }
 
   // -------------------------------------------------------------
+  // VIEW: INFORMAZIONI MASTICAZIONE & MASSETERI (SEZIONE DEDICATA)
+  // -------------------------------------------------------------
+  if (activeView === 'asimmetria_masticazione') {
+    return <MasticazioneMasseteriView onBack={() => setActiveView('asimmetria')} />;
+  }
+
+  // -------------------------------------------------------------
   // VIEW: LA MIA ASIMMETRIA (MENU DETTAGLIATO)
   // -------------------------------------------------------------
   if (activeView === 'asimmetria') {
@@ -407,9 +415,21 @@ export const NoteTab: React.FC = () => {
             <ArrowLeft className="w-4 h-4" />
             <span>Tutte le Note</span>
           </button>
-          <span className="text-[11px] font-bold text-gray-400 bg-black/40 px-3 py-1 rounded-xl border border-white/5">
-            Nota Guida • 8 Mesi
-          </span>
+          
+          <div className="flex items-center space-x-2">
+            <button
+              type="button"
+              onClick={() => setActiveView('asimmetria_masticazione')}
+              className="flex items-center space-x-1.5 py-1.5 px-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/40 text-xs font-extrabold shadow-[0_0_15px_rgba(245,158,11,0.25)] transition-all cursor-pointer active:scale-95"
+            >
+              <Info className="w-4 h-4 text-amber-400" />
+              <span>Info Masticazione & Gomme</span>
+            </button>
+
+            <span className="hidden sm:inline-block text-[11px] font-bold text-gray-400 bg-black/40 px-3 py-1 rounded-xl border border-white/5">
+              Nota Guida • 8 Mesi
+            </span>
+          </div>
         </div>
 
         {/* Master Note Title Card */}
@@ -428,6 +448,33 @@ export const NoteTab: React.FC = () => {
           <p className="text-xs text-gray-300 leading-relaxed font-medium">
             Questa nota riassume la tua struttura anatomica specifica, la diagnosi al tatto dei muscoli masseteri e il piano naturale aggiornato: la parte destra ha bisogno solo di dimagrimento per definirsi, mentre la parte sinistra (fina) deve essere stimolata con la masticazione per pareggiare lo spessore muscolare ed evitare che il dimagrimento accentui l'asimmetria.
           </p>
+        </div>
+
+        {/* Banner Link a Nuova Sezione Masticazione */}
+        <div
+          onClick={() => setActiveView('asimmetria_masticazione')}
+          className="p-4 rounded-3xl bg-gradient-to-r from-amber-500/15 via-black/80 to-purple-500/15 border-2 border-amber-500/40 hover:border-amber-400 cursor-pointer transition-all flex items-center justify-between group shadow-sm hover:shadow-[0_0_20px_rgba(245,158,11,0.2)]"
+        >
+          <div className="flex items-center space-x-3">
+            <div className="p-2.5 rounded-2xl bg-amber-500/20 text-amber-300 border border-amber-500/30 group-hover:scale-105 transition-transform shrink-0">
+              <Info className="w-5 h-5 text-amber-400" />
+            </div>
+            <div className="space-y-0.5">
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1">
+                <Sparkles className="w-3 h-3" /> Nuova Sezione Dedicata
+              </span>
+              <h4 className="text-xs sm:text-sm font-black text-white group-hover:text-amber-200 transition-colors">
+                Dieta Moderna, Gomme Dure per Definizione & Allenamento Massetere Sinistro
+              </h4>
+              <p className="text-[11px] text-gray-400 line-clamp-1">
+                Fisica delle gomme, protocollo da 10 min (65% sx), spiegazione al tatto e verdetto visivo.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center space-x-1.5 text-xs font-black px-3 py-2 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 group-hover:bg-amber-500 group-hover:text-black transition-all shrink-0 ml-2">
+            <span>Apri Sezione</span>
+            <ChevronRight className="w-4 h-4" />
+          </div>
         </div>
 
         {/* BOX 1: CONFRONTO FOTOGRAFICO VISO ATTUALE VS VISO DEFINITO */}
