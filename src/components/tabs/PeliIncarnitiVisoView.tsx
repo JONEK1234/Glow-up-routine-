@@ -178,10 +178,10 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
             {/* Chiusura della routine mattina */}
             <div className="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/30 to-black/60 border border-emerald-500/30 text-xs text-emerald-200 leading-relaxed font-medium space-y-1">
               <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5" /> Conclusione del Lavaggio:
+                <CheckCircle2 className="w-3.5 h-3.5" /> Sequenza Mattutina Corretta:
               </span>
               <p className="text-[11px] text-gray-300">
-                Dopo questo breve massaggio, applichi il <strong className="text-white">detergente</strong>, sciacqui con l'<strong className="text-white">acqua fredda</strong> per svegliarti, asciughi tamponando e metti la tua <strong className="text-white">crema idratante</strong>.
+                1. <strong className="text-white">Detergente</strong> (con acqua tiepida) ➔ 2. <strong className="text-white">Bottiglia di ghiaccio</strong> (avvolta nel panno per sgonfiare e spegnere rossori) ➔ 3. <strong className="text-white">Crema idratante + Massaggio linfatico</strong> (insieme per non creare attrito) ➔ 4. <strong className="text-white">Crema solare</strong> (scudo finale senza più sfregare).
               </p>
             </div>
           </div>

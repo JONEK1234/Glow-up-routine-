@@ -22,6 +22,7 @@ export const HomeRoutineTab: React.FC = () => {
   // Skincare steps completion state
   const [skincareDone, setSkincareDone] = useState<{ [key: string]: boolean }>({
     step1: false,
+    step_ice: false,
     step_spoon: false,
     step2: false,
     step3: false,
@@ -709,7 +710,7 @@ export const HomeRoutineTab: React.FC = () => {
         </div>
 
         {/* 🧴 SKINCARE MATTUTINA (Step Sequenziali) */}
-        <div className="p-4 rounded-3xl glass-card space-y-3">
+        <div className="p-4 sm:p-5 rounded-3xl glass-card space-y-3.5 border border-rose-500/20">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2.5">
               <div className="p-2 rounded-2xl bg-rose-500/10 text-rose-400 border border-rose-500/30">
@@ -722,85 +723,140 @@ export const HomeRoutineTab: React.FC = () => {
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             {[
               {
                 key: 'step1',
                 num: '1',
-                title: 'Detergente Delicato',
+                title: '1. Detergente (con acqua tiepida)',
                 productLabel: 'Detergente',
-                note: 'Rimuove il sebo notturno senza alterare la barriera cutanea',
+                note: 'Pulisci il viso per rimuovere il sebo accumulato durante la notte e prepara la pelle pulita per i passaggi successivi.',
                 image: 'https://i.ibb.co/VYdfZy24/Screenshot-2026-09-12-16-02-46-987-com-amazon-m-Shop-android-shopping-edit.jpg'
               },
               {
-                key: 'step_spoon',
+                key: 'step_ice',
                 num: '2',
-                title: 'Spoon Method (Cucchiai Freddi)',
-                productLabel: 'Spoon Method',
-                note: 'Decongestiona borse ed occhiaie per uno sguardo riposato ed energico'
+                title: '2. Bottiglia di ghiaccio (avvolta nel panno)',
+                productLabel: 'Bottiglia di ghiaccio',
+                note: 'La usi subito dopo aver risciacquato il detergente. Sgonfia il viso appena sveglio, chiude i pori e spegne eventuali rossori o infiammazioni dei peli incarniti.'
               },
               {
                 key: 'step2',
                 num: '3',
-                title: 'Crema Garnier Salicilico Fresco & Opaco',
+                title: '3. Massaggio linfatico + Crema idratante (Insieme!)',
                 productLabel: 'Crema Garnier Salicilico Fresco & Opaco',
-                note: 'Applica su pelle umida per trattenere l’idratazione ed opacizzare',
+                note: 'Applica la crema idratante e usala come lubrificante per il massaggio linfatico drenante.',
+                bullet1Label: 'Perché insieme?',
+                bullet1Text: 'Non fare mai il massaggio sulla pelle asciutta o già "fissata" dalla crema solare. Usa la tua crema idratante come "lubrificante" per far scorrere le dita e la mascella senza tirare la pelle.',
+                bullet2Label: 'Come fare:',
+                bullet2Text: 'Applica la crema idratante e, mentre la stendi, fai i tuoi movimenti di drenaggio dall\'alto verso il basso (dalle guance verso il collo). In questo modo la crema penetra benissimo e non crei attrito.',
                 image: 'https://i.ibb.co/mCmnyPkF/Picsart-26-09-25-21-51-33-055.jpg'
               },
               {
                 key: 'step3',
                 num: '4',
-                title: 'Protezione Solare SPF 30-50',
-                productLabel: 'Crema Solare',
-                note: 'Indispensabile per prevenire macchie e invecchiamento',
+                title: '4. Crema solare (Ultimo passaggio fondamentale)',
+                productLabel: 'Protezione Solare SPF 30-50',
+                note: 'La protezione solare deve sempre essere l\'ultimo scudo protettivo che metti sul viso prima di uscire.',
                 image: 'https://i.ibb.co/jPzRZth0/Screenshot-2026-09-12-16-04-07-095-com-amazon-m-Shop-android-shopping-edit.jpg'
               }
             ].map(step => {
-              const isDone = skincareDone[step.key];
+              const isDone = skincareDone[step.key] || (step.key === 'step_ice' && skincareDone['step_spoon']);
               return (
                 <div
                   key={step.key}
                   onClick={() => toggleSkincare(step.key)}
-                  className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-center justify-between ${
+                  className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex flex-col gap-2 ${
                     isDone
                       ? 'bg-[#00FFD1]/15 border-[#00FFD1]/40 text-cyan-300 shadow-neon'
                       : 'bg-black/40 border-white/5 text-gray-300 hover:border-white/20'
                   }`}
                 >
-                  <div className="flex items-center space-x-3">
-                    {step.image ? (
-                      <div
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setFullscreenImage(step.image);
-                          setFullscreenTitle(step.productLabel);
-                        }}
-                        className="w-8 h-8 rounded-xl overflow-hidden border border-white/20 bg-black/60 shrink-0 cursor-zoom-in hover:scale-105 transition-transform"
-                        title="Tocca per ingrandire la foto"
-                      >
-                        <img
-                          src={step.image}
-                          alt={step.productLabel || step.title}
-                          referrerPolicy="no-referrer"
-                          className="w-full h-full object-cover"
-                        />
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      {step.image ? (
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setFullscreenImage(step.image);
+                            setFullscreenTitle(step.productLabel);
+                          }}
+                          className="w-9 h-9 rounded-xl overflow-hidden border border-white/20 bg-black/60 shrink-0 cursor-zoom-in hover:scale-105 transition-transform"
+                          title="Tocca per ingrandire la foto"
+                        >
+                          <img
+                            src={step.image}
+                            alt={step.productLabel || step.title}
+                            referrerPolicy="no-referrer"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div className={`w-9 h-9 rounded-xl font-extrabold text-xs flex items-center justify-center shrink-0 ${
+                          isDone ? 'bg-neon text-black shadow-neon' : 'bg-white/10 text-gray-400'
+                        }`}>
+                          {isDone ? <Check className="w-4 h-4 stroke-[3]" /> : step.num}
+                        </div>
+                      )}
+                      <div>
+                        <h5 className="text-xs font-bold text-white">{step.title}</h5>
+                        <p className="text-[10px] text-gray-400 mt-0.5">{step.note}</p>
                       </div>
-                    ) : (
-                      <div className={`w-8 h-8 rounded-xl font-extrabold text-xs flex items-center justify-center shrink-0 ${
-                        isDone ? 'bg-neon text-black shadow-neon' : 'bg-white/10 text-gray-400'
-                      }`}>
-                        {isDone ? <Check className="w-4 h-4 stroke-[3]" /> : step.num}
-                      </div>
-                    )}
-                    <div>
-                      <h5 className="text-xs font-bold text-white">{step.title}</h5>
-                      <p className="text-[10px] text-gray-400 mt-0.5">{step.note}</p>
+                    </div>
+                    <div className={`w-6 h-6 rounded-lg flex items-center justify-center border transition-all shrink-0 ${
+                      isDone
+                        ? 'bg-[#00FFD1] text-black border-[#00FFD1] shadow-neon'
+                        : 'border-white/20 bg-white/5 text-transparent'
+                    }`}>
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
                     </div>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-gray-500 shrink-0" />
+
+                  {/* Bullet points extra */}
+                  {(step.bullet1Text || step.bullet2Text) && (
+                    <div className="pt-1.5 pl-12 space-y-1.5 text-[11px] text-gray-300 border-t border-white/5">
+                      {step.bullet1Text && (
+                        <div className="flex items-start gap-1.5">
+                          <span className="text-cyan-300 font-bold shrink-0">• {step.bullet1Label}</span>
+                          <span className="leading-relaxed">{step.bullet1Text}</span>
+                        </div>
+                      )}
+                      {step.bullet2Text && (
+                        <div className="flex items-start gap-1.5">
+                          <span className="text-cyan-300 font-bold shrink-0">• {step.bullet2Label}</span>
+                          <span className="leading-relaxed">{step.bullet2Text}</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               );
             })}
+
+            {/* Schema Riassuntivo Veloce */}
+            <div className="p-3.5 rounded-2xl bg-black/60 border border-white/10 space-y-2 mt-2">
+              <span className="text-[10px] font-black uppercase tracking-wider text-cyan-300 block">
+                ⚡ Schema riassuntivo veloce
+              </span>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[11px] text-gray-200 font-semibold">
+                <div className="p-2 rounded-xl bg-white/5 border border-white/5 text-center flex flex-col items-center">
+                  <span className="text-cyan-400 font-black text-xs">1</span>
+                  <span>Detergente</span>
+                </div>
+                <div className="p-2 rounded-xl bg-white/5 border border-white/5 text-center flex flex-col items-center">
+                  <span className="text-cyan-400 font-black text-xs">2</span>
+                  <span>Bottiglia ghiacciata</span>
+                </div>
+                <div className="p-2 rounded-xl bg-white/5 border border-white/5 text-center flex flex-col items-center">
+                  <span className="text-cyan-400 font-black text-xs">3</span>
+                  <span className="leading-tight">Crema Idratante + Massaggio</span>
+                </div>
+                <div className="p-2 rounded-xl bg-white/5 border border-white/5 text-center flex flex-col items-center">
+                  <span className="text-cyan-400 font-black text-xs">4</span>
+                  <span className="leading-tight">Crema Solare (Pronto!)</span>
+                </div>
+              </div>
+            </div>
 
             {/* Separatore visivo di stile senza testo */}
             <div className="pt-2">

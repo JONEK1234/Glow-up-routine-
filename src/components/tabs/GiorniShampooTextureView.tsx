@@ -3,107 +3,111 @@ import {
   ArrowLeft,
   Sparkles,
   Calendar,
-  Clock,
   Droplets,
-  Wind,
-  CheckCircle2,
   Dumbbell,
   ShieldCheck,
   Zap,
   Info,
-  Layers,
-  Flame,
   Sun,
   Moon,
-  Sparkle
+  AlertTriangle,
+  Bed,
+  CheckCircle2,
+  Wind
 } from 'lucide-react';
 
 interface GiorniShampooTextureViewProps {
   onBack: () => void;
 }
 
-const WEEK_DAYS = [
+interface RoutineDay {
+  day: string;
+  badge: string;
+  badgeColor: string;
+  morning: string;
+  evening: string;
+  nightNote: string;
+  isNightWarning?: boolean;
+  isShampooMorning?: boolean;
+  isShampooEvening?: boolean;
+}
+
+const WEEK_DAYS: RoutineDay[] = [
+  {
+    day: 'Domenica',
+    badge: 'SHAMPOO MATTINA',
+    badgeColor: 'border-cyan-500/40 bg-cyan-500/15 text-cyan-300',
+    morning: 'SHAMPOO (Head & Shoulders)',
+    evening: 'Relax / Uscita',
+    nightNote: 'Dormi con la cute pulita.',
+    isShampooMorning: true
+  },
   {
     day: 'Lunedì',
-    short: 'Lun',
-    type: 'shampoo',
-    badge: 'Palestra + Shampoo',
-    badgeColor: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-300',
-    morning: 'Sistemazione del ciuffo, idratazione texture',
-    morningDetails: 'Lavori di precisione sul ciuffo, tocco di idratazione e polverina strategica senza appesantire la cute per la scuola.',
-    evening: 'Palestra ➔ SHAMPOO SERA (Head & Shoulders). Asciugatura al 100%.',
-    notes: 'Zero sudore a letto: shampoo serale dopo la palestra.'
+    badge: 'Texture + Palestra',
+    badgeColor: 'border-amber-500/40 bg-amber-500/15 text-amber-300',
+    morning: 'Texture (Polverina / Styling)',
+    evening: 'Palestra ➔ Doccia SERA solo corpo (senza bagnare i capelli)',
+    nightNote: 'Attenzione: Dormi con il sudore/prodotto del lunedì sul cuscino.',
+    isNightWarning: true
   },
   {
     day: 'Martedì',
-    short: 'Mar',
-    type: 'texture',
-    badge: 'Restyling Texture',
-    badgeColor: 'border-amber-500/30 bg-amber-500/10 text-amber-300',
-    morning: 'Restyling texture',
-    morningDetails: 'Capello pulitissimo dalla sera prima: azzera la piega del cuscino con mani umide, phon dal basso per volume e polverina.',
-    evening: 'Doccia rapida la sera solo corpo (testa asciutta)',
-    notes: 'Cute pulita, non bagnare i capelli.'
+    badge: 'SHAMPOO MATTINA',
+    badgeColor: 'border-cyan-500/40 bg-cyan-500/15 text-cyan-300',
+    morning: 'SHAMPOO MATTINA',
+    evening: 'Giornata standard',
+    nightNote: 'Dormi con la cute pulita.',
+    isShampooMorning: true
   },
   {
     day: 'Mercoledì',
-    short: 'Mer',
-    type: 'shampoo',
-    badge: 'Palestra + Shampoo & Balsamo',
-    badgeColor: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-300',
-    morning: 'Sistemazione del ciuffo, idratazione texture',
-    morningDetails: 'Dettagli frontali sul ciuffo, morbidezza/idratazione leggera e polverina calibrata per reggere fino a sera.',
-    evening: 'Palestra ➔ SHAMPOO SERA (+ Balsamo Mousse Pantene). Asciugatura al 100%.',
-    notes: 'Nutrimento con Balsamo Mousse Pantene dopo la palestra.'
+    badge: 'Texture + Palestra',
+    badgeColor: 'border-amber-500/40 bg-amber-500/15 text-amber-300',
+    morning: 'Texture (Polverina / Styling)',
+    evening: 'Palestra ➔ Doccia SERA normale/solo corpo',
+    nightNote: 'Attenzione: Dormi con il sudore/prodotto del mercoledì sul cuscino.',
+    isNightWarning: true
   },
   {
     day: 'Giovedì',
-    short: 'Gio',
-    type: 'texture',
-    badge: 'Restyling Texture',
-    badgeColor: 'border-amber-500/30 bg-amber-500/10 text-amber-300',
-    morning: 'Restyling texture',
-    morningDetails: 'Capelli leggeri e morbidi: mani umide contro la piega del cuscino, phon dal basso e polverina per massima struttura.',
-    evening: 'Doccia rapida la sera solo corpo',
-    notes: 'Mantieni la testa all asciutto sotto la doccia.'
+    badge: 'SHAMPOO MATTINA + Balsamo',
+    badgeColor: 'border-cyan-500/40 bg-cyan-500/15 text-cyan-300',
+    morning: 'SHAMPOO MATTINA (+ Balsamo Mousse Pantene)',
+    evening: 'Giornata standard',
+    nightNote: 'Dormi con la cute pulita e idratata.',
+    isShampooMorning: true
   },
   {
     day: 'Venerdì',
-    short: 'Ven',
-    type: 'shampoo',
-    badge: 'Palestra + Shampoo',
-    badgeColor: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-300',
-    morning: 'Sistemazione del ciuffo, idratazione texture',
-    morningDetails: 'Focus sul ciuffo, idratazione leggera per la scuola e polverina per arrivare perfetto all allenamento serale.',
-    evening: 'Palestra ➔ SHAMPOO SERA (Head & Shoulders). Asciugatura al 100%.',
-    notes: 'Ultimo allenamento della settimana: cute pulita e asciugata al 100%.'
+    badge: 'Texture + SHAMPOO SERA',
+    badgeColor: 'border-emerald-500/40 bg-emerald-500/15 text-emerald-300',
+    morning: 'Texture (Polverina / Styling)',
+    evening: 'Palestra ➔ SHAMPOO SERA',
+    nightNote: 'Ottimo: Pulisci via palestra e polverina prima di dormire (asciuga al 100%).',
+    isShampooEvening: true
   },
   {
     day: 'Sabato',
-    short: 'Sab',
-    type: 'texture',
-    badge: 'Restyling / Weekend',
-    badgeColor: 'border-purple-500/30 bg-purple-500/10 text-purple-300',
-    morning: 'Restyling texture (o styling per il weekend)',
-    morningDetails: 'Capelli puliti dallo shampoo del venerdì sera: styling dinamico con phon e polverina per le uscite del sabato.',
-    evening: 'Uscita / Relax (Eventuale shampoo la sera se esci)',
-    notes: 'Serata libera: valuta lo shampoo la sera solo se necessario.'
+    badge: 'Texture Weekend',
+    badgeColor: 'border-purple-500/40 bg-purple-500/15 text-purple-300',
+    morning: 'Texture (Restyling rapido)',
+    evening: 'Uscita / Relax',
+    nightNote: 'Dormi con la cute leggera.'
   },
   {
     day: 'Domenica',
-    short: 'Dom',
-    type: 'relax',
-    badge: 'Pausa Styling (Cute Libera)',
-    badgeColor: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300',
-    morning: 'PAUSA STYLING (Lascia respirare la cute)',
-    morningDetails: 'Nessun prodotto pesante o polverina: lascia che il cuoio capelluto riposi e respiri in modo naturale.',
-    evening: 'Relax',
-    notes: 'Riposo totale in vista del nuovo ciclo settimanale.'
+    badge: 'Ricomincia il Ciclo',
+    badgeColor: 'border-cyan-500/40 bg-cyan-500/15 text-cyan-300',
+    morning: 'SHAMPOO MATTINA',
+    evening: '(Ricomincia il ciclo continuo)',
+    nightNote: 'Dormi con la cute pulita.',
+    isShampooMorning: true
   }
 ];
 
 export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutte' | 'tabella' | 'significato' | 'informazioni'>('tutte');
+  const [activeTab, setActiveTab] = useState<'tutte' | 'tabella' | 'notti' | 'polverina'>('tutte');
   const [selectedDayIndex, setSelectedDayIndex] = useState<number | null>(null);
 
   return (
@@ -120,7 +124,7 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
         </button>
         <span className="text-[11px] font-bold text-cyan-300 bg-cyan-500/10 px-3 py-1 rounded-xl border border-cyan-500/20 flex items-center gap-1.5">
           <Droplets className="w-3.5 h-3.5 text-cyan-400" />
-          Capelli & Routine
+          Capelli, Scuola & Palestra
         </span>
       </div>
 
@@ -131,7 +135,7 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
             <Sparkles className="w-3 h-3 text-cyan-400" />
             ★ Note Scritte Da Me
           </span>
-          <span className="text-[10px] text-gray-400 font-semibold">Routine Settimanale Definitiva</span>
+          <span className="text-[10px] text-gray-400 font-semibold">Ciclo Continuo</span>
         </div>
 
         <h1 className="text-xl sm:text-2xl font-black text-white leading-tight uppercase tracking-tight flex items-center gap-2">
@@ -139,7 +143,7 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
         </h1>
 
         <p className="text-xs text-gray-300 leading-relaxed font-medium">
-          Lo schema aggiornato con le indicazioni esatte per ogni mattina (scuola) e pomeriggio/sera (palestra & shampoo serale), il significato pratico dei passaggi e la spiegazione di perché questa logica funziona al 100%.
+          Tabella organizzata con i lavaggi distribuiti tra mattina e sera per stare sempre a posto con i capelli, la scuola e la palestra, inclusa la gestione delle notti critiche per il cuscino e la guida all'uso ottimale della polverina texturizzante.
         </p>
 
         {/* Tab Filters */}
@@ -165,37 +169,37 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
             }`}
           >
             <Calendar className="w-3.5 h-3.5" />
-            1. Routine Settimanale
+            1. Tabella Settimanale
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('significato')}
+            onClick={() => setActiveTab('notti')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-              activeTab === 'significato'
+              activeTab === 'notti'
                 ? 'bg-amber-500 text-black shadow-md shadow-amber-500/30 font-extrabold'
                 : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
             }`}
           >
-            <Sparkle className="w-3.5 h-3.5" />
-            2. Significato Passaggi
+            <Bed className="w-3.5 h-3.5" />
+            2. Notti Critiche & Cuscino
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('informazioni')}
+            onClick={() => setActiveTab('polverina')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-              activeTab === 'informazioni'
+              activeTab === 'polverina'
                 ? 'bg-purple-500 text-white shadow-md shadow-purple-500/30 font-extrabold'
                 : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
             }`}
           >
-            <Info className="w-3.5 h-3.5" />
-            3. Informazioni & Logica
+            <Sparkles className="w-3.5 h-3.5" />
+            3. Guida Polverina
           </button>
         </div>
       </div>
 
       {/* ============================================================= */}
-      {/* SEZIONE 1: LA ROUTINE SETTIMANALE DEFINITIVA                  */}
+      {/* SEZIONE 1: TABELLA ROUTINE SETTIMANALE (CICLO CONTINUO)        */}
       {/* ============================================================= */}
       {(activeTab === 'tutte' || activeTab === 'tabella') && (
         <div className="space-y-4 animate-in fade-in duration-200">
@@ -206,34 +210,38 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
               </span>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400">
-                  Tabella Orari & Attività
+                  Ciclo Continuo
                 </span>
                 <h2 className="text-base sm:text-lg font-black text-white">
-                  La Routine Settimanale Definitiva
+                  Tabella Routine Settimanale
                 </h2>
               </div>
             </div>
             <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
-              Lun - Dom
+              Mattina & Sera
             </span>
           </div>
 
           <p className="text-xs text-gray-300 leading-relaxed font-medium pl-1">
-            Ecco lo schema aggiornato con le indicazioni esatte per ogni mattina e sera:
+            Ecco la tabella organizzata esattamente secondo i tuoi passaggi, con i lavaggi distribuiti tra mattina e sera per farti stare sempre a posto con i capelli e la scuola:
           </p>
 
           {/* TABELLA DESKTOP / CARD MOBILE */}
-          <div className="overflow-hidden rounded-3xl border border-cyan-500/30 bg-black/75 shadow-[0_0_20px_rgba(6,182,212,0.1)]">
-            {/* Header Tabella */}
-            <div className="hidden sm:grid grid-cols-12 gap-3 p-3.5 bg-cyan-950/40 border-b border-white/10 text-[11px] font-black uppercase tracking-wider text-cyan-300">
+          <div className="overflow-hidden rounded-3xl border border-cyan-500/30 bg-black/80 shadow-[0_0_20px_rgba(6,182,212,0.1)]">
+            {/* Header Tabella Desktop */}
+            <div className="hidden sm:grid grid-cols-12 gap-3 p-3.5 bg-cyan-950/50 border-b border-white/10 text-[11px] font-black uppercase tracking-wider text-cyan-300">
               <div className="col-span-2">Giorno</div>
-              <div className="col-span-5 flex items-center gap-1.5">
+              <div className="col-span-3 flex items-center gap-1.5">
                 <Sun className="w-3.5 h-3.5 text-amber-400" />
                 Mattina (Scuola)
               </div>
-              <div className="col-span-5 flex items-center gap-1.5">
+              <div className="col-span-4 flex items-center gap-1.5">
                 <Moon className="w-3.5 h-3.5 text-indigo-400" />
                 Pomeriggio / Sera
+              </div>
+              <div className="col-span-3 flex items-center gap-1.5">
+                <Bed className="w-3.5 h-3.5 text-rose-400" />
+                Note Notte (Cuscino & Cute)
               </div>
             </div>
 
@@ -241,30 +249,36 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
             <div className="divide-y divide-white/5">
               {WEEK_DAYS.map((item, index) => {
                 const isSelected = selectedDayIndex === index;
-                const isShampoo = item.type === 'shampoo';
-                const isTexture = item.type === 'texture';
 
                 return (
                   <div
-                    key={item.day}
+                    key={`${item.day}-${index}`}
                     onClick={() => setSelectedDayIndex(isSelected ? null : index)}
-                    className={`p-4 transition-colors cursor-pointer ${
+                    className={`p-3.5 sm:p-4 transition-colors cursor-pointer ${
                       isSelected
                         ? 'bg-cyan-950/30'
-                        : isShampoo
-                        ? 'hover:bg-cyan-500/5'
-                        : isTexture
+                        : item.isNightWarning
                         ? 'hover:bg-amber-500/5'
-                        : 'hover:bg-emerald-500/5'
+                        : item.isShampooEvening
+                        ? 'hover:bg-emerald-500/5'
+                        : item.isShampooMorning
+                        ? 'hover:bg-cyan-500/5'
+                        : 'hover:bg-white/5'
                     }`}
                   >
-                    {/* Visualizzazione Mobile & Desktop Responsive */}
+                    {/* Visualizzazione Responsive */}
                     <div className="space-y-2.5 sm:space-y-0 sm:grid sm:grid-cols-12 sm:gap-3 sm:items-center">
                       {/* Colonna Giorno */}
                       <div className="sm:col-span-2 flex items-center justify-between sm:block">
                         <div className="flex items-center space-x-2">
-                          <span className={`w-2 h-2 rounded-full ${
-                            isShampoo ? 'bg-cyan-400 animate-pulse' : isTexture ? 'bg-amber-400' : 'bg-emerald-400'
+                          <span className={`w-2.5 h-2.5 rounded-full ${
+                            item.isNightWarning
+                              ? 'bg-amber-400 ring-2 ring-amber-400/40'
+                              : item.isShampooEvening
+                              ? 'bg-emerald-400 ring-2 ring-emerald-400/40'
+                              : item.isShampooMorning
+                              ? 'bg-cyan-400 ring-2 ring-cyan-400/40'
+                              : 'bg-purple-400'
                           }`} />
                           <span className="font-extrabold text-sm text-white tracking-tight">
                             {item.day}
@@ -276,29 +290,38 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
                       </div>
 
                       {/* Colonna Mattina (Scuola) */}
-                      <div className="sm:col-span-5 p-2.5 sm:p-0 rounded-2xl bg-white/[0.02] sm:bg-transparent border border-white/5 sm:border-0 space-y-1">
+                      <div className="sm:col-span-3 p-2.5 sm:p-0 rounded-2xl bg-white/[0.02] sm:bg-transparent border border-white/5 sm:border-0 space-y-1">
                         <div className="flex items-center gap-1.5 text-[10px] font-bold text-amber-300 uppercase tracking-wider sm:hidden">
                           <Sun className="w-3 h-3 text-amber-400" /> Mattina (Scuola)
                         </div>
-                        <p className="text-xs font-semibold text-gray-100">
+                        <p className={`text-xs font-bold ${item.isShampooMorning ? 'text-cyan-300' : 'text-gray-100'}`}>
                           {item.morning}
-                        </p>
-                        <p className="text-[11px] text-gray-400 leading-relaxed">
-                          {item.morningDetails}
                         </p>
                       </div>
 
                       {/* Colonna Pomeriggio / Sera */}
-                      <div className="sm:col-span-5 p-2.5 sm:p-0 rounded-2xl bg-white/[0.02] sm:bg-transparent border border-white/5 sm:border-0 space-y-1">
-                        <div className="flex items-center gap-1.5 text-[10px] font-bold text-cyan-300 uppercase tracking-wider sm:hidden">
-                          <Moon className="w-3 h-3 text-cyan-400" /> Pomeriggio / Sera
+                      <div className="sm:col-span-4 p-2.5 sm:p-0 rounded-2xl bg-white/[0.02] sm:bg-transparent border border-white/5 sm:border-0 space-y-1">
+                        <div className="flex items-center gap-1.5 text-[10px] font-bold text-indigo-300 uppercase tracking-wider sm:hidden">
+                          <Moon className="w-3 h-3 text-indigo-400" /> Pomeriggio / Sera
                         </div>
-                        <p className="text-xs font-semibold text-gray-100 flex items-center gap-1.5">
-                          {isShampoo && <Dumbbell className="w-3.5 h-3.5 text-cyan-400 shrink-0" />}
-                          <span>{item.evening}</span>
+                        <p className={`text-xs font-semibold ${item.isShampooEvening ? 'text-emerald-300 font-bold' : 'text-gray-200'}`}>
+                          {item.evening}
                         </p>
-                        <p className="text-[11px] text-cyan-200/80 leading-relaxed font-medium">
-                          💡 {item.notes}
+                      </div>
+
+                      {/* Colonna Note Notte */}
+                      <div className="sm:col-span-3 p-2.5 sm:p-0 rounded-2xl bg-white/[0.02] sm:bg-transparent border border-white/5 sm:border-0 space-y-1">
+                        <div className="flex items-center gap-1.5 text-[10px] font-bold text-rose-300 uppercase tracking-wider sm:hidden">
+                          <Bed className="w-3 h-3 text-rose-400" /> Note Notte
+                        </div>
+                        <p className={`text-[11px] leading-relaxed font-medium ${
+                          item.isNightWarning
+                            ? 'text-amber-200 font-semibold'
+                            : item.isShampooEvening
+                            ? 'text-emerald-200/90'
+                            : 'text-gray-300'
+                        }`}>
+                          {item.nightNote}
                         </p>
                       </div>
                     </div>
@@ -307,155 +330,65 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
               })}
             </div>
           </div>
-
-          {/* Quick Recap Badge Pills */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-            <div className="p-3 rounded-2xl bg-cyan-950/30 border border-cyan-500/30 space-y-1">
-              <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400 flex items-center gap-1">
-                <Droplets className="w-3.5 h-3.5" /> Giorni Shampoo (3)
-              </span>
-              <p className="text-[11px] text-gray-300 font-medium">
-                <strong className="text-white">Lunedì, Mercoledì, Venerdì:</strong> palestra e shampoo la sera prima di dormire.
-              </p>
-            </div>
-            <div className="p-3 rounded-2xl bg-amber-950/30 border border-amber-500/30 space-y-1">
-              <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5" /> Giorni Texture (3)
-              </span>
-              <p className="text-[11px] text-gray-300 font-medium">
-                <strong className="text-white">Martedì, Giovedì, Sabato:</strong> capello pulito, solo restyling con phon e polverina.
-              </p>
-            </div>
-            <div className="p-3 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 space-y-1 col-span-2 sm:col-span-1">
-              <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5" /> Pausa Styling (1)
-              </span>
-              <p className="text-[11px] text-gray-300 font-medium">
-                <strong className="text-white">Domenica:</strong> nessun prodotto, cuoio capelluto libero di respirare.
-              </p>
-            </div>
-          </div>
         </div>
       )}
 
       {/* ============================================================= */}
-      {/* SEZIONE 2: SIGNIFICATO DEI PASSAGGI DELLA MATTINA             */}
+      {/* SEZIONE 2: CONSIGLIO PRATICO PER LE NOTTI CRITICHE            */}
       {/* ============================================================= */}
-      {(activeTab === 'tutte' || activeTab === 'significato') && (
+      {(activeTab === 'tutte' || activeTab === 'notti') && (
         <div className="space-y-4 animate-in fade-in duration-200">
           <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
             <div className="flex items-center space-x-2">
               <span className="p-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                <Sun className="w-4 h-4" />
+                <Bed className="w-4 h-4 text-amber-400" />
               </span>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
-                  Cosa Fare la Mattina
+                  Lunedì & Mercoledì Notte
                 </span>
                 <h2 className="text-base sm:text-lg font-black text-white">
-                  Significato dei Passaggi della Mattina
+                  Consiglio Pratico per le Notti Critiche
                 </h2>
               </div>
             </div>
             <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30">
-              Guida Pratica
+              Cuscino & Cute
             </span>
           </div>
 
-          <div className="space-y-3.5">
-            {/* 1. Restyling texture */}
-            <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-amber-500/30 space-y-3 shadow-[0_0_20px_rgba(245,158,11,0.1)]">
-              <div className="flex items-start justify-between border-b border-white/10 pb-2.5">
-                <div className="space-y-0.5">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
-                    Martedì • Giovedì • Sabato
+          <div className="p-4 sm:p-5 rounded-3xl bg-black/80 border border-amber-500/30 space-y-3.5 shadow-[0_0_20px_rgba(245,158,11,0.1)]">
+            <p className="text-xs text-amber-200 leading-relaxed font-medium bg-amber-950/30 p-3.5 rounded-2xl border border-amber-500/30">
+              Visto che il <strong>lunedì</strong> e il <strong>mercoledì sera</strong> vai a dormire con i capelli che hanno accumulato la palestra e la polverina della mattina, adotta queste due abitudini fondamentali:
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-amber-500/20 space-y-1.5">
+                <div className="flex items-center space-x-2">
+                  <span className="w-6 h-6 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-xs shrink-0">
+                    1
                   </span>
-                  <h3 className="text-sm sm:text-base font-extrabold text-white flex items-center gap-1.5">
-                    <Sparkles className="w-4 h-4 text-amber-400" />
-                    Restyling Texture
-                  </h3>
+                  <strong className="text-white font-bold text-xs">
+                    Gira o cambia la federa del cuscino:
+                  </strong>
                 </div>
-                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                  Giorno post-shampoo
-                </span>
+                <p className="text-[11px] leading-relaxed text-gray-300 pl-8">
+                  Fallo il <strong className="text-amber-300">martedì mattina</strong>, così quando dormi il martedì sera con i capelli appena lavati non li riappoggi sul sudore e sui residui della notte prima.
+                </p>
               </div>
 
-              <div className="p-3 rounded-2xl bg-amber-950/20 border border-amber-500/20 text-xs text-amber-200 leading-relaxed font-medium">
-                È il giorno subito dopo lo shampoo della sera prima. I capelli sono pulitissimi.
-              </div>
-
-              <div className="space-y-2 text-xs text-gray-300">
-                <strong className="text-white block font-bold text-xs">
-                  I 3 passaggi chiave per la mattina di scuola:
-                </strong>
-                <div className="grid grid-cols-1 gap-2 pl-1">
-                  <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-start gap-2.5">
-                    <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-[11px] shrink-0">1</span>
-                    <span className="text-[11px] leading-relaxed text-gray-300">
-                      <strong className="text-white">Azzera la piega del cuscino:</strong> inumidisci leggermente le mani con acqua e passa le dita tra i capelli per togliere ogni segno del sonno.
-                    </span>
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-start gap-2.5">
-                    <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-[11px] shrink-0">2</span>
-                    <span className="text-[11px] leading-relaxed text-gray-300">
-                      <strong className="text-white">Phon dal basso per il volume:</strong> passa velocemente il phon orientando il getto d aria verso l alto per rialzare le radici in pochi secondi.
-                    </span>
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-start gap-2.5">
-                    <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-[11px] shrink-0">3</span>
-                    <span className="text-[11px] leading-relaxed text-gray-300">
-                      <strong className="text-white">Polverina per texture:</strong> applica una leggera spolverata di polverina volumizzante/texturizzante per dare definizione e tenuta naturale per tutta la giornata.
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 2. Sistemazione del ciuffo, idratazione texture */}
-            <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-cyan-500/30 space-y-3 shadow-[0_0_20px_rgba(6,182,212,0.1)]">
-              <div className="flex items-start justify-between border-b border-white/10 pb-2.5">
-                <div className="space-y-0.5">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400">
-                    Lunedì • Mercoledì • Venerdì
+              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-amber-500/20 space-y-1.5">
+                <div className="flex items-center space-x-2">
+                  <span className="w-6 h-6 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-xs shrink-0">
+                    2
                   </span>
-                  <h3 className="text-sm sm:text-base font-extrabold text-white flex items-center gap-1.5">
-                    <Droplets className="w-4 h-4 text-cyan-400" />
-                    Sistemazione del Ciuffo, Idratazione Texture
-                  </h3>
+                  <strong className="text-white font-bold text-xs">
+                    Pochissima polverina al mattino:
+                  </strong>
                 </div>
-                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                  Giorno di palestra & lavaggio
-                </span>
-              </div>
-
-              <div className="p-3 rounded-2xl bg-cyan-950/20 border border-cyan-500/20 text-xs text-cyan-200 leading-relaxed font-medium">
-                È la mattina del giorno in cui la sera farai la palestra e lo shampoo.
-              </div>
-
-              <div className="space-y-2 text-xs text-gray-300">
-                <strong className="text-white block font-bold text-xs">
-                  I passaggi strategici per la mattina:
-                </strong>
-                <div className="grid grid-cols-1 gap-2 pl-1">
-                  <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-start gap-2.5">
-                    <span className="w-5 h-5 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold text-[11px] shrink-0">•</span>
-                    <span className="text-[11px] leading-relaxed text-gray-300">
-                      <strong className="text-white">Lavori di precisione sul ciuffo:</strong> concentrati solo sulla parte frontale e sulla silhouette visibile del capello senza toccare troppo la nuca.
-                    </span>
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-start gap-2.5">
-                    <span className="w-5 h-5 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold text-[11px] shrink-0">•</span>
-                    <span className="text-[11px] leading-relaxed text-gray-300">
-                      <strong className="text-white">Tocco di idratazione e leggerezza:</strong> mantieni il capello morbido senza ungere o appesantire la radice.
-                    </span>
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-start gap-2.5">
-                    <span className="w-5 h-5 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold text-[11px] shrink-0">•</span>
-                    <span className="text-[11px] leading-relaxed text-gray-300">
-                      <strong className="text-white">Polverina senza esagerare:</strong> usa la polverina in quantità moderata e strategica per arrivare perfetto a sera fino all'allenamento in palestra.
-                    </span>
-                  </div>
-                </div>
+                <p className="text-[11px] leading-relaxed text-gray-300 pl-8">
+                  Usa <strong className="text-amber-300">pochissima polverina</strong> il lunedì e il mercoledì mattina: in questo modo la notte la cute "soffre" e suda molto meno durante il sonno.
+                </p>
               </div>
             </div>
           </div>
@@ -463,67 +396,147 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
       )}
 
       {/* ============================================================= */}
-      {/* SEZIONE 3: INFORMAZIONI & LOGICA DELLA ROUTINE                */}
+      {/* SEZIONE 3: LA FUNZIONE "MAGICA" DELLA POLVERE TEXTURIZZANTE    */}
       {/* ============================================================= */}
-      {(activeTab === 'tutte' || activeTab === 'informazioni') && (
+      {(activeTab === 'tutte' || activeTab === 'polverina') && (
         <div className="space-y-4 animate-in fade-in duration-200">
           <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
             <div className="flex items-center space-x-2">
               <span className="p-1.5 rounded-xl bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                <Info className="w-4 h-4" />
+                <Sparkles className="w-4 h-4 text-purple-400" />
               </span>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-purple-400">
-                  Approfondimento Tecnico
+                  Come Funziona
                 </span>
                 <h2 className="text-base sm:text-lg font-black text-white">
-                  Informazioni: Perché Questa Routine Funziona
+                  La Funzione "Magica" della Polvere Texturizzante
                 </h2>
               </div>
             </div>
             <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-purple-500/15 text-purple-300 border border-purple-500/30">
-              Logica Perfetta
+              Spugna Microscopica
             </span>
           </div>
 
-          <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-purple-500/30 space-y-4 shadow-[0_0_20px_rgba(168,85,247,0.1)]">
+          <div className="p-4 sm:p-5 rounded-3xl bg-black/80 border border-purple-500/30 space-y-4 shadow-[0_0_20px_rgba(168,85,247,0.1)]">
             <p className="text-xs text-purple-200 leading-relaxed font-semibold bg-purple-950/30 p-3.5 rounded-2xl border border-purple-500/30">
-              Sì, ci sta benissimo! Ha perfettamente senso perché rispecchia la condizione esatta del capello in quel momento della settimana:
+              Hai colto esattamente la funzione "magica" della polvere texturizzante (volumizzante): è formulata principalmente a base di micro-particelle opacizzanti (spesso silice sferica o amido) che funzionano come una <strong className="text-white">vera e propria spugna microscopica</strong>.
             </p>
 
-            <div className="space-y-3 text-xs text-gray-300">
-              {/* Box 1: Restyling texture */}
-              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5">
-                <strong className="text-amber-300 block font-bold text-xs flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                  Restyling texture (il giorno subito dopo lo shampoo):
-                </strong>
-                <p className="text-[11px] leading-relaxed text-gray-200 pl-3">
-                  Il capello è leggero, soffice e perfettamente pulito dalla sera prima. Ti serve solo azzerare la piega del cuscino, rialzare la radice col phon e applicare la polverina per dare la struttura (texture) che ti piace.
-                </p>
-              </div>
+            <div className="space-y-2.5 text-xs text-gray-300">
+              <strong className="text-white block font-bold text-xs">
+                Cosa succede quando la metti a secco sui capelli:
+              </strong>
 
-              {/* Box 2: Sistemazione del ciuffo */}
-              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5">
-                <strong className="text-cyan-300 block font-bold text-xs flex items-center gap-1.5">
-                  <Droplets className="w-3.5 h-3.5 text-cyan-400" />
-                  Sistemazione del ciuffo, idratazione texture (il giorno del lavaggio la sera):
-                </strong>
-                <p className="text-[11px] leading-relaxed text-gray-200 pl-3">
-                  Il capello ha già sulle spalle una giornata intera, quindi la mattina non devi stravolgerlo o riempirlo di troppa roba. Ti concentri sui dettagli frontali (il ciuffo), mantieni la morbidezza/idratazione senza appesantire la cute e dai quel tocco di polverina strategico per farlo reggere fino alla palestra della sera.
-                </p>
+              <div className="space-y-2">
+                <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
+                  <div className="flex items-center space-x-2 text-cyan-300 font-bold">
+                    <CheckCircle2 className="w-4 h-4 shrink-0 text-cyan-400" />
+                    <span>Assorbe l'unto e il sudore residuo</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-gray-300 pl-6">
+                    Cattura l'eccesso di sebo e l'umidità della notte, opacizzando il capello e togliendo quell'effetto lucido/pesante da "capello da lavare".
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
+                  <div className="flex items-center space-x-2 text-purple-300 font-bold">
+                    <Zap className="w-4 h-4 shrink-0 text-purple-400" />
+                    <span>Dà spinta e volume immediato</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-gray-300 pl-6">
+                    Si deposita tra i singoli steli e crea una micro-frizione. Invece di scivolare e appiattirsi uno sull'altro, i capelli si "agganciano" tra loro, sollevando la radice al centro e sul ciuffo.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
+                  <div className="flex items-center space-x-2 text-emerald-300 font-bold">
+                    <Wind className="w-4 h-4 shrink-0 text-emerald-400" />
+                    <span>Mantiene il controllo senza appesantire</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-gray-300 pl-6">
+                    A differenza di gel o cere oleose, non incolla la chioma e ti permette di modellare il ciuffo con le dita anche durante la mattinata a scuola.
+                  </p>
+                </div>
               </div>
             </div>
 
-            {/* Sintesi Finale */}
-            <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-950/40 via-cyan-950/30 to-black/70 border-2 border-purple-400/40 space-y-2">
-              <span className="text-[11px] font-black uppercase tracking-wider text-purple-300 flex items-center gap-1.5">
-                <Zap className="w-4 h-4 text-purple-400" />
-                La Sintesi Vincente:
+            {/* Banner Alleata Lunedì & Mercoledì */}
+            <div className="p-3.5 rounded-2xl bg-gradient-to-r from-purple-950/40 via-cyan-950/30 to-black/70 border border-purple-400/30 text-xs text-gray-200 leading-relaxed font-medium">
+              💡 <strong>Perché è la tua alleata n°1 il lunedì e mercoledì:</strong> ti permette di passare la giornata a scuola con un look pulito, pieno e strutturato, rimandando lo shampoo senza che nessuno noti la differenza, per poi fare il lavaggio profondo la mattina successiva!
+            </div>
+          </div>
+
+          {/* ============================================================= */}
+          {/* SOTTO-SEZIONE: COME FARLA FRUTTARE AL MASSIMO                */}
+          {/* ============================================================= */}
+          <div className="p-4 sm:p-5 rounded-3xl bg-black/80 border border-cyan-500/30 space-y-4 shadow-[0_0_20px_rgba(6,182,212,0.1)]">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                <Info className="w-4 h-4 text-cyan-400" />
               </span>
-              <p className="text-xs text-gray-200 leading-relaxed font-medium">
-                È una logica chiarissima e pratica: hai coperto sia la <strong className="text-cyan-300">salute del cuoio capelluto</strong> (zero sudore a letto) sia la <strong className="text-amber-300">resa estetica per la scuola</strong>. Se segui questi passaggi vai sul sicuro!
-              </p>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400">
+                  Applicazione Perfetta
+                </span>
+                <h3 className="text-sm sm:text-base font-black text-white">
+                  Sembra che Scompaia tra le Mani? Ecco il Segreto
+                </h3>
+              </div>
+            </div>
+
+            <p className="text-xs text-gray-300 leading-relaxed font-medium">
+              È una sensazione normalissima: quando sfregi la polverina tra le mani sembra che "scompaia", ma in realtà si è distribuita in una <strong>pellicola microscopica sulle palme e sulle dita</strong>. Non è sparita nel nulla, è solo pronta all'uso! Il calore e l'umidità naturale della pelle la fanno aderire subito ai palmi.
+            </p>
+
+            <div className="space-y-2.5">
+              <strong className="text-white block font-bold text-xs uppercase tracking-wider text-cyan-300">
+                Come farla fruttare al massimo (Senza sprecarla):
+              </strong>
+
+              <div className="space-y-2 text-xs">
+                <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
+                  <div className="flex items-center space-x-2 text-white font-bold">
+                    <span className="w-5 h-5 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] shrink-0 font-black">
+                      1
+                    </span>
+                    <span>Non strofinare troppo le mani tra loro</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-gray-300 pl-7">
+                    Quando la versi sul palmo, dai solo un paio di colpi leggeri con l'altro palmo per allargarla, senza sfregare forte. Non devi "farla assorbire" dalle mani, ma solo distribuirla prima di infilare le dita tra i capelli.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
+                  <div className="flex items-center space-x-2 text-white font-bold">
+                    <span className="w-5 h-5 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] shrink-0 font-black">
+                      2
+                    </span>
+                    <span>Usa le mani come un rastrello</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-gray-300 pl-7">
+                    Appena l'hai sulle dita, infila subito le mani dentro i capelli andando ad agganciare le radici, non rimanere solo sulle punte. Deve essere il capello ad "assorbire" la polvere dalle tue dita.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1">
+                  <div className="flex items-center space-x-2 text-white font-bold">
+                    <span className="w-5 h-5 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] shrink-0 font-black">
+                      3
+                    </span>
+                    <span>Mani ben asciutte (Fondamentale!)</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-gray-300 pl-7">
+                    Assicurati che prima di mettere la polverina le mani siano completamente asciutte. Se hai le mani anche solo leggermente umide dopo esserti lavato il viso o le mani, la polvere si impacca e si scioglie sulla pelle prima ancora di toccare i capelli.
+                  </p>
+                </div>
+              </div>
+
+              {/* Risultato finale */}
+              <div className="p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 text-xs text-emerald-200 leading-relaxed font-medium mt-2">
+                ✨ <strong>Risultato:</strong> Facendo così, anche se ti sembra che sulle mani non ci sia più niente, appena entri nella chioma sentirai subito i capelli che prendono aderenza, volume e texture solida!
+              </div>
             </div>
           </div>
         </div>

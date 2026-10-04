@@ -1712,7 +1712,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Schema per ogni mattina (scuola) e sera (palestra e shampoo): la differenza tra restyling texture con phon e polverina e sistemazione del ciuffo, con spiegazione dettagliata del perché funziona.
+                Tabella ciclo continuo con lavaggi mattina e sera (scuola e palestra), consiglio federa cuscino per le notti critiche e guida completa alla polverina texturizzante.
               </p>
             </div>
 
@@ -1726,7 +1726,7 @@ export const NoteTab: React.FC = () => {
               <span>Tocca per aprire la routine capelli settimanale</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">Tabella Lun-Dom + Spiegazioni</span>
+            <span className="text-[10px] text-gray-400 font-semibold">Ciclo Continuo + Notti Critiche & Polverina</span>
           </div>
         </div>
       </div>
