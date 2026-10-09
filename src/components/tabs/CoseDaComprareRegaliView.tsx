@@ -28,7 +28,7 @@ interface CoseDaComprareRegaliViewProps {
 }
 
 export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutti' | 'rasatura' | 'seta' | 'diffusore'>('tutti');
+  const [activeTab, setActiveTab] = useState<'tutti' | 'rasatura' | 'seta' | 'diffusore' | 'gomme_mewing'>('tutti');
   const [fullscreenImage, setFullscreenImage] = useState<{ url: string; title: string } | null>(null);
 
   return (
@@ -80,7 +80,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
         </button>
         <span className="text-[11px] font-bold text-emerald-300 bg-emerald-500/10 px-3 py-1 rounded-xl border border-emerald-500/20 flex items-center gap-1.5">
           <Gift className="w-3.5 h-3.5 text-emerald-400" />
-          I Miei Regali di Natale (3 Oggetti)
+          I Miei Regali di Natale (4 Oggetti)
         </span>
       </div>
 
@@ -91,7 +91,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
             <Gift className="w-3 h-3 text-emerald-400" />
             ★ Wishlist Ufficiale
           </span>
-          <span className="text-[10px] text-gray-400 font-semibold">I 3 Regali Scelti Per Me</span>
+          <span className="text-[10px] text-gray-400 font-semibold">I 4 Regali Scelti Per Me</span>
         </div>
 
         <h1 className="text-xl sm:text-2xl font-black text-white leading-tight uppercase tracking-tight flex items-center gap-2">
@@ -99,7 +99,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
         </h1>
 
         <p className="text-xs text-gray-300 leading-relaxed font-medium">
-          La lista completa e dettagliata con link diretti, prezzi e schede tecniche: il set rasatura di sicurezza King C. Gillette con lamette platino su Amazon (15 €), la federa in pura seta Mulberry 22 Momme su Offtopic (49 €) e il diffusore per phon per il volume e il fissaggio dei legami a idrogeno.
+          La lista completa e dettagliata con link diretti, prezzi e schede tecniche: il set rasatura di sicurezza King C. Gillette con lamette platino su Amazon (15 €), la federa in pura seta Mulberry 22 Momme su Offtopic (49 €), il diffusore per phon per il volume e il fissaggio dei legami a idrogeno, e le gomme da masticare mewing dure per l'allenamento dei muscoli masseteri.
         </p>
 
         {/* Tab Filters */}
@@ -113,7 +113,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
                 : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
             }`}
           >
-            Tutti i 3 Regali
+            Tutti i 4 Regali
           </button>
           <button
             type="button"
@@ -150,6 +150,18 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
           >
             <Wind className="w-3.5 h-3.5" />
             3. Il Diffusore (Volume & Fisica)
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('gomme_mewing')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'gomme_mewing'
+                ? 'bg-amber-400 text-black shadow-md shadow-amber-500/30 font-extrabold'
+                : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
+            }`}
+          >
+            <Flame className="w-3.5 h-3.5 text-amber-400 group-hover:text-amber-300" />
+            4. Gomme da Masticare Mewing
           </button>
         </div>
       </div>
@@ -806,6 +818,162 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
               <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                 <p className="text-[11px] font-bold text-emerald-300">
                   ✨ Quel design a punte arrotondate è la forma migliore per dare volume alla radice in totale comfort.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 4: GOMME DA MASTICARE MEWING (JAWLINE & MASSETERI)     */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutti' || activeTab === 'gomme_mewing') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                <Flame className="w-4 h-4 text-amber-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
+                  Allenamento Muscolare Mascella • Prezzo ~15 - 20 € • Regalo 4
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  4. Gomme da Masticare Mewing (Gomme Dure Jawline)
+                </h2>
+              </div>
+            </div>
+            <span className="text-xs font-black px-3 py-1 rounded-xl bg-amber-400 text-black shadow-neon">
+              ~15 - 20 €
+            </span>
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-amber-400/50 space-y-4 bg-gradient-to-br from-amber-950/30 via-black/85 to-black shadow-[0_0_25px_rgba(245,158,11,0.15)]">
+            {/* Header Prodotto + Link Shop */}
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+              <div className="space-y-1">
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Ipertrofia Masseteri & Sinergia Palato
+                </span>
+                <h3 className="text-lg font-black text-white">
+                  Gomme da Masticare Dure per Mewing & Jawline
+                </h3>
+                <p className="text-xs text-gray-300">
+                  Gomme ad alta resistenza meccanica (Mastic Gum 100% naturale o Jawliner alimentare) formulate specificamente per stimolare il muscolo massetere.
+                </p>
+              </div>
+
+              <a
+                href="https://www.amazon.it/s?k=gomme+masticare+mewing+jawline"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="self-start px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-black font-black text-xs flex items-center gap-2 transition-all shadow-neon active:scale-95 shrink-0"
+              >
+                <ShoppingBag className="w-4 h-4" />
+                <span>Cerca su Amazon (~15-20 €)</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+
+            {/* Dettagli e differenze scientifiche */}
+            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-3">
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block">
+                🧠 Perché le Gomme Mewing e NON Chewing Gum Normali?
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-black/50 border border-white/5 space-y-1.5">
+                  <strong className="text-red-400 font-bold flex items-center gap-1.5">
+                    <X className="w-3.5 h-3.5 text-red-400" />
+                    Gomme Commerciali (Supermercato):
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Si sciolgono con la saliva dopo 2 minuti, diventando morbide come poltiglia. Non forniscono alcuna resistenza meccanica utile per ipertrofizzare i masseteri e creano solo aria nello stomaco.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/50 border border-emerald-500/20 space-y-1.5">
+                  <strong className="text-emerald-300 font-bold flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    Gomme da Masticare Mewing Dure:
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Hanno una consistenza da 5 a 10 volte più dura e non perdono densità durante la masticazione. Richiedono una forza di morso reale, stimolando l'ipertrofia del massetere e lo spessore dell'angolo mandibolare.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* PROTOCOLLO PRATICO DI UTILIZZO (CON FOCUS ASIMMETRIA) */}
+            <div className="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/30 space-y-3">
+              <div className="flex items-center space-x-2">
+                <span className="p-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  <Zap className="w-4 h-4 text-amber-400" />
+                </span>
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
+                    Protocollo Quotidiano Mewing & Asimmetria
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-black text-white">
+                    Come Usarle Correttamente (10-15 Minuti al Giorno)
+                  </h4>
+                </div>
+              </div>
+
+              <div className="space-y-2 text-xs">
+                <div className="p-3 rounded-xl bg-black/50 border border-white/5 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-black text-[11px] shrink-0 mt-0.5">
+                    1
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-white text-xs">Focus Strategico sul Lato Sinistro (65% / 35%)</h5>
+                    <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
+                      Dato che il massetere destro è già più sviluppato mentre il sinistro è più fino, mastica per circa il <strong>65% del tempo a sinistra</strong> e il <strong>35% a destra</strong>. Questo pareggia il volume muscolare e impedisce che il dimagrimento accentui l'asimmetria.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/50 border border-white/5 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-black text-[11px] shrink-0 mt-0.5">
+                    2
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-white text-xs">Solo sui Molari Posteriori</h5>
+                    <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
+                      Mastica esclusivamente posizionando la gomma sui <strong>molari</strong>. Non masticare mai con incisivi o canini frontali per non sovraccaricare i denti anteriori o l'articolazione.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/50 border border-white/5 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-black text-[11px] shrink-0 mt-0.5">
+                    3
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-white text-xs">10-15 Minuti Massimo (Sicurezza ATM)</h5>
+                    <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
+                      Trattalo come un vero allenamento con i pesi: 10-15 minuti di stimolazione intensa bastano a dare lo stimolo anabolico. Non masticare per ore per non affaticare l'articolazione temporo-mandibolare.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/50 border border-white/5 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-black text-[11px] shrink-0 mt-0.5">
+                    4
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-white text-xs">Sinergia con il Mewing</h5>
+                    <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
+                      Finita la sessione, appoggia subito la lingua sul palato (terzo posteriore incluso) con le labbra chiuse e i denti a contatto leggero. Il tono acquisito dai masseteri facilita il mantenimento automatico della postura corretta del viso.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-center">
+                <p className="text-[11px] font-bold text-amber-300">
+                  🎁 Regalo perfetto ed economico (~15-20 €) da abbinare alla routine viso e al percorso di simmetria!
                 </p>
               </div>
             </div>
