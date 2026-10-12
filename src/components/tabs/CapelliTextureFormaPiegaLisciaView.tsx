@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   ArrowLeft,
   Sparkles,
@@ -19,18 +19,388 @@ import {
   Activity,
   Atom,
   ChevronRight,
-  X
+  ChevronLeft,
+  X,
+  Camera,
+  Maximize2,
+  SlidersHorizontal,
+  Sun
 } from 'lucide-react';
 
 interface CapelliTextureFormaPiegaLisciaViewProps {
   onBack: () => void;
 }
 
+export interface HairProgressPhoto {
+  id: string;
+  title: string;
+  badge: string;
+  type: 'prima' | 'dopo';
+  typeLabel: string;
+  desc: string;
+  localUrl: string;
+  url: string;
+  sourceUrl: string;
+}
+
+export const HAIR_PROGRESS_PHOTOS: HairProgressPhoto[] = [
+  {
+    id: 'prog1_init_1',
+    title: 'Mattina - Risveglio Scompigliato 1',
+    badge: '1/7 • Foto Iniziale',
+    type: 'prima',
+    typeLabel: 'Prima • Mattina',
+    desc: 'Capelli scompigliati al risveglio prima del ritocco',
+    localUrl: '/uploads/progressi_capelli/114616.jpg',
+    url: 'https://i.ibb.co/WWQ8jRK2/IMG-20261011-114616.jpg',
+    sourceUrl: 'https://ibb.co/GvXYNrP5'
+  },
+  {
+    id: 'prog1_init_2',
+    title: 'Mattina - Risveglio Scompigliato 2',
+    badge: '2/7 • Foto Iniziale',
+    type: 'prima',
+    typeLabel: 'Prima • Mattina',
+    desc: 'Ciocche disordinate prima di inumidire e phonare',
+    localUrl: '/uploads/progressi_capelli/114551.jpg',
+    url: 'https://i.ibb.co/QvsZFxkg/IMG-20261011-114551.jpg',
+    sourceUrl: 'https://ibb.co/YBv67VXC'
+  },
+  {
+    id: 'prog1_res_1',
+    title: 'Risultato Piega - Definizione & Volume 1',
+    badge: '3/7 • Risultato',
+    type: 'dopo',
+    typeLabel: 'Risultato Finale',
+    desc: 'Volume alle radici e ciuffo orientato in diagonale',
+    localUrl: '/uploads/progressi_capelli/111858.jpg',
+    url: 'https://i.ibb.co/zHWWVVmd/IMG-20261011-111858.jpg',
+    sourceUrl: 'https://ibb.co/n8qqMMwp'
+  },
+  {
+    id: 'prog1_res_2',
+    title: 'Risultato Piega - Ciuffo & Direzione 2',
+    badge: '4/7 • Risultato',
+    type: 'dopo',
+    typeLabel: 'Risultato Finale',
+    desc: 'Direzione destra impostata col pettine a denti larghi',
+    localUrl: '/uploads/progressi_capelli/111857.jpg',
+    url: 'https://i.ibb.co/BHb9yV9k/IMG-20261011-111857.jpg',
+    sourceUrl: 'https://ibb.co/j9mSyvSt'
+  },
+  {
+    id: 'prog1_res_3',
+    title: 'Risultato Piega - Radici & Separazione 3',
+    badge: '5/7 • Risultato',
+    type: 'dopo',
+    typeLabel: 'Risultato Finale',
+    desc: 'Ciocche separate senza effetto blocco rigido',
+    localUrl: '/uploads/progressi_capelli/111900.jpg',
+    url: 'https://i.ibb.co/mCPmR8v9/IMG-20261011-111900.jpg',
+    sourceUrl: 'https://ibb.co/wN2TdsJS'
+  },
+  {
+    id: 'prog1_res_4',
+    title: 'Risultato Piega - Dettaglio Vertice & Cima 4',
+    badge: '6/7 • Risultato',
+    type: 'dopo',
+    typeLabel: 'Risultato Finale',
+    desc: 'Vertice chiuso e radice sollevata con aria fredda',
+    localUrl: '/uploads/progressi_capelli/114030.jpg',
+    url: 'https://i.ibb.co/SXJHkqRp/IMG-20261011-114030.jpg',
+    sourceUrl: 'https://ibb.co/C5W4jxhF'
+  },
+  {
+    id: 'prog1_res_5',
+    title: 'Risultato Piega - Vista Completa Post-Ritocco 5',
+    badge: '7/7 • Risultato',
+    type: 'dopo',
+    typeLabel: 'Risultato Finale',
+    desc: 'Look pulito, dinamico e compatto completato in 1 minuto',
+    localUrl: '/uploads/progressi_capelli/114036.jpg',
+    url: 'https://i.ibb.co/0RtRmT0B/IMG-20261011-114036.jpg',
+    sourceUrl: 'https://ibb.co/v6Y6VpNs'
+  }
+];
+
 export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPiegaLisciaViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutta' | 'diagnosi' | 'regole_cima' | 'routine_4passi' | 'polverina' | 'giorno_dopo' | 'fisica'>('tutta');
+  const [activeTab, setActiveTab] = useState<'tutta' | 'progressi' | 'diagnosi' | 'regole_cima' | 'routine_4passi' | 'polverina' | 'giorno_dopo' | 'fisica'>('tutta');
+  const [galleryFilter, setGalleryFilter] = useState<'tutte' | 'prima' | 'dopo'>('tutte');
+
+  // Mini gallery & Fullscreen modal states
+  const [activeGalleryIndex, setActiveGalleryIndex] = useState<number | null>(null);
+  const [isUltraZoomOpen, setIsUltraZoomOpen] = useState<boolean>(false);
+
+  // Swipe handling
+  const touchStartX = useRef<number | null>(null);
+  const [swipeOffset, setSwipeOffset] = useState<number>(0);
+  const [isSwiping, setIsSwiping] = useState<boolean>(false);
+
+  const filteredPhotos = galleryFilter === 'tutte'
+    ? HAIR_PROGRESS_PHOTOS
+    : HAIR_PROGRESS_PHOTOS.filter(p => p.type === galleryFilter);
+
+  const handleNextPhoto = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (activeGalleryIndex === null) return;
+    setActiveGalleryIndex((prev) => (prev! + 1) % HAIR_PROGRESS_PHOTOS.length);
+  };
+
+  const handlePrevPhoto = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (activeGalleryIndex === null) return;
+    setActiveGalleryIndex((prev) => (prev! === 0 ? HAIR_PROGRESS_PHOTOS.length - 1 : prev! - 1));
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    setIsSwiping(true);
+    setSwipeOffset(0);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const diff = e.touches[0].clientX - touchStartX.current;
+    setSwipeOffset(diff);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current !== null && activeGalleryIndex !== null) {
+      if (swipeOffset < -45) {
+        handleNextPhoto();
+      } else if (swipeOffset > 45) {
+        handlePrevPhoto();
+      }
+    }
+    touchStartX.current = null;
+    setIsSwiping(false);
+    setSwipeOffset(0);
+  };
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">
+      {/* ------------------------------------------------------------- */}
+      {/* 1. MODAL ULTRA ZOOM (LIVELLO ANCORA PIÙ GRANDE A TUTTO SCHERMO) */}
+      {/* ------------------------------------------------------------- */}
+      {isUltraZoomOpen && activeGalleryIndex !== null && (
+        <div
+          onClick={() => setIsUltraZoomOpen(false)}
+          className="fixed inset-0 z-50 bg-black/98 backdrop-blur-2xl flex flex-col items-center justify-between p-3 select-none cursor-zoom-out animate-in fade-in duration-200"
+        >
+          <div className="w-full max-w-2xl flex items-center justify-between px-2 pt-2">
+            <div className="flex items-center space-x-2">
+              <span className="px-2.5 py-1 rounded-xl bg-cyan-500/20 text-cyan-300 text-xs font-black border border-cyan-500/30">
+                {HAIR_PROGRESS_PHOTOS[activeGalleryIndex].badge}
+              </span>
+              <span className="text-xs font-bold text-white">
+                {HAIR_PROGRESS_PHOTOS[activeGalleryIndex].title}
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsUltraZoomOpen(false)}
+              className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md transition-all active:scale-95 cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-2xl flex-1 flex items-center justify-center p-2 cursor-default relative"
+          >
+            <img
+              src={HAIR_PROGRESS_PHOTOS[activeGalleryIndex].url}
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = HAIR_PROGRESS_PHOTOS[activeGalleryIndex].localUrl;
+              }}
+              alt={HAIR_PROGRESS_PHOTOS[activeGalleryIndex].title}
+              referrerPolicy="no-referrer"
+              className="max-h-[82vh] w-auto max-w-full object-contain rounded-2xl shadow-2xl border border-white/20"
+            />
+
+            {/* Left and Right Nav in Ultra Zoom */}
+            <button
+              type="button"
+              onClick={handlePrevPhoto}
+              className="absolute left-3 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/70 hover:bg-black text-white border border-white/20 backdrop-blur-md cursor-pointer active:scale-90 transition-all"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button
+              type="button"
+              onClick={handleNextPhoto}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/70 hover:bg-black text-white border border-white/20 backdrop-blur-md cursor-pointer active:scale-90 transition-all"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+
+          <div className="w-full max-w-md pb-2 text-center text-xs text-gray-400">
+            Tocca ovunque fuori dall'immagine per chiudere lo zoom massimo
+          </div>
+        </div>
+      )}
+
+      {/* ------------------------------------------------------------- */}
+      {/* 2. MINI GALLERIA INTERATTIVA CON SWIPE (LIVELLO PIÙ GRANDE)    */}
+      {/* ------------------------------------------------------------- */}
+      {activeGalleryIndex !== null && !isUltraZoomOpen && (
+        <div
+          onClick={() => setActiveGalleryIndex(null)}
+          className="fixed inset-0 z-40 bg-black/90 backdrop-blur-xl flex flex-col items-center justify-center p-3 select-none animate-in fade-in duration-200 cursor-pointer"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="max-w-md w-full bg-[#101622] border-2 border-cyan-400/50 rounded-3xl p-4 shadow-2xl flex flex-col space-y-3 cursor-default relative max-h-[92vh] overflow-hidden"
+          >
+            {/* Header Mini Galleria */}
+            <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
+              <div className="space-y-0.5">
+                <div className="flex items-center space-x-2">
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${
+                    HAIR_PROGRESS_PHOTOS[activeGalleryIndex].type === 'prima'
+                      ? 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+                      : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                  }`}>
+                    {HAIR_PROGRESS_PHOTOS[activeGalleryIndex].typeLabel}
+                  </span>
+                  <span className="text-[11px] font-bold text-gray-400">
+                    Foto {activeGalleryIndex + 1} di {HAIR_PROGRESS_PHOTOS.length}
+                  </span>
+                </div>
+                <h3 className="text-xs sm:text-sm font-black text-white leading-tight">
+                  {HAIR_PROGRESS_PHOTOS[activeGalleryIndex].title}
+                </h3>
+              </div>
+
+              <div className="flex items-center space-x-1">
+                <button
+                  type="button"
+                  onClick={() => setIsUltraZoomOpen(true)}
+                  className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-cyan-300 border border-white/10 transition-all cursor-pointer active:scale-95"
+                  title="Ingrandisci ancora di più a schermo intero"
+                >
+                  <Maximize2 className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveGalleryIndex(null)}
+                  className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer active:scale-95"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Immagine con Swipe e Clic per Ingrandire Ancora */}
+            <div
+              className="relative rounded-2xl overflow-hidden border border-white/15 bg-black cursor-grab active:cursor-grabbing select-none aspect-[3/4] max-h-[50vh] flex items-center justify-center group"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              onClick={() => setIsUltraZoomOpen(true)}
+              title="Tocca per ingrandire ancora di più"
+            >
+              <img
+                src={HAIR_PROGRESS_PHOTOS[activeGalleryIndex].url}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = HAIR_PROGRESS_PHOTOS[activeGalleryIndex].localUrl;
+                }}
+                alt={HAIR_PROGRESS_PHOTOS[activeGalleryIndex].title}
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-contain pointer-events-none transition-transform duration-200"
+                style={{
+                  transform: isSwiping ? `translateX(${swipeOffset}px)` : 'none'
+                }}
+              />
+
+              {/* Bottoni Frecce per Scambiare Foto */}
+              <button
+                type="button"
+                onClick={handlePrevPhoto}
+                className="absolute left-2.5 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/75 hover:bg-black text-white border border-white/20 backdrop-blur-md cursor-pointer z-10 active:scale-90 transition-all shadow-lg"
+                title="Foto Precedente"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                type="button"
+                onClick={handleNextPhoto}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/75 hover:bg-black text-white border border-white/20 backdrop-blur-md cursor-pointer z-10 active:scale-90 transition-all shadow-lg"
+                title="Foto Successiva"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+
+              {/* Suggerimento Zoom Massimo al centro in basso */}
+              <div className="absolute bottom-2.5 left-3 right-3 py-1.5 px-3 rounded-xl bg-black/80 backdrop-blur-md border border-white/20 flex items-center justify-between text-[10px] text-gray-200 pointer-events-none">
+                <span className="flex items-center gap-1 font-semibold text-cyan-300">
+                  <Maximize2 className="w-3 h-3" /> Tocca per zoom ultra-grande
+                </span>
+                <span className="text-gray-400">Swipe ◀ ▶ per cambiare</span>
+              </div>
+            </div>
+
+            {/* Descrizione Foto Attiva */}
+            <p className="text-[11px] text-gray-300 leading-snug px-1">
+              {HAIR_PROGRESS_PHOTOS[activeGalleryIndex].desc}
+            </p>
+
+            {/* Strip di Miniature Orizzontale */}
+            <div className="flex items-center space-x-1.5 overflow-x-auto pb-1 pt-1 no-scrollbar border-t border-white/10">
+              {HAIR_PROGRESS_PHOTOS.map((photo, pIdx) => (
+                <button
+                  key={photo.id}
+                  type="button"
+                  onClick={() => setActiveGalleryIndex(pIdx)}
+                  className={`w-11 h-14 rounded-xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer relative ${
+                    activeGalleryIndex === pIdx
+                      ? 'border-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.6)] scale-105'
+                      : 'border-white/20 opacity-60 hover:opacity-100'
+                  }`}
+                >
+                  <img
+                    src={photo.url}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = photo.localUrl;
+                    }}
+                    alt={photo.title}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover pointer-events-none"
+                  />
+                  <span className={`absolute bottom-0 inset-x-0 text-[8px] font-black text-center py-0.2 ${
+                    photo.type === 'prima' ? 'bg-amber-500/80 text-black' : 'bg-emerald-500/80 text-black'
+                  }`}>
+                    {pIdx + 1}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Tasti di controllo rapido in basso */}
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              <button
+                type="button"
+                onClick={handlePrevPhoto}
+                className="py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 font-bold text-xs flex items-center justify-center gap-1 transition-all active:scale-95 cursor-pointer"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span>Precedente</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleNextPhoto}
+                className="py-2 px-3 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-400/40 font-bold text-xs flex items-center justify-center gap-1 transition-all active:scale-95 cursor-pointer"
+              >
+                <span>Successiva</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Top Navigation Bar */}
       <div className="flex items-center justify-between sticky top-0 z-30 bg-[#0B0F17]/95 backdrop-blur-md py-2 -mx-4 px-4 border-b border-white/10">
         <button
@@ -42,10 +412,19 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           <span>Tutte le Note</span>
         </button>
 
-        <span className="text-[11px] font-bold text-cyan-300 bg-cyan-500/10 px-3 py-1 rounded-xl border border-cyan-500/20 flex items-center gap-1.5">
-          <Wind className="w-3.5 h-3.5 text-cyan-400" />
-          Nota Tecnica Capelli
-        </span>
+        {/* Tasto Diretto per i Progressi nella Barra Superiore */}
+        <button
+          type="button"
+          onClick={() => setActiveTab(activeTab === 'progressi' ? 'tutta' : 'progressi')}
+          className={`flex items-center space-x-1.5 py-1.5 px-3 rounded-xl text-xs font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer ${
+            activeTab === 'progressi'
+              ? 'bg-gradient-to-r from-emerald-400 to-cyan-400 text-black border-emerald-300 shadow-neon'
+              : 'bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border-emerald-500/30'
+          }`}
+        >
+          <Camera className="w-3.5 h-3.5" />
+          <span>{activeTab === 'progressi' ? 'Chiudi Progressi' : 'Progressi'}</span>
+        </button>
       </div>
 
       {/* Hero Header Card */}
@@ -66,6 +445,41 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           La sintesi completa, organizzata e priva di ripetizioni sulla struttura dei tuoi capelli: diagnosi della fibra (Tipo 2B, non crespi), correzione del verso d'asciugatura, regola del "buchino" a sinistra, routine veloce anti-separazione in 4 passi, applicazione della polverina volumizzante, riattivazione il giorno dopo e la spiegazione fisica del perché la piega migliora dopo qualche ora.
         </p>
 
+        {/* Tasto Progressi Esplicito (Appare SOLO se cliccato) */}
+        <div className="pt-1">
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'progressi' ? 'tutta' : 'progressi')}
+            className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] ${
+              activeTab === 'progressi'
+                ? 'bg-gradient-to-r from-emerald-950/80 via-teal-950/60 to-black/90 border-emerald-400 shadow-neon'
+                : 'bg-gradient-to-r from-emerald-950/40 via-teal-950/30 to-black/70 border-emerald-500/40 hover:border-emerald-400'
+            }`}
+          >
+            <div className="flex items-center space-x-2.5">
+              <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 group-hover:scale-105 transition-transform shrink-0">
+                <Camera className="w-4 h-4 text-emerald-400" />
+              </div>
+              <div className="text-left">
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1">
+                  {activeTab === 'progressi' ? '✓ Sezione Progressi Aperta' : '★ Tasto Progressi'}
+                </span>
+                <h4 className="text-xs font-black text-white group-hover:text-emerald-200 transition-colors">
+                  {activeTab === 'progressi' ? 'Stai visualizzando il Progresso N° 1 (7 Foto)' : 'Clicca per aprire i Progressi (Progresso N° 1 & 7 Foto)'}
+                </h4>
+              </div>
+            </div>
+            <div className={`flex items-center space-x-1 text-xs font-black px-3 py-1.5 rounded-xl shrink-0 transition-all ${
+              activeTab === 'progressi'
+                ? 'bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500/30'
+                : 'bg-emerald-400 text-black shadow-neon'
+            }`}>
+              <span>{activeTab === 'progressi' ? 'Chiudi' : 'Progressi'}</span>
+              {activeTab === 'progressi' ? <X className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
+            </div>
+          </button>
+        </div>
+
         {/* Tab Filters */}
         <div className="pt-2 flex flex-wrap items-center gap-2 border-t border-white/10">
           <button
@@ -79,6 +493,21 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           >
             Tutta la Nota
           </button>
+
+          {/* TASTO PROGRESSI RICHIESTO */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'progressi' ? 'tutta' : 'progressi')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'progressi'
+                ? 'bg-gradient-to-r from-emerald-400 to-cyan-400 text-black shadow-neon font-black ring-2 ring-emerald-300'
+                : 'bg-emerald-500/20 text-emerald-300 hover:text-white border border-emerald-500/40'
+            }`}
+          >
+            <Camera className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Progressi</span>
+          </button>
+
           <button
             type="button"
             onClick={() => setActiveTab('diagnosi')}
@@ -153,6 +582,317 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           </button>
         </div>
       </div>
+
+      {/* ============================================================= */}
+      {/* SEZIONE SPECIALE: PROGRESSI (PROGRESSO NUMERO 1 & BACHECA FOTO) */}
+      {/* (Visibile SOLO ed esclusivamente su click del tasto Progressi) */}
+      {/* ============================================================= */}
+      {activeTab === 'progressi' && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                <Camera className="w-4 h-4 text-emerald-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400">
+                  Documentazione Reale • Bacheca & Galleria
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Progressi • Progresso Numero 1
+                </h2>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                7 Foto Caricate
+              </span>
+              <button
+                type="button"
+                onClick={() => setActiveTab('tutta')}
+                className="flex items-center space-x-1 py-1 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all active:scale-95 cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Torna alla Nota</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-emerald-400/50 space-y-4 bg-gradient-to-br from-emerald-950/30 via-black/85 to-teal-950/30 shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+            {/* Header del Progresso N° 1 */}
+            <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 space-y-2">
+              <div className="flex items-center space-x-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-400 text-black text-[10px] font-black uppercase tracking-wider">
+                  Progresso N° 1
+                </span>
+                <span className="text-xs font-bold text-emerald-300">
+                  Risultato Testato & Replicabile
+                </span>
+              </div>
+              <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                Ecco la nota finale salvata e pronta per i tuoi promemoria. C'è dentro tutto il procedimento perfetto che hai testato e che ti ha dato quel risultato pazzesco:
+              </p>
+            </div>
+
+            {/* CARD: PROTOCOLLO DI RITOCCO MATTUTINO (RISVEGLIO) */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-emerald-500/30 space-y-3">
+              <div className="flex items-center space-x-2 border-b border-white/10 pb-2">
+                <span className="p-1.5 rounded-xl bg-cyan-500/20 text-cyan-300">
+                  <Clock className="w-4 h-4" />
+                </span>
+                <h3 className="text-xs sm:text-sm font-black text-white uppercase tracking-tight">
+                  📝 Nota: Protocollo di Ritocco Mattutino (Risveglio)
+                </h3>
+              </div>
+
+              <div className="space-y-2.5 text-xs">
+                {/* Punto 1 */}
+                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-black text-[11px] shrink-0 mt-0.5">
+                    1
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-white text-xs">Inumidire le mani</h5>
+                    <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
+                      Bagnare leggermente i palmi con pochissima acqua.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Punto 2 */}
+                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-black text-[11px] shrink-0 mt-0.5">
+                    2
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-white text-xs">Attivazione delle radici</h5>
+                    <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
+                      Passare le mani umide direttamente alla base e sul ciuffo, indirizzando e spingendo le radici in diagonale verso il lato destro.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Punto 3 */}
+                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-black text-[11px] shrink-0 mt-0.5">
+                    3
+                  </span>
+                  <div className="space-y-1">
+                    <h5 className="font-bold text-white text-xs">Asciugatura con phon (Caldo + Freddo)</h5>
+                    <ul className="text-[11px] text-gray-300 leading-relaxed space-y-1 pl-1">
+                      <li className="flex items-start gap-1.5">
+                        <span className="text-cyan-400">•</span>
+                        <span>Usare il phon con il beccuccio.</span>
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <span className="text-cyan-400">•</span>
+                        <span>Dare una passata di aria calda concentrata prima sulle radici per ridare volume e sollevamento, e poi accompagnando le lunghezze verso destra.</span>
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <span className="text-cyan-400">•</span>
+                        <span>Chiudere sempre con qualche secondo di aria fredda per bloccare la forma e fissare il volume.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Punto 4 */}
+                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-black text-[11px] shrink-0 mt-0.5">
+                    4
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-white text-xs">Finitura con il pettine a denti larghi</h5>
+                    <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
+                      Usare il pettine a denti larghi nell'ultima fase per separare le ciocche e dare quel look dinamico e pulito, senza appiattire il tutto in un blocco unico.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Conclusione incoraggiante */}
+              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-200">
+                ✨ <strong>Hai fatto un lavoro eccezionale:</strong> questo schema è perfetto da replicare ogni mattina per avere sempre i capelli al top in un minuto!
+              </div>
+            </div>
+
+            {/* ========================================================= */}
+            {/* LA BACHECA FOTO: PRIMA (MATTINA) VS RISULTATO (DOPO)      */}
+            {/* ========================================================= */}
+            <div className="space-y-3 pt-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-2">
+                <div>
+                  <h4 className="text-xs sm:text-sm font-black text-white flex items-center gap-1.5">
+                    <span>Bacheca Foto del Ritocco</span>
+                    <span className="text-[10px] font-bold text-gray-400">(Tocca per aprire la galleria)</span>
+                  </h4>
+                  <p className="text-[10px] text-gray-400">
+                    2 foto iniziali scompigliate della mattina e 5 foto del risultato finale
+                  </p>
+                </div>
+
+                {/* Filtro bacheca */}
+                <div className="flex bg-black/60 p-1 rounded-xl border border-white/10 text-[10px] space-x-1 self-start sm:self-auto">
+                  <button
+                    type="button"
+                    onClick={() => setGalleryFilter('tutte')}
+                    className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${
+                      galleryFilter === 'tutte'
+                        ? 'bg-cyan-400 text-black font-black'
+                        : 'text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    Tutte (7)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setGalleryFilter('prima')}
+                    className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${
+                      galleryFilter === 'prima'
+                        ? 'bg-amber-400 text-black font-black'
+                        : 'text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    Mattina (2)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setGalleryFilter('dopo')}
+                    className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${
+                      galleryFilter === 'dopo'
+                        ? 'bg-emerald-400 text-black font-black'
+                        : 'text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    Risultato (5)
+                  </button>
+                </div>
+              </div>
+
+              {/* 1. SEZIONE FOTO INIZIALI (SCOMPIGLIATI AL RISVEGLIO) */}
+              {(galleryFilter === 'tutte' || galleryFilter === 'prima') && (
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2 pl-1">
+                    <Sun className="w-3.5 h-3.5 text-amber-400" />
+                    <span className="text-[10px] font-black uppercase tracking-wider text-amber-300">
+                      Foto Iniziali • Risveglio Mattutino (Capelli Scompigliati)
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2.5">
+                    {HAIR_PROGRESS_PHOTOS.filter(p => p.type === 'prima').map((photo) => {
+                      const photoIndex = HAIR_PROGRESS_PHOTOS.findIndex(p => p.id === photo.id);
+                      return (
+                        <div
+                          key={photo.id}
+                          onClick={() => setActiveGalleryIndex(photoIndex)}
+                          className="group relative rounded-2xl overflow-hidden border-2 border-amber-500/40 hover:border-amber-400 bg-black cursor-pointer aspect-[3/4] shadow-md transition-all active:scale-[0.98]"
+                        >
+                          <img
+                            src={photo.url}
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = photo.localUrl;
+                            }}
+                            alt={photo.title}
+                            referrerPolicy="no-referrer"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                          <div className="absolute top-2 left-2">
+                            <span className="text-[9px] font-black px-2 py-0.5 rounded-md bg-amber-950/90 text-amber-300 border border-amber-400/50 backdrop-blur-md shadow-sm">
+                              {photo.badge}
+                            </span>
+                          </div>
+                          <div className="absolute top-2 right-2 p-1.5 rounded-lg bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                            <Maximize2 className="w-3.5 h-3.5" />
+                          </div>
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-2 text-left">
+                            <span className="text-[10px] font-bold text-white block line-clamp-1">
+                              {photo.title}
+                            </span>
+                            <span className="text-[9px] text-amber-300 font-medium">Tocca per galleria</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* 2. SEZIONE FOTO RISULTATO (POST-RITOCCO FINALE) */}
+              {(galleryFilter === 'tutte' || galleryFilter === 'dopo') && (
+                <div className="space-y-2 pt-2">
+                  <div className="flex items-center space-x-2 pl-1">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                    <span className="text-[10px] font-black uppercase tracking-wider text-emerald-300">
+                      Foto Risultato • Post-Ritocco (Volume, Direzione & Look Pulito)
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                    {HAIR_PROGRESS_PHOTOS.filter(p => p.type === 'dopo').map((photo) => {
+                      const photoIndex = HAIR_PROGRESS_PHOTOS.findIndex(p => p.id === photo.id);
+                      return (
+                        <div
+                          key={photo.id}
+                          onClick={() => setActiveGalleryIndex(photoIndex)}
+                          className="group relative rounded-2xl overflow-hidden border-2 border-emerald-500/40 hover:border-emerald-300 bg-black cursor-pointer aspect-[3/4] shadow-md transition-all active:scale-[0.98]"
+                        >
+                          <img
+                            src={photo.url}
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = photo.localUrl;
+                            }}
+                            alt={photo.title}
+                            referrerPolicy="no-referrer"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                          <div className="absolute top-2 left-2">
+                            <span className="text-[9px] font-black px-2 py-0.5 rounded-md bg-emerald-950/90 text-emerald-300 border border-emerald-400/50 backdrop-blur-md shadow-sm">
+                              {photo.badge}
+                            </span>
+                          </div>
+                          <div className="absolute top-2 right-2 p-1.5 rounded-lg bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                            <Maximize2 className="w-3.5 h-3.5" />
+                          </div>
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-2 text-left">
+                            <span className="text-[10px] font-bold text-white block line-clamp-1">
+                              {photo.title}
+                            </span>
+                            <span className="text-[9px] text-emerald-300 font-medium">Tocca per galleria</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Hint interazione galleria */}
+              <div className="p-3 rounded-2xl bg-black/50 border border-white/10 flex items-center justify-between text-[11px] text-gray-300">
+                <span className="flex items-center gap-1.5 font-bold text-cyan-300">
+                  <Eye className="w-4 h-4" />
+                  Mini Galleria Interattiva
+                </span>
+                <span className="text-[10px] text-gray-400">
+                  Tocca una foto per ingrandirla, fare swipe o zoom massimo
+                </span>
+              </div>
+
+              {/* Tasto Chiudi Progressi e Torna alla Nota */}
+              <div className="pt-2 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('tutta')}
+                  className="w-full sm:w-auto py-3 px-6 rounded-2xl bg-gradient-to-r from-emerald-400 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 text-black font-black text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-neon flex items-center justify-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Chiudi Progressi e Torna alla Nota Completa</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ============================================================= */}
       {/* SEZIONE 1: DIAGNOSI DELLA FIBRA (TIPO 2B vs CRESPO REALE)     */}

@@ -1921,7 +1921,9 @@ export const NoteTab: React.FC = () => {
                   <Wind className="w-3 h-3 text-cyan-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">Tipo 2B • Non Crespi</span>
+                <span className="text-[10px] text-emerald-300 font-extrabold bg-emerald-500/15 px-2 py-0.5 rounded-md border border-emerald-500/30">
+                  📸 Progresso N° 1 (7 Foto)
+                </span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-cyan-300 transition-colors uppercase tracking-tight">
@@ -1929,7 +1931,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Diagnosi reale Tipo 2B con onde a "S" (non crespi), correzione verso d'asciugatura e blocco mazzetti, la regola aurea per eliminare il "buchino" a sinistra, routine anti-separazione in 4 passi, applicazione polverina volumizzante e riattivazione in 30 secondi.
+                Diagnosi reale Tipo 2B con onde a "S" (non crespi), Progresso N° 1 con Protocollo di Ritocco Mattutino in 1 minuto, bacheca con 7 foto (risveglio scompigliato vs risultato finale), mini-galleria con swipe e zoom ingrandito.
               </p>
             </div>
 
@@ -1940,10 +1942,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-cyan-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire la nota completa sui capelli</span>
+              <span>Tocca per aprire nota & bacheca progressi</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">4 Passi + Buchino a Sx + Polverina</span>
+            <span className="text-[10px] text-emerald-300 font-bold">Progresso 1 + 7 Foto Swipe</span>
           </div>
         </div>
       </div>
