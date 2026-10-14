@@ -1916,13 +1916,16 @@ export const NoteTab: React.FC = () => {
 
           <div className="flex items-start justify-between relative z-10">
             <div className="space-y-2 flex-1 pr-3">
-              <div className="flex items-center space-x-2">
+              <div className="flex flex-wrap items-center gap-1.5">
                 <span className="px-2.5 py-0.5 rounded-full bg-cyan-400/20 text-cyan-300 text-[10px] font-black uppercase tracking-wider border border-cyan-400/40 shadow-sm flex items-center gap-1">
                   <Wind className="w-3 h-3 text-cyan-400" />
                   ★ Note Scritte Da Me
                 </span>
                 <span className="text-[10px] text-emerald-300 font-extrabold bg-emerald-500/15 px-2 py-0.5 rounded-md border border-emerald-500/30">
                   📸 Progresso N° 1 (7 Foto)
+                </span>
+                <span className="text-[10px] text-cyan-300 font-extrabold bg-cyan-500/15 px-2 py-0.5 rounded-md border border-cyan-500/30">
+                  ✨ Il primo risultato (16 Foto)
                 </span>
               </div>
 
@@ -1931,7 +1934,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Diagnosi reale Tipo 2B con onde a "S" (non crespi), Progresso N° 1 con Protocollo di Ritocco Mattutino in 1 minuto, bacheca con 7 foto (risveglio scompigliato vs risultato finale), mini-galleria con swipe e zoom ingrandito.
+                Diagnosi reale Tipo 2B con onde a "S" (non crespi), Progresso N° 1 con Protocollo di Ritocco Mattutino in 1 minuto, "Il primo risultato piega venuta bene" con bacheca 16 foto, mini-galleria con swipe e zoom ingrandito.
               </p>
             </div>
 
@@ -1942,10 +1945,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-cyan-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire nota & bacheca progressi</span>
+              <span>Tocca per aprire nota & gallerie fotografiche</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-emerald-300 font-bold">Progresso 1 + 7 Foto Swipe</span>
+            <span className="text-[10px] text-cyan-300 font-bold">Progressi (7) + Primo Risultato (16)</span>
           </div>
         </div>
       </div>

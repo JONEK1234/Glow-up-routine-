@@ -123,11 +123,191 @@ export const HAIR_PROGRESS_PHOTOS: HairProgressPhoto[] = [
   }
 ];
 
+export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
+  {
+    id: 'primo_risultato_1',
+    title: 'Piega Riuscita - Vista Frontale & Ciuffo 1',
+    badge: '1/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Ciuffo leggero e sollevato con orientamento diagonale verso destra',
+    localUrl: '/uploads/primo_risultato_piega/piega_01.jpg',
+    url: 'https://i.ibb.co/1CRFdTj/IMG-20261014-071931.jpg',
+    sourceUrl: 'https://ibb.co/GZCztRN'
+  },
+  {
+    id: 'primo_risultato_2',
+    title: 'Piega Riuscita - Radici & Volume 2',
+    badge: '2/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Spinta naturale alla radice senza effetto schiacciato',
+    localUrl: '/uploads/primo_risultato_piega/piega_02.jpg',
+    url: 'https://i.ibb.co/7tFBGgBH/IMG-20261014-071934.jpg',
+    sourceUrl: 'https://ibb.co/23BRj8Rw'
+  },
+  {
+    id: 'primo_risultato_3',
+    title: 'Piega Riuscita - Texture & Separazione 3',
+    badge: '3/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Ciocche definite ad onde a "S" morbide senza mazzetti compatti',
+    localUrl: '/uploads/primo_risultato_piega/piega_03.jpg',
+    url: 'https://i.ibb.co/7JWMGZmN/IMG-20261014-071939.jpg',
+    sourceUrl: 'https://ibb.co/hRWQK4z1'
+  },
+  {
+    id: 'primo_risultato_4',
+    title: 'Piega Riuscita - Profilo Destro & Direzione 4',
+    badge: '4/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Accompagnamento fluido delle lunghezze verso il lato destro',
+    localUrl: '/uploads/primo_risultato_piega/piega_04.jpg',
+    url: 'https://i.ibb.co/v4rDrh0C/IMG-20261014-071943.jpg',
+    sourceUrl: 'https://ibb.co/gZX6Xdkb'
+  },
+  {
+    id: 'primo_risultato_5',
+    title: 'Piega Riuscita - Dettaglio Vertice & Cima 5',
+    badge: '5/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Cima controllata e vertice chiuso senza aperture disordinate',
+    localUrl: '/uploads/primo_risultato_piega/piega_05.jpg',
+    url: 'https://i.ibb.co/nqRkf0Fz/IMG-20261014-071946.jpg',
+    sourceUrl: 'https://ibb.co/0pQJZXxh'
+  },
+  {
+    id: 'primo_risultato_6',
+    title: 'Piega Riuscita - Volume & Tenuta 6',
+    badge: '6/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Fissaggio con getto di aria fredda e movimento dinamico',
+    localUrl: '/uploads/primo_risultato_piega/piega_06.jpg',
+    url: 'https://i.ibb.co/0R02PxDC/IMG-20261014-071949.jpg',
+    sourceUrl: 'https://ibb.co/mVnTQ3D9'
+  },
+  {
+    id: 'primo_risultato_7',
+    title: 'Piega Riuscita - Angolatura Frontale 7',
+    badge: '7/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Separazione pulita col pettine a denti larghi',
+    localUrl: '/uploads/primo_risultato_piega/piega_07.jpg',
+    url: 'https://i.ibb.co/XNhzf1K/IMG-20261014-071957.jpg',
+    sourceUrl: 'https://ibb.co/yGw8mtZ'
+  },
+  {
+    id: 'primo_risultato_8',
+    title: 'Piega Riuscita - Lato Sinistro Controllato 8',
+    badge: '8/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Zona a rischio buchino ben schermata e fusto lucido',
+    localUrl: '/uploads/primo_risultato_piega/piega_08.jpg',
+    url: 'https://i.ibb.co/dw0w7JjZ/IMG-20261014-072000.jpg',
+    sourceUrl: 'https://ibb.co/W4W4spGC'
+  },
+  {
+    id: 'primo_risultato_9',
+    title: 'Piega Riuscita - Definizione & Lucentezza 9',
+    badge: '9/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Cuticole chiuse ed evidenza della salute della fibra Tipo 2B',
+    localUrl: '/uploads/primo_risultato_piega/piega_09.jpg',
+    url: 'https://i.ibb.co/JW2B6V4r/IMG-20261014-072003.jpg',
+    sourceUrl: 'https://ibb.co/rKM78YS5'
+  },
+  {
+    id: 'primo_risultato_10',
+    title: 'Piega Riuscita - Prospettiva Tre Quarti 10',
+    badge: '10/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Look dinamico e aerato senza polvere visibile o pesantezza',
+    localUrl: '/uploads/primo_risultato_piega/piega_10.jpg',
+    url: 'https://i.ibb.co/Hp3NX9rV/IMG-20261014-072005.jpg',
+    sourceUrl: 'https://ibb.co/2YH85pjy'
+  },
+  {
+    id: 'primo_risultato_11',
+    title: 'Piega Riuscita - Movimento Ciocche 11',
+    badge: '11/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Ciocche flessibili che tornano in posizione dopo il movimento',
+    localUrl: '/uploads/primo_risultato_piega/piega_11.jpg',
+    url: 'https://i.ibb.co/0zdw6XB/IMG-20261014-072013.jpg',
+    sourceUrl: 'https://ibb.co/hTtq4MX'
+  },
+  {
+    id: 'primo_risultato_12',
+    title: 'Piega Riuscita - Visione d\'Insieme 12',
+    badge: '12/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Piega naturale e pulita ottenuta con il protocollo rapido',
+    localUrl: '/uploads/primo_risultato_piega/piega_12.jpg',
+    url: 'https://i.ibb.co/pjPFshh0/IMG-20261014-072016.jpg',
+    sourceUrl: 'https://ibb.co/CKtGXPP1'
+  },
+  {
+    id: 'primo_risultato_13',
+    title: 'Piega Riuscita - Post-Stabilizzazione 13',
+    badge: '13/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Fusto stabilizzato dopo qualche minuto, morbidezza ideale',
+    localUrl: '/uploads/primo_risultato_piega/piega_13.jpg',
+    url: 'https://i.ibb.co/DH0nhv2b/20261014-072520.jpg',
+    sourceUrl: 'https://ibb.co/zTqwpBv5'
+  },
+  {
+    id: 'primo_risultato_14',
+    title: 'Piega Riuscita - Angolo Laterale 14',
+    badge: '14/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Definizione geometrica senza scalini né ciuffo cadente',
+    localUrl: '/uploads/primo_risultato_piega/piega_14.jpg',
+    url: 'https://i.ibb.co/fYwGVmHx/20261014-072522.jpg',
+    sourceUrl: 'https://ibb.co/Rpw4GLcD'
+  },
+  {
+    id: 'primo_risultato_15',
+    title: 'Piega Riuscita - Zoom Radice & Ciuffo 15',
+    badge: '15/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Volume continuo alla radice senza effetto piatto o finto',
+    localUrl: '/uploads/primo_risultato_piega/piega_15.jpg',
+    url: 'https://i.ibb.co/GvTH5vwP/20261014-072524.jpg',
+    sourceUrl: 'https://ibb.co/KjwKrjZy'
+  },
+  {
+    id: 'primo_risultato_16',
+    title: 'Piega Riuscita - Risultato Finale Completo 16',
+    badge: '16/16 • Risultato Piega',
+    type: 'dopo',
+    typeLabel: 'Risultato Ottimale',
+    desc: 'Panoramica impeccabile della piega venuta bene e stabile',
+    localUrl: '/uploads/primo_risultato_piega/piega_16.jpg',
+    url: 'https://i.ibb.co/99JCZ294/20261014-072528.jpg',
+    sourceUrl: 'https://ibb.co/ccP7Ytc8'
+  }
+];
+
 export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPiegaLisciaViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutta' | 'progressi' | 'diagnosi' | 'regole_cima' | 'routine_4passi' | 'polverina' | 'giorno_dopo' | 'fisica'>('tutta');
+  const [activeTab, setActiveTab] = useState<'tutta' | 'progressi' | 'primo_risultato' | 'diagnosi' | 'regole_cima' | 'routine_4passi' | 'polverina' | 'giorno_dopo' | 'fisica'>('tutta');
   const [galleryFilter, setGalleryFilter] = useState<'tutte' | 'prima' | 'dopo'>('tutte');
 
   // Mini gallery & Fullscreen modal states
+  const [activeGalleryCollection, setActiveGalleryCollection] = useState<'progressi' | 'primo_risultato'>('progressi');
   const [activeGalleryIndex, setActiveGalleryIndex] = useState<number | null>(null);
   const [isUltraZoomOpen, setIsUltraZoomOpen] = useState<boolean>(false);
 
@@ -136,20 +316,30 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
   const [swipeOffset, setSwipeOffset] = useState<number>(0);
   const [isSwiping, setIsSwiping] = useState<boolean>(false);
 
-  const filteredPhotos = galleryFilter === 'tutte'
-    ? HAIR_PROGRESS_PHOTOS
-    : HAIR_PROGRESS_PHOTOS.filter(p => p.type === galleryFilter);
+  const currentGalleryPhotos = activeGalleryCollection === 'progressi'
+    ? (galleryFilter === 'tutte' ? HAIR_PROGRESS_PHOTOS : HAIR_PROGRESS_PHOTOS.filter(p => p.type === galleryFilter))
+    : PRIMO_RISULTATO_PIEGA_PHOTOS;
+
+  const openProgressGallery = (idx: number) => {
+    setActiveGalleryCollection('progressi');
+    setActiveGalleryIndex(idx);
+  };
+
+  const openPrimoRisultatoGallery = (idx: number) => {
+    setActiveGalleryCollection('primo_risultato');
+    setActiveGalleryIndex(idx);
+  };
 
   const handleNextPhoto = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     if (activeGalleryIndex === null) return;
-    setActiveGalleryIndex((prev) => (prev! + 1) % HAIR_PROGRESS_PHOTOS.length);
+    setActiveGalleryIndex((prev) => (prev! + 1) % currentGalleryPhotos.length);
   };
 
   const handlePrevPhoto = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     if (activeGalleryIndex === null) return;
-    setActiveGalleryIndex((prev) => (prev! === 0 ? HAIR_PROGRESS_PHOTOS.length - 1 : prev! - 1));
+    setActiveGalleryIndex((prev) => (prev! === 0 ? currentGalleryPhotos.length - 1 : prev! - 1));
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -190,10 +380,10 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           <div className="w-full max-w-2xl flex items-center justify-between px-2 pt-2">
             <div className="flex items-center space-x-2">
               <span className="px-2.5 py-1 rounded-xl bg-cyan-500/20 text-cyan-300 text-xs font-black border border-cyan-500/30">
-                {HAIR_PROGRESS_PHOTOS[activeGalleryIndex].badge}
+                {currentGalleryPhotos[activeGalleryIndex].badge}
               </span>
               <span className="text-xs font-bold text-white">
-                {HAIR_PROGRESS_PHOTOS[activeGalleryIndex].title}
+                {currentGalleryPhotos[activeGalleryIndex].title}
               </span>
             </div>
             <button
@@ -210,11 +400,11 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
             className="w-full max-w-2xl flex-1 flex items-center justify-center p-2 cursor-default relative"
           >
             <img
-              src={HAIR_PROGRESS_PHOTOS[activeGalleryIndex].url}
+              src={currentGalleryPhotos[activeGalleryIndex].url}
               onError={(e) => {
-                (e.target as HTMLImageElement).src = HAIR_PROGRESS_PHOTOS[activeGalleryIndex].localUrl;
+                (e.target as HTMLImageElement).src = currentGalleryPhotos[activeGalleryIndex].localUrl;
               }}
-              alt={HAIR_PROGRESS_PHOTOS[activeGalleryIndex].title}
+              alt={currentGalleryPhotos[activeGalleryIndex].title}
               referrerPolicy="no-referrer"
               className="max-h-[82vh] w-auto max-w-full object-contain rounded-2xl shadow-2xl border border-white/20"
             />
@@ -259,18 +449,18 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
               <div className="space-y-0.5">
                 <div className="flex items-center space-x-2">
                   <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${
-                    HAIR_PROGRESS_PHOTOS[activeGalleryIndex].type === 'prima'
+                    currentGalleryPhotos[activeGalleryIndex].type === 'prima'
                       ? 'bg-amber-500/20 text-amber-300 border-amber-500/30'
                       : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
                   }`}>
-                    {HAIR_PROGRESS_PHOTOS[activeGalleryIndex].typeLabel}
+                    {currentGalleryPhotos[activeGalleryIndex].typeLabel}
                   </span>
                   <span className="text-[11px] font-bold text-gray-400">
-                    Foto {activeGalleryIndex + 1} di {HAIR_PROGRESS_PHOTOS.length}
+                    Foto {activeGalleryIndex + 1} di {currentGalleryPhotos.length}
                   </span>
                 </div>
                 <h3 className="text-xs sm:text-sm font-black text-white leading-tight">
-                  {HAIR_PROGRESS_PHOTOS[activeGalleryIndex].title}
+                  {currentGalleryPhotos[activeGalleryIndex].title}
                 </h3>
               </div>
 
@@ -303,11 +493,11 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
               title="Tocca per ingrandire ancora di più"
             >
               <img
-                src={HAIR_PROGRESS_PHOTOS[activeGalleryIndex].url}
+                src={currentGalleryPhotos[activeGalleryIndex].url}
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = HAIR_PROGRESS_PHOTOS[activeGalleryIndex].localUrl;
+                  (e.target as HTMLImageElement).src = currentGalleryPhotos[activeGalleryIndex].localUrl;
                 }}
-                alt={HAIR_PROGRESS_PHOTOS[activeGalleryIndex].title}
+                alt={currentGalleryPhotos[activeGalleryIndex].title}
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-contain pointer-events-none transition-transform duration-200"
                 style={{
@@ -344,12 +534,12 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
 
             {/* Descrizione Foto Attiva */}
             <p className="text-[11px] text-gray-300 leading-snug px-1">
-              {HAIR_PROGRESS_PHOTOS[activeGalleryIndex].desc}
+              {currentGalleryPhotos[activeGalleryIndex].desc}
             </p>
 
             {/* Strip di Miniature Orizzontale */}
             <div className="flex items-center space-x-1.5 overflow-x-auto pb-1 pt-1 no-scrollbar border-t border-white/10">
-              {HAIR_PROGRESS_PHOTOS.map((photo, pIdx) => (
+              {currentGalleryPhotos.map((photo, pIdx) => (
                 <button
                   key={photo.id}
                   type="button"
@@ -412,19 +602,36 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           <span>Tutte le Note</span>
         </button>
 
-        {/* Tasto Diretto per i Progressi nella Barra Superiore */}
-        <button
-          type="button"
-          onClick={() => setActiveTab(activeTab === 'progressi' ? 'tutta' : 'progressi')}
-          className={`flex items-center space-x-1.5 py-1.5 px-3 rounded-xl text-xs font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer ${
-            activeTab === 'progressi'
-              ? 'bg-gradient-to-r from-emerald-400 to-cyan-400 text-black border-emerald-300 shadow-neon'
-              : 'bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border-emerald-500/30'
-          }`}
-        >
-          <Camera className="w-3.5 h-3.5" />
-          <span>{activeTab === 'progressi' ? 'Chiudi Progressi' : 'Progressi'}</span>
-        </button>
+        {/* Tasti Rapidi nella Barra Superiore */}
+        <div className="flex items-center space-x-1.5 overflow-x-auto no-scrollbar py-0.5">
+          {/* Tasto Diretto per i Progressi */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'progressi' ? 'tutta' : 'progressi')}
+            className={`flex items-center space-x-1 py-1.5 px-2.5 rounded-xl text-xs font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'progressi'
+                ? 'bg-gradient-to-r from-emerald-400 to-cyan-400 text-black border-emerald-300 shadow-neon'
+                : 'bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border-emerald-500/30'
+            }`}
+          >
+            <Camera className="w-3.5 h-3.5" />
+            <span>{activeTab === 'progressi' ? 'Chiudi' : 'Progressi (7)'}</span>
+          </button>
+
+          {/* Tasto Diretto per Il Primo Risultato Piega Venuta Bene */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'primo_risultato' ? 'tutta' : 'primo_risultato')}
+            className={`flex items-center space-x-1 py-1.5 px-2.5 rounded-xl text-xs font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'primo_risultato'
+                ? 'bg-gradient-to-r from-cyan-400 to-blue-400 text-black border-cyan-300 shadow-neon'
+                : 'bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border-cyan-500/30'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>{activeTab === 'primo_risultato' ? 'Chiudi' : 'Primo Risultato (16)'}</span>
+          </button>
+        </div>
       </div>
 
       {/* Hero Header Card */}
@@ -445,12 +652,13 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           La sintesi completa, organizzata e priva di ripetizioni sulla struttura dei tuoi capelli: diagnosi della fibra (Tipo 2B, non crespi), correzione del verso d'asciugatura, regola del "buchino" a sinistra, routine veloce anti-separazione in 4 passi, applicazione della polverina volumizzante, riattivazione il giorno dopo e la spiegazione fisica del perché la piega migliora dopo qualche ora.
         </p>
 
-        {/* Tasto Progressi Esplicito (Appare SOLO se cliccato) */}
-        <div className="pt-1">
+        {/* Tasti Dedicati Espliciti (Appaiono SOLO se cliccati) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+          {/* Tasto Progressi */}
           <button
             type="button"
             onClick={() => setActiveTab(activeTab === 'progressi' ? 'tutta' : 'progressi')}
-            className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] ${
+            className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
               activeTab === 'progressi'
                 ? 'bg-gradient-to-r from-emerald-950/80 via-teal-950/60 to-black/90 border-emerald-400 shadow-neon'
                 : 'bg-gradient-to-r from-emerald-950/40 via-teal-950/30 to-black/70 border-emerald-500/40 hover:border-emerald-400'
@@ -460,22 +668,55 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
               <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 group-hover:scale-105 transition-transform shrink-0">
                 <Camera className="w-4 h-4 text-emerald-400" />
               </div>
-              <div className="text-left">
-                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1">
-                  {activeTab === 'progressi' ? '✓ Sezione Progressi Aperta' : '★ Tasto Progressi'}
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400 block">
+                  {activeTab === 'progressi' ? '✓ Sezione Attiva' : '★ Tasto Progressi'}
                 </span>
                 <h4 className="text-xs font-black text-white group-hover:text-emerald-200 transition-colors">
-                  {activeTab === 'progressi' ? 'Stai visualizzando il Progresso N° 1 (7 Foto)' : 'Clicca per aprire i Progressi (Progresso N° 1 & 7 Foto)'}
+                  Progressi (N° 1 • 7 Foto)
                 </h4>
               </div>
             </div>
-            <div className={`flex items-center space-x-1 text-xs font-black px-3 py-1.5 rounded-xl shrink-0 transition-all ${
+            <div className={`flex items-center space-x-1 text-xs font-black px-2.5 py-1.5 rounded-xl shrink-0 transition-all ${
               activeTab === 'progressi'
                 ? 'bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500/30'
                 : 'bg-emerald-400 text-black shadow-neon'
             }`}>
-              <span>{activeTab === 'progressi' ? 'Chiudi' : 'Progressi'}</span>
+              <span>{activeTab === 'progressi' ? 'Chiudi' : 'Apri'}</span>
               {activeTab === 'progressi' ? <X className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
+            </div>
+          </button>
+
+          {/* Tasto Il Primo Risultato Piega Venuta Bene */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'primo_risultato' ? 'tutta' : 'primo_risultato')}
+            className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+              activeTab === 'primo_risultato'
+                ? 'bg-gradient-to-r from-cyan-950/80 via-blue-950/60 to-black/90 border-cyan-400 shadow-neon'
+                : 'bg-gradient-to-r from-cyan-950/40 via-blue-950/30 to-black/70 border-cyan-500/40 hover:border-cyan-400'
+            }`}
+          >
+            <div className="flex items-center space-x-2.5">
+              <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 group-hover:scale-105 transition-transform shrink-0">
+                <Sparkles className="w-4 h-4 text-cyan-400" />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400 block">
+                  {activeTab === 'primo_risultato' ? '✓ Sezione Attiva' : '★ Nuova Galleria'}
+                </span>
+                <h4 className="text-xs font-black text-white group-hover:text-cyan-200 transition-colors">
+                  Il primo risultato piega venuta bene
+                </h4>
+              </div>
+            </div>
+            <div className={`flex items-center space-x-1 text-xs font-black px-2.5 py-1.5 rounded-xl shrink-0 transition-all ${
+              activeTab === 'primo_risultato'
+                ? 'bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500/30'
+                : 'bg-gradient-to-r from-cyan-400 to-blue-400 text-black shadow-neon'
+            }`}>
+              <span>{activeTab === 'primo_risultato' ? 'Chiudi' : '16 Foto'}</span>
+              {activeTab === 'primo_risultato' ? <X className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
             </div>
           </button>
         </div>
@@ -506,6 +747,20 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           >
             <Camera className="w-3.5 h-3.5 text-emerald-400" />
             <span>Progressi</span>
+          </button>
+
+          {/* TASTO IL PRIMO RISULTATO PIEGA VENUTA BENE */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'primo_risultato' ? 'tutta' : 'primo_risultato')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'primo_risultato'
+                ? 'bg-gradient-to-r from-cyan-400 to-blue-400 text-black shadow-neon font-black ring-2 ring-cyan-300'
+                : 'bg-cyan-500/20 text-cyan-300 hover:text-white border border-cyan-500/40'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Il primo risultato piega venuta bene (16)</span>
           </button>
 
           <button
@@ -785,7 +1040,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
                       return (
                         <div
                           key={photo.id}
-                          onClick={() => setActiveGalleryIndex(photoIndex)}
+                          onClick={() => openProgressGallery(photoIndex)}
                           className="group relative rounded-2xl overflow-hidden border-2 border-amber-500/40 hover:border-amber-400 bg-black cursor-pointer aspect-[3/4] shadow-md transition-all active:scale-[0.98]"
                         >
                           <img
@@ -834,7 +1089,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
                       return (
                         <div
                           key={photo.id}
-                          onClick={() => setActiveGalleryIndex(photoIndex)}
+                          onClick={() => openProgressGallery(photoIndex)}
                           className="group relative rounded-2xl overflow-hidden border-2 border-emerald-500/40 hover:border-emerald-300 bg-black cursor-pointer aspect-[3/4] shadow-md transition-all active:scale-[0.98]"
                         >
                           <img
@@ -889,6 +1144,118 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
                   <span>Chiudi Progressi e Torna alla Nota Completa</span>
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE: IL PRIMO RISULTATO PIEGA VENUTA BENE (16 FOTO)       */}
+      {/* (Visibile SOLO ed esclusivamente su click del tasto dedicato)  */}
+      {/* ============================================================= */}
+      {activeTab === 'primo_risultato' && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                <Sparkles className="w-4 h-4 text-cyan-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400">
+                  Documentazione Reale • Bacheca 16 Foto
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Il primo risultato piega venuta bene
+                </h2>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
+                16 Foto Caricate
+              </span>
+              <button
+                type="button"
+                onClick={() => setActiveTab('tutta')}
+                className="flex items-center space-x-1 py-1 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all active:scale-95 cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Torna alla Nota</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-cyan-400/50 space-y-4 bg-gradient-to-br from-cyan-950/30 via-black/85 to-blue-950/30 shadow-[0_0_30px_rgba(6,182,212,0.2)]">
+            {/* Header del Risultato */}
+            <div className="p-4 rounded-2xl bg-cyan-950/40 border border-cyan-500/40 space-y-2">
+              <div className="flex items-center space-x-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-cyan-400 text-black text-[10px] font-black uppercase tracking-wider">
+                  ★ Primo Risultato Piega
+                </span>
+                <span className="text-xs font-bold text-cyan-300">
+                  Risultato Testato & Confermato
+                </span>
+              </div>
+              <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                Ecco la bacheca completa del <strong>primo risultato piega venuta bene</strong>. La documentazione fotografica ad alta definizione mostra la perfetta tenuta del volume alla radice, il ciuffo orientato diagonalmente a destra, onde Tipo 2B soffici e separate e l'assenza totale di mazzetti rigidi o buchini.
+              </p>
+            </div>
+
+            {/* Hint e istruzioni interazione */}
+            <div className="p-3 rounded-2xl bg-black/60 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[11px] text-gray-300">
+              <span className="flex items-center gap-1.5 font-bold text-cyan-300">
+                <Eye className="w-4 h-4 text-cyan-400" />
+                Bacheca 16 Foto (Miniature)
+              </span>
+              <span className="text-[10px] text-gray-400">
+                Tocca una foto per aprire la mini galleria con swipe, frecce e zoom a schermo intero
+              </span>
+            </div>
+
+            {/* Griglia Bacheca delle 16 Foto */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+              {PRIMO_RISULTATO_PIEGA_PHOTOS.map((photo, idx) => (
+                <div
+                  key={photo.id}
+                  onClick={() => openPrimoRisultatoGallery(idx)}
+                  className="group relative rounded-2xl overflow-hidden border-2 border-cyan-500/30 hover:border-cyan-400 bg-black cursor-pointer aspect-[3/4] shadow-md transition-all active:scale-[0.98]"
+                >
+                  <img
+                    src={photo.url}
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = photo.localUrl;
+                    }}
+                    alt={photo.title}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute top-2 left-2">
+                    <span className="text-[9px] font-black px-2 py-0.5 rounded-md bg-cyan-950/90 text-cyan-300 border border-cyan-400/50 backdrop-blur-md shadow-sm">
+                      {photo.badge}
+                    </span>
+                  </div>
+                  <div className="absolute top-2 right-2 p-1.5 rounded-lg bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Maximize2 className="w-3.5 h-3.5" />
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-2 text-left">
+                    <span className="text-[10px] font-bold text-white block line-clamp-1">
+                      {photo.title}
+                    </span>
+                    <span className="text-[9px] text-cyan-300 font-medium">Tocca per galleria</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Tasto Chiudi e Torna alla Nota */}
+            <div className="pt-2 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setActiveTab('tutta')}
+                className="w-full sm:w-auto py-3 px-6 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-400 hover:from-cyan-300 hover:to-blue-300 text-black font-black text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-neon flex items-center justify-center gap-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Chiudi e Torna alla Nota Completa</span>
+              </button>
             </div>
           </div>
         </div>
