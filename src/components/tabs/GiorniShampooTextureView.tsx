@@ -15,6 +15,7 @@ import {
   CheckCircle2,
   Wind
 } from 'lucide-react';
+import { scrollToTop } from '../../utils/scrollHelper';
 
 interface GiorniShampooTextureViewProps {
   onBack: () => void;
@@ -109,6 +110,11 @@ const WEEK_DAYS: RoutineDay[] = [
 export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState<'tutte' | 'tabella' | 'notti' | 'polverina'>('tutte');
   const [selectedDayIndex, setSelectedDayIndex] = useState<number | null>(null);
+
+  // Scroll solo all'apertura della nota (mount)
+  React.useEffect(() => {
+    scrollToTop();
+  }, []);
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">

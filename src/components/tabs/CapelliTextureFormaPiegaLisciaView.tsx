@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   ArrowLeft,
   Sparkles,
   Wind,
   Droplets,
+  Droplet,
   Layers,
   Flame,
   Zap,
@@ -26,6 +27,7 @@ import {
   SlidersHorizontal,
   Sun
 } from 'lucide-react';
+import { scrollToTop } from '../../utils/scrollHelper';
 
 interface CapelliTextureFormaPiegaLisciaViewProps {
   onBack: () => void;
@@ -303,8 +305,13 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
 ];
 
 export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPiegaLisciaViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutta' | 'progressi' | 'primo_risultato' | 'diagnosi' | 'regole_cima' | 'routine_4passi' | 'polverina' | 'giorno_dopo' | 'fisica'>('tutta');
+  const [activeTab, setActiveTab] = useState<'tutta' | 'progressi' | 'progressi_2' | 'primo_risultato' | 'diagnosi' | 'regole_cima' | 'routine_4passi' | 'polverina' | 'giorno_dopo' | 'fisica'>('tutta');
   const [galleryFilter, setGalleryFilter] = useState<'tutte' | 'prima' | 'dopo'>('tutte');
+
+  // Scroll solo all'apertura della nota (mount)
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   // Mini gallery & Fullscreen modal states
   const [activeGalleryCollection, setActiveGalleryCollection] = useState<'progressi' | 'primo_risultato'>('progressi');
@@ -602,9 +609,9 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           <span>Tutte le Note</span>
         </button>
 
-        {/* Tasti Rapidi nella Barra Superiore */}
+        {/* Tasti Rapidi nella Barra Superiore (Ordinati Cronologicamente) */}
         <div className="flex items-center space-x-1.5 overflow-x-auto no-scrollbar py-0.5">
-          {/* Tasto Diretto per i Progressi */}
+          {/* 1. Tasto Diretto per i Progressi N° 1 */}
           <button
             type="button"
             onClick={() => setActiveTab(activeTab === 'progressi' ? 'tutta' : 'progressi')}
@@ -618,7 +625,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
             <span>{activeTab === 'progressi' ? 'Chiudi' : 'Progressi (7)'}</span>
           </button>
 
-          {/* Tasto Diretto per Il Primo Risultato Piega Venuta Bene */}
+          {/* 2. Tasto Diretto per Il Primo Risultato Piega Venuta Bene */}
           <button
             type="button"
             onClick={() => setActiveTab(activeTab === 'primo_risultato' ? 'tutta' : 'primo_risultato')}
@@ -630,6 +637,34 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>{activeTab === 'primo_risultato' ? 'Chiudi' : 'Primo Risultato (16)'}</span>
+          </button>
+
+          {/* 3. Tasto Diretto per Progressi #2 (Viene dopo il Primo Risultato) */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'progressi_2' ? 'tutta' : 'progressi_2')}
+            className={`flex items-center space-x-1 py-1.5 px-2.5 rounded-xl text-xs font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'progressi_2'
+                ? 'bg-gradient-to-r from-amber-400 to-orange-400 text-black border-amber-300 shadow-neon'
+                : 'bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border-amber-500/30'
+            }`}
+          >
+            <Zap className="w-3.5 h-3.5" />
+            <span>{activeTab === 'progressi_2' ? 'Chiudi' : 'Progressi #2 (Tutorial)'}</span>
+          </button>
+
+          {/* 4. Tasto Diretto per Aggiornamenti #2 (Giorno Dopo) */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'giorno_dopo' ? 'tutta' : 'giorno_dopo')}
+            className={`flex items-center space-x-1 py-1.5 px-2.5 rounded-xl text-xs font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'giorno_dopo'
+                ? 'bg-gradient-to-r from-sky-400 to-indigo-400 text-black border-sky-300 shadow-neon'
+                : 'bg-sky-500/15 hover:bg-sky-500/25 text-sky-300 border-sky-500/30'
+            }`}
+          >
+            <Repeat className="w-3.5 h-3.5" />
+            <span>{activeTab === 'giorno_dopo' ? 'Chiudi' : 'Aggiornamenti #2 (Giorno Dopo)'}</span>
           </button>
         </div>
       </div>
@@ -652,73 +687,164 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           La sintesi completa, organizzata e priva di ripetizioni sulla struttura dei tuoi capelli: diagnosi della fibra (Tipo 2B, non crespi), correzione del verso d'asciugatura, regola del "buchino" a sinistra, routine veloce anti-separazione in 4 passi, applicazione della polverina volumizzante, riattivazione il giorno dopo e la spiegazione fisica del perché la piega migliora dopo qualche ora.
         </p>
 
-        {/* Tasti Dedicati Espliciti (Appaiono SOLO se cliccati) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-          {/* Tasto Progressi */}
-          <button
-            type="button"
-            onClick={() => setActiveTab(activeTab === 'progressi' ? 'tutta' : 'progressi')}
-            className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
-              activeTab === 'progressi'
-                ? 'bg-gradient-to-r from-emerald-950/80 via-teal-950/60 to-black/90 border-emerald-400 shadow-neon'
-                : 'bg-gradient-to-r from-emerald-950/40 via-teal-950/30 to-black/70 border-emerald-500/40 hover:border-emerald-400'
-            }`}
-          >
-            <div className="flex items-center space-x-2.5">
-              <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 group-hover:scale-105 transition-transform shrink-0">
-                <Camera className="w-4 h-4 text-emerald-400" />
+        {/* Tasti Dedicati Espliciti (Organizzati in Sequenza Cronologica) */}
+        <div className="space-y-2.5 pt-1">
+          {/* Prima Riga: Progressi N° 1 e Il Primo Risultato Piega */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {/* Tasto Progressi (N° 1) */}
+            <button
+              type="button"
+              onClick={() => setActiveTab(activeTab === 'progressi' ? 'tutta' : 'progressi')}
+              className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+                activeTab === 'progressi'
+                  ? 'bg-gradient-to-r from-emerald-950/80 via-teal-950/60 to-black/90 border-emerald-400 shadow-neon'
+                  : 'bg-gradient-to-r from-emerald-950/40 via-teal-950/30 to-black/70 border-emerald-500/40 hover:border-emerald-400'
+              }`}
+            >
+              <div className="flex items-center space-x-2.5">
+                <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 group-hover:scale-105 transition-transform shrink-0">
+                  <Camera className="w-4 h-4 text-emerald-400" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400 block">
+                    {activeTab === 'progressi' ? '✓ Sezione Attiva' : '1. Primo Step'}
+                  </span>
+                  <h4 className="text-xs font-black text-white group-hover:text-emerald-200 transition-colors">
+                    Progressi N° 1
+                  </h4>
+                  <p className="text-[10px] text-gray-400">7 Foto (Ritocco 1 min)</p>
+                </div>
               </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400 block">
-                  {activeTab === 'progressi' ? '✓ Sezione Attiva' : '★ Tasto Progressi'}
-                </span>
-                <h4 className="text-xs font-black text-white group-hover:text-emerald-200 transition-colors">
-                  Progressi (N° 1 • 7 Foto)
-                </h4>
+              <div className={`flex items-center space-x-1 text-xs font-black px-2.5 py-1.5 rounded-xl shrink-0 transition-all ${
+                activeTab === 'progressi'
+                  ? 'bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500/30'
+                  : 'bg-emerald-400 text-black shadow-neon'
+              }`}>
+                <span>{activeTab === 'progressi' ? 'Chiudi' : 'Apri'}</span>
+                {activeTab === 'progressi' ? <X className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
               </div>
-            </div>
-            <div className={`flex items-center space-x-1 text-xs font-black px-2.5 py-1.5 rounded-xl shrink-0 transition-all ${
-              activeTab === 'progressi'
-                ? 'bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500/30'
-                : 'bg-emerald-400 text-black shadow-neon'
-            }`}>
-              <span>{activeTab === 'progressi' ? 'Chiudi' : 'Apri'}</span>
-              {activeTab === 'progressi' ? <X className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
-            </div>
-          </button>
+            </button>
 
-          {/* Tasto Il Primo Risultato Piega Venuta Bene */}
-          <button
-            type="button"
-            onClick={() => setActiveTab(activeTab === 'primo_risultato' ? 'tutta' : 'primo_risultato')}
-            className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
-              activeTab === 'primo_risultato'
-                ? 'bg-gradient-to-r from-cyan-950/80 via-blue-950/60 to-black/90 border-cyan-400 shadow-neon'
-                : 'bg-gradient-to-r from-cyan-950/40 via-blue-950/30 to-black/70 border-cyan-500/40 hover:border-cyan-400'
-            }`}
-          >
-            <div className="flex items-center space-x-2.5">
-              <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 group-hover:scale-105 transition-transform shrink-0">
-                <Sparkles className="w-4 h-4 text-cyan-400" />
+            {/* Tasto Il Primo Risultato Piega Venuta Bene */}
+            <button
+              type="button"
+              onClick={() => setActiveTab(activeTab === 'primo_risultato' ? 'tutta' : 'primo_risultato')}
+              className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+                activeTab === 'primo_risultato'
+                  ? 'bg-gradient-to-r from-cyan-950/80 via-blue-950/60 to-black/90 border-cyan-400 shadow-neon'
+                  : 'bg-gradient-to-r from-cyan-950/40 via-blue-950/30 to-black/70 border-cyan-500/40 hover:border-cyan-400'
+              }`}
+            >
+              <div className="flex items-center space-x-2.5">
+                <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 group-hover:scale-105 transition-transform shrink-0">
+                  <Sparkles className="w-4 h-4 text-cyan-400" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400 block">
+                    {activeTab === 'primo_risultato' ? '✓ Sezione Attiva' : '2. Risultato Piega'}
+                  </span>
+                  <h4 className="text-xs font-black text-white group-hover:text-cyan-200 transition-colors">
+                    Il primo risultato piega venuta bene
+                  </h4>
+                  <p className="text-[10px] text-gray-400">16 Foto Caricate</p>
+                </div>
               </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400 block">
-                  {activeTab === 'primo_risultato' ? '✓ Sezione Attiva' : '★ Nuova Galleria'}
-                </span>
-                <h4 className="text-xs font-black text-white group-hover:text-cyan-200 transition-colors">
-                  Il primo risultato piega venuta bene
-                </h4>
+              <div className={`flex items-center space-x-1 text-xs font-black px-2.5 py-1.5 rounded-xl shrink-0 transition-all ${
+                activeTab === 'primo_risultato'
+                  ? 'bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500/30'
+                  : 'bg-gradient-to-r from-cyan-400 to-blue-400 text-black shadow-neon'
+              }`}>
+                <span>{activeTab === 'primo_risultato' ? 'Chiudi' : '16 Foto'}</span>
+                {activeTab === 'primo_risultato' ? <X className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
               </div>
-            </div>
-            <div className={`flex items-center space-x-1 text-xs font-black px-2.5 py-1.5 rounded-xl shrink-0 transition-all ${
-              activeTab === 'primo_risultato'
-                ? 'bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500/30'
-                : 'bg-gradient-to-r from-cyan-400 to-blue-400 text-black shadow-neon'
-            }`}>
-              <span>{activeTab === 'primo_risultato' ? 'Chiudi' : '16 Foto'}</span>
-              {activeTab === 'primo_risultato' ? <X className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
-            </div>
-          </button>
+            </button>
+          </div>
+
+          {/* Sotto a Primo Risultato: Progressi #2 (Posizionato sotto per indicare che viene dopo) */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setActiveTab(activeTab === 'progressi_2' ? 'tutta' : 'progressi_2')}
+              className={`w-full p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+                activeTab === 'progressi_2'
+                  ? 'bg-gradient-to-r from-amber-950/90 via-orange-950/70 to-black/90 border-amber-400 shadow-neon ring-2 ring-amber-400/30'
+                  : 'bg-gradient-to-r from-amber-950/40 via-orange-950/30 to-black/70 border-amber-500/40 hover:border-amber-400'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <div className="p-2.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30 group-hover:scale-105 transition-transform shrink-0">
+                  <Zap className="w-5 h-5 text-amber-400" />
+                </div>
+                <div>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block">
+                      {activeTab === 'progressi_2' ? '✓ Sezione Attiva' : '3. Fase Successiva'}
+                    </span>
+                    <span className="text-[9px] px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 font-extrabold border border-amber-500/40">
+                      ↓ Viene Dopo il Primo Risultato Piega
+                    </span>
+                  </div>
+                  <h4 className="text-xs sm:text-sm font-black text-white group-hover:text-amber-200 transition-colors mt-0.5">
+                    Progressi #2: Tutorial Spazzola Sopra & Ciuffo Graffiato
+                  </h4>
+                  <p className="text-[10px] text-gray-300">
+                    Tutorial Operativo Passo dopo Passo (Procedura Tecnica Definitiva)
+                  </p>
+                </div>
+              </div>
+              <div className={`flex items-center space-x-1 text-xs font-black px-3 py-1.5 rounded-xl shrink-0 transition-all ${
+                activeTab === 'progressi_2'
+                  ? 'bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500/30'
+                  : 'bg-gradient-to-r from-amber-400 to-orange-400 text-black shadow-neon'
+              }`}>
+                <span>{activeTab === 'progressi_2' ? 'Chiudi' : 'Apri Tutorial'}</span>
+                {activeTab === 'progressi_2' ? <X className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
+              </div>
+            </button>
+          </div>
+
+          {/* Sotto a Progressi #2: Aggiornamenti #2 (Capelli il Giorno Dopo & Reset se Persa) */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setActiveTab(activeTab === 'giorno_dopo' ? 'tutta' : 'giorno_dopo')}
+              className={`w-full p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+                activeTab === 'giorno_dopo'
+                  ? 'bg-gradient-to-r from-sky-950/90 via-indigo-950/70 to-black/90 border-sky-400 shadow-neon ring-2 ring-sky-400/30'
+                  : 'bg-gradient-to-r from-sky-950/40 via-indigo-950/30 to-black/70 border-sky-500/40 hover:border-sky-400'
+              }`}
+            >
+              <div className="flex items-center space-x-3">
+                <div className="p-2.5 rounded-xl bg-sky-500/20 text-sky-300 border border-sky-500/30 group-hover:scale-105 transition-transform shrink-0">
+                  <Repeat className="w-5 h-5 text-sky-400" />
+                </div>
+                <div>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-sky-400 block">
+                      {activeTab === 'giorno_dopo' ? '✓ Sezione Attiva' : '4. Aggiornamenti Ufficiali'}
+                    </span>
+                    <span className="text-[9px] px-2 py-0.5 rounded-md bg-sky-500/20 text-sky-300 font-extrabold border border-sky-500/40">
+                      ★ Aggiornamenti #2: Capelli il Giorno Dopo
+                    </span>
+                  </div>
+                  <h4 className="text-xs sm:text-sm font-black text-white group-hover:text-sky-200 transition-colors mt-0.5">
+                    Il Giorno Dopo: Reset da Capo se la Piega si è Rovinata (Aggiornamenti #2)
+                  </h4>
+                  <p className="text-[10px] text-gray-300">
+                    Procedura obbligatoria se la piega si è rovinata o dopo umidità • Ciclo Acqua &rarr; Phon Caldo &rarr; Freddo &rarr; Pettine
+                  </p>
+                </div>
+              </div>
+              <div className={`flex items-center space-x-1 text-xs font-black px-3 py-1.5 rounded-xl shrink-0 transition-all ${
+                activeTab === 'giorno_dopo'
+                  ? 'bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500/30'
+                  : 'bg-gradient-to-r from-sky-400 to-indigo-400 text-black shadow-neon'
+              }`}>
+                <span>{activeTab === 'giorno_dopo' ? 'Chiudi' : 'Apri'}</span>
+                {activeTab === 'giorno_dopo' ? <X className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
+              </div>
+            </button>
+          </div>
         </div>
 
         {/* Tab Filters */}
@@ -746,10 +872,10 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
             }`}
           >
             <Camera className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Progressi</span>
+            <span>Progressi (N° 1)</span>
           </button>
 
-          {/* TASTO IL PRIMO RISULTATO PIEGA VENUTA BENE */}
+          {/* TASTO IL PRIMO RISULTATO PIEGA VENUTA BENE (PRIMA DI PROGRESSI #2) */}
           <button
             type="button"
             onClick={() => setActiveTab(activeTab === 'primo_risultato' ? 'tutta' : 'primo_risultato')}
@@ -761,6 +887,20 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           >
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
             <span>Il primo risultato piega venuta bene (16)</span>
+          </button>
+
+          {/* TASTO PROGRESSI #2 (DOPO IL PRIMO RISULTATO) */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'progressi_2' ? 'tutta' : 'progressi_2')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'progressi_2'
+                ? 'bg-gradient-to-r from-amber-400 to-orange-400 text-black shadow-neon font-black ring-2 ring-amber-300'
+                : 'bg-amber-500/20 text-amber-300 hover:text-white border border-amber-500/40'
+            }`}
+          >
+            <Zap className="w-3.5 h-3.5 text-amber-400" />
+            <span>Progressi #2 (Tutorial • Viene dopo)</span>
           </button>
 
           <button
@@ -816,12 +956,12 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
             onClick={() => setActiveTab('giorno_dopo')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'giorno_dopo'
-                ? 'bg-cyan-400 text-black shadow-md shadow-cyan-500/30 font-extrabold'
-                : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
+                ? 'bg-sky-400 text-black shadow-md shadow-sky-500/30 font-extrabold'
+                : 'bg-sky-500/10 text-sky-300 hover:text-white border border-sky-500/30'
             }`}
           >
             <Repeat className="w-3.5 h-3.5" />
-            5. Il Giorno Dopo (30s)
+            5. Giorno Dopo & Aggiornamenti #2
           </button>
           <button
             type="button"
@@ -1262,6 +1402,306 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
       )}
 
       {/* ============================================================= */}
+      {/* SEZIONE: PROGRESSI #2 (SPAZZOLA SOPRA & CIUFFO GRAFFIATO)      */}
+      {/* (Visibile SOLO ed esclusivamente su click del tasto Progressi #2) */}
+      {/* ============================================================= */}
+      {activeTab === 'progressi_2' && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                <Zap className="w-4 h-4 text-amber-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
+                  Progresso & Tecnica • Sezione Dedicata
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Progressi #2: Spazzola Sopra & Ciuffo Graffiato
+                </h2>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="text-[10px] font-bold px-2 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                Tutorial Step by Step
+              </span>
+              <button
+                type="button"
+                onClick={() => setActiveTab('tutta')}
+                className="flex items-center space-x-1 py-1 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all active:scale-95 cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Torna alla Nota</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-amber-400/50 space-y-5 bg-gradient-to-br from-amber-950/30 via-black/85 to-orange-950/30 shadow-[0_0_30px_rgba(245,158,11,0.2)]">
+            {/* Box Rassicurazione & Focus Mentale (Sintetico) */}
+            <div className="p-4 rounded-2xl bg-amber-950/40 border border-amber-500/40 space-y-2">
+              <div className="flex items-center space-x-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-400 text-black text-[10px] font-black uppercase tracking-wider">
+                  ★ Protocollo Definitivo
+                </span>
+                <span className="text-xs font-bold text-amber-300">
+                  Cross-Wrapping 100% • Spazzola Sopra • Segreto Graffiato
+                </span>
+              </div>
+              <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                Hai capito un punto fondamentale: <strong>pettinare i capelli nella direzione giusta subito dopo il cross-wrapping e prima di passare alla spazzola tonda</strong> è il trucco che ti ha evitato quella ciocca che cadeva verso il basso come nelle prime foto! Ecco la sequenza tutorial completa e integrata: dal perfezionamento del cross-wrapping fino al trucco per far uscire le scanalature graffiate sopra a phon spento.
+              </p>
+            </div>
+
+            {/* ======================================================== */}
+            {/* 🚿 IL TUTORIAL DEFINITIVO PASSO DOPO PASSO (STEP BY STEP) */}
+            {/* ======================================================== */}
+            <div className="space-y-3 pt-1">
+              <div className="flex items-center space-x-2 border-b border-amber-500/30 pb-1.5">
+                <span className="p-1 rounded-lg bg-orange-500/20 text-orange-300">
+                  <Flame className="w-4 h-4" />
+                </span>
+                <h3 className="text-xs sm:text-sm font-black text-white uppercase tracking-wider flex items-center gap-1.5">
+                  <span>🚿 Il Tutorial Definitivo: Il Ciuffo Graffiato (Tutti i Passaggi Integrati)</span>
+                </h3>
+              </div>
+
+              <div className="space-y-2.5">
+                {/* Step 1: Cross-Wrapping 100% */}
+                <div className="p-3.5 rounded-2xl bg-black/70 border border-white/10 flex items-start space-x-3 group hover:border-amber-400/50 transition-colors">
+                  <div className="p-2 rounded-xl bg-amber-500/20 text-amber-300 font-black text-xs shrink-0 mt-0.5">
+                    01
+                  </div>
+                  <div className="space-y-1.5 flex-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-xs font-black text-white">Cross-Wrapping Perfetto al 100% (Dita a Rastrello & Aria alle Radici)</h4>
+                      <span className="text-[10px] text-amber-400 font-bold">Base Volume</span>
+                    </div>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Non usare spazzole in questa fase: infila le <strong>5 dita della mano libera direttamente nella cute</strong>, a ridosso delle radici.
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px] pt-0.5">
+                      <div className="p-2 rounded-xl bg-white/5 border border-white/10 text-gray-200">
+                        <strong className="text-amber-300 block mb-0.5">Movimento Destra ↔ Sinistra (5 sec):</strong>
+                        Spingi tutta la massa da sinistra verso destra asciugando la radice col phon per 5s; poi inverti subito e spingi tutto da destra verso sinistra per altri 5s.
+                      </div>
+                      <div className="p-2 rounded-xl bg-white/5 border border-white/10 text-gray-200">
+                        <strong className="text-cyan-300 block mb-0.5">Aria SOLO sulle Radici:</strong>
+                        Il phon deve scaldare la base del capello (non le punte!), perché è lì che devi azzerare la riga e creare il volume iniziale.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 2: Il Trucco Chiave Pre-Spazzola */}
+                <div className="p-3.5 rounded-2xl bg-amber-950/40 border border-amber-400/60 flex items-start space-x-3 group shadow-md">
+                  <div className="p-2 rounded-xl bg-amber-400 text-black font-black text-xs shrink-0 mt-0.5">
+                    02
+                  </div>
+                  <div className="space-y-1.5 flex-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-xs font-black text-amber-300">Il Passaggio Chiave: Pettinata Direzionale a Destra all'80%</h4>
+                      <span className="text-[10px] text-amber-300 font-black uppercase">Segreto Anti-Caduta</span>
+                    </div>
+                    <p className="text-[11px] text-gray-200 leading-relaxed">
+                      Quando senti le <strong>radici asciutte all'80%</strong>, fermati subito col cross-wrapping. Prendi il <strong>pettine a denti larghi</strong> e dai un'unica pettinata generale guidando tutto il ciuffo in diagonale verso destra prima ancora di prendere la spazzola tonda!
+                    </p>
+                    <div className="p-2 rounded-xl bg-black/50 border border-amber-500/30 text-[10px] text-amber-200">
+                      ★ <em>È questo il trucco fondamentale che fa memorizzare ai capelli la direzione verso destra ed evita che la ciocca ricada in basso o in avanti sulla fronte come nelle prime foto scompigliate.</em>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 3: Sezionamento */}
+                <div className="p-3.5 rounded-2xl bg-black/70 border border-white/10 flex items-start space-x-3 group hover:border-amber-400/50 transition-colors">
+                  <div className="p-2 rounded-xl bg-amber-500/20 text-amber-300 font-black text-xs shrink-0 mt-0.5">
+                    03
+                  </div>
+                  <div className="space-y-1 flex-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-xs font-black text-white">Isola la Prima Sezione del Ciuffo Anteriore (2-3 Micro-Ciocche)</h4>
+                      <span className="text-[10px] text-amber-400 font-bold">Micro-Sezione</span>
+                    </div>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Non prendere mai tutto il ciuffo davanti in blocco (creerebbe una massa rigida e appiattita). Con due dita solleva solo la prima porzione centrale (spessore di circa 2 cm), lasciando i lati per dopo.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 4: Spazzola DA SOPRA */}
+                <div className="p-3.5 rounded-2xl bg-black/70 border border-white/10 flex items-start space-x-3 group hover:border-amber-400/50 transition-colors">
+                  <div className="p-2 rounded-xl bg-amber-500/20 text-amber-300 font-black text-xs shrink-0 mt-0.5">
+                    04
+                  </div>
+                  <div className="space-y-1 flex-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-xs font-black text-white">Posiziona la Spazzolina Tonda "DA SOPRA" (Modalità Definitiva)</h4>
+                      <span className="text-[10px] text-amber-300 font-bold">Ergonomia</span>
+                    </div>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Appoggia la spazzola rotonda <strong>sopra</strong> la ciocca, facendola aderire proprio sopra la radice. Le setole agganciano i capelli dall'alto: hai il controllo visivo totale allo specchio e il polso non si affatica rispetto alla scomoda presa da sotto.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 5: Trazione & No Lisciatura Eccessiva */}
+                <div className="p-3.5 rounded-2xl bg-black/70 border border-white/10 flex items-start space-x-3 group hover:border-amber-400/50 transition-colors">
+                  <div className="p-2 rounded-xl bg-amber-500/20 text-amber-300 font-black text-xs shrink-0 mt-0.5">
+                    05
+                  </div>
+                  <div className="space-y-1.5 flex-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-xs font-black text-white">Trazione in Alto & Rotazione a Destra (Senza Lisciare Troppo!)</h4>
+                      <span className="text-[10px] text-cyan-400 font-bold">Volume + Direzione</span>
+                    </div>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Solleva leggermente la spazzola verso l'alto (per staccare la radice dalla testa) e falla ruotare dolcemente guidando la ciocca in diagonale verso destra.
+                    </p>
+                    <div className="p-2 rounded-xl bg-cyan-950/30 border border-cyan-500/30 text-[10px] text-cyan-200">
+                      <strong>Regola d'oro:</strong> La spazzola tonda serve SOLO a dare la direzione destra e togliere il crespo. NON continuare a lisciare finché è del tutto asciutta, altrimenti le setole uniscono tutti i capelli in una massa piatta!
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 6: Flusso Caldo col Beccuccio */}
+                <div className="p-3.5 rounded-2xl bg-black/70 border border-white/10 flex items-start space-x-3 group hover:border-amber-400/50 transition-colors">
+                  <div className="p-2 rounded-xl bg-amber-500/20 text-amber-300 font-black text-xs shrink-0 mt-0.5">
+                    06
+                  </div>
+                  <div className="space-y-1 flex-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-xs font-black text-white">Flusso Caldo col Beccuccio Parallelo Radice-Punte</h4>
+                      <span className="text-[10px] text-amber-400 font-bold">Aria Continua</span>
+                    </div>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Tieni il phon con il beccuccio piatto a circa 2 cm dalla spazzola, inclinato verso il basso e a destra. Segui il movimento della spazzola che scorre fino alle punte senza soste a metà fusto.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 7: Cool Shot 3 Secondi */}
+                <div className="p-3.5 rounded-2xl bg-cyan-950/40 border border-cyan-500/40 flex items-start space-x-3 group shadow-sm">
+                  <div className="p-2 rounded-xl bg-cyan-400 text-black font-black text-xs shrink-0 mt-0.5">
+                    07
+                  </div>
+                  <div className="space-y-1 flex-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-xs font-black text-cyan-300">Il Sigillo Termico Freddo (3 Secondi a Spazzola Ferma)</h4>
+                      <span className="text-[10px] text-cyan-300 font-black uppercase">Blocco Piega</span>
+                    </div>
+                    <p className="text-[11px] text-gray-200 leading-relaxed">
+                      Arrivato alle punte con la ciocca curvata verso destra, <strong>blocca il movimento della spazzola</strong> e premi immediatamente il tasto dell'aria fredda per 3 secondi contati. Solo ora sfila la spazzola verso destra.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 8: Replica sulle altre ciocche */}
+                <div className="p-3.5 rounded-2xl bg-black/70 border border-white/10 flex items-start space-x-3 group hover:border-amber-400/50 transition-colors">
+                  <div className="p-2 rounded-xl bg-amber-500/20 text-amber-300 font-black text-xs shrink-0 mt-0.5">
+                    08
+                  </div>
+                  <div className="space-y-1 flex-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-xs font-black text-white">Ripeti sulle Altre 1 o 2 Micro-Ciocche del Davanti</h4>
+                      <span className="text-[10px] text-amber-400 font-bold">Completamento</span>
+                    </div>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Esegui la stessa sequenza rapida (spazzola sopra, trazione alta, rotazione destra, flusso caldo e 3s freddo) sulle sezioni laterali del ciuffo. Il davanti sarà perfettamente asciutto e orientato.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 9: 💡 Il Segreto del Graffiato a Phon Spento */}
+                <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/60 via-teal-950/50 to-black/80 border-2 border-emerald-400/60 flex items-start space-x-3 group shadow-lg">
+                  <div className="p-2.5 rounded-xl bg-emerald-400 text-black font-black text-sm shrink-0 mt-0.5 shadow-neon">
+                    09
+                  </div>
+                  <div className="space-y-2 flex-1">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-xs sm:text-sm font-black text-emerald-300">
+                        💡 Il Segreto del Graffiato Sopra: Separazione a Secco a Phon Spento
+                      </h4>
+                      <span className="text-[10px] text-emerald-300 font-black uppercase tracking-wider bg-emerald-500/20 px-2 py-0.5 rounded-md border border-emerald-500/40">
+                        Look Definitivo
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-gray-200 leading-relaxed">
+                      La piega è venuta benissimo come direzione e altezza della radice. <strong>Perché il graffiato sopra non usciva?</strong> Perché la spazzola tonda liscia e unisce tutti i capelli in una massa compatta. Il look graffiato NON lo fa la spazzola: <strong>nasce solo dopo, a phon spento</strong>!
+                    </p>
+                    
+                    <div className="space-y-1.5 p-3 rounded-xl bg-black/60 border border-emerald-500/30 text-[11px] text-gray-200">
+                      <strong className="text-emerald-300 block text-xs">Cosa fare appena spegni il phon:</strong>
+                      <ul className="space-y-1 pl-1">
+                        <li className="flex items-start gap-1.5">
+                          <span className="text-red-400 font-bold">✗</span>
+                          <span><strong>Non toccare più la spazzola tonda</strong> né spazzole piatte.</span>
+                        </li>
+                        <li className="flex items-start gap-1.5">
+                          <span className="text-emerald-400 font-bold">✓</span>
+                          <span>Prendi il <strong>pettine a denti larghi</strong>.</span>
+                        </li>
+                        <li className="flex items-start gap-1.5">
+                          <span className="text-emerald-400 font-bold">✓</span>
+                          <span>Infila i denti del pettine <strong>in profondità nel ciuffo sopra</strong> e tiralo verso destra con <strong>dei colpi decisi</strong>.</span>
+                        </li>
+                        <li className="flex items-start gap-1.5">
+                          <span className="text-emerald-400 font-bold">✓</span>
+                          <span>I denti larghi divideranno istantaneamente la massa compatta in <strong>4 o 5 "scanalature" ben definite</strong>: è esattamente da qui che nasce l'effetto graffiato pulito e arioso!</span>
+                        </li>
+                        <li className="flex items-start gap-1.5">
+                          <span className="text-cyan-300 font-bold">★</span>
+                          <span><em>Perché sui capelli 2B serve il tocco texturizzante:</em> I capelli puliti tendono ad aggregarsi di nuovo tra loro. Una spolverata di <strong>polvere volumizzante</strong> alle radici o spray al sale prima di passare il pettine a denti larghi "blocca" la separazione e impedisce alle ciocche di tornare una massa unica durante il giorno.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Sintesi Rapida & Regole d'Oro */}
+            <div className="p-3.5 rounded-2xl bg-black/80 border border-white/15 space-y-2">
+              <h4 className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                Riepilogo Veloce: I 3 Errori che Impediscono il Graffiato
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+                <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-200 space-y-1">
+                  <span className="font-bold block text-amber-300">1. Lisciare troppo a lungo</span>
+                  <p className="text-[10px] text-gray-300 leading-tight">
+                    Se continui a spazzolare con phon finché è asciutto, le setole compattano tutti i capelli in un blocco unico.
+                  </p>
+                </div>
+                <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-200 space-y-1">
+                  <span className="font-bold block text-cyan-300">2. Mancata apertura a secco</span>
+                  <p className="text-[10px] text-gray-300 leading-tight">
+                    La spazzola tonda dà solo direzione e toglie crespo; il graffiato lo crea il pettine largo a phon spento.
+                  </p>
+                </div>
+                <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-200 space-y-1">
+                  <span className="font-bold block text-emerald-300">3. Aggregazione Tipo 2B</span>
+                  <p className="text-[10px] text-gray-300 leading-tight">
+                    I capelli 2B puliti tendono a riunirsi: il colpo deciso di pettine largo e la polverina li mantengono separati in scanalature.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Tasto Chiudi Progressi #2 e Torna alla Nota */}
+            <div className="pt-2 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setActiveTab('tutta')}
+                className="w-full sm:w-auto py-3 px-6 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-300 hover:to-orange-300 text-black font-black text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-neon flex items-center justify-center gap-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Chiudi Progressi #2 e Torna alla Nota Completa</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
       {/* SEZIONE 1: DIAGNOSI DELLA FIBRA (TIPO 2B vs CRESPO REALE)     */}
       {/* ============================================================= */}
       {(activeTab === 'tutta' || activeTab === 'diagnosi') && (
@@ -1602,7 +2042,8 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
       )}
 
       {/* ============================================================= */}
-      {/* SEZIONE 5: IL GIORNO DOPO (MARTEDÌ MATTINA IN 30 SECONDI)     */}
+      {/* ============================================================= */}
+      {/* SEZIONE 5: IL GIORNO DOPO & AGGIORNAMENTI #2 (RESET TOTALE)   */}
       {/* ============================================================= */}
       {(activeTab === 'tutta' || activeTab === 'giorno_dopo') && (
         <div className="space-y-4 animate-in fade-in duration-200">
@@ -1613,58 +2054,184 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
               </span>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-sky-400">
-                  Tenuta & Risveglio • Sezione 5
+                  Tenuta & Aggiornamenti #2 • Sezione 5
                 </span>
                 <h2 className="text-base sm:text-lg font-black text-white">
-                  5. Gestione del Giorno Dopo (Martedì Mattina in 30 Secondi)
+                  5. Gestione del Giorno Dopo & Aggiornamenti #2 (Reset Totale)
                 </h2>
               </div>
             </div>
             <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-sky-500/15 text-sky-300 border border-sky-500/30">
-              30 Secondi
+              Aggiornamenti #2
             </span>
           </div>
 
-          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-sky-500/40 space-y-3 bg-gradient-to-br from-sky-950/20 via-black/85 to-black shadow-[0_0_25px_rgba(56,189,248,0.15)]">
-            <div className="p-3 rounded-2xl bg-red-950/20 border border-red-500/30 text-xs">
-              <strong className="text-red-300 block font-bold flex items-center gap-1.5">
-                <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
-                Regola di Tenuta: NON aggiungere altro prodotto!
-              </strong>
-              <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
-                La polverina è ancora sui capelli: la notte l'ha solo schiacciata contro il cuscino. Se aggiungi altra polvere il secondo giorno, appesantisci la fibra creando un blocco pastoso. Va solo <strong>riattivata</strong>.
-              </p>
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-sky-500/40 space-y-5 bg-gradient-to-br from-sky-950/25 via-black/85 to-indigo-950/30 shadow-[0_0_30px_rgba(56,189,248,0.18)]">
+            {/* --------------------------------------------------------- */}
+            {/* AGGIORNAMENTI #2 CAPELLI IL GIORNO DOPO                   */}
+            {/* SE LA PIEGA SI È ROVINATA / PERSA / UMIDITÀ (RESET TOTALE) */}
+            {/* --------------------------------------------------------- */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-sky-950/40 via-blue-950/30 to-black/85 border-2 border-sky-400/50 space-y-3.5 shadow-md">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-sky-500/30 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-xl bg-sky-400/20 text-sky-300">
+                    <Sparkles className="w-4 h-4 text-sky-400" />
+                  </span>
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-wider text-sky-400 block">
+                      ★ Aggiornamenti #2 Capelli: Il Giorno Dopo
+                    </span>
+                    <h3 className="text-sm sm:text-base font-black text-white">
+                      Se la Piega si è Rovinata, Persa o Scompigliata (Reset da Capo)
+                    </h3>
+                  </div>
+                </div>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-500/40">
+                  Procedura Obbligatoria
+                </span>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-black/60 border border-sky-500/30 space-y-2 text-xs">
+                <p className="text-gray-200 leading-relaxed font-medium">
+                  Esatto, <strong>hai centrato perfettamente il punto</strong>: se la piega si è rovinata, persa o scompigliata (magari dopo essere uscita o dopo aver preso umidità), per recuperare il risultato pulito <strong>devi rifare il procedimento da capo</strong>.
+                </p>
+                <div className="p-2.5 rounded-lg bg-red-950/30 border border-red-500/40 text-red-200 text-[11px] leading-relaxed">
+                  <strong>La Regola Biologica:</strong> Non puoi semplicemente &quot;aggiustarla&quot; a secco sopra al disastro, perché i <strong>legami a idrogeno</strong> e le <strong>cuticole</strong> sono ormai andati per conto loro!
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <span className="text-xs font-black uppercase tracking-wider text-sky-300 block">
+                  Ecco cosa devi fare per ripartire da zero e recuperare il risultato perfetto:
+                </span>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                  {/* Step 1: Bagna di nuovo */}
+                  <div className="p-3.5 rounded-xl bg-black/70 border border-white/10 space-y-1">
+                    <div className="flex items-center space-x-2 text-sky-400 font-extrabold text-xs">
+                      <Droplet className="w-3.5 h-3.5" />
+                      <span>1. Bagna di nuovo (o inumidisci bene)</span>
+                    </div>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Riporta i capelli nello stato iniziale con l'acqua per azzerare la forma precedente e riaprire i legami a idrogeno.
+                    </p>
+                  </div>
+
+                  {/* Step 2: Spazzola + Phon Caldo */}
+                  <div className="p-3.5 rounded-xl bg-black/70 border border-white/10 space-y-1">
+                    <div className="flex items-center space-x-2 text-orange-400 font-extrabold text-xs">
+                      <Flame className="w-3.5 h-3.5" />
+                      <span>2. Usa la spazzola + Phon Caldo</span>
+                    </div>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Riprendi la spazzola per stirare e indirizzare i capelli verso destra, usando l'aria calda del phon per riaprire le cuticole e dare la nuova direzione.
+                    </p>
+                  </div>
+
+                  {/* Step 3: Chiudi con l'Aria Fredda */}
+                  <div className="p-3.5 rounded-xl bg-black/70 border border-white/10 space-y-1">
+                    <div className="flex items-center space-x-2 text-cyan-400 font-extrabold text-xs">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>3. Chiudi con l'Aria Fredda</span>
+                    </div>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Fai sempre i tuoi secondi di aria fredda per sigillare le cuticole e congelare la piega, bloccandola contro l'umidità esterna.
+                    </p>
+                  </div>
+
+                  {/* Step 4: Pettine a denti larghi alla fine */}
+                  <div className="p-3.5 rounded-xl bg-black/70 border border-white/10 space-y-1">
+                    <div className="flex items-center space-x-2 text-amber-400 font-extrabold text-xs">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <span>4. Pettine a Denti Larghi Solo alla Fine</span>
+                    </div>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Solo quando i capelli sono asciutti e freddi, prendi il pettine a denti larghi per sgranare le ciocche e ottenere l'effetto graffiato definitivo.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Ciclo Fisso */}
+                <div className="p-3 rounded-xl bg-gradient-to-r from-sky-950/60 to-black/80 border border-sky-400/40 text-center space-y-1">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-sky-400 block">
+                    Il Ciclo Indispensabile:
+                  </span>
+                  <p className="text-xs sm:text-sm font-extrabold text-white">
+                    Acqua &rarr; Spazzola e Aria Calda &rarr; Aria Fredda &rarr; Pettine a Denti Larghi
+                  </p>
+                  <p className="text-[11px] text-gray-300 font-medium">
+                    È l'unico modo per non ritrovarsi con un risultato rovinato dopo pochi minuti!
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="space-y-2 text-xs">
-              <div className="p-3 rounded-xl bg-black/50 border border-white/10 flex items-start gap-2.5">
-                <span className="w-5 h-5 rounded-lg bg-sky-500/20 text-sky-300 flex items-center justify-center font-black text-[11px] shrink-0 mt-0.5">1</span>
+            {/* --------------------------------------------------------- */}
+            {/* PARTE C: ERRORE CHE HO FATTO (ANALISI SCIENTIFICA)         */}
+            {/* --------------------------------------------------------- */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-red-950/40 via-orange-950/30 to-black/85 border-2 border-red-500/40 space-y-3.5 shadow-md">
+              <div className="flex items-center space-x-2 border-b border-red-500/30 pb-2">
+                <span className="p-1.5 rounded-xl bg-red-500/20 text-red-300">
+                  <AlertTriangle className="w-4 h-4 text-red-400" />
+                </span>
                 <div>
-                  <h5 className="font-bold text-white text-xs">Testa in Giù (10 secondi)</h5>
-                  <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
-                    Mettiti a testa in giù e passa le dita tra le radici strofinando leggermente il cuoio capelluto. Questo scolla la polvere adagiata sulla cute e ridà subito il volume base.
+                  <span className="text-[10px] font-black uppercase tracking-wider text-red-400 block">
+                    Analisi di Laboratorio • Diagnosi Errore
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    Errore Che Ho Fatto: Dove Stava l'Inghippo e Perché la Piega è Crollata
+                  </h3>
+                </div>
+              </div>
+
+              <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                Esatto, <strong>hai fatto centro al 100%!</strong> Hai individuato esattamente tutti i passaggi mancanti che hanno fatto crollare il risultato. Facciamo il punto della situazione su dove stava l'errore:
+              </p>
+
+              <div className="space-y-2.5 text-xs">
+                {/* 1. Il salto del phon */}
+                <div className="p-3 rounded-xl bg-black/60 border border-red-500/30 space-y-1">
+                  <strong className="text-red-300 block text-xs font-bold flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-red-400"></span>
+                    1. Il salto del phon (Mancata asciugatura):
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Hai stirato i capelli verso il tuo lato con la spazzola e poi sei passato direttamente al pettine a denti larghi, <strong>lasciando però i capelli umidi o bagnati d'acqua</strong>. Senza il phon, la struttura dell'acqua è rimasta intrappolata all'interno della corteccia del capello.
+                  </p>
+                </div>
+
+                {/* 2. Niente aria calda */}
+                <div className="p-3 rounded-xl bg-black/60 border border-orange-500/30 space-y-1">
+                  <strong className="text-orange-300 block text-xs font-bold flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-orange-400"></span>
+                    2. Niente aria calda (Mancata attivazione):
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Saltando il phon con l'aria calda, <strong>le cuticole non si sono aperte</strong> per farsi guidare e i legami a idrogeno non hanno memorizzato la nuova direzione verso destra.
+                  </p>
+                </div>
+
+                {/* 3. Niente aria fredda */}
+                <div className="p-3 rounded-xl bg-black/60 border border-cyan-500/30 space-y-1">
+                  <strong className="text-cyan-300 block text-xs font-bold flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+                    3. Niente aria fredda (Mancata sigillatura):
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Non avendo usato il colpo di freddo alla fine, le cuticole sono rimaste &quot;aperte&quot; e i legami non sono stati congelati. <strong>Appena hai messo piede fuori casa, l'umidità dell'aria è entrata all'istante (come una spugna)</strong>, rompendo quel poco di forma che era rimasta e facendo aprire e gonfiare i capelli.
                   </p>
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-black/50 border border-white/10 flex items-start gap-2.5">
-                <span className="w-5 h-5 rounded-lg bg-sky-500/20 text-sky-300 flex items-center justify-center font-black text-[11px] shrink-0 mt-0.5">2</span>
-                <div>
-                  <h5 className="font-bold text-white text-xs">"Graffia" a Secco (10 secondi)</h5>
-                  <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
-                    Torna su con la testa. Usa solo i polpastrelli ad artiglio infilandoli da davanti verso dietro per separare le ciocche. La polvere rimasta farà presa all'istante, ricreando i mazzetti definiti.
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-3 rounded-xl bg-black/50 border border-white/10 flex items-start gap-2.5">
-                <span className="w-5 h-5 rounded-lg bg-sky-500/20 text-sky-300 flex items-center justify-center font-black text-[11px] shrink-0 mt-0.5">3</span>
-                <div>
-                  <h5 className="font-bold text-white text-xs">Soffio di Aria Fredda / Tiepida se C'è una Piega Strana (10 secondi)</h5>
-                  <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
-                    Se vedi una piega anomala dovuta alla posizione sul cuscino, dai una scaldata rapidissima di 5 secondi ad aria tiepida tenendo il ciuffo in posizione con le dita, e fissa subito con 5 secondi di aria fredda.
-                  </p>
-                </div>
+              {/* Conclusione Chiave */}
+              <div className="p-3.5 rounded-xl bg-black/70 border border-red-500/40 space-y-1.5">
+                <span className="text-xs font-black uppercase tracking-wider text-red-300 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-red-400" />
+                  La Dinamica Chiave da Ricordare Sempre:
+                </span>
+                <p className="text-xs text-gray-200 leading-relaxed">
+                  Il pettine a denti larghi serve <strong>solo alla fine per fare il &quot;graffiato&quot;</strong>, ma se prima non fai asciugare e bloccare la struttura con <strong>spazzola + aria calda e poi aria fredda</strong>, qualsiasi forma tu faccia si scioglierà sempre nel giro di pochi minuti. Adesso la sequenza ce l'hai chiara al 100% in testa!
+                </p>
               </div>
             </div>
           </div>

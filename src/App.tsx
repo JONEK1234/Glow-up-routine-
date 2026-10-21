@@ -9,6 +9,7 @@ import { HomeRoutineTab } from './components/tabs/HomeRoutineTab';
 import { DailyChecklistTab } from './components/tabs/DailyChecklistTab';
 import { LookmaxingTab } from './components/tabs/LookmaxingTab';
 import { NoteTab } from './components/tabs/NoteTab';
+import { scrollToTop } from './utils/scrollHelper';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<NavTab>('home');
@@ -24,10 +25,11 @@ export default function App() {
     return unsubscribe;
   }, []);
 
-  // Sync streak
+  // Sync streak & scroll to top when changing tab
   useEffect(() => {
     const current = storageHelper.getStreak();
     setStreak(current);
+    scrollToTop();
   }, [activeTab]);
 
   return (

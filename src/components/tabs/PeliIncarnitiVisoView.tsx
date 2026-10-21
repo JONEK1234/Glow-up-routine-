@@ -15,6 +15,7 @@ import {
   RefreshCw,
   HeartPulse
 } from 'lucide-react';
+import { scrollToTop } from '../../utils/scrollHelper';
 
 interface PeliIncarnitiVisoViewProps {
   onBack: () => void;
@@ -22,6 +23,11 @@ interface PeliIncarnitiVisoViewProps {
 
 export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState<'tutte' | 'mattina' | 'barba' | 'informazioni'>('tutte');
+
+  // Scroll solo all'apertura della nota (mount)
+  React.useEffect(() => {
+    scrollToTop();
+  }, []);
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">

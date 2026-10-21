@@ -19,15 +19,23 @@ import {
   ChevronDown,
   RefreshCw,
   Droplet,
-  Moon
+  Moon,
+  Target,
+  LineChart
 } from 'lucide-react';
+import { scrollToTop } from '../../utils/scrollHelper';
 
 interface PalestraPerditaGrassoViewProps {
   onBack: () => void;
 }
 
 export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2'>('tutte');
+  const [activeTab, setActiveTab] = useState<'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza'>('tutte');
+
+  // Scroll solo all'apertura della nota (mount)
+  React.useEffect(() => {
+    scrollToTop();
+  }, []);
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">
@@ -66,11 +74,11 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
         </p>
 
         {/* Tasti Informazioni Rapidi */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
           {/* 1# Informazioni */}
           <div
             onClick={() => setActiveTab('informazioni')}
-            className="p-3.5 rounded-2xl bg-gradient-to-r from-purple-950/50 via-indigo-950/40 to-black/70 border border-purple-500/40 hover:border-purple-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-purple-500/20"
+            className="p-3 rounded-2xl bg-gradient-to-r from-purple-950/50 via-indigo-950/40 to-black/70 border border-purple-500/40 hover:border-purple-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-purple-500/20"
           >
             <div className="flex items-center space-x-2.5">
               <span className="p-2 rounded-xl bg-purple-500/20 text-purple-300 border border-purple-500/30 group-hover:bg-purple-500 group-hover:text-black transition-all shrink-0">
@@ -78,7 +86,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
               </span>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-purple-400 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" /> 1# Informazioni
+                  <Sparkles className="w-3 h-3" /> 1# Info
                 </span>
                 <h3 className="text-xs font-extrabold text-white group-hover:text-purple-200 transition-colors line-clamp-1">
                   Stretching vs Rigidità • Flessioni & Verticale
@@ -93,7 +101,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           {/* 2# Informazioni */}
           <div
             onClick={() => setActiveTab('informazioni2')}
-            className="p-3.5 rounded-2xl bg-gradient-to-r from-blue-950/50 via-indigo-950/40 to-black/70 border border-blue-500/40 hover:border-blue-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-blue-500/20"
+            className="p-3 rounded-2xl bg-gradient-to-r from-blue-950/50 via-indigo-950/40 to-black/70 border border-blue-500/40 hover:border-blue-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-blue-500/20"
           >
             <div className="flex items-center space-x-2.5">
               <span className="p-2 rounded-xl bg-blue-500/20 text-blue-300 border border-blue-500/30 group-hover:bg-blue-500 group-hover:text-black transition-all shrink-0">
@@ -101,7 +109,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
               </span>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-blue-400 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" /> 2# Informazioni
+                  <Sparkles className="w-3 h-3" /> 2# Info
                 </span>
                 <h3 className="text-xs font-extrabold text-white group-hover:text-blue-200 transition-colors line-clamp-1">
                   Muscoli a Riposo • Grasso • Notte & GH
@@ -109,6 +117,144 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
               </div>
             </div>
             <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-blue-500/20 text-blue-300 border border-blue-500/30 group-hover:bg-blue-500 group-hover:text-black transition-all shrink-0">
+              Apri ➔
+            </span>
+          </div>
+
+          {/* 3# Informazioni: Il Quadro Completo */}
+          <div
+            onClick={() => setActiveTab('quadro_completo')}
+            className="p-3 rounded-2xl bg-gradient-to-r from-emerald-950/50 via-teal-950/40 to-black/70 border border-emerald-500/40 hover:border-emerald-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-emerald-500/20"
+          >
+            <div className="flex items-center space-x-2.5">
+              <span className="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 group-hover:bg-emerald-500 group-hover:text-black transition-all shrink-0">
+                <Target className="w-4 h-4" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" /> 3# Info: Quadro Completo
+                </span>
+                <h3 className="text-xs font-extrabold text-white group-hover:text-emerald-200 transition-colors line-clamp-1">
+                  Strategia, Scienza Grasso Viso/Pancia & Controllo
+                </h3>
+              </div>
+            </div>
+            <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 group-hover:bg-emerald-500 group-hover:text-black transition-all shrink-0">
+              Apri ➔
+            </span>
+          </div>
+
+          {/* 4# Informazioni: Proteine & Grasso */}
+          <div
+            onClick={() => setActiveTab('proteine_scienza')}
+            className="p-3 rounded-2xl bg-gradient-to-r from-amber-950/50 via-rose-950/40 to-black/70 border border-amber-500/40 hover:border-amber-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-amber-500/20"
+          >
+            <div className="flex items-center space-x-2.5">
+              <span className="p-2 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30 group-hover:bg-amber-500 group-hover:text-black transition-all shrink-0">
+                <ShieldCheck className="w-4 h-4" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" /> 4# Info: Proteine & Grasso
+                </span>
+                <h3 className="text-xs font-extrabold text-white group-hover:text-amber-200 transition-colors line-clamp-1">
+                  Proteine e Grasso • ~1 g/kg (~75 g) & Termogenesi (TID)
+                </h3>
+              </div>
+            </div>
+            <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 group-hover:bg-amber-500 group-hover:text-black transition-all shrink-0">
+              Apri ➔
+            </span>
+          </div>
+
+          {/* Box Unificato per 5# Info: Parte 1 & Parte 2 Affiancati */}
+          <div className="col-span-1 sm:col-span-2 p-2 rounded-2xl bg-gradient-to-r from-rose-950/30 via-orange-950/20 to-black/60 border border-orange-500/30 space-y-2">
+            <div className="flex items-center justify-between px-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-orange-400 flex items-center gap-1.5">
+                <Sparkles className="w-3 h-3 text-orange-400" />
+                5# Info • Argomento Fabbisogno & Eccesso Proteico (Diviso in 2 Parti Collegate)
+              </span>
+              <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest bg-white/5 px-2 py-0.5 rounded-md">
+                1 & 2 Affiancati
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {/* 5# Parte 1 (Sinistra) */}
+              <div
+                onClick={() => setActiveTab('fabbisogno_tid')}
+                className={`p-2.5 rounded-xl border transition-all cursor-pointer group flex items-center justify-between ${
+                  activeTab === 'fabbisogno_tid'
+                    ? 'bg-rose-500/20 border-rose-400 shadow-md shadow-rose-500/20'
+                    : 'bg-black/60 border-rose-500/30 hover:border-rose-400'
+                }`}
+              >
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30 group-hover:bg-rose-500 group-hover:text-black transition-all shrink-0">
+                    <Flame className="w-3.5 h-3.5 text-rose-400 group-hover:text-black" />
+                  </span>
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-wider text-rose-400 flex items-center gap-1">
+                      Parte 1 (Sinistra)
+                    </span>
+                    <h3 className="text-xs font-extrabold text-white group-hover:text-rose-200 transition-colors line-clamp-1">
+                      1g/kg, Turnover & TID
+                    </h3>
+                  </div>
+                </div>
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-rose-500/20 text-rose-300 border border-rose-500/30 group-hover:bg-rose-500 group-hover:text-black transition-all shrink-0">
+                  Apri ➔
+                </span>
+              </div>
+
+              {/* 5# Parte 2 (Destra) */}
+              <div
+                onClick={() => setActiveTab('fabbisogno_tid_2')}
+                className={`p-2.5 rounded-xl border transition-all cursor-pointer group flex items-center justify-between ${
+                  activeTab === 'fabbisogno_tid_2'
+                    ? 'bg-orange-500/20 border-orange-400 shadow-md shadow-orange-500/20'
+                    : 'bg-black/60 border-orange-500/40 hover:border-orange-400'
+                }`}
+              >
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-orange-500/20 text-orange-300 border border-orange-500/30 group-hover:bg-orange-500 group-hover:text-black transition-all shrink-0">
+                    <Zap className="w-3.5 h-3.5 text-orange-400 group-hover:text-black" />
+                  </span>
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-wider text-orange-400 flex items-center gap-1">
+                      Parte 2 (Destra)
+                    </span>
+                    <h3 className="text-xs font-extrabold text-white group-hover:text-orange-200 transition-colors line-clamp-1">
+                      Proteine in Eccesso & Gluconeogenesi
+                    </h3>
+                  </div>
+                </div>
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-orange-500/20 text-orange-300 border border-orange-500/30 group-hover:bg-orange-500 group-hover:text-black transition-all shrink-0">
+                  Apri ➔
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* 6# Informazioni: Grassi Alimentari, Digestione & Metabolismo 24h */}
+          <div
+            onClick={() => setActiveTab('grassi_scienza')}
+            className="p-3 rounded-2xl bg-gradient-to-r from-yellow-950/50 via-amber-950/40 to-black/70 border border-yellow-500/40 hover:border-yellow-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-yellow-500/20 sm:col-span-2 lg:col-span-1"
+          >
+            <div className="flex items-center space-x-2.5">
+              <span className="p-2 rounded-xl bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 group-hover:bg-yellow-500 group-hover:text-black transition-all shrink-0">
+                <Droplet className="w-4 h-4 text-yellow-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-yellow-400 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" /> 6# Info: I Grassi
+                </span>
+                <h3 className="text-xs font-extrabold text-white group-hover:text-yellow-200 transition-colors line-clamp-1">
+                  I Grassi, la Carne, Digestione & Notte 24h
+                </h3>
+              </div>
+            </div>
+            <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 group-hover:bg-yellow-500 group-hover:text-black transition-all shrink-0">
               Apri ➔
             </span>
           </div>
@@ -137,7 +283,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
             }`}
           >
             <Dumbbell className="w-3.5 h-3.5" />
-            1. Palestra & Esercizi
+            1. Pesi & Esercizi
           </button>
           <button
             type="button"
@@ -210,6 +356,73 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           >
             <Moon className="w-3.5 h-3.5 text-blue-400" />
             7. 2# Info
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('quadro_completo')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'quadro_completo'
+                ? 'bg-teal-500 text-black shadow-md shadow-teal-500/30 font-extrabold'
+                : 'bg-teal-500/10 text-teal-300 hover:text-white border border-teal-500/30'
+            }`}
+          >
+            <Target className="w-3.5 h-3.5 text-teal-400" />
+            8. 3# Quadro Completo
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('proteine_scienza')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'proteine_scienza'
+                ? 'bg-amber-500 text-black shadow-md shadow-amber-500/30 font-extrabold'
+                : 'bg-amber-500/10 text-amber-300 hover:text-white border border-amber-500/30'
+            }`}
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+            9. 4# Proteine (~1g/kg & TID)
+          </button>
+
+          {/* Tasti 5# Parte 1 e Parte 2 - Inseparabili, Uniti e Affiancati Sinistra/Destra */}
+          <div className="inline-flex items-center gap-1 p-1 rounded-2xl bg-gradient-to-r from-rose-950/40 to-orange-950/40 border border-orange-500/40 shadow-sm shrink-0">
+            <button
+              type="button"
+              onClick={() => setActiveTab('fabbisogno_tid')}
+              className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                activeTab === 'fabbisogno_tid'
+                  ? 'bg-rose-500 text-white shadow-md shadow-rose-500/30 font-extrabold'
+                  : 'bg-rose-500/20 text-rose-300 hover:text-white border border-rose-500/30'
+              }`}
+            >
+              <Flame className="w-3 h-3 text-rose-400" />
+              <span>10. 5# Parte 1 (Sx)</span>
+            </button>
+            <span className="text-gray-500 font-bold text-xs">/</span>
+            <button
+              type="button"
+              onClick={() => setActiveTab('fabbisogno_tid_2')}
+              className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                activeTab === 'fabbisogno_tid_2'
+                  ? 'bg-orange-500 text-white shadow-md shadow-orange-500/30 font-extrabold'
+                  : 'bg-orange-500/20 text-orange-300 hover:text-white border border-orange-500/30'
+              }`}
+            >
+              <Zap className="w-3 h-3 text-orange-400" />
+              <span>11. 5# Parte 2 (Dx)</span>
+            </button>
+          </div>
+
+          {/* 12. 6# Info: I Grassi Alimentari & Metabolismo 24h */}
+          <button
+            type="button"
+            onClick={() => setActiveTab('grassi_scienza')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'grassi_scienza'
+                ? 'bg-yellow-500 text-black shadow-md shadow-yellow-500/30 font-extrabold'
+                : 'bg-yellow-500/10 text-yellow-300 hover:text-white border border-yellow-500/30'
+            }`}
+          >
+            <Droplet className="w-3.5 h-3.5 text-yellow-400" />
+            12. 6# Info: Grassi & Carne
           </button>
         </div>
       </div>
@@ -1054,6 +1267,886 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
                 </div>
                 <p className="text-xs text-gray-200 leading-relaxed font-medium pt-1">
                   🌅 <strong>Il risultato al risveglio:</strong> il muscolo è più tonico e compatto, mentre una piccola quota di grasso corporeo è stata consumata definitivamente. È proprio così che, giorno dopo giorno, ci si ritrova più magri e definiti!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 8: 3# INFORMAZIONI - IL QUADRO COMPLETO: STRATEGIA,   */}
+      {/* SCIENZA DEL GRASSO (VISO & PANCIA) E CONTROLLO                */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'quadro_completo') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-teal-500/20 text-teal-300 border border-teal-500/30">
+                <Target className="w-4 h-4 text-teal-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-teal-400">
+                  Pilastro 8 • 3# Informazioni (Sintesi Integrata)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  📌 Il Quadro Completo: Strategia, Scienza e Controllo
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-teal-500/15 text-teal-300 border border-teal-500/30">
+              Ricomposizione 360°
+            </span>
+          </div>
+
+          <p className="text-xs text-gray-300 leading-relaxed font-medium pl-1">
+            Tutta la scienza del corpo, del grasso di viso e pancia e del controllo immediato e a lungo termine: il riassunto definitivo che racchiude ogni principio senza tralasciare nulla.
+          </p>
+
+          <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-teal-500/30 space-y-4 shadow-[0_0_20px_rgba(20,184,166,0.1)]">
+            {/* 1. La Strategia Generale (Niente massa per ora) */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2.5">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-teal-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  1. La Strategia Generale (Niente massa per ora)
+                </h3>
+              </div>
+              <ul className="list-disc list-inside text-xs leading-relaxed text-gray-300 space-y-2 pl-1">
+                <li>
+                  <strong className="text-teal-300">Obiettivo pulizia e ricomposizione:</strong> Il tuo obiettivo prioritario è pulire e ricomporre il corpo (togliendo il grasso da viso e pancia) senza fare diete restrittive o calcoli folli.
+                </li>
+                <li>
+                  <strong className="text-teal-300">Come fai il deficit leggero:</strong> Mangi le tue solite <strong>1.500–1.600 kcal</strong> (che per te sono il punto di pareggio) e crei il deficit calorico leggero unendo il movimento quotidiano e l'intensità della palestra. In questo modo bruci energia in più senza patire la fame e senza toccare il cibo.
+                </li>
+                <li>
+                  <strong className="text-teal-300">Vantaggio anagrafico & ormonale:</strong> Alla tua età, grazie all'assetto ormonale favorevole, puoi costruire muscolo e definirti contemporaneamente anche senza una fase di massa tradizionale.
+                </li>
+              </ul>
+            </div>
+
+            {/* 2. La Scienza del Grasso (Viso e Pancia) */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2.5">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  2. La Scienza del Grasso (Viso e Pancia)
+                </h3>
+              </div>
+              <div className="space-y-2 text-xs text-gray-300 leading-relaxed">
+                <div>
+                  • <strong className="text-white">Che cos'è il grasso e recettori alfa-2:</strong> Sono cellule adipose (adipociti) che accumulano trigliceridi in eccesso. Nella pancia e nel viso ci sono <strong>recettori specifici (alfa-2)</strong> che rendono il grasso di quelle zone il più "ostinato" a staccarsi.
+                </div>
+                <div>
+                  • <strong className="text-white">Come sparisce (Lipolisi e Ossidazione):</strong>
+                  <ul className="list-disc list-inside text-[11px] text-gray-300 pl-4 space-y-1 pt-1">
+                    <li>Il deficit calorico rilascia ormoni (adrenalina, noradrenalina, glucagone) che smontano i trigliceridi in acidi grassi liberi.</li>
+                    <li>Il sangue li trasporta nei muscoli che lavorano (grazie all'allenamento in palestra).</li>
+                    <li>I muscoli bruciano questi acidi grassi nei mitocondri trasformandoli in energia e respirandoli via sotto forma di anidride carbonica e acqua.</li>
+                  </ul>
+                </div>
+                <div>
+                  • <strong className="text-white">Il ruolo delle proteine:</strong> Fanno da <strong>"scudo"</strong> (impedendo al corpo di mangiare i muscoli per ricavare energia, effetto anti-catabolico) e da <strong>"mattoni"</strong> (forniscono aminoacidi per riparare e far crescere il muscolo dopo la palestra).
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Come monitorare se stai facendo giusto */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2.5">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  3. Come Monitorare se Stai Facendo Giusto (Subito e a Lungo Termine)
+                </h3>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                {/* Segnali SUBITO */}
+                <div className="p-3.5 rounded-xl bg-black/50 border border-teal-500/20 space-y-2">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-teal-300">
+                    <Zap className="w-3.5 h-3.5 text-teal-400" />
+                    I Segnali SUBITO (Giorno per giorno)
+                  </div>
+                  <ul className="list-disc list-inside text-[11px] leading-relaxed text-gray-300 space-y-1 pl-1">
+                    <li>
+                      <strong className="text-emerald-300">Livello di energia ottimale:</strong> Se ti svegli lucido, arrivi in palestra con la forza giusta e non hai un freddo anomalo o stanchezza estrema, le 1.500–1.600 kcal sono perfette.
+                    </li>
+                    <li>
+                      <strong className="text-red-300">Se sei troppo in deficit:</strong> Ti senti svuotato, hai cali di forza improvvisi o una fame nervosa ossessiva.
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Metodo A LUNGO TERMINE */}
+                <div className="p-3.5 rounded-xl bg-black/50 border border-teal-500/20 space-y-2">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-teal-300">
+                    <LineChart className="w-3.5 h-3.5 text-teal-400" />
+                    Il Metodo A LUNGO TERMINE (La media mobile)
+                  </div>
+                  <ul className="list-disc list-inside text-[11px] leading-relaxed text-gray-300 space-y-1 pl-1">
+                    <li>
+                      <strong className="text-white">Pesata a digiuno:</strong> Ti pesi 3 volte a settimana (es. Lunedì, Mercoledì, Venerdì) la mattina a digiuno dopo essere andato in bagno.
+                    </li>
+                    <li>
+                      <strong className="text-white">Media settimanale:</strong> Fai la media dei 3 numeri e la confronti con la settimana prima.
+                    </li>
+                    <li>
+                      <strong className="text-emerald-300">Il risultato perfetto:</strong> Se la media scende di circa <strong>200–400 grammi a settimana</strong>, il deficit leggero creato dal movimento sta funzionando perfettamente sul grasso. Se scende di oltre 1 kg, stai tagliando troppo. Se è immobile per settimane, il movimento non basta.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Box di sintesi Pilastro 8 */}
+            <div className="p-3.5 rounded-2xl bg-gradient-to-r from-teal-950/40 via-emerald-950/30 to-black/70 border border-teal-500/40 text-xs text-teal-200 leading-relaxed font-semibold">
+              🎯 <strong>Regola Chiave del Quadro Completo:</strong> Non abbassare il cibo: mantieni le 1.500–1.600 kcal stabili con buone proteine, fai la palestra con intensità e lascia che la lipolisi bruci il grasso di pancia e viso a un ritmo sostenibile di 200–400g a settimana!
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 9: 4# INFORMAZIONI - CHIARIMENTO SCIENTIFICO:         */}
+      {/* LE PROTEINE E IL GRASSO CORPOREO (~1g per kg / ~75g)          */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'proteine_scienza') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                <ShieldCheck className="w-4 h-4 text-amber-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
+                  Pilastro 9 • 4# Informazioni (Biochimica Nutrizionale)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  🔬 Chiarimento Scientifico: Le Proteine "Bloccano" il Grasso?
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30">
+              ~1 g per kg (ca. 75 g)
+            </span>
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-amber-500/30 space-y-4 shadow-[0_0_20px_rgba(245,158,11,0.1)]">
+            <p className="text-xs text-gray-200 leading-relaxed font-medium">
+              Hai perfettamente ragione a sollevare il dubbio, ed è un'ottima osservazione scientifica: le proteine di per sé non "catturano" né "bloccano" il grasso corporeo impedendogli di accumularsi, e un eccesso calorico (da qualsiasi macronutriente) verrebbe comunque immagazzinato.
+            </p>
+
+            <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+              <h3 className="text-sm sm:text-base font-extrabold text-white">
+                Vediamo esattamente cosa succede a livello biologico e metabolico:
+              </h3>
+            </div>
+
+            <div className="space-y-3.5 text-xs text-gray-300">
+              {/* 1. La lipolisi e il deficit calorico */}
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
+                <div className="flex items-center space-x-2">
+                  <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-xs">
+                    1
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-extrabold text-white">
+                    1. La lipolisi e il deficit calorico (Perché il grasso se ne va)
+                  </h4>
+                </div>
+                <p className="text-[11px] text-gray-300 leading-relaxed pl-7">
+                  Il corpo intacca il tessuto adiposo (grasso) unicamente quando si trova in deficit calorico (cioè consuma più energia di quella che introduce). In questa condizione, gli ormoni (come il glucagone e le catecolamine) segnalano alle cellule adipose di rilasciare gli acidi grassi nel sangue per usarli come carburante.
+                </p>
+              </div>
+
+              {/* 2. Il ruolo reale delle proteine */}
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
+                <div className="flex items-center space-x-2">
+                  <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-bold text-xs">
+                    2
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-extrabold text-white">
+                    2. Il ruolo reale delle proteine (Lo "scudo" anti-catabolico)
+                  </h4>
+                </div>
+                <p className="text-[11px] text-gray-300 leading-relaxed pl-7">
+                  Durante il deficit, il corpo avrebbe teoricamente la tentazione di smontare non solo il grasso, ma anche il tessuto muscolare per ricavarne amminoacidi da usare a scopo energetico.
+                </p>
+                <ul className="list-disc list-inside text-[11px] text-gray-300 space-y-1.5 pl-7">
+                  <li>
+                    <strong className="text-emerald-300">Mantenere un adeguato apporto proteico (~1 g per kg, circa 75 g)</strong> significa fornire al sangue un flusso costante di amminoacidi liberi.
+                  </li>
+                  <li>
+                    In questo modo, i muscoli riconoscono che non c'è carenza di "mattoni" e non vengono degradati (effetto anti-catabolico).
+                  </li>
+                  <li>
+                    Di conseguenza, l'energia mancante viene presa quasi esclusivamente dalle riserve di grasso.
+                  </li>
+                </ul>
+              </div>
+
+              {/* 3. Il costo energetico (Termogenesi) */}
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
+                <div className="flex items-center space-x-2">
+                  <span className="w-5 h-5 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold text-xs">
+                    3
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-extrabold text-white">
+                    3. Il costo energetico (Termogenesi)
+                  </h4>
+                </div>
+                <p className="text-[11px] text-gray-300 leading-relaxed pl-7">
+                  C'è un altro motivo per cui le proteine aiutano nella definizione: la loro digestione e il loro metabolismo richiedono molta più energia rispetto ai carboidrati o ai grassi. Questo processo si chiama <strong>Termogenesi Indotta dalla Dieta (TID)</strong>: circa il <strong>20–30% delle calorie</strong> introdotte con le proteine viene "bruciato" solo per digerirle e assimilarle.
+                </p>
+              </div>
+
+              {/* In Sintesi */}
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-950/40 via-orange-950/40 to-black/80 border-2 border-amber-400/40 space-y-1.5">
+                <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-amber-300">
+                  <Sparkles className="w-4 h-4 text-amber-400" />
+                  In sintesi:
+                </div>
+                <p className="text-xs text-gray-200 leading-relaxed font-semibold">
+                  Le proteine non impediscono al grasso di accumularsi per magia se sei in eccesso di cibo, ma in un contesto di deficit calorico proteggono la massa magra e fanno sì che il calo di peso sia mirato principalmente alla massa grassa.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 10: 5# INFORMAZIONI - FABBISOGNO 1 G/KG, TURNOVER,   */}
+      {/* TID & DEFICIT A DUE FRONTI (SINERGIA BRUCIA-GRASSI)           */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'fabbisogno_tid') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                <Flame className="w-4 h-4 text-rose-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-rose-400">
+                  Pilastro 10 • 5# Informazioni (Fisiologia, Fabbisogno & Sinergia)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  🥩 Fabbisogno Base 1 g/kg, Turnover, TID & Deficit a Due Fronti
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-rose-500/15 text-rose-300 border border-rose-500/30">
+              Sinergia Metabolica
+            </span>
+          </div>
+
+          <p className="text-xs text-gray-300 leading-relaxed font-medium pl-1">
+            Il valore di <strong>1 grammo per ogni chilogrammo di peso corporeo</strong> (es. circa 70–75 g al giorno per un peso di 70–75 kg) è la quantità di base consigliata per un motivo ben preciso: la quota di fabbisogno minimo giornaliero e di ricambio cellulare. Ecco tutta la spiegazione scientifica organizzata in modo chiaro e organico punto per punto:
+          </p>
+
+          <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-rose-500/30 space-y-4 shadow-[0_0_20px_rgba(244,63,94,0.1)]">
+            {/* 1. Il "Turnover" proteico giornaliero e la proporzionalità */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2.5">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  1. Il "Turnover" Proteico Giornaliero & Proporzionalità al Peso
+                </h3>
+              </div>
+              <p className="text-xs text-gray-300 leading-relaxed">
+                Ogni singolo giorno, anche se stai fermo sul divano, il tuo corpo consuma e demolisce naturalmente una quota delle sue proteine interne (pelle, cellule della mucosa intestinale, enzimi, ormoni, fibre muscolari).
+              </p>
+              <ul className="list-disc list-inside text-[11px] text-gray-300 space-y-1.5 pl-1 leading-relaxed">
+                <li>
+                  <strong className="text-rose-300">Che cos'è il turnover:</strong> Questo processo continuo di degradazione e rinnovamento si chiama <em>turnover proteico</em>.
+                </li>
+                <li>
+                  <strong className="text-rose-300">La perdita netta (0.8–1.0 g/kg):</strong> Una parte di questi amminoacidi viene riutilizzata dal corpo, ma una quota significativa (circa <strong>0.8–1.0 grammi per ogni chilogrammo di peso</strong>) viene persa definitivamente e non può essere recuperata.
+                </li>
+                <li>
+                  <strong className="text-rose-300">Il pareggio (Bilancio Azotato):</strong> Mangiando circa 1 g/kg, rimpiazzi esattamente la quantità che il corpo degrada per vivere, mantenendoti in pareggio (bilancio azotato in equilibrio).
+                </li>
+                <li>
+                  <strong className="text-white">Perché è proporzionale ai chili:</strong> Si parla di 1 g per ogni kg semplicemente perché il fabbisogno dipende dalla massa biologica complessiva: una persona di 90 kg ha una quantità di tessuti, sangue e organi maggiore da mantenere rispetto a una di 50 kg, e di conseguenza necessita di un volume assoluto di amminoacidi superiore.
+                </li>
+              </ul>
+            </div>
+
+            {/* 2. Come varia la quota in base al tuo stile di vita (Tabella) */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-orange-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  2. Come Varia il Fabbisogno in Base al Tuo Stile di Vita
+                </h3>
+              </div>
+              <p className="text-xs text-gray-300 leading-relaxed">
+                L'indicazione di 1 g/kg è la base di partenza per chiunque, ma la richiesta biologica cambia a seconda di quanto e come ti alleni:
+              </p>
+
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/60 pt-1">
+                <div className="divide-y divide-white/10 text-xs">
+                  {/* Header */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 p-3 gap-2 bg-rose-950/30 text-rose-300 font-black uppercase tracking-wider text-[11px]">
+                    <span>Livello di Attività</span>
+                    <span>Fabbisogno Giornaliero</span>
+                    <span>Perché? (Motivazione Fisiologica)</span>
+                  </div>
+                  {/* Row 1 */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 p-3 gap-2 bg-white/[0.01]">
+                    <span className="font-bold text-white flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+                      Sedentario
+                    </span>
+                    <span className="text-amber-300 font-semibold">0.8 – 1.0 g per kg</span>
+                    <span className="text-gray-300 text-[11px]">Copre solo il ricambio cellulare di base e la salute generale.</span>
+                  </div>
+                  {/* Row 2 */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 p-3 gap-2 bg-white/[0.03]">
+                    <span className="font-bold text-white flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                      Attività moderata / Cardio
+                    </span>
+                    <span className="text-blue-300 font-semibold">1.2 – 1.4 g per kg</span>
+                    <span className="text-gray-300 text-[11px]">Serve a riparare la micro-usura dei tessuti causata dal movimento continuo.</span>
+                  </div>
+                  {/* Row 3 */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 p-3 gap-2 bg-white/[0.01]">
+                    <span className="font-bold text-emerald-300 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                      Palestra / Pesi / Definizione
+                    </span>
+                    <span className="text-emerald-300 font-bold">1.6 – 2.0 g per kg</span>
+                    <span className="text-gray-300 text-[11px]">I muscoli subiscono micro-lesioni allenandosi con i carichi; serve una scorta maggiore di amminoacidi per ripararli, integrarli e proteggerli se sei a dieta.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Le proteine in eccesso e il grasso corporeo */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2.5">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  3. Le Proteine in Eccesso si Trasformano in Grasso? (La Verità sul Surplus)
+                </h3>
+              </div>
+              <ul className="list-disc list-inside text-xs leading-relaxed text-gray-300 space-y-1.5 pl-1">
+                <li>
+                  <strong className="text-white">Nessuna conversione automatica:</strong> Le proteine in più rispetto al fabbisogno minimo non si trasformano automaticamente in grasso corporeo.
+                </li>
+                <li>
+                  <strong className="text-amber-300">Solo in surplus calorico:</strong> Questo accumulo avviene <em>esclusivamente</em> se ti trovi in un surplus calorico totale (cioè se mangi più calorie complessive di quelle che consumi durante la giornata).
+                </li>
+                <li>
+                  <strong className="text-emerald-300">In deficit calorico:</strong> Se ti trovi in deficit calorico, le proteine in eccesso vengono semplicemente usate dal corpo a scopo energetico o convertite, senza mai trasformarsi in tessuto adiposo.
+                </li>
+              </ul>
+            </div>
+
+            {/* 4. L'Effetto Termico del Cibo (TID) e le Calorie "Bruciate" nella Digestione */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2.5">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  4. L'Effetto Termico del Cibo (TID) e la Spesa Digestiva
+                </h3>
+              </div>
+              <p className="text-xs text-gray-300 leading-relaxed">
+                Per digerire, assimilare e metabolizzare le proteine, il corpo spende molta più energia rispetto a quanta ne usa per carboidrati o grassi. Questo processo si chiama <strong>Termogenesi Indotta dalla Dieta (TID)</strong>.
+              </p>
+              <div className="p-3 rounded-xl bg-black/50 border border-cyan-500/20 text-xs text-cyan-200 leading-relaxed space-y-1">
+                <div>
+                  • <strong>Circa il 20–30% delle calorie</strong> introdotte tramite le proteine viene letteralmente "bruciato" dal corpo stesso durante la digestione e scomposizione in amminoacidi.
+                </div>
+                <div>
+                  • <strong>Esempio pratico:</strong> se introduci ad esempio <strong>500 kcal da proteine</strong>, circa <strong>100–150 kcal</strong> vengono bruciate dal tuo corpo solo per digerirle. Quindi è come se il tuo corpo ne incassasse realmente solo <strong>~1450–1500 kcal nette</strong> pur mangiando le tue solite 1600 kcal!
+                </div>
+              </div>
+            </div>
+
+            {/* 5. Come Questo Meccanismo Fa Perdere ANCORA PIÙ Grasso: La Sinergia a Due Fronti */}
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-rose-950/40 via-orange-950/30 to-black/80 border-2 border-rose-500/40 space-y-3.5">
+              <div className="border-b border-white/10 pb-2 flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Flame className="w-4 h-4 text-rose-400" />
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    5. Come Questo Ti Fa Perdere ANCORA PIÙ Grasso (Deficit Ampliato su Due Fronti)
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 text-[10px] font-bold border border-rose-500/30">
+                  Effetto Moltiplicatore
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-200 leading-relaxed">
+                I due fattori si sommano e allargano notevolmente il deficit calorico su due fronti contemporaneamente (senza che sia un "doppio" matematico, ma un ampliamento reale e concreto):
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                {/* Fronte 1 */}
+                <div className="p-3.5 rounded-xl bg-black/60 border border-white/10 space-y-1.5">
+                  <span className="text-orange-400 font-extrabold flex items-center gap-1.5 text-xs">
+                    <Dumbbell className="w-3.5 h-3.5" />
+                    1. Il Dispendio della Palestra (Movimento)
+                  </span>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Andare in palestra e allenarsi con i pesi richiede energia. Se prima il tuo corpo consumava 1600 kcal restando fermo, ora tra l'allenamento e il recupero muscolare nelle ore successive (il cosiddetto <strong>effetto EPOC</strong>) il tuo consumo totale giornaliero sale a circa <strong>1900–2000 kcal</strong>.
+                  </p>
+                </div>
+
+                {/* Fronte 2 */}
+                <div className="p-3.5 rounded-xl bg-black/60 border border-white/10 space-y-1.5">
+                  <span className="text-rose-400 font-extrabold flex items-center gap-1.5 text-xs">
+                    <Flame className="w-3.5 h-3.5" />
+                    2. Il Vantaggio Metabolico delle Proteine (Digestione)
+                  </span>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Convertendo una parte maggiore della tua alimentazione in proteine (mantenendo le stesse 1600 kcal totali), entra in gioco la termogenesi (TID): il corpo ne "spreca" 100–150 kcal per digerirle, incassandone solo <strong>~1450–1500 nette</strong>.
+                  </p>
+                </div>
+              </div>
+
+              {/* Risultato Finale Organizzato */}
+              <div className="p-3.5 rounded-xl bg-black/70 border border-rose-500/30 space-y-2">
+                <span className="text-xs font-black uppercase tracking-wider text-rose-300 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-rose-400" />
+                  Qual è il Risultato Finale?
+                </span>
+                <ul className="list-disc list-inside text-xs leading-relaxed text-gray-200 space-y-1.5 pl-1">
+                  <li>
+                    <strong className="text-white">Aumento del deficit effettivo:</strong> Da una parte bruci di più perché ti alleni e muovi i muscoli (fabbisogno in uscita che sale); dall'altra incassi di meno a parità di cibo perché le proteine richiedono tanta energia per essere digerite (calorie nette in entrata che scendono). Il deficit si fa più profondo <em>senza dover mangiare di meno e senza patire la fame</em>!
+                  </li>
+                  <li>
+                    <strong className="text-emerald-300">Massima protezione della massa magra:</strong> Mantenendo le proteine adeguate durante il deficit, il corpo non ha mai bisogno di attaccare o smontare i tuoi muscoli per ricavare amminoacidi.
+                  </li>
+                  <li>
+                    <strong className="text-amber-300">Utilizzo del grasso come carburante primario:</strong> Trovandosi in deficit di energia e con i muscoli blindati dalle proteine, al tuo corpo non rimane altra scelta se non attingere direttamente e in modo preferenziale dalle riserve di grasso corporeo (viso e pancia) per coprire il restante fabbisogno energetico giornaliero!
+                  </li>
+                </ul>
+              </div>
+
+              {/* Quick Switch to Parte 2 */}
+              <div className="p-3.5 rounded-2xl bg-gradient-to-r from-orange-950/40 via-red-950/30 to-black/70 border border-orange-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-orange-400 block flex items-center gap-1">
+                    <Sparkles className="w-3 h-3" /> Approfondimento Collegato (Parte 2)
+                  </span>
+                  <span className="text-xs font-bold text-white">
+                    Proteine in Eccesso, Gluconeogenesi & Come le Brucia il Corpo
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('fabbisogno_tid_2')}
+                  className="py-2 px-3.5 rounded-xl bg-orange-500 hover:bg-orange-400 text-black text-xs font-black transition-all active:scale-95 cursor-pointer shrink-0 shadow-md flex items-center justify-center gap-1.5"
+                >
+                  <span>Apri Parte 2</span>
+                  <Zap className="w-3.5 h-3.5 fill-black" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 11: 5# INFORMAZIONI (PARTE 2) - PROTEINE IN ECCESSO,  */}
+      {/* GLUCONEOGENESI, DESTINO FISICO E BRUCIA-GRASSI               */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'fabbisogno_tid_2') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-orange-500/20 text-orange-300 border border-orange-500/30">
+                <Zap className="w-4 h-4 text-orange-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-orange-400">
+                  Pilastro 11 • 5# Informazioni (Parte 2 • Approfondimento)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  ⚡ 5# Info (Parte 2): Proteine in Eccesso, Gluconeogenesi & Grassi
+                </h2>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              {activeTab === 'fabbisogno_tid_2' && (
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('fabbisogno_tid')}
+                  className="hidden sm:flex items-center gap-1 text-[11px] font-bold text-rose-300 bg-rose-500/10 px-2.5 py-1 rounded-xl border border-rose-500/20 hover:bg-rose-500/20 transition-all cursor-pointer"
+                >
+                  ⬅ Torna a Parte 1
+                </button>
+              )}
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-orange-500/15 text-orange-300 border border-orange-500/30">
+                Metabolismo Energetico
+              </span>
+            </div>
+          </div>
+
+          <p className="text-xs text-gray-300 leading-relaxed font-medium pl-1">
+            Capisco benissimo il tuo dubbio: sembra quasi che incastrare tante proteine stando a poche calorie complessive sia un'impresa impossibile senza vivere di sole polveri! Mettiamo in ordine tutti i punti chiave in modo organico e senza ripetizioni:
+          </p>
+
+          <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-orange-500/30 space-y-4 shadow-[0_0_20px_rgba(249,115,22,0.1)]">
+            {/* 1. Il Dilemma Pratico: Tante Proteine in Poche Calorie */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2.5">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-orange-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  1. È Difficile Assumere Più Proteine Stando in Deficit Calorico?
+                </h3>
+              </div>
+              <p className="text-xs text-gray-300 leading-relaxed">
+                Sì, all'inizio non è facilissimo: se vuoi mantenere le calorie basse (es. 1.600 kcal) ma vuoi salire a 120–130 g di proteine (circa 1.5–1.8 g/kg per riparare le micro-lesioni della palestra), devi scegliere cibi con un alto rapporto proteine/calorie, altrimenti si rischia di sforare il budget:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-[11px]">
+                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+                  <strong className="text-emerald-300 block font-bold">Cibi Magri Fondamentali:</strong>
+                  <p className="text-gray-300 leading-relaxed">
+                    Petto di pollo, tacchino, albume d'uovo, pesce bianco (merluzzo, orata, spigola), fiocchi di latte magri e yogurt greco 0%.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+                  <strong className="text-cyan-300 block font-bold">Il Ruolo delle Proteine in Polvere:</strong>
+                  <p className="text-gray-300 leading-relaxed">
+                    Molti le usano proprio perché danno una dose di proteine "pure" con pochissime calorie, senza grassi o carboidrati extra, aiutandoti a centrare l'obiettivo senza impazzire a mangiare chili di cibo.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Dove Vanno Fisicamente le Proteine in Eccesso? (Fegato & Gluconeogenesi) */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2.5">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  2. Dove Finiscono Fisicamente le Proteine in Eccesso e Come le Brucia il Corpo?
+                </h3>
+              </div>
+              <p className="text-xs text-gray-300 leading-relaxed">
+                Il tuo corpo è una macchina perfetta che non spreca nulla, ma i muscoli <strong>non sono un buco nero</strong> infinito:
+              </p>
+              <ul className="list-disc list-inside text-[11px] text-gray-300 space-y-2 pl-1 leading-relaxed">
+                <li>
+                  <strong className="text-white">Capienza muscolare limitata:</strong> Il corpo ha un tetto massimo giornaliero di proteine che può usare per riparare e costruire muscoli (specialmente in deficit). Una volta che i muscoli hanno preso i "mattoni" necessari per le micro-lesioni, la loro capienza è satura.
+                </li>
+                <li>
+                  <strong className="text-white">Cosa succede alle rimanenze nel sangue:</strong> Gli amminoacidi extra rimangono temporaneamente in circolo. Non rimangono lì a fare la muffa né vengono buttati via a caso.
+                </li>
+                <li>
+                  <strong className="text-amber-300">Il fegato entra in azione (Deaminazione):</strong> Il fegato prende l'amminoacido in eccesso, stacca la parte azotata (che viene espulsa con le urine tramite il ciclo dell'urea) e tiene lo scheletro di carbonio.
+                </li>
+                <li>
+                  <strong className="text-cyan-300">Conversione in carburante puro (Gluconeogenesi):</strong> La parte rimanente viene trasformata in energia immediata (glucosio o corpi chetogeni). Questa energia va dritta ai tuoi muscoli e organi mentre cammini, respiri, studi o ti alleni con i pesi!
+                </li>
+              </ul>
+            </div>
+
+            {/* 3. Perché NON Diventano Grasso e NON Spengono il Forno dell'Adipe */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2.5">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  3. Perché le Proteine in Più NON Diventano Grasso e NON Fermano il Dimagrimento?
+                </h3>
+              </div>
+              <div className="space-y-2 text-xs text-gray-300 leading-relaxed">
+                <p>
+                  C'è spesso l'equivoco comune: <em>"Se il corpo brucia le proteine in eccesso per energia, allora usa quelle e non tocca il grasso?"</em> La risposta scientifica è <strong>NO</strong>, per tre motivi precisi:
+                </p>
+                <div className="space-y-2 pl-1">
+                  <div className="p-3 rounded-xl bg-black/50 border border-white/5 space-y-1">
+                    <strong className="text-white block text-xs">A) La "Regola dei Conti" (Il Deficit Vince Sempre):</strong>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Per creare grasso serve un surplus energetico. Se a fine giornata hai speso più di quanto hai mangiato, il corpo è obbligato a prelevare dai risparmi (le cellule adipose). Le proteine extra vengono bruciate come benzina, ma il buco calorico totale rimane intatto: non c'è abbastanza energia totale per accumulare ciccia.
+                    </p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-black/50 border border-white/5 space-y-1">
+                    <strong className="text-white block text-xs">B) Le Proteine non Spengono il "Forno" del Grasso:</strong>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      In deficit, il fabbisogno giornaliero per muoverti e vivere è talmente alto che il corpo deve bruciare <strong>sia l'energia del cibo sia una grossa fetta di grasso accumulato</strong>. L'adipe continua a bruciare costantemente.
+                    </p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-black/50 border border-white/5 space-y-1">
+                    <strong className="text-rose-300 block text-xs">C) Il Pericolo di Mangiare Meno Proteine:</strong>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Se tenessi le proteine basse, il corpo non trovando amminoacidi smonterebbe i tuoi muscoli per ricavarli. Perderesti peso, ma gran parte sarebbe massa magra: il metabolismo rallenterebbe e il corpo apparirebbe svuotato invece che tonico e definito.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 4. Il Meccanismo Virtuoso: Le Proteine "Rubano il Posto" ai Carboidrati col 20-30% di Spesa */}
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-orange-950/40 via-amber-950/30 to-black/80 border-2 border-orange-500/40 space-y-3">
+              <div className="border-b border-white/10 pb-2 flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Flame className="w-4 h-4 text-orange-400" />
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    4. Il Meccanismo Virtuoso: Le Proteine Sostituiscono i Carboidrati con Alto Costo Termico
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-300 text-[10px] font-bold border border-orange-500/30">
+                  TID Elevata
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-200 leading-relaxed">
+                In termini biologici non è un circolo vizioso, ma un <strong>meccanismo metabolico virtuoso</strong>:
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-yellow-300 block text-xs font-bold">Se mangi Carboidrati (Pane/Pasta):</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Il corpo li digerisce facilmente e spende pochissima energia metabolica per usarli (solo il <strong>5–10%</strong>).
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-orange-300 block text-xs font-bold">Se usa Proteine come Carburante:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Compie un lavoro chimico lungo e faticoso nel fegato per trasformare l'amminoacido in glucosio, bruciando il <strong>20–30% di calorie extra</strong> per la conversione.
+                  </p>
+                </div>
+              </div>
+
+              {/* Box Riassuntivo Finale */}
+              <div className="p-3.5 rounded-xl bg-black/70 border border-orange-500/30 space-y-2">
+                <span className="text-xs font-black uppercase tracking-wider text-orange-300 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-orange-400" />
+                  In Sintesi Definitiva:
+                </span>
+                <ul className="list-disc list-inside text-xs leading-relaxed text-gray-200 space-y-1 pl-1 font-medium">
+                  <li>Hai l'energia piena per muoverti e spingere forte in palestra (perché le proteine diventano carburante).</li>
+                  <li>Il metabolismo lavora a pieno ritmo e consuma calorie extra solo per fare questa conversione chimica.</li>
+                  <li>I muscoli restano blindati al 100% e il corpo è costretto a prelevare tutto il resto dell'energia direttamente dalle tue riserve di grasso!</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 12: 6# INFORMAZIONI - I GRASSI, LA CARNE,              */}
+      {/* DIGESTIONE, ASSORBIMENTO E METABOLISMO NELLE 24 ORE           */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'grassi_scienza') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">
+                <Droplet className="w-4 h-4 text-yellow-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-yellow-400">
+                  Pilastro 12 • 6# Informazioni: I Grassi & la Carne
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  🧈 6# Info: I Grassi Alimentari, Digestione, Lipolisi & Notte
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-yellow-500/15 text-yellow-300 border border-yellow-500/30">
+              Lipidi & Fisiologia
+            </span>
+          </div>
+
+          <p className="text-xs text-gray-300 leading-relaxed font-medium pl-1">
+            I grassi che mangiamo <strong>non si trasformano automaticamente in grasso corporeo</strong>. Il corpo non prende la fetta di lardo, la carne o il filo d'olio e lo &quot;incolla&quot; subito sui fianchi o sull'addome. Vediamo il percorso scientifico completo, senza ripetizioni, da quando entra nella bocca a come viene utilizzato o stoccato nelle 24 ore:
+          </p>
+
+          <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-yellow-500/30 space-y-4 shadow-[0_0_20px_rgba(234,179,8,0.1)]">
+            {/* 1. Che Cosa Sono i Grassi? (Biochimica di Base) */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  1. Che Cosa Sono i Grassi? (Biochimica Base)
+                </h3>
+              </div>
+
+              <div className="space-y-2 text-xs text-gray-300 leading-relaxed">
+                <p>
+                  Scientificamente, i grassi che mangiamo si chiamano <strong>lipidi</strong>, e oltre il <strong>95%</strong> di essi si trova sotto forma di <strong>trigliceridi</strong>:
+                </p>
+                <div className="p-3 rounded-xl bg-black/50 border border-yellow-500/20 text-xs text-yellow-200 leading-relaxed space-y-1">
+                  <strong className="text-white block font-bold">Struttura a forma di &quot;E&quot;:</strong>
+                  <div>• <strong>1 molecola di glicerolo</strong>: fa da spina dorsale verticale.</div>
+                  <div>• <strong>3 catene di acidi grassi</strong>: attaccate orizzontalmente come i tre bracci della lettera E.</div>
+                </div>
+              </div>
+
+              {/* Differenza Carne vs Olio d'Oliva */}
+              <div className="space-y-2 pt-1">
+                <span className="text-xs font-black uppercase tracking-wider text-yellow-400 block">
+                  I Grassi della Carne vs Olio d'Oliva: Perché Uno è Solido e l'Altro è Liquido?
+                </span>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  I grassi della carne (e di origine animale in genere) sono composti prevalentemente da <strong>acidi grassi saturi</strong>, insieme a una quota di monoinsaturi e piccoli quantitativi fisiologici di colesterolo:
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-[11px]">
+                  {/* Grassi Carne */}
+                  <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1.5">
+                    <strong className="text-amber-300 block font-bold flex items-center gap-1.5">
+                      🥩 Grasso della Carne (Solido a Temperatura Ambiente):
+                    </strong>
+                    <p className="text-gray-300 leading-relaxed">
+                      Le catene degli acidi grassi saturi sono chimicamente <strong>&quot;dritte&quot; e rigide</strong> (prive di doppi legami). Possono impacchettarsi in modo molto stretto e compatto tra loro: è questo legame serrato che rende il grasso visibile della bistecca o il burro solido e consistente.
+                    </p>
+                  </div>
+
+                  {/* Olio d'Oliva */}
+                  <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1.5">
+                    <strong className="text-emerald-300 block font-bold flex items-center gap-1.5">
+                      🫒 Olio d'Oliva (Liquido a Temperatura Ambiente):
+                    </strong>
+                    <p className="text-gray-300 leading-relaxed">
+                      Contiene prevalentemente <strong>acidi grassi monoinsaturi</strong> (acido oleico). La presenza di un doppio legame di carbonio crea una &quot;piega&quot; o gomito nella molecola: questa curvatura impedisce alle molecole di impacchettarsi strettamente, lasciando l'olio fluido e scorrevole.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Cosa Succede Quando li Mangiamo? (Digestione e Assorbimento) */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  2. Cosa Succede Quando li Mangiamo? (Digestione e Assorbimento)
+                </h3>
+              </div>
+
+              <div className="space-y-2.5 text-xs text-gray-300 leading-relaxed">
+                {/* Bocca & Stomaco */}
+                <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                  <strong className="text-white block text-xs">A) Bocca e Stomaco (Fase Preparatoria):</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Qui avviene solo una prima triturazione meccanica con la masticazione e una minima azione di enzimi preliminari (lipasi linguale e gastrica). I grassi restano quasi intatti fino all'intestino.
+                  </p>
+                </div>
+
+                {/* Intestino Tenue */}
+                <div className="p-3.5 rounded-xl bg-gradient-to-r from-yellow-950/30 to-black/60 border border-yellow-500/20 space-y-2">
+                  <strong className="text-yellow-300 block text-xs font-bold">
+                    B) Intestino Tenue (Il Cuore della Digestione - La Bile come &quot;Detersivo&quot;):
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Il grasso non si scioglie in acqua (e quindi neanche nei succhi gastrici). Per questo interviene la <strong>bile</strong> (prodotta dal fegato e rilasciata dalla cistifellea), che agisce esattamente come un detersivo per i piatti: <strong>emulsiona</strong> le grandi gocce di grasso, spaccandole in miliardi di microscopiche goccioline (micelle).
+                  </p>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    A questo punto, la <strong>lipasi pancreatica</strong> può finalmente attaccarle e &quot;smontare&quot; i trigliceridi nei loro singoli pezzi: <em>acidi grassi liberi</em> e <em>monogliceridi</em>.
+                  </p>
+                </div>
+
+                {/* Assorbimento e Chilomicroni */}
+                <div className="p-3.5 rounded-xl bg-gradient-to-r from-cyan-950/30 to-black/60 border border-cyan-500/20 space-y-2">
+                  <strong className="text-cyan-300 block text-xs font-bold">
+                    C) Assorbimento e la &quot;Via Speciale&quot; (Sistema Linfatico & Chilomicroni):
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Le cellule intestinali (enterociti) assorbono questi componenti e li <strong>riassemblano subito in trigliceridi</strong>.
+                  </p>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Li impacchettano poi all'interno di speciali &quot;navette di trasporto&quot; chiamate <strong>chilomicroni</strong> (lipoproteine con una superficie compatibile con l'acqua).
+                  </p>
+                  <div className="p-2.5 rounded-lg bg-black/60 border border-cyan-500/30 text-[11px] text-cyan-200">
+                    <strong>La differenza fondamentale rispetto a zuccheri e proteine:</strong> Mentre zuccheri e amminoacidi entrano direttamente nella vena porta andando subito al fegato, i chilomicroni <strong>entrano nel sistema linfatico</strong> (dotto toracico) e vengono immessi direttamente nella circolazione sanguigna generale!
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Il Destino nel Corpo: Chi Decide se Bruciarli o Stoccarli? */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-3">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  3. Il Destino nel Corpo: Come Viaggiano e Perché NON si Incollano all'Addome
+                </h3>
+              </div>
+
+              <div className="space-y-2.5 text-xs text-gray-300 leading-relaxed">
+                <p>
+                  Mentre i chilomicroni navigano nel flusso sanguigno, incontrano sulle pareti dei vasi sanguigni un enzima chiave: la <strong>Lipoproteina Lipasi (LPL)</strong>.
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-[11px]">
+                  <div className="p-3 rounded-xl bg-black/60 border border-emerald-500/30 space-y-1.5">
+                    <strong className="text-emerald-300 block font-bold flex items-center gap-1.5">
+                      🔥 IN DEFICIT CALORICO (La Tua Situazione con Palestra):
+                    </strong>
+                    <p className="text-gray-300 leading-relaxed">
+                      I muscoli in continuo movimento e recupero (e il cuore, che vive quasi al 100% di grassi) captano avidamente gli acidi grassi.
+                    </p>
+                    <p className="text-gray-300 leading-relaxed">
+                      Gli acidi grassi entrano nei <strong>mitocondri</strong> e vengono bruciati tramite <strong>beta-ossidazione</strong>, fornendo ATP (energia pura). Una parte viene espulsa come anidride carbonica (respiro) e acqua.
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-black/60 border border-red-500/30 space-y-1.5">
+                    <strong className="text-rose-300 block font-bold flex items-center gap-1.5">
+                      ⚖️ Il Saldo Netto delle 24 Ore:
+                    </strong>
+                    <p className="text-gray-300 leading-relaxed">
+                      Anche se durante la digestione una quota minima entra temporaneamente negli adipociti, <strong>il bilancio totale a fine giornata è negativo</strong>: il corpo estrae dalle cellule adipose molto più grasso di quello immesso con la dieta.
+                    </p>
+                    <p className="text-amber-200 font-semibold">
+                      Risultato: le riserve di grasso su viso e pancia si svuotano costantemente!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 4. Il Ruolo Vitale dei Grassi: Perché Non Vanno MAI Eliminati */}
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-yellow-950/40 via-amber-950/30 to-black/80 border-2 border-yellow-500/40 space-y-3">
+              <div className="border-b border-white/10 pb-2 flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Droplet className="w-4 h-4 text-yellow-400" />
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    4. Il Ruolo Biologico Vitale dei Grassi (Non Eliminarli Mai!)
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-yellow-500/20 text-yellow-300 text-[10px] font-bold border border-yellow-500/30">
+                  Salute & Ormoni
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-yellow-300 block text-xs font-bold">1. Ormoni & Testosterone:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Il colesterolo e i grassi sono i mattoni indispensabili per sintetizzare testosterone e ormoni steroidei, che regolano forza muscolare ed energia.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-amber-300 block text-xs font-bold">2. Vitamine Liposolubili:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Le vitamine <strong>A, D, E, K</strong> possono essere assorbite e trasportate nell'organismo unicamente in presenza di grassi alimentari.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-emerald-300 block text-xs font-bold">3. Membrane & Cervello:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    La parete di ogni cellula e il 60% del peso secco del cervello sono fatti di fosfolipidi e acidi grassi sani.
+                  </p>
+                </div>
+              </div>
+
+              {/* Box di Chiusura */}
+              <div className="p-3.5 rounded-xl bg-black/70 border border-yellow-500/30 space-y-2">
+                <span className="text-xs font-black uppercase tracking-wider text-yellow-300 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
+                  Regola d'Oro Riassuntiva:
+                </span>
+                <p className="text-xs leading-relaxed text-gray-200">
+                  Non è il grasso che mangi a farti ingrassare, così come non è mangiare insalata a farti dimagrire da solo. È il <strong>totale energetico (deficit calorico)</strong> unito all'intensità in palestra che comanda dove vanno i nutrienti: con il deficit, i grassi della dieta e i grassi accumulati vengono convertiti in energia termica e movimento continuo!
                 </p>
               </div>
             </div>

@@ -22,6 +22,7 @@ import {
   Atom,
   Waves
 } from 'lucide-react';
+import { scrollToTop } from '../../utils/scrollHelper';
 
 interface CoseDaComprareRegaliViewProps {
   onBack: () => void;
@@ -30,6 +31,11 @@ interface CoseDaComprareRegaliViewProps {
 export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState<'tutti' | 'rasatura' | 'seta' | 'diffusore' | 'gomme_mewing'>('tutti');
   const [fullscreenImage, setFullscreenImage] = useState<{ url: string; title: string } | null>(null);
+
+  // Scroll solo all'apertura della nota (mount)
+  React.useEffect(() => {
+    scrollToTop();
+  }, []);
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">

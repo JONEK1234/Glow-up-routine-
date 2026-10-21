@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ArrowLeft,
   Activity,
@@ -18,15 +18,22 @@ import {
   TrendingUp,
   TrendingDown,
   Check,
-  X
+  X,
+  ChevronRight
 } from 'lucide-react';
+import { scrollToTop } from '../../utils/scrollHelper';
 
 interface DiabeteGlicemiaPalestraViewProps {
   onBack: () => void;
 }
 
 export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutta' | 'palestra' | 'notte' | 'colazione' | 'succo' | 'protocollo'>('tutta');
+  const [activeTab, setActiveTab] = useState<'tutta' | 'brucia_grassi' | 'palestra' | 'notte' | 'colazione' | 'succo' | 'protocollo'>('tutta');
+
+  // Scroll solo all'apertura della nota (mount)
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">
@@ -41,10 +48,26 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           <span>Tutte le Note</span>
         </button>
 
-        <span className="text-[11px] font-bold text-rose-300 bg-rose-500/10 px-3 py-1 rounded-xl border border-rose-500/20 flex items-center gap-1.5">
-          <Activity className="w-3.5 h-3.5 text-rose-400" />
-          Nota Medica & Glicemia
-        </span>
+        <div className="flex items-center space-x-2">
+          {/* Tasto Diretto per la Seconda Nota: Brucia-Grassi */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'brucia_grassi' ? 'tutta' : 'brucia_grassi')}
+            className={`flex items-center space-x-1.5 py-1.5 px-2.5 rounded-xl text-xs font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'brucia_grassi'
+                ? 'bg-gradient-to-r from-amber-400 to-orange-400 text-black border-amber-300 shadow-neon'
+                : 'bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border-amber-500/30'
+            }`}
+          >
+            <Zap className="w-3.5 h-3.5" />
+            <span>{activeTab === 'brucia_grassi' ? 'Chiudi' : 'Nota 2: Brucia-Grassi'}</span>
+          </button>
+
+          <span className="hidden sm:inline-flex text-[11px] font-bold text-rose-300 bg-rose-500/10 px-3 py-1 rounded-xl border border-rose-500/20 items-center gap-1.5">
+            <Activity className="w-3.5 h-3.5 text-rose-400" />
+            Nota Medica
+          </span>
+        </div>
       </div>
 
       {/* Hero Header Card */}
@@ -65,6 +88,49 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           Analisi completa e scientifica su cosa accade nel corpo dopo la palestra serale: assorbimento del glicogeno, effetto "spugna" per 12-24 ore, distinzione tra Fenomeno dell'Alba ed Effetto Somogyi (il crollo notturno con rimbalzo a 120 e 180), l'errore del succo di frutta e le colazioni strategiche per stabilizzare i livelli.
         </p>
 
+        {/* Tasto Card Prominente per la Seconda Nota Richiesta */}
+        <div className="pt-1">
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'brucia_grassi' ? 'tutta' : 'brucia_grassi')}
+            className={`w-full p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+              activeTab === 'brucia_grassi'
+                ? 'bg-gradient-to-r from-amber-950/90 via-orange-950/70 to-black/90 border-amber-400 shadow-neon ring-2 ring-amber-400/30'
+                : 'bg-gradient-to-r from-amber-950/40 via-orange-950/30 to-black/70 border-amber-500/40 hover:border-amber-400'
+            }`}
+          >
+            <div className="flex items-center space-x-3">
+              <div className="p-2.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30 group-hover:scale-105 transition-transform shrink-0">
+                <Zap className="w-5 h-5 text-amber-400" />
+              </div>
+              <div>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block">
+                    {activeTab === 'brucia_grassi' ? '✓ Sezione Attiva' : '★ Seconda Nota Aggiunta'}
+                  </span>
+                  <span className="text-[9px] px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 font-extrabold border border-amber-500/40">
+                    Valori 80–90 mg/dL & Bustine di Zucchero
+                  </span>
+                </div>
+                <h4 className="text-xs sm:text-sm font-black text-white group-hover:text-amber-200 transition-colors mt-0.5">
+                  📝 Glicemia, Palestra e Brucia-Grassi
+                </h4>
+                <p className="text-[10px] text-gray-300">
+                  Effetto spugna, lipolisi attiva e perché correggere con 1-2 bustine di zucchero non blocca il dimagrimento
+                </p>
+              </div>
+            </div>
+            <div className={`flex items-center space-x-1 text-xs font-black px-3 py-1.5 rounded-xl shrink-0 transition-all ${
+              activeTab === 'brucia_grassi'
+                ? 'bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500/30'
+                : 'bg-gradient-to-r from-amber-400 to-orange-400 text-black shadow-neon'
+            }`}>
+              <span>{activeTab === 'brucia_grassi' ? 'Chiudi' : 'Leggi Nota 2'}</span>
+              {activeTab === 'brucia_grassi' ? <X className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
+            </div>
+          </button>
+        </div>
+
         {/* Tab Filters */}
         <div className="pt-2 flex flex-wrap items-center gap-2 border-t border-white/10">
           <button
@@ -76,8 +142,23 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
                 : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
             }`}
           >
-            Tutta la Nota
+            Tutta la Guida
           </button>
+
+          {/* TAB SECONDA NOTA: BRUCIA-GRASSI */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'brucia_grassi' ? 'tutta' : 'brucia_grassi')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'brucia_grassi'
+                ? 'bg-gradient-to-r from-amber-400 to-orange-400 text-black shadow-neon font-black ring-2 ring-amber-300'
+                : 'bg-amber-500/20 text-amber-300 hover:text-white border border-amber-500/40'
+            }`}
+          >
+            <Zap className="w-3.5 h-3.5 text-amber-400" />
+            <span>Nota 2: Brucia-Grassi (80-90)</span>
+          </button>
+
           <button
             type="button"
             onClick={() => setActiveTab('palestra')}
@@ -140,6 +221,154 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           </button>
         </div>
       </div>
+
+      {/* ============================================================= */}
+      {/* SECONDA NOTA: GLICEMIA, PALESTRA E BRUCIA-GRASSI               */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutta' || activeTab === 'brucia_grassi') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                <Zap className="w-4 h-4 text-amber-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
+                  Seconda Nota Specifica • Metabolismo Post-Workout
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  📝 Glicemia, Palestra e Brucia-Grassi
+                </h2>
+              </div>
+            </div>
+            {activeTab === 'brucia_grassi' ? (
+              <button
+                type="button"
+                onClick={() => setActiveTab('tutta')}
+                className="flex items-center space-x-1 py-1 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all active:scale-95 cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Torna alla Guida Completa</span>
+              </button>
+            ) : (
+              <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                Nuova Aggiunta
+              </span>
+            )}
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-amber-400/50 space-y-4 bg-gradient-to-br from-amber-950/30 via-black/85 to-orange-950/30 shadow-[0_0_30px_rgba(245,158,11,0.2)]">
+            {/* Box 1: Cosa succede dopo la palestra (Valori 80–90 mg/dL) */}
+            <div className="p-4 rounded-2xl bg-black/70 border border-amber-500/30 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <span className="w-6 h-6 rounded-xl bg-amber-400 text-black flex items-center justify-center font-black text-xs">
+                    1
+                  </span>
+                  <h3 className="text-sm font-black text-white">
+                    Cosa succede dopo la palestra (Valori 80–90 mg/dL)
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold border border-emerald-500/30">
+                  Segno Ottimale
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                <div className="p-3 rounded-xl bg-white/5 border border-white/10 space-y-1">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-cyan-300">
+                    <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                    Effetto Spugna (12–24h)
+                  </div>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Per <strong>12–24 ore dopo l'allenamento</strong>, i muscoli assorbono il glucosio dal sangue per ricaricare le riserve di glicogeno.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/30 space-y-1">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-300">
+                    <Flame className="w-3.5 h-3.5 text-emerald-400" />
+                    Stato Brucia-Grassi (Lipolisi)
+                  </div>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Vedere la glicemia attorno a <strong>80–90 mg/dL dopo l'attività fisica è un ottimo segno</strong>: indica che il corpo ha esaurito lo zucchero in eccesso e sta attingendo al tessuto adiposo (lipolisi) per produrre energia.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Box 2: Correggere con 1–2 bustine di zucchero */}
+            <div className="p-4 rounded-2xl bg-black/70 border border-amber-500/30 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <span className="w-6 h-6 rounded-xl bg-orange-400 text-black flex items-center justify-center font-black text-xs">
+                    2
+                  </span>
+                  <h3 className="text-sm font-black text-white">
+                    Correggere con 1–2 bustine di zucchero
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold border border-amber-500/30">
+                  Sicurezza Glicemica
+                </span>
+              </div>
+
+              <div className="space-y-2 text-xs">
+                <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <h5 className="font-bold text-white text-xs">Non blocca il dimagrimento</h5>
+                    <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
+                      Prendere <strong>5–10 grammi di zucchero</strong> quando la glicemia scende <strong>non annulla la perdita di grasso né ti fa ingrassare</strong>.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-2.5">
+                  <Zap className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                  <div>
+                    <h5 className="font-bold text-white text-xs">Destinazione immediata</h5>
+                    <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
+                      Quel poco zucchero entra nei muscoli "asciutti" per proteggerti dall'ipoglicemia.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-2.5">
+                  <Flame className="w-4 h-4 text-orange-400 shrink-0 mt-0.5" />
+                  <div>
+                    <h5 className="font-bold text-white text-xs">Bilancio calorico</h5>
+                    <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
+                      La perdita di grasso dipende dal <strong>deficit calorico complessivo della giornata</strong>, non dalle poche calorie usate per la sicurezza della glicemia.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Hint pratico */}
+            <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-start gap-2 text-xs text-amber-200">
+              <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+              <p className="text-[11px] leading-relaxed">
+                <strong>Regola Pratica:</strong> Se la glicemia cala verso o sotto gli 80 mg/dL e senti calo di forze, assumere 1–2 bustine di zucchero è la scelta corretta per la tua incolumità e protegge la massa magra muscolare senza compromettere la lipolisi e la definizione corporea.
+              </p>
+            </div>
+
+            {activeTab === 'brucia_grassi' && (
+              <div className="pt-2 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('tutta')}
+                  className="w-full sm:w-auto py-3 px-6 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-300 hover:to-orange-300 text-black font-black text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-neon flex items-center justify-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Torna alla Guida Completa</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* ============================================================= */}
       {/* SEZIONE 1: COSA ACCADE CON LA PALESTRA LA SERA                 */}

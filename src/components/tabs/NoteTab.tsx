@@ -45,6 +45,7 @@ import { CoseDaComprareRegaliView } from './CoseDaComprareRegaliView';
 import { MasticazioneMasseteriView } from './MasticazioneMasseteriView';
 import { CapelliTextureFormaPiegaLisciaView } from './CapelliTextureFormaPiegaLisciaView';
 import { DiabeteGlicemiaPalestraView } from './DiabeteGlicemiaPalestraView';
+import { scrollToTop } from '../../utils/scrollHelper';
 
 const FACE_PHOTOS = [
   {
@@ -103,6 +104,17 @@ export const NoteTab: React.FC = () => {
   const [swipeOffset, setSwipeOffset] = useState<number>(0);
   const [isSwiping, setIsSwiping] = useState<boolean>(false);
   const [isOrtodonziaExpanded, setIsOrtodonziaExpanded] = useState(false);
+
+  // Helper unificato per cambiare vista resettando istantaneamente lo scroll in cima
+  const handleOpenView = (view: typeof activeView) => {
+    scrollToTop();
+    setActiveView(view);
+  };
+
+  // Scroll sempre all'inizio (in cima) quando si apre o si cambia qualsiasi nota
+  useEffect(() => {
+    scrollToTop();
+  }, [activeView]);
 
   // Quick swap handler for overlay comparison
   const handleToggleFace = () => {
@@ -355,63 +367,63 @@ export const NoteTab: React.FC = () => {
   // VIEW: MENTO, POSTURA E OCCHI (RICHIESTA SPECIFICA UTENTE)
   // -------------------------------------------------------------
   if (activeView === 'postura_occhi') {
-    return <MentoPosturaOcchiView onBack={() => setActiveView('list')} />;
+    return <MentoPosturaOcchiView onBack={() => handleOpenView('list')} />;
   }
 
   // -------------------------------------------------------------
   // VIEW: SONNO E POSIZIONI (RICHIESTA SPECIFICA UTENTE)
   // -------------------------------------------------------------
   if (activeView === 'sonno_posizioni') {
-    return <SonnoPosizioniView onBack={() => setActiveView('list')} />;
+    return <SonnoPosizioniView onBack={() => handleOpenView('list')} />;
   }
 
   // -------------------------------------------------------------
   // VIEW: PELI INCARNITI VISO (RICHIESTA SPECIFICA UTENTE)
   // -------------------------------------------------------------
   if (activeView === 'peli_incarniti') {
-    return <PeliIncarnitiVisoView onBack={() => setActiveView('list')} />;
+    return <PeliIncarnitiVisoView onBack={() => handleOpenView('list')} />;
   }
 
   // -------------------------------------------------------------
   // VIEW: GIORNI DI SHAMPOO E GIORNI TEXTURE (RICHIESTA SPECIFICA UTENTE)
   // -------------------------------------------------------------
   if (activeView === 'shampoo_texture') {
-    return <GiorniShampooTextureView onBack={() => setActiveView('list')} />;
+    return <GiorniShampooTextureView onBack={() => handleOpenView('list')} />;
   }
 
   // -------------------------------------------------------------
   // VIEW: PALESTRA E ORGANIZZAZIONE PER PERDERE GRASSO
   // -------------------------------------------------------------
   if (activeView === 'palestra_grasso') {
-    return <PalestraPerditaGrassoView onBack={() => setActiveView('list')} />;
+    return <PalestraPerditaGrassoView onBack={() => handleOpenView('list')} />;
   }
 
   // -------------------------------------------------------------
   // VIEW: COSE DA COMPRARE (I MIEI REGALI DI NATALE)
   // -------------------------------------------------------------
   if (activeView === 'regali_natale') {
-    return <CoseDaComprareRegaliView onBack={() => setActiveView('list')} />;
+    return <CoseDaComprareRegaliView onBack={() => handleOpenView('list')} />;
   }
 
   // -------------------------------------------------------------
   // VIEW: CAPELLI TEXTURE FORMA PIEGA LISCIA
   // -------------------------------------------------------------
   if (activeView === 'capelli_texture') {
-    return <CapelliTextureFormaPiegaLisciaView onBack={() => setActiveView('list')} />;
+    return <CapelliTextureFormaPiegaLisciaView onBack={() => handleOpenView('list')} />;
   }
 
   // -------------------------------------------------------------
   // VIEW: DIABETE GLICEMIA PALESTRA
   // -------------------------------------------------------------
   if (activeView === 'diabete_glicemia') {
-    return <DiabeteGlicemiaPalestraView onBack={() => setActiveView('list')} />;
+    return <DiabeteGlicemiaPalestraView onBack={() => handleOpenView('list')} />;
   }
 
   // -------------------------------------------------------------
   // VIEW: INFORMAZIONI MASTICAZIONE & MASSETERI (SEZIONE DEDICATA)
   // -------------------------------------------------------------
   if (activeView === 'asimmetria_masticazione') {
-    return <MasticazioneMasseteriView onBack={() => setActiveView('asimmetria')} />;
+    return <MasticazioneMasseteriView onBack={() => handleOpenView('asimmetria')} />;
   }
 
   // -------------------------------------------------------------
@@ -426,7 +438,7 @@ export const NoteTab: React.FC = () => {
         <div className="flex items-center justify-between sticky top-0 z-30 bg-[#0B0F17]/90 backdrop-blur-md py-2 -mx-4 px-4 border-b border-white/10">
           <button
             type="button"
-            onClick={() => setActiveView('list')}
+            onClick={() => handleOpenView('list')}
             className="flex items-center space-x-1.5 py-2 px-3 rounded-2xl bg-white/5 hover:bg-white/10 text-cyan-300 border border-white/10 text-xs font-bold uppercase tracking-wider transition-all active:scale-95 cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -436,7 +448,7 @@ export const NoteTab: React.FC = () => {
           <div className="flex items-center space-x-2">
             <button
               type="button"
-              onClick={() => setActiveView('asimmetria_masticazione')}
+              onClick={() => handleOpenView('asimmetria_masticazione')}
               className="flex items-center space-x-1.5 py-1.5 px-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/40 text-xs font-extrabold shadow-[0_0_15px_rgba(245,158,11,0.25)] transition-all cursor-pointer active:scale-95"
             >
               <Info className="w-4 h-4 text-amber-400" />
@@ -469,7 +481,7 @@ export const NoteTab: React.FC = () => {
 
         {/* Banner Link a Nuova Sezione Masticazione */}
         <div
-          onClick={() => setActiveView('asimmetria_masticazione')}
+          onClick={() => handleOpenView('asimmetria_masticazione')}
           className="p-4 rounded-3xl bg-gradient-to-r from-amber-500/15 via-black/80 to-purple-500/15 border-2 border-amber-500/40 hover:border-amber-400 cursor-pointer transition-all flex items-center justify-between group shadow-sm hover:shadow-[0_0_20px_rgba(245,158,11,0.2)]"
         >
           <div className="flex items-center space-x-3">
@@ -1575,7 +1587,7 @@ export const NoteTab: React.FC = () => {
         </span>
 
         <div
-          onClick={() => setActiveView('asimmetria')}
+          onClick={() => handleOpenView('asimmetria')}
           className="p-5 rounded-3xl glass-card border-2 border-cyan-400/70 hover:border-cyan-400 bg-gradient-to-br from-cyan-500/20 via-black/85 to-purple-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
         >
           <div className="absolute -top-12 -right-12 w-32 h-32 bg-cyan-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
@@ -1622,7 +1634,7 @@ export const NoteTab: React.FC = () => {
         </span>
 
         <div
-          onClick={() => setActiveView('postura_occhi')}
+          onClick={() => handleOpenView('postura_occhi')}
           className="p-5 rounded-3xl glass-card border-2 border-amber-400/70 hover:border-amber-400 bg-gradient-to-br from-amber-500/20 via-black/85 to-cyan-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
         >
           <div className="absolute -top-12 -right-12 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
@@ -1669,7 +1681,7 @@ export const NoteTab: React.FC = () => {
         </span>
 
         <div
-          onClick={() => setActiveView('sonno_posizioni')}
+          onClick={() => handleOpenView('sonno_posizioni')}
           className="p-5 rounded-3xl glass-card border-2 border-indigo-400/70 hover:border-indigo-400 bg-gradient-to-br from-indigo-500/20 via-black/85 to-purple-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
         >
           <div className="absolute -top-12 -right-12 w-32 h-32 bg-indigo-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
@@ -1717,7 +1729,7 @@ export const NoteTab: React.FC = () => {
         </span>
 
         <div
-          onClick={() => setActiveView('peli_incarniti')}
+          onClick={() => handleOpenView('peli_incarniti')}
           className="p-5 rounded-3xl glass-card border-2 border-emerald-400/70 hover:border-emerald-400 bg-gradient-to-br from-emerald-500/20 via-black/85 to-teal-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
         >
           <div className="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
@@ -1765,7 +1777,7 @@ export const NoteTab: React.FC = () => {
         </span>
 
         <div
-          onClick={() => setActiveView('shampoo_texture')}
+          onClick={() => handleOpenView('shampoo_texture')}
           className="p-5 rounded-3xl glass-card border-2 border-cyan-400/70 hover:border-cyan-400 bg-gradient-to-br from-cyan-500/20 via-black/85 to-blue-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
         >
           <div className="absolute -top-12 -right-12 w-32 h-32 bg-cyan-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
@@ -1813,7 +1825,7 @@ export const NoteTab: React.FC = () => {
         </span>
 
         <div
-          onClick={() => setActiveView('palestra_grasso')}
+          onClick={() => handleOpenView('palestra_grasso')}
           className="p-5 rounded-3xl glass-card border-2 border-orange-500/70 hover:border-orange-400 bg-gradient-to-br from-orange-500/20 via-black/85 to-amber-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
         >
           <div className="absolute -top-12 -right-12 w-32 h-32 bg-orange-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
@@ -1825,7 +1837,7 @@ export const NoteTab: React.FC = () => {
                   <Dumbbell className="w-3 h-3 text-orange-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">Guida Completa 5 Pilastri</span>
+                <span className="text-[10px] text-gray-400 font-semibold">Guida Completa 12 Pilastri + 6# Info (con 5# Parti 1 & 2 affiancate)</span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-orange-300 transition-colors uppercase tracking-tight">
@@ -1833,7 +1845,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Tecnica dei pesi e buffer (3x12), deficit calorico naturale senza fame, protezione assoluta della massa magra, scaletta pratica della sessione passo-passo e gestione di proteine, carboidrati e glicemia.
+                Tecnica dei pesi e buffer, deficit senza fame, Quadro Completo, turnover 1g/kg, proteine in eccesso, gluconeogenesi nel fegato e biochimica dei grassi (carne, olio, digestione e notte 24h).
               </p>
             </div>
 
@@ -1847,7 +1859,7 @@ export const NoteTab: React.FC = () => {
               <span>Tocca per aprire la guida su palestra e dimagrimento</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">Pesi + Deficit + Protezione Muscoli</span>
+            <span className="text-[10px] text-gray-400 font-semibold">Pesi + Deficit + 1g/kg + Gluconeogenesi + Grassi</span>
           </div>
         </div>
       </div>
@@ -1861,7 +1873,7 @@ export const NoteTab: React.FC = () => {
         </span>
 
         <div
-          onClick={() => setActiveView('regali_natale')}
+          onClick={() => handleOpenView('regali_natale')}
           className="p-5 rounded-3xl glass-card border-2 border-emerald-500/70 hover:border-emerald-400 bg-gradient-to-br from-emerald-500/20 via-black/85 to-teal-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
         >
           <div className="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
@@ -1909,7 +1921,7 @@ export const NoteTab: React.FC = () => {
         </span>
 
         <div
-          onClick={() => setActiveView('capelli_texture')}
+          onClick={() => handleOpenView('capelli_texture')}
           className="p-5 rounded-3xl glass-card border-2 border-cyan-400/70 hover:border-cyan-400 bg-gradient-to-br from-cyan-500/20 via-black/85 to-blue-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
         >
           <div className="absolute -top-12 -right-12 w-32 h-32 bg-cyan-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
@@ -1925,7 +1937,13 @@ export const NoteTab: React.FC = () => {
                   📸 Progresso N° 1 (7 Foto)
                 </span>
                 <span className="text-[10px] text-cyan-300 font-extrabold bg-cyan-500/15 px-2 py-0.5 rounded-md border border-cyan-500/30">
-                  ✨ Il primo risultato (16 Foto)
+                  ✨ Primo Risultato (16 Foto)
+                </span>
+                <span className="text-[10px] text-amber-300 font-extrabold bg-amber-500/15 px-2 py-0.5 rounded-md border border-amber-500/30">
+                  ⚡ Progressi #2 (Tutorial Spazzola)
+                </span>
+                <span className="text-[10px] text-sky-300 font-extrabold bg-sky-500/15 px-2 py-0.5 rounded-md border border-sky-500/30">
+                  🔄 Aggiornamenti #2 (Giorno Dopo)
                 </span>
               </div>
 
@@ -1934,7 +1952,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Diagnosi reale Tipo 2B con onde a "S" (non crespi), Progresso N° 1 con Protocollo di Ritocco Mattutino in 1 minuto, "Il primo risultato piega venuta bene" con bacheca 16 foto, mini-galleria con swipe e zoom ingrandito.
+                Diagnosi reale Tipo 2B, Progresso N° 1 con Ritocco in 1 min, bacheca 16 foto del Primo Risultato Piega, Progressi #2 con il tutorial Spazzola Sopra & Ciuffo Graffiato, e Aggiornamenti #2 per il reset totale del giorno dopo se la piega si è rovinata.
               </p>
             </div>
 
@@ -1945,10 +1963,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-cyan-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire nota & gallerie fotografiche</span>
+              <span>Tocca per aprire nota, gallerie & tutorial</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-cyan-300 font-bold">Progressi (7) + Primo Risultato (16)</span>
+            <span className="text-[10px] text-cyan-300 font-bold">1. Progressi (7) → 2. Risultato (16) → 3. Progressi #2 → 4. Aggiornamenti #2</span>
           </div>
         </div>
       </div>
@@ -1962,7 +1980,7 @@ export const NoteTab: React.FC = () => {
         </span>
 
         <div
-          onClick={() => setActiveView('diabete_glicemia')}
+          onClick={() => handleOpenView('diabete_glicemia')}
           className="p-5 rounded-3xl glass-card border-2 border-rose-500/70 hover:border-rose-400 bg-gradient-to-br from-rose-500/20 via-black/85 to-red-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
         >
           <div className="absolute -top-12 -right-12 w-32 h-32 bg-rose-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />

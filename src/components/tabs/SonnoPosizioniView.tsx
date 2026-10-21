@@ -19,6 +19,7 @@ import {
   Maximize2,
   X
 } from 'lucide-react';
+import { scrollToTop } from '../../utils/scrollHelper';
 
 interface SonnoPosizioniViewProps {
   onBack: () => void;
@@ -27,6 +28,11 @@ interface SonnoPosizioniViewProps {
 export const SonnoPosizioniView: React.FC<SonnoPosizioniViewProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState<'tutte' | 'schiena' | 'lato'>('tutte');
   const [fullscreenImage, setFullscreenImage] = useState<{ url: string; title: string } | null>(null);
+
+  // Scroll solo all'apertura della nota (mount)
+  React.useEffect(() => {
+    scrollToTop();
+  }, []);
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">

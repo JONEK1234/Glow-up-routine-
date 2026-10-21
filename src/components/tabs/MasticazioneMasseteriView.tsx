@@ -16,6 +16,7 @@ import {
   Check,
   Scale
 } from 'lucide-react';
+import { scrollToTop } from '../../utils/scrollHelper';
 
 interface MasticazioneMasseteriViewProps {
   onBack: () => void;
@@ -23,6 +24,11 @@ interface MasticazioneMasseteriViewProps {
 
 export const MasticazioneMasseteriView: React.FC<MasticazioneMasseteriViewProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState<'tutte' | 'tabella' | 'protocollo' | 'anatomia' | 'visivo'>('tutte');
+
+  // Scroll solo all'apertura della nota (mount)
+  React.useEffect(() => {
+    scrollToTop();
+  }, []);
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">

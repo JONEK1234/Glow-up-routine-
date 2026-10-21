@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { storageHelper } from '../../utils/storage';
 import { PostureComparisonData } from '../../types';
+import { scrollToTop } from '../../utils/scrollHelper';
 
 interface MentoPosturaOcchiViewProps {
   onBack: () => void;
@@ -160,6 +161,11 @@ export const MentoPosturaOcchiView: React.FC<MentoPosturaOcchiViewProps> = ({ on
   const [overlayActiveState, setOverlayActiveState] = useState<'normal' | 'good'>('normal');
   const [overlaySwapCount, setOverlaySwapCount] = useState<number>(0);
   const [isOverlayBlinking, setIsOverlayBlinking] = useState<boolean>(false);
+
+  // Scroll sempre all'inizio (in cima) all'apertura della nota
+  React.useEffect(() => {
+    scrollToTop();
+  }, []);
 
   const handleTogglePostureOverlay = () => {
     setOverlayActiveState(prev => (prev === 'normal' ? 'good' : 'normal'));
