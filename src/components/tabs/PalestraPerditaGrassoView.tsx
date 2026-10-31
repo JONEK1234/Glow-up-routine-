@@ -30,7 +30,7 @@ interface PalestraPerditaGrassoViewProps {
 }
 
 export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza'>('tutte');
+  const [activeTab, setActiveTab] = useState<'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra'>('tutte');
 
   // Scroll solo all'apertura della nota (mount)
   React.useEffect(() => {
@@ -236,25 +236,94 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
             </div>
           </div>
 
-          {/* 6# Informazioni: Grassi Alimentari, Digestione & Metabolismo 24h */}
+          {/* Box Unificato per 6# Info: I Grassi (Parte 1 & Parte 2 Affiancati) */}
+          <div className="col-span-1 sm:col-span-2 p-2 rounded-2xl bg-gradient-to-r from-yellow-950/30 via-amber-950/20 to-black/60 border border-yellow-500/30 space-y-2">
+            <div className="flex items-center justify-between px-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-yellow-400 flex items-center gap-1.5">
+                <Droplet className="w-3 h-3 text-yellow-400" />
+                6# Info • I Grassi (Diviso in 2 Parti Collegate)
+              </span>
+              <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest bg-white/5 px-2 py-0.5 rounded-md">
+                1 & 2 Affiancati
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {/* 6# Parte 1 (Sinistra) */}
+              <div
+                onClick={() => setActiveTab('grassi_scienza')}
+                className={`p-2.5 rounded-xl border transition-all cursor-pointer group flex items-center justify-between ${
+                  activeTab === 'grassi_scienza'
+                    ? 'bg-yellow-500/20 border-yellow-400 shadow-md shadow-yellow-500/20'
+                    : 'bg-black/60 border-yellow-500/30 hover:border-yellow-400'
+                }`}
+              >
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 group-hover:bg-yellow-500 group-hover:text-black transition-all shrink-0">
+                    <Droplet className="w-3.5 h-3.5 text-yellow-400 group-hover:text-black" />
+                  </span>
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-wider text-yellow-400 flex items-center gap-1">
+                      Parte 1 (Sinistra)
+                    </span>
+                    <h3 className="text-xs font-extrabold text-white group-hover:text-yellow-200 transition-colors line-clamp-1">
+                      Digestione, Carne & Notte 24h
+                    </h3>
+                  </div>
+                </div>
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 group-hover:bg-yellow-500 group-hover:text-black transition-all shrink-0">
+                  Apri ➔
+                </span>
+              </div>
+
+              {/* 6# Parte 2 (Destra) */}
+              <div
+                onClick={() => setActiveTab('grassi_scienza_2')}
+                className={`p-2.5 rounded-xl border transition-all cursor-pointer group flex items-center justify-between ${
+                  activeTab === 'grassi_scienza_2'
+                    ? 'bg-amber-500/20 border-amber-400 shadow-md shadow-amber-500/20'
+                    : 'bg-black/60 border-amber-500/40 hover:border-amber-400'
+                }`}
+              >
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 group-hover:bg-amber-500 group-hover:text-black transition-all shrink-0">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400 group-hover:text-black" />
+                  </span>
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1">
+                      Parte 2 (Destra)
+                    </span>
+                    <h3 className="text-xs font-extrabold text-white group-hover:text-amber-200 transition-colors line-clamp-1">
+                      Grassi Dieta vs Grasso Corpo (Mito)
+                    </h3>
+                  </div>
+                </div>
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 group-hover:bg-amber-500 group-hover:text-black transition-all shrink-0">
+                  Apri ➔
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* 7# Informazioni: Zucchero in Palestra & Calorie (Stabilità 120-130) */}
           <div
-            onClick={() => setActiveTab('grassi_scienza')}
-            className="p-3 rounded-2xl bg-gradient-to-r from-yellow-950/50 via-amber-950/40 to-black/70 border border-yellow-500/40 hover:border-yellow-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-yellow-500/20 sm:col-span-2 lg:col-span-1"
+            onClick={() => setActiveTab('bustine_palestra')}
+            className="p-3 rounded-2xl bg-gradient-to-r from-emerald-950/50 via-teal-950/40 to-black/70 border border-emerald-500/40 hover:border-emerald-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-emerald-500/20 col-span-1 sm:col-span-2 lg:col-span-1"
           >
             <div className="flex items-center space-x-2.5">
-              <span className="p-2 rounded-xl bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 group-hover:bg-yellow-500 group-hover:text-black transition-all shrink-0">
-                <Droplet className="w-4 h-4 text-yellow-400" />
+              <span className="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 group-hover:bg-emerald-500 group-hover:text-black transition-all shrink-0">
+                <Zap className="w-4 h-4 text-emerald-400" />
               </span>
               <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-yellow-400 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" /> 6# Info: I Grassi
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" /> 7# Info: Zucchero Palestra
                 </span>
-                <h3 className="text-xs font-extrabold text-white group-hover:text-yellow-200 transition-colors line-clamp-1">
-                  I Grassi, la Carne, Digestione & Notte 24h
+                <h3 className="text-xs font-extrabold text-white group-hover:text-emerald-200 transition-colors line-clamp-1">
+                  I Conti delle Bustine, Calorie & Stabilità 120-130 mg/dL
                 </h3>
               </div>
             </div>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 group-hover:bg-yellow-500 group-hover:text-black transition-all shrink-0">
+            <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 group-hover:bg-emerald-500 group-hover:text-black transition-all shrink-0">
               Apri ➔
             </span>
           </div>
@@ -411,18 +480,47 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
             </button>
           </div>
 
-          {/* 12. 6# Info: I Grassi Alimentari & Metabolismo 24h */}
+          {/* Tasti 6# Parte 1 e Parte 2 - Inseparabili, Uniti e Affiancati Sinistra/Destra */}
+          <div className="inline-flex items-center gap-1 p-1 rounded-2xl bg-gradient-to-r from-yellow-950/40 to-amber-950/40 border border-yellow-500/40 shadow-sm shrink-0">
+            <button
+              type="button"
+              onClick={() => setActiveTab('grassi_scienza')}
+              className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                activeTab === 'grassi_scienza'
+                  ? 'bg-yellow-500 text-black shadow-md shadow-yellow-500/30 font-extrabold'
+                  : 'bg-yellow-500/20 text-yellow-300 hover:text-white border border-yellow-500/30'
+              }`}
+            >
+              <Droplet className="w-3 h-3 text-yellow-400" />
+              <span>12. 6# Parte 1 (Sx)</span>
+            </button>
+            <span className="text-gray-500 font-bold text-xs">/</span>
+            <button
+              type="button"
+              onClick={() => setActiveTab('grassi_scienza_2')}
+              className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                activeTab === 'grassi_scienza_2'
+                  ? 'bg-amber-500 text-black shadow-md shadow-amber-500/30 font-extrabold'
+                  : 'bg-amber-500/20 text-amber-300 hover:text-white border border-amber-500/30'
+              }`}
+            >
+              <Sparkles className="w-3 h-3 text-amber-400" />
+              <span>13. 6# Parte 2 (Dx)</span>
+            </button>
+          </div>
+
+          {/* 14. 7# Info: Zucchero in Palestra, Calorie & Stabilità 120-130 mg/dL */}
           <button
             type="button"
-            onClick={() => setActiveTab('grassi_scienza')}
+            onClick={() => setActiveTab('bustine_palestra')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-              activeTab === 'grassi_scienza'
-                ? 'bg-yellow-500 text-black shadow-md shadow-yellow-500/30 font-extrabold'
-                : 'bg-yellow-500/10 text-yellow-300 hover:text-white border border-yellow-500/30'
+              activeTab === 'bustine_palestra'
+                ? 'bg-emerald-400 text-black shadow-md shadow-emerald-500/30 font-extrabold'
+                : 'bg-emerald-500/10 text-emerald-300 hover:text-white border border-emerald-500/30'
             }`}
           >
-            <Droplet className="w-3.5 h-3.5 text-yellow-400" />
-            12. 6# Info: Grassi & Carne
+            <Zap className="w-3.5 h-3.5 text-emerald-400" />
+            14. 7# Info: Bustine & 120-130
           </button>
         </div>
       </div>
@@ -2154,7 +2252,257 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
         </div>
       )}
 
-      {/* Bottom Back Button */}
+      {/* ============================================================= */}
+      {/* SEZIONE 12 (PARTE 2): 6# INFORMAZIONI (PARTE 2) - GRASSI       */}
+      {/* ALIMENTARI VS GRASSO CORPOREO (IL FALSO MITO DEL MANGIARE GRASSO)*/}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'grassi_scienza_2') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                <Sparkles className="w-4 h-4 text-amber-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
+                  Pilastro 13 • 6# Informazioni (Parte 2 • Approfondimento Grassi)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  🧈 6# Info (Parte 2): Mangiare Grassi Fa Accumulare Grasso? Il Falso Mito
+                </h2>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              {activeTab === 'grassi_scienza_2' && (
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('grassi_scienza')}
+                  className="hidden sm:flex items-center gap-1 text-[11px] font-bold text-yellow-300 bg-yellow-500/10 px-2.5 py-1 rounded-xl border border-yellow-500/20 hover:bg-yellow-500/20 transition-all cursor-pointer"
+                >
+                  ⬅ Torna a Parte 1
+                </button>
+              )}
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                Miti Alimentari & Deficit
+              </span>
+            </div>
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-amber-500/30 space-y-4 shadow-[0_0_20px_rgba(245,158,11,0.1)]">
+            <div className="p-4 rounded-2xl bg-amber-950/30 border border-amber-500/30 space-y-2.5">
+              <span className="text-xs font-black uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                <AlertTriangle className="w-4 h-4 text-amber-400" />
+                Un Dubbio Comprensibile ma Scientificamente Falso:
+              </span>
+              <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                È un dubbio super normale e ci sta che tu lo pensi: se vuoi perdere il grasso corporeo, la tentazione automatica è pensare che <em>&quot;più grassi mangi, più grasso accumuli&quot;</em>. In realtà il corpo umano <strong>non funziona affatto così</strong>.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
+                <strong className="text-emerald-300 block text-xs font-bold flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  1. Il Deficit Calorico Comanda su Tutto:
+                </strong>
+                <p className="text-[11px] text-gray-300 leading-relaxed">
+                  Il grasso corporeo lo elimini se sei in <strong>deficit calorico</strong> (cioè se consumi più calorie di quelle che introduci), <strong>indipendentemente</strong> dal fatto che le calorie provengano dai carboidrati, dalle proteine o dai grassi.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2">
+                <strong className="text-cyan-300 block text-xs font-bold flex items-center gap-1.5">
+                  <HeartPulse className="w-3.5 h-3.5 text-cyan-400" />
+                  2. I Grassi Alimentari Sono Vitali:
+                </strong>
+                <p className="text-[11px] text-gray-300 leading-relaxed">
+                  I grassi alimentari (quelli che mangi) sono fondamentali perché servono al tuo corpo e ai tuoi ormoni per funzionare bene, specialmente alla tua età mentre cresci e ti alleni con i carichi in palestra.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-red-950/20 border border-red-500/30 text-xs space-y-1.5">
+              <strong className="text-red-300 block font-bold flex items-center gap-1.5">
+                <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
+                Cosa Succede Se Azzeri i Grassi?
+              </strong>
+              <p className="text-[11px] text-gray-300 leading-relaxed">
+                Se azzeri o tagli drasticamente i grassi, rischi solo di <strong>mandare in tilt il metabolismo</strong>, far crollare la produzione di testosterone e sentirti costantemente stanco, svuotato e debole.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-yellow-950/40 via-amber-950/30 to-black/80 border-2 border-yellow-500/40 space-y-2">
+              <span className="text-xs font-black uppercase tracking-wider text-yellow-300 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
+                La Distinzione Fisiologica Chiave:
+              </span>
+              <p className="text-xs text-white leading-relaxed font-semibold">
+                Il grasso che hai addosso (tessuto adiposo) <strong>non è quello che mangi</strong>: è semplicemente l'energia complessiva in eccesso che il corpo ha accumulato nel tempo!
+              </p>
+              <p className="text-[11px] text-gray-300 leading-relaxed">
+                Per bruciarlo basta mantenere il totale delle calorie controllato (il tuo deficit sostenibile), senza aver paura di assumere una giusta quota di grassi sani nei pasti (olio extravergine d'oliva, carne, uova).
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 13: 7# INFORMAZIONI - ZUCCHERO IN PALESTRA: CALORIE,   */}
+      {/* EFFETTO SPUGNA & STABILITÀ A 120-130 MG/DL                     */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'bustine_palestra') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                <Zap className="w-4 h-4 text-emerald-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400">
+                  Pilastro 14 • 7# Informazioni: Gestione Energetica in Palestra
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  ⚡ 7# Info: I Conti delle Bustine, Calorie & Stabilità 120-130 mg/dL
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+              Calorie & Glicogeno
+            </span>
+          </div>
+
+          <p className="text-xs text-gray-300 leading-relaxed font-medium pl-1">
+            Hai fatto benissimo a portarci l'attenzione sui numeri, perché i conti vanno fatti con precisione! Facciamo chiarezza scientifica su quante calorie contengono davvero quelle bustine, dove vanno a finire e perché stabilizzarsi a 120–130 mg/dL durante i pesi è la mossa perfetta:
+          </p>
+
+          <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-emerald-500/30 space-y-4 shadow-[0_0_20px_rgba(16,185,129,0.1)]">
+            {/* 1. I Conti Esatti delle Calorie */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2.5">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  1. I Conti Esatti delle Calorie delle Bustine
+                </h3>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <span className="text-gray-400 text-[10px] block uppercase font-bold">1 Bustina da Bar:</span>
+                  <p className="text-sm font-black text-white">~5 grammi di zucchero</p>
+                  <p className="text-[11px] text-gray-300">5g &times; 4 kcal/g = <strong>20 calorie</strong> a bustina.</p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <span className="text-gray-400 text-[10px] block uppercase font-bold">5 Bustine per Ipo Grossa:</span>
+                  <p className="text-sm font-black text-emerald-300">100 calorie totali</p>
+                  <p className="text-[11px] text-gray-300">5 bustine &times; 20 kcal = <strong>100 kcal</strong> (25g carboidrati).</p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/60 border border-emerald-500/30 space-y-1">
+                  <span className="text-emerald-400 text-[10px] block uppercase font-bold">Impatto sul Bilancio:</span>
+                  <p className="text-xs font-bold text-white">Praticamente IRRILEVANTE</p>
+                  <p className="text-[11px] text-gray-300">100 kcal equivalgono a un piccolo frutto o a un latte macchiato: <strong>non rovinano certo la dieta</strong>!</p>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Che Fine Fanno Quelle 100 Calorie? */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2.5">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  2. Che Fine Fanno Quei 25 Grammi di Carboidrati? (Destinazione Energetica)
+                </h3>
+              </div>
+              <p className="text-xs text-gray-300 leading-relaxed">
+                Vengono utilizzati o stoccati immediatamente, ma la destinazione cambia radicalmente a seconda di dove si trova il tuo corpo:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-xs">
+                <div className="p-3.5 rounded-xl bg-black/60 border border-cyan-500/30 space-y-1.5">
+                  <strong className="text-cyan-300 block text-xs font-bold flex items-center gap-1.5">
+                    🏋️ Se Hai Appena Fatto Palestra:
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    I tuoi muscoli sono come <strong>&quot;spugne vuote&quot;</strong> affamate di glicogeno. Quei 25 grammi di carboidrati entrano dritti nei muscoli e vengono <strong>bruciati o usati al 100%</strong> per ricaricare le scorte muscolari. Non fanno in tempo a diventare grasso corporeo perché i muscoli se li bevono letteralmente!
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-black/60 border border-amber-500/30 space-y-1.5">
+                  <strong className="text-amber-300 block text-xs font-bold flex items-center gap-1.5">
+                    🛋️ Se Sei a Riposo (es. Ipoglicemia sul Divano):
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Quei carboidrati servono prima di tutto a salvare il cervello dall'emergenza e a riportare a galla i livelli di glucosio. L'eventuale rimanenza viene stoccata temporaneamente nel fegato e nei muscoli come riserva di glicogeno, non come grasso.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Il Vero Problema di Troppe Bustine & La Regola d'Oro */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2.5">
+              <div className="border-b border-white/10 pb-2 flex items-center space-x-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+                <h3 className="text-sm font-extrabold text-white">
+                  3. Il Vero &quot;Problema&quot; di Prendere 5 Bustine Insieme (Le Montagne Russe)
+                </h3>
+              </div>
+              <p className="text-xs text-gray-300 leading-relaxed">
+                Il punto critico di prendere 5 bustine (25 g di zucchero puro) <strong>non sono le 100 calorie in sé</strong>, ma l'effetto sull'andamento della glicemia:
+              </p>
+              <ul className="list-disc list-inside text-[11px] text-gray-300 space-y-1.5 pl-1 leading-relaxed">
+                <li>Essendo zucchero puro al 100% (saccarosio/glucosio), entra in circolo in pochissimi minuti.</li>
+                <li>Se ne prendi troppe tutte insieme, rischi di passare dall'ipoglicemia (es. 50 mg/dL) a un picco iperglicemico (es. 200 mg/dL) nel giro di mezz'ora.</li>
+                <li>A quel punto, per abbassare il 200, ti toccherebbe fare insulina di correzione, rientrando nelle pericolose <em>montagne russe</em>.</li>
+              </ul>
+              <div className="p-3 rounded-xl bg-black/70 border border-emerald-500/30 text-xs text-emerald-200">
+                <strong>La Regola d'Oro:</strong> Prendi la quantità esatta che ti serve per tamponare l'emergenza (di solito <strong>2 o 3 bustine</strong>, cioè 10–15 grammi, bastano per tirarti su dai 50 senza spararti a 200), abbinandole a uno spuntino solido se manca molto tempo al pasto successivo!
+              </div>
+            </div>
+
+            {/* 4. Correggere Durante la Palestra e Stabilizzarsi a 120-130 mg/dL */}
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-emerald-950/40 via-teal-950/30 to-black/85 border-2 border-emerald-500/40 space-y-3">
+              <div className="border-b border-white/10 pb-2 flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Flame className="w-4 h-4 text-emerald-400" />
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    4. Correggere a Metà Allenamento: Perché Arrivare a 120–130 mg/dL è Geniale
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold border border-emerald-500/30">
+                  Strategia Vincente
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                Se prendi le tue bustine di zucchero mentre sei in mezzo agli esercizi senza volerti fermare, e la glicemia si stabilizza poi intorno a <strong>120–130 mg/dL</strong>, stai facendo una <strong>manovra estremamente intelligente e corretta</strong>:
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-emerald-300 block text-xs font-bold">1. Il Muscolo Brucia Subito:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Sotto sforzo i muscoli risucchiano glucosio continuamente per avere forza. Lo zucchero che prendi viene bruciato sul colpo: non si accumula e non manda la glicemia alle stelle.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-cyan-300 block text-xs font-bold">2. Cuscino di Sicurezza 120-130:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Hai abbastanza carburante per finire l'allenamento con la massima forza, senza il pericolo di un nuovo crollo improvviso a 50 a metà serie.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-amber-300 block text-xs font-bold">3. I Grassi Li Perdi Lo Stesso:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Quell'energia è servita solo allo sforzo immediato. Finita la palestra, grazie al deficit calorico giornaliero e al riposo notturno, il corpo continua a bruciare i grassi di riserva senza sosta!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="pt-4 text-center">
         <button
           type="button"

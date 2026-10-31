@@ -25,7 +25,8 @@ import {
   Camera,
   Maximize2,
   SlidersHorizontal,
-  Sun
+  Sun,
+  Moon
 } from 'lucide-react';
 import { scrollToTop } from '../../utils/scrollHelper';
 
@@ -42,6 +43,7 @@ export interface HairProgressPhoto {
   desc: string;
   localUrl: string;
   url: string;
+  fallbackUrl: string;
   sourceUrl: string;
 }
 
@@ -54,7 +56,8 @@ export const HAIR_PROGRESS_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Prima • Mattina',
     desc: 'Capelli scompigliati al risveglio prima del ritocco',
     localUrl: '/uploads/progressi_capelli/114616.jpg',
-    url: 'https://i.ibb.co/WWQ8jRK2/IMG-20261011-114616.jpg',
+    url: '/uploads/progressi_capelli/114616.jpg',
+    fallbackUrl: 'https://i.ibb.co/WWQ8jRK2/IMG-20261011-114616.jpg',
     sourceUrl: 'https://ibb.co/GvXYNrP5'
   },
   {
@@ -65,7 +68,8 @@ export const HAIR_PROGRESS_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Prima • Mattina',
     desc: 'Ciocche disordinate prima di inumidire e phonare',
     localUrl: '/uploads/progressi_capelli/114551.jpg',
-    url: 'https://i.ibb.co/QvsZFxkg/IMG-20261011-114551.jpg',
+    url: '/uploads/progressi_capelli/114551.jpg',
+    fallbackUrl: 'https://i.ibb.co/QvsZFxkg/IMG-20261011-114551.jpg',
     sourceUrl: 'https://ibb.co/YBv67VXC'
   },
   {
@@ -76,7 +80,8 @@ export const HAIR_PROGRESS_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Finale',
     desc: 'Volume alle radici e ciuffo orientato in diagonale',
     localUrl: '/uploads/progressi_capelli/111858.jpg',
-    url: 'https://i.ibb.co/zHWWVVmd/IMG-20261011-111858.jpg',
+    url: '/uploads/progressi_capelli/111858.jpg',
+    fallbackUrl: 'https://i.ibb.co/zHWWVVmd/IMG-20261011-111858.jpg',
     sourceUrl: 'https://ibb.co/n8qqMMwp'
   },
   {
@@ -87,7 +92,8 @@ export const HAIR_PROGRESS_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Finale',
     desc: 'Direzione destra impostata col pettine a denti larghi',
     localUrl: '/uploads/progressi_capelli/111857.jpg',
-    url: 'https://i.ibb.co/BHb9yV9k/IMG-20261011-111857.jpg',
+    url: '/uploads/progressi_capelli/111857.jpg',
+    fallbackUrl: 'https://i.ibb.co/BHb9yV9k/IMG-20261011-111857.jpg',
     sourceUrl: 'https://ibb.co/j9mSyvSt'
   },
   {
@@ -98,7 +104,8 @@ export const HAIR_PROGRESS_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Finale',
     desc: 'Ciocche separate senza effetto blocco rigido',
     localUrl: '/uploads/progressi_capelli/111900.jpg',
-    url: 'https://i.ibb.co/mCPmR8v9/IMG-20261011-111900.jpg',
+    url: '/uploads/progressi_capelli/111900.jpg',
+    fallbackUrl: 'https://i.ibb.co/mCPmR8v9/IMG-20261011-111900.jpg',
     sourceUrl: 'https://ibb.co/wN2TdsJS'
   },
   {
@@ -109,7 +116,8 @@ export const HAIR_PROGRESS_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Finale',
     desc: 'Vertice chiuso e radice sollevata con aria fredda',
     localUrl: '/uploads/progressi_capelli/114030.jpg',
-    url: 'https://i.ibb.co/SXJHkqRp/IMG-20261011-114030.jpg',
+    url: '/uploads/progressi_capelli/114030.jpg',
+    fallbackUrl: 'https://i.ibb.co/SXJHkqRp/IMG-20261011-114030.jpg',
     sourceUrl: 'https://ibb.co/C5W4jxhF'
   },
   {
@@ -120,7 +128,8 @@ export const HAIR_PROGRESS_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Finale',
     desc: 'Look pulito, dinamico e compatto completato in 1 minuto',
     localUrl: '/uploads/progressi_capelli/114036.jpg',
-    url: 'https://i.ibb.co/0RtRmT0B/IMG-20261011-114036.jpg',
+    url: '/uploads/progressi_capelli/114036.jpg',
+    fallbackUrl: 'https://i.ibb.co/0RtRmT0B/IMG-20261011-114036.jpg',
     sourceUrl: 'https://ibb.co/v6Y6VpNs'
   }
 ];
@@ -134,7 +143,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Ciuffo leggero e sollevato con orientamento diagonale verso destra',
     localUrl: '/uploads/primo_risultato_piega/piega_01.jpg',
-    url: 'https://i.ibb.co/1CRFdTj/IMG-20261014-071931.jpg',
+    url: '/uploads/primo_risultato_piega/piega_01.jpg',
+    fallbackUrl: 'https://i.ibb.co/1CRFdTj/IMG-20261014-071931.jpg',
     sourceUrl: 'https://ibb.co/GZCztRN'
   },
   {
@@ -145,7 +155,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Spinta naturale alla radice senza effetto schiacciato',
     localUrl: '/uploads/primo_risultato_piega/piega_02.jpg',
-    url: 'https://i.ibb.co/7tFBGgBH/IMG-20261014-071934.jpg',
+    url: '/uploads/primo_risultato_piega/piega_02.jpg',
+    fallbackUrl: 'https://i.ibb.co/7tFBGgBH/IMG-20261014-071934.jpg',
     sourceUrl: 'https://ibb.co/23BRj8Rw'
   },
   {
@@ -156,7 +167,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Ciocche definite ad onde a "S" morbide senza mazzetti compatti',
     localUrl: '/uploads/primo_risultato_piega/piega_03.jpg',
-    url: 'https://i.ibb.co/7JWMGZmN/IMG-20261014-071939.jpg',
+    url: '/uploads/primo_risultato_piega/piega_03.jpg',
+    fallbackUrl: 'https://i.ibb.co/7JWMGZmN/IMG-20261014-071939.jpg',
     sourceUrl: 'https://ibb.co/hRWQK4z1'
   },
   {
@@ -167,7 +179,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Accompagnamento fluido delle lunghezze verso il lato destro',
     localUrl: '/uploads/primo_risultato_piega/piega_04.jpg',
-    url: 'https://i.ibb.co/v4rDrh0C/IMG-20261014-071943.jpg',
+    url: '/uploads/primo_risultato_piega/piega_04.jpg',
+    fallbackUrl: 'https://i.ibb.co/v4rDrh0C/IMG-20261014-071943.jpg',
     sourceUrl: 'https://ibb.co/gZX6Xdkb'
   },
   {
@@ -178,7 +191,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Cima controllata e vertice chiuso senza aperture disordinate',
     localUrl: '/uploads/primo_risultato_piega/piega_05.jpg',
-    url: 'https://i.ibb.co/nqRkf0Fz/IMG-20261014-071946.jpg',
+    url: '/uploads/primo_risultato_piega/piega_05.jpg',
+    fallbackUrl: 'https://i.ibb.co/nqRkf0Fz/IMG-20261014-071946.jpg',
     sourceUrl: 'https://ibb.co/0pQJZXxh'
   },
   {
@@ -189,7 +203,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Fissaggio con getto di aria fredda e movimento dinamico',
     localUrl: '/uploads/primo_risultato_piega/piega_06.jpg',
-    url: 'https://i.ibb.co/0R02PxDC/IMG-20261014-071949.jpg',
+    url: '/uploads/primo_risultato_piega/piega_06.jpg',
+    fallbackUrl: 'https://i.ibb.co/0R02PxDC/IMG-20261014-071949.jpg',
     sourceUrl: 'https://ibb.co/mVnTQ3D9'
   },
   {
@@ -200,7 +215,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Separazione pulita col pettine a denti larghi',
     localUrl: '/uploads/primo_risultato_piega/piega_07.jpg',
-    url: 'https://i.ibb.co/XNhzf1K/IMG-20261014-071957.jpg',
+    url: '/uploads/primo_risultato_piega/piega_07.jpg',
+    fallbackUrl: 'https://i.ibb.co/XNhzf1K/IMG-20261014-071957.jpg',
     sourceUrl: 'https://ibb.co/yGw8mtZ'
   },
   {
@@ -211,7 +227,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Zona a rischio buchino ben schermata e fusto lucido',
     localUrl: '/uploads/primo_risultato_piega/piega_08.jpg',
-    url: 'https://i.ibb.co/dw0w7JjZ/IMG-20261014-072000.jpg',
+    url: '/uploads/primo_risultato_piega/piega_08.jpg',
+    fallbackUrl: 'https://i.ibb.co/dw0w7JjZ/IMG-20261014-072000.jpg',
     sourceUrl: 'https://ibb.co/W4W4spGC'
   },
   {
@@ -222,7 +239,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Cuticole chiuse ed evidenza della salute della fibra Tipo 2B',
     localUrl: '/uploads/primo_risultato_piega/piega_09.jpg',
-    url: 'https://i.ibb.co/JW2B6V4r/IMG-20261014-072003.jpg',
+    url: '/uploads/primo_risultato_piega/piega_09.jpg',
+    fallbackUrl: 'https://i.ibb.co/JW2B6V4r/IMG-20261014-072003.jpg',
     sourceUrl: 'https://ibb.co/rKM78YS5'
   },
   {
@@ -233,7 +251,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Look dinamico e aerato senza polvere visibile o pesantezza',
     localUrl: '/uploads/primo_risultato_piega/piega_10.jpg',
-    url: 'https://i.ibb.co/Hp3NX9rV/IMG-20261014-072005.jpg',
+    url: '/uploads/primo_risultato_piega/piega_10.jpg',
+    fallbackUrl: 'https://i.ibb.co/Hp3NX9rV/IMG-20261014-072005.jpg',
     sourceUrl: 'https://ibb.co/2YH85pjy'
   },
   {
@@ -244,7 +263,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Ciocche flessibili che tornano in posizione dopo il movimento',
     localUrl: '/uploads/primo_risultato_piega/piega_11.jpg',
-    url: 'https://i.ibb.co/0zdw6XB/IMG-20261014-072013.jpg',
+    url: '/uploads/primo_risultato_piega/piega_11.jpg',
+    fallbackUrl: 'https://i.ibb.co/0zdw6XB/IMG-20261014-072013.jpg',
     sourceUrl: 'https://ibb.co/hTtq4MX'
   },
   {
@@ -255,7 +275,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Piega naturale e pulita ottenuta con il protocollo rapido',
     localUrl: '/uploads/primo_risultato_piega/piega_12.jpg',
-    url: 'https://i.ibb.co/pjPFshh0/IMG-20261014-072016.jpg',
+    url: '/uploads/primo_risultato_piega/piega_12.jpg',
+    fallbackUrl: 'https://i.ibb.co/pjPFshh0/IMG-20261014-072016.jpg',
     sourceUrl: 'https://ibb.co/CKtGXPP1'
   },
   {
@@ -266,7 +287,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Fusto stabilizzato dopo qualche minuto, morbidezza ideale',
     localUrl: '/uploads/primo_risultato_piega/piega_13.jpg',
-    url: 'https://i.ibb.co/DH0nhv2b/20261014-072520.jpg',
+    url: '/uploads/primo_risultato_piega/piega_13.jpg',
+    fallbackUrl: 'https://i.ibb.co/DH0nhv2b/20261014-072520.jpg',
     sourceUrl: 'https://ibb.co/zTqwpBv5'
   },
   {
@@ -277,7 +299,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Definizione geometrica senza scalini né ciuffo cadente',
     localUrl: '/uploads/primo_risultato_piega/piega_14.jpg',
-    url: 'https://i.ibb.co/fYwGVmHx/20261014-072522.jpg',
+    url: '/uploads/primo_risultato_piega/piega_14.jpg',
+    fallbackUrl: 'https://i.ibb.co/fYwGVmHx/20261014-072522.jpg',
     sourceUrl: 'https://ibb.co/Rpw4GLcD'
   },
   {
@@ -288,7 +311,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Volume continuo alla radice senza effetto piatto o finto',
     localUrl: '/uploads/primo_risultato_piega/piega_15.jpg',
-    url: 'https://i.ibb.co/GvTH5vwP/20261014-072524.jpg',
+    url: '/uploads/primo_risultato_piega/piega_15.jpg',
+    fallbackUrl: 'https://i.ibb.co/GvTH5vwP/20261014-072524.jpg',
     sourceUrl: 'https://ibb.co/KjwKrjZy'
   },
   {
@@ -299,13 +323,27 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
     typeLabel: 'Risultato Ottimale',
     desc: 'Panoramica impeccabile della piega venuta bene e stabile',
     localUrl: '/uploads/primo_risultato_piega/piega_16.jpg',
-    url: 'https://i.ibb.co/99JCZ294/20261014-072528.jpg',
+    url: '/uploads/primo_risultato_piega/piega_16.jpg',
+    fallbackUrl: 'https://i.ibb.co/99JCZ294/20261014-072528.jpg',
     sourceUrl: 'https://ibb.co/ccP7Ytc8'
   }
 ];
 
 export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPiegaLisciaViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutta' | 'progressi' | 'progressi_2' | 'primo_risultato' | 'diagnosi' | 'regole_cima' | 'routine_4passi' | 'polverina' | 'giorno_dopo' | 'fisica'>('tutta');
+  const [activeTab, setActiveTab] = useState<
+    | 'tutta'
+    | 'progressi'
+    | 'progressi_2'
+    | 'primo_risultato'
+    | 'diagnosi'
+    | 'regole_cima'
+    | 'routine_4passi'
+    | 'polverina'
+    | 'giorno_dopo'
+    | 'fisica'
+    | 'taglio_confronto'
+    | 'graffiato_prodotto'
+  >('tutta');
   const [galleryFilter, setGalleryFilter] = useState<'tutte' | 'prima' | 'dopo'>('tutte');
 
   // Scroll solo all'apertura della nota (mount)
@@ -409,7 +447,8 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
             <img
               src={currentGalleryPhotos[activeGalleryIndex].url}
               onError={(e) => {
-                (e.target as HTMLImageElement).src = currentGalleryPhotos[activeGalleryIndex].localUrl;
+                const p = currentGalleryPhotos[activeGalleryIndex];
+                (e.target as HTMLImageElement).src = p.fallbackUrl || p.localUrl;
               }}
               alt={currentGalleryPhotos[activeGalleryIndex].title}
               referrerPolicy="no-referrer"
@@ -502,7 +541,8 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
               <img
                 src={currentGalleryPhotos[activeGalleryIndex].url}
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = currentGalleryPhotos[activeGalleryIndex].localUrl;
+                  const p = currentGalleryPhotos[activeGalleryIndex];
+                  (e.target as HTMLImageElement).src = p.fallbackUrl || p.localUrl;
                 }}
                 alt={currentGalleryPhotos[activeGalleryIndex].title}
                 referrerPolicy="no-referrer"
@@ -560,7 +600,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
                   <img
                     src={photo.url}
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = photo.localUrl;
+                      (e.target as HTMLImageElement).src = photo.fallbackUrl || photo.localUrl;
                     }}
                     alt={photo.title}
                     referrerPolicy="no-referrer"
@@ -664,7 +704,35 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
             }`}
           >
             <Repeat className="w-3.5 h-3.5" />
-            <span>{activeTab === 'giorno_dopo' ? 'Chiudi' : 'Aggiornamenti #2 (Giorno Dopo)'}</span>
+            <span>{activeTab === 'giorno_dopo' ? 'Chiudi' : 'Aggiornamenti #2'}</span>
+          </button>
+
+          {/* 5. Tasto Diretto per Taglio Ciuffo Graffiato (Confronto a 1 Mese) */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'taglio_confronto' ? 'tutta' : 'taglio_confronto')}
+            className={`flex items-center space-x-1 py-1.5 px-2.5 rounded-xl text-xs font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'taglio_confronto'
+                ? 'bg-gradient-to-r from-rose-400 to-pink-400 text-black border-rose-300 shadow-neon'
+                : 'bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border-rose-500/30'
+            }`}
+          >
+            <Scissors className="w-3.5 h-3.5" />
+            <span>{activeTab === 'taglio_confronto' ? 'Chiudi' : 'Taglio Graffiato (1 Mese)'}</span>
+          </button>
+
+          {/* 6. Tasto Diretto per Graffiato & Spray Sale Marino */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'graffiato_prodotto' ? 'tutta' : 'graffiato_prodotto')}
+            className={`flex items-center space-x-1 py-1.5 px-2.5 rounded-xl text-xs font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'graffiato_prodotto'
+                ? 'bg-gradient-to-r from-teal-400 to-emerald-400 text-black border-teal-300 shadow-neon'
+                : 'bg-teal-500/15 hover:bg-teal-500/25 text-teal-300 border-teal-500/30'
+            }`}
+          >
+            <Droplet className="w-3.5 h-3.5" />
+            <span>{activeTab === 'graffiato_prodotto' ? 'Chiudi' : 'Graffiato & Spray Sale'}</span>
           </button>
         </div>
       </div>
@@ -845,6 +913,87 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
               </div>
             </button>
           </div>
+
+          {/* Nuove Card Affiancate: Taglio Ciuffo Graffiato (1 Mese) & Graffiato & Spray Sale */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {/* Card Taglio Capelli Ciuffo Graffiato */}
+            <button
+              type="button"
+              onClick={() => setActiveTab(activeTab === 'taglio_confronto' ? 'tutta' : 'taglio_confronto')}
+              className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+                activeTab === 'taglio_confronto'
+                  ? 'bg-gradient-to-r from-rose-950/90 via-pink-950/70 to-black/90 border-rose-400 shadow-neon ring-2 ring-rose-400/30'
+                  : 'bg-gradient-to-r from-rose-950/40 via-pink-950/30 to-black/70 border-rose-500/40 hover:border-rose-400'
+              }`}
+            >
+              <div className="flex items-center space-x-2.5">
+                <div className="p-2 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30 group-hover:scale-105 transition-transform shrink-0">
+                  <Scissors className="w-4 h-4 text-rose-400" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-rose-400 block">
+                      {activeTab === 'taglio_confronto' ? '✓ Attiva' : '5. Novità'}
+                    </span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-extrabold border border-rose-500/40">
+                      Confronto 1 Mese
+                    </span>
+                  </div>
+                  <h4 className="text-xs font-black text-white group-hover:text-rose-200 transition-colors">
+                    Taglio Ciuffo Graffiato
+                  </h4>
+                  <p className="text-[10px] text-gray-400">Liscio forzato vs Mosso 2B</p>
+                </div>
+              </div>
+              <div className={`flex items-center space-x-1 text-[11px] font-black px-2.5 py-1.5 rounded-xl shrink-0 transition-all ${
+                activeTab === 'taglio_confronto'
+                  ? 'bg-red-500/20 text-red-300 border border-red-500/30'
+                  : 'bg-rose-400 text-black shadow-neon'
+              }`}>
+                <span>{activeTab === 'taglio_confronto' ? 'Chiudi' : 'Apri'}</span>
+                {activeTab === 'taglio_confronto' ? <X className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
+              </div>
+            </button>
+
+            {/* Card Graffiato & Spray al Sale Marino */}
+            <button
+              type="button"
+              onClick={() => setActiveTab(activeTab === 'graffiato_prodotto' ? 'tutta' : 'graffiato_prodotto')}
+              className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+                activeTab === 'graffiato_prodotto'
+                  ? 'bg-gradient-to-r from-teal-950/90 via-emerald-950/70 to-black/90 border-teal-400 shadow-neon ring-2 ring-teal-400/30'
+                  : 'bg-gradient-to-r from-teal-950/40 via-emerald-950/30 to-black/70 border-teal-500/40 hover:border-teal-400'
+              }`}
+            >
+              <div className="flex items-center space-x-2.5">
+                <div className="p-2 rounded-xl bg-teal-500/20 text-teal-300 border border-teal-500/30 group-hover:scale-105 transition-transform shrink-0">
+                  <Droplet className="w-4 h-4 text-teal-400" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-teal-400 block">
+                      {activeTab === 'graffiato_prodotto' ? '✓ Attiva' : '6. Prodotto'}
+                    </span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-teal-500/20 text-teal-300 font-extrabold border border-teal-500/40">
+                      Sea Salt Spray
+                    </span>
+                  </div>
+                  <h4 className="text-xs font-black text-white group-hover:text-teal-200 transition-colors">
+                    Graffiato &amp; Spray Sale
+                  </h4>
+                  <p className="text-[10px] text-gray-400">Routine 6 passi & Scienza notte</p>
+                </div>
+              </div>
+              <div className={`flex items-center space-x-1 text-[11px] font-black px-2.5 py-1.5 rounded-xl shrink-0 transition-all ${
+                activeTab === 'graffiato_prodotto'
+                  ? 'bg-red-500/20 text-red-300 border border-red-500/30'
+                  : 'bg-teal-400 text-black shadow-neon'
+              }`}>
+                <span>{activeTab === 'graffiato_prodotto' ? 'Chiudi' : 'Apri'}</span>
+                {activeTab === 'graffiato_prodotto' ? <X className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
+              </div>
+            </button>
+          </div>
         </div>
 
         {/* Tab Filters */}
@@ -901,6 +1050,34 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           >
             <Zap className="w-3.5 h-3.5 text-amber-400" />
             <span>Progressi #2 (Tutorial • Viene dopo)</span>
+          </button>
+
+          {/* TASTO TAGLIO CIUFFO GRAFFIATO (CONFRONTO A 1 MESE) */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'taglio_confronto' ? 'tutta' : 'taglio_confronto')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'taglio_confronto'
+                ? 'bg-gradient-to-r from-rose-400 to-pink-400 text-black shadow-neon font-black ring-2 ring-rose-300'
+                : 'bg-rose-500/20 text-rose-300 hover:text-white border border-rose-500/40'
+            }`}
+          >
+            <Scissors className="w-3.5 h-3.5 text-rose-400" />
+            <span>Taglio Graffiato (1 Mese)</span>
+          </button>
+
+          {/* TASTO GRAFFIATO & SPRAY SALE MARINO */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'graffiato_prodotto' ? 'tutta' : 'graffiato_prodotto')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'graffiato_prodotto'
+                ? 'bg-gradient-to-r from-teal-400 to-emerald-400 text-black shadow-neon font-black ring-2 ring-teal-300'
+                : 'bg-teal-500/20 text-teal-300 hover:text-white border border-teal-500/40'
+            }`}
+          >
+            <Droplet className="w-3.5 h-3.5 text-teal-400" />
+            <span>Graffiato &amp; Spray Sale</span>
           </button>
 
           <button
@@ -2298,6 +2475,303 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE: TAGLIO CAPELLI CIUFFO GRAFFIATO (CONFRONTO A 1 MESE)   */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutta' || activeTab === 'taglio_confronto') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                <Scissors className="w-4 h-4 text-rose-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-rose-400">
+                  Taglio &amp; Geometria • Confronto a Distanza di 1 Mese
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  ✂️ Taglio Capelli Ciuffo Graffiato: Confronto a 1 Mese
+                </h2>
+              </div>
+            </div>
+            {activeTab === 'taglio_confronto' ? (
+              <button
+                type="button"
+                onClick={() => setActiveTab('tutta')}
+                className="flex items-center space-x-1 py-1 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all active:scale-95 cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Chiudi</span>
+              </button>
+            ) : (
+              <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-rose-500/15 text-rose-300 border border-rose-500/30">
+                Scienza del Taglio
+              </span>
+            )}
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border border-rose-500/30 space-y-4 bg-black/75">
+            <p className="text-xs text-gray-300 leading-relaxed font-medium">
+              Ecco la versione aggiornata e arricchita del confronto a distanza di un mese tra i due approcci possibili per i tuoi capelli Tipo 2B: il contrasto radicale tra continuare a forzarli al liscio contro la valorizzazione del pattern naturale con taglio integrato e ciuffo graffiato.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              {/* SCENARIO A: LISCIO FORZATO */}
+              <div className="p-4 rounded-2xl bg-red-950/25 border-2 border-red-500/40 space-y-3">
+                <div className="flex items-center justify-between border-b border-red-500/20 pb-2">
+                  <div className="flex items-center space-x-2">
+                    <X className="w-4 h-4 text-red-400 shrink-0" />
+                    <h3 className="font-black text-white text-xs">Scenario A: Se Continui a Combatterli (Liscio Forzato)</h3>
+                  </div>
+                  <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded bg-red-500/20 text-red-300">
+                    Sconsigliato
+                  </span>
+                </div>
+
+                <div className="space-y-2 text-[11px] text-gray-300 leading-relaxed">
+                  <div className="p-2.5 rounded-xl bg-black/50 border border-red-500/20">
+                    <strong className="text-red-300 block mb-0.5">• I primi giorni (L'illusione della facilità):</strong>
+                    Subito dopo il taglio e lo sfoltimento, i capelli sembrano docili e modellabili perché la struttura è ancora fresca, corta e priva del peso morto in eccesso. Riuscirai a stirarli e appiattirli con la spazzola senza troppa fatica iniziale.
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-black/50 border border-red-500/20">
+                    <strong className="text-red-300 block mb-0.5">• La ricrescita e le "molle" (A 1 mese di distanza):</strong>
+                    Passato il primo mese, i capelli sfoltiti cominciano a crescere. Essendo più corti rispetto alla massa principale, <strong>agiscono come minuscole molle interne che spingono le ciocche lunghe verso l'esterno</strong>, facendoti perdere completamente il controllo della forma.
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-black/50 border border-red-500/20">
+                    <strong className="text-red-300 block mb-0.5">• La lotta quotidiana &amp; Clima ostile:</strong>
+                    Ogni mattina devi lottare con phon e spazzola per raddrizzarli e forzarli, ma la struttura mossa fa resistenza naturale ai ponti a idrogeno. Appena metti piede fuori e prendi un minimo di umidità o vento, la piega si scompone, il ciuffo fa i capricci ed è <strong>crespo, elettrico e ingestibile</strong>.
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-red-950/40 border border-red-500/30 text-red-200">
+                    <strong>Risultato Visivo &amp; Salute:</strong> Effetto "gonfio a fungo", scatola quadrata rigida e fibra sfibrata e seccata dal calore continuo.
+                  </div>
+                </div>
+              </div>
+
+              {/* SCENARIO B: MOSSO NATURALE 2B */}
+              <div className="p-4 rounded-2xl bg-emerald-950/25 border-2 border-emerald-500/40 space-y-3">
+                <div className="flex items-center justify-between border-b border-emerald-500/20 pb-2">
+                  <div className="flex items-center space-x-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <h3 className="font-black text-white text-xs">Scenario B: Valorizzazione Mosso 2B (Ciuffo Graffiato)</h3>
+                  </div>
+                  <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">
+                    Scelta Vincente
+                  </span>
+                </div>
+
+                <div className="space-y-2 text-[11px] text-gray-300 leading-relaxed">
+                  <div className="p-2.5 rounded-xl bg-black/50 border border-emerald-500/20">
+                    <strong className="text-emerald-300 block mb-0.5">• I primi giorni (Movimento fluido naturale):</strong>
+                    Il taglio asseconda le onde a "S". La chioma cade morbida, con ciocche sfilate e separate a mano libera senza sforzo alcuno.
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-black/50 border border-emerald-500/20">
+                    <strong className="text-emerald-300 block mb-0.5">• La ricrescita e l'integrazione (A 1 mese di distanza):</strong>
+                    A distanza di un mese le ciocche ricrescono in modo fluido e armonioso. Non "sparano" verso l'esterno perché seguono l'onda biologica anziché combatterla: <strong>la forma del taglio resta impeccabile e bilanciata anche dopo 4-5 settimane</strong>!
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-black/50 border border-emerald-500/20">
+                    <strong className="text-emerald-300 block mb-0.5">• La routine quotidiana veloce (3 Minuti):</strong>
+                    Zero lotte: inumidisci, direzioni verso destra con spazzola sopra, blocchi col freddo, 2 spruzzi di spray al sale marino a fine asciugatura e pettine largo. 3 minuti reali e sei pronto.
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-200">
+                    <strong>Tenuta ad Umidità e Vento:</strong> RESISTE all'umidità! Poiché il capello è nella sua conformazione nativa 2B, l'umidità non rompe la piega ma esalta la texture naturale creando un look graffiato, sfilato e mascolino.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {activeTab === 'taglio_confronto' && (
+              <div className="pt-2 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('tutta')}
+                  className="w-full sm:w-auto py-3 px-6 rounded-2xl bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-300 hover:to-pink-300 text-black font-black text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-neon flex items-center justify-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Torna alla Nota Completa</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE: GRAFFIATO & SPRAY AL SALE MARINO (ROUTINE & SCIENZA) */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutta' || activeTab === 'graffiato_prodotto') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-teal-500/20 text-teal-300 border border-teal-500/30">
+                <Droplet className="w-4 h-4 text-teal-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-teal-400">
+                  Styling &amp; Prodotto • Sea Salt Spray &amp; Routine Graffiata
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  🌊 Ciuffo Graffiato &amp; Spray al Sale Marino: Routine &amp; Scienza del Giorno Dopo
+                </h2>
+              </div>
+            </div>
+            {activeTab === 'graffiato_prodotto' ? (
+              <button
+                type="button"
+                onClick={() => setActiveTab('tutta')}
+                className="flex items-center space-x-1 py-1 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all active:scale-95 cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Chiudi</span>
+              </button>
+            ) : (
+              <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-teal-500/15 text-teal-300 border border-teal-500/30">
+                Guida Prodotto Completa
+              </span>
+            )}
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border border-teal-500/30 space-y-4 bg-black/75">
+            <p className="text-xs text-gray-300 leading-relaxed font-medium">
+              Lo spray al sale marino (Sea Salt Spray) è il compagno ideale per i capelli 2B quando vuoi ottenere un <strong>ciuffo graffiato, opaco, con scanalature separate e massima tenuta</strong>. Ma va applicato secondo una rigorosa logica termica per evitare l'effetto paglia.
+            </p>
+
+            {/* FASE 1: LA ROUTINE OPERATIVA DEI 6 PASSI */}
+            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-3">
+              <h3 className="font-bold text-white text-xs flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-teal-400" />
+                La Routine Completa di Styling: I 6 Passaggi Cronologici
+              </h3>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <div className="flex items-center gap-1.5 font-bold text-teal-300">
+                    <span className="w-5 h-5 rounded-md bg-teal-500/20 flex items-center justify-center text-[10px] font-black">1</span>
+                    <span>Towel / Base Umida</span>
+                  </div>
+                  <p className="text-[10px] text-gray-300 leading-relaxed">
+                    Capelli tamponati delicatamente con asciugamano in microfibra. Devono essere umidi al tatto, ma non gocciolanti.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <div className="flex items-center gap-1.5 font-bold text-teal-300">
+                    <span className="w-5 h-5 rounded-md bg-teal-500/20 flex items-center justify-center text-[10px] font-black">2</span>
+                    <span>Pettinata Direzionale a Destra</span>
+                  </div>
+                  <p className="text-[10px] text-gray-300 leading-relaxed">
+                    A dita bagnate o con pettine largo, direziona tutta la base verso destra per chiudere la riga e impostare il verso.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <div className="flex items-center gap-1.5 font-bold text-teal-300">
+                    <span className="w-5 h-5 rounded-md bg-teal-500/20 flex items-center justify-center text-[10px] font-black">3</span>
+                    <span>Spazzola da Sopra + Phon Caldo</span>
+                  </div>
+                  <p className="text-[10px] text-gray-300 leading-relaxed">
+                    Spazzola appoggiata da sopra, tira a 45° a destra con aria calda: apri le cuticole e memorizzi la direzione. Non lisciare all'infinito!
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <div className="flex items-center gap-1.5 font-bold text-cyan-300">
+                    <span className="w-5 h-5 rounded-md bg-cyan-500/20 flex items-center justify-center text-[10px] font-black">4</span>
+                    <span>Blocco Aria Fredda (10s)</span>
+                  </div>
+                  <p className="text-[10px] text-gray-300 leading-relaxed">
+                    Soffio freddo sparato sul ciuffo. Congela i ponti a idrogeno, chiude le cuticole e blocca la struttura contro l'umidità.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-teal-950/50 border border-teal-400/50 space-y-1 ring-1 ring-teal-400/30">
+                  <div className="flex items-center gap-1.5 font-bold text-teal-200">
+                    <span className="w-5 h-5 rounded-md bg-teal-400 text-black flex items-center justify-center text-[10px] font-black">5</span>
+                    <span>Spray Sale A FREDDO (Alla Fine!)</span>
+                  </div>
+                  <p className="text-[10px] text-gray-200 leading-relaxed">
+                    <strong>RIGOROSAMENTE A PIEGA TERMINATA:</strong> 2–3 spruzzi leggeri a 20 cm di distanza sulla piega già formata e fredda.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <div className="flex items-center gap-1.5 font-bold text-teal-300">
+                    <span className="w-5 h-5 rounded-md bg-teal-500/20 flex items-center justify-center text-[10px] font-black">6</span>
+                    <span>Pettine a Denti Larghi (Graffiato)</span>
+                  </div>
+                  <p className="text-[10px] text-gray-300 leading-relaxed">
+                    Passaggio finale con colpi decisi verso destra: il sale mantiene i mazzetti separati in 4–5 scanalature aperte e stabili.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* FASE 2: PERCHÉ LO SPRAY AL SALE VA MESSO ALLA FINE */}
+            <div className="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/30 space-y-2">
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                <AlertTriangle className="w-4 h-4 text-amber-400" />
+                Regola di Sicurezza Termica: Perché lo Spray al Sale VA MESSO ALLA FINE?
+              </span>
+              <p className="text-[11px] text-gray-300 leading-relaxed">
+                Se metti lo spray al sale marino sui capelli bagnati <em>prima</em> del phon caldo, il calore fa evaporare subito l'acqua lasciando i cristalli di sale minerali a <strong>"cuocere" direttamente sulle cuticole aperte</strong>. Questo errore rende il capello secco come fieno, duro, stopposo e opaco. <br />
+                Applicato invece <strong>alla fine, a capello asciutto e già sigillato dal colpo freddo</strong>, il sale si deposita leggerissimo all'esterno della cuticola: regala grip microscopico, volume e separazione graffiata <strong>senza bruciare né seccare la fibra</strong>!
+              </p>
+            </div>
+
+            {/* FASE 3: COSA SUCCEDE AL SALE DURANTE LA NOTTE, AL RISVEGLIO E COL LAVAGGIO */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div className="p-3.5 rounded-xl bg-black/60 border border-white/10 space-y-1.5">
+                <div className="flex items-center gap-1.5 font-bold text-sky-300">
+                  <Moon className="w-3.5 h-3.5" />
+                  <span>Durante la Notte</span>
+                </div>
+                <p className="text-[11px] text-gray-300 leading-relaxed">
+                  Il sale assorbe una minima quota di umidità naturale dall'aria ambiente. I capelli si ammorbidiscono leggermente e si schiacciano contro il cuscino, ma <strong>i cristalli restano adesi alla fibra</strong>.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-black/60 border border-white/10 space-y-1.5">
+                <div className="flex items-center gap-1.5 font-bold text-amber-300">
+                  <Sun className="w-3.5 h-3.5" />
+                  <span>Al Risveglio (NO altro sale!)</span>
+                </div>
+                <p className="text-[11px] text-gray-300 leading-relaxed">
+                  <strong>NON spruzzare altro sale la mattina!</strong> Creeresti un eccesso pastoso e pesante. Basta mettersi a testa in giù, strofinare le radici coi polpastrelli e dare una passata di pettine largo o soffio tiepido/freddo per riattivare la texture.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-black/60 border border-white/10 space-y-1.5">
+                <div className="flex items-center gap-1.5 font-bold text-emerald-300">
+                  <Droplets className="w-3.5 h-3.5" />
+                  <span>Lavaggio con Sola Acqua</span>
+                </div>
+                <p className="text-[11px] text-gray-300 leading-relaxed">
+                  Il sale marino è <strong>idrosolubile al 100%</strong>! Appena bagni i capelli con acqua tiepida, si scioglie istantaneamente senza bisogno di shampoo. Lo shampoo usalo solo 2-3 volte a settimana normalmente; nei giorni intermedi basta l'acqua.
+                </p>
+              </div>
+            </div>
+
+            {activeTab === 'graffiato_prodotto' && (
+              <div className="pt-2 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('tutta')}
+                  className="w-full sm:w-auto py-3 px-6 rounded-2xl bg-gradient-to-r from-teal-400 to-emerald-400 hover:from-teal-300 hover:to-emerald-300 text-black font-black text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-neon flex items-center justify-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Torna alla Nota Completa</span>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

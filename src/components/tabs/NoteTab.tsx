@@ -1837,7 +1837,7 @@ export const NoteTab: React.FC = () => {
                   <Dumbbell className="w-3 h-3 text-orange-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">Guida Completa 12 Pilastri + 6# Info (con 5# Parti 1 & 2 affiancate)</span>
+                <span className="text-[10px] text-gray-400 font-semibold">14 Pilastri • 5# & 6# Affiancate + 7# Bustine & Stabilità</span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-orange-300 transition-colors uppercase tracking-tight">
@@ -1845,7 +1845,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Tecnica dei pesi e buffer, deficit senza fame, Quadro Completo, turnover 1g/kg, proteine in eccesso, gluconeogenesi nel fegato e biochimica dei grassi (carne, olio, digestione e notte 24h).
+                Tecnica dei pesi e buffer, deficit senza fame, Quadro Completo, turnover 1g/kg, proteine in eccesso (5# Parti 1 & 2 affiancate), biochimica dei grassi alimentari vs corporei (6# Parti 1 & 2 affiancate) e i conti delle bustine di zucchero con target 120–130 mg/dL.
               </p>
             </div>
 
@@ -1859,7 +1859,7 @@ export const NoteTab: React.FC = () => {
               <span>Tocca per aprire la guida su palestra e dimagrimento</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">Pesi + Deficit + 1g/kg + Gluconeogenesi + Grassi</span>
+            <span className="text-[10px] text-gray-400 font-semibold">5# Proteine (Sx/Dx) + 6# Grassi (Sx/Dx) + 7# Bustine 120-130</span>
           </div>
         </div>
       </div>
@@ -1934,16 +1934,22 @@ export const NoteTab: React.FC = () => {
                   ★ Note Scritte Da Me
                 </span>
                 <span className="text-[10px] text-emerald-300 font-extrabold bg-emerald-500/15 px-2 py-0.5 rounded-md border border-emerald-500/30">
-                  📸 Progresso N° 1 (7 Foto)
+                  📸 Progresso N° 1 (7)
                 </span>
                 <span className="text-[10px] text-cyan-300 font-extrabold bg-cyan-500/15 px-2 py-0.5 rounded-md border border-cyan-500/30">
-                  ✨ Primo Risultato (16 Foto)
+                  ✨ Primo Risultato (16)
                 </span>
                 <span className="text-[10px] text-amber-300 font-extrabold bg-amber-500/15 px-2 py-0.5 rounded-md border border-amber-500/30">
-                  ⚡ Progressi #2 (Tutorial Spazzola)
+                  ⚡ Progressi #2 (Tutorial)
                 </span>
                 <span className="text-[10px] text-sky-300 font-extrabold bg-sky-500/15 px-2 py-0.5 rounded-md border border-sky-500/30">
-                  🔄 Aggiornamenti #2 (Giorno Dopo)
+                  🔄 Reset Giorno Dopo
+                </span>
+                <span className="text-[10px] text-rose-300 font-extrabold bg-rose-500/15 px-2 py-0.5 rounded-md border border-rose-500/30">
+                  ✂️ Taglio Graffiato (1 Mese)
+                </span>
+                <span className="text-[10px] text-teal-300 font-extrabold bg-teal-500/15 px-2 py-0.5 rounded-md border border-teal-500/30">
+                  🌊 Spray Sale Marino
                 </span>
               </div>
 
@@ -1952,7 +1958,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Diagnosi reale Tipo 2B, Progresso N° 1 con Ritocco in 1 min, bacheca 16 foto del Primo Risultato Piega, Progressi #2 con il tutorial Spazzola Sopra & Ciuffo Graffiato, e Aggiornamenti #2 per il reset totale del giorno dopo se la piega si è rovinata.
+                Diagnosi reale Tipo 2B, Progresso N° 1 (7 Foto), bacheca 16 foto del Primo Risultato Piega, tutorial Spazzola Sopra & Ciuffo Graffiato, reset del giorno dopo se persa, confronto Taglio a 1 mese (liscio forzato vs mosso 2B) e routine Sea Salt Spray.
               </p>
             </div>
 
@@ -1963,10 +1969,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-cyan-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire nota, gallerie & tutorial</span>
+              <span>Tocca per aprire nota, gallerie & novità styling</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-cyan-300 font-bold">1. Progressi (7) → 2. Risultato (16) → 3. Progressi #2 → 4. Aggiornamenti #2</span>
+            <span className="text-[10px] text-cyan-300 font-bold">1. Progressi → 2. Risultato → 3. Tutorial → 4. Giorno Dopo → 5. Taglio 1 Mese → 6. Spray Sale</span>
           </div>
         </div>
       </div>
@@ -1987,12 +1993,23 @@ export const NoteTab: React.FC = () => {
 
           <div className="flex items-start justify-between relative z-10">
             <div className="space-y-2 flex-1 pr-3">
-              <div className="flex items-center space-x-2">
+              <div className="flex flex-wrap items-center gap-1.5">
                 <span className="px-2.5 py-0.5 rounded-full bg-rose-400/20 text-rose-300 text-[10px] font-black uppercase tracking-wider border border-rose-400/40 shadow-sm flex items-center gap-1">
                   <Activity className="w-3 h-3 text-rose-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">Salute & Metabolismo</span>
+                <span className="text-[10px] text-amber-300 font-extrabold bg-amber-500/15 px-2 py-0.5 rounded-md border border-amber-500/30">
+                  ⚡ 2: Brucia-Grassi (80-90)
+                </span>
+                <span className="text-[10px] text-emerald-300 font-extrabold bg-emerald-500/15 px-2 py-0.5 rounded-md border border-emerald-500/30">
+                  ☕ 3: Bustine vs Cibo Vero
+                </span>
+                <span className="text-[10px] text-rose-300 font-extrabold bg-rose-500/15 px-2 py-0.5 rounded-md border border-rose-500/30">
+                  🔬 4: Correggi 50-60
+                </span>
+                <span className="text-[10px] text-purple-300 font-extrabold bg-purple-500/15 px-2 py-0.5 rounded-md border border-purple-500/30">
+                  📊 5: Iperglicemia &gt;180
+                </span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-rose-300 transition-colors uppercase tracking-tight">
@@ -2000,7 +2017,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                I 2 processi dell'allenamento serale (ricarica glicogeno e sensibilità insulinica 12-24h), confronto tra Fenomeno dell'Alba ed Effetto Somogyi (crollo 60-70 a notte con rimbalzo a 120 e 180 saltando colazione), l'errore del succo di frutta e le colazioni strategiche anti-picco.
+                Guida fisiologica e metabolica completa: ricarica glicogeno e GLUT-4, Somogyi vs Alba, correzione con bustine vs spuntino con cibo vero, biochimica a 50–60 mg/dL (catabolismo muscolare & ciclo di Krebs) e cosa accade oltre la soglia renale di 180 mg/dL (poliuria, polidipsia e tabella range).
               </p>
             </div>
 
@@ -2011,10 +2028,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-rose-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire la nota su glicemia e palestra</span>
+              <span>Tocca per aprire la guida su glicemia e palestra</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">Somogyi vs Alba + Colazione Protetta</span>
+            <span className="text-[10px] text-gray-400 font-semibold">5 Note Speciali + 5 Sezioni Fisiologiche</span>
           </div>
         </div>
       </div>

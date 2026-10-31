@@ -418,8 +418,11 @@ export const HomeRoutineTab: React.FC = () => {
                 <img
                   src="https://i.ibb.co/s9VfpN8w/image.jpg"
                   onError={(e) => {
-                    // Fallback URL if direct image format differs
-                    (e.target as HTMLImageElement).src = "https://ibb.co/s9VfpN8w";
+                    const img = e.target as HTMLImageElement;
+                    if (!img.dataset.retried) {
+                      img.dataset.retried = 'true';
+                      img.src = 'https://i.ibb.co/s9VfpN8w/image.png';
+                    }
                   }}
                   alt="Posizione del Cammello"
                   referrerPolicy="no-referrer"
