@@ -1741,7 +1741,7 @@ export const NoteTab: React.FC = () => {
                   <Scissors className="w-3 h-3 text-emerald-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">3 Parti: Mattina • Barba • Informazioni</span>
+                <span className="text-[10px] text-gray-400 font-semibold">4 Parti: Mattina • Barba • Info • Metodo Diviso</span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-emerald-300 transition-colors uppercase tracking-tight">
@@ -1749,7 +1749,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Massaggio mattutino preparatorio (30-60s), routine completa per la rasatura (grasso facciale, crema Nivea, confronto lamette BIC vs rasoio monolama) e tempi reali di guarigione e turnover cellulare.
+                Massaggio mattutino preparatorio (30-60s), routine rasatura con monolama, turnover cellulare e nuovo Metodo Diviso per zone: monolama Gillette su guance con schiuma, rifinitore Nikai su baffi a secco, shaver squadrato su collo a secco, e pausa 2-3 giorni per sfiammare.
               </p>
             </div>
 
@@ -1763,7 +1763,7 @@ export const NoteTab: React.FC = () => {
               <span>Tocca per aprire la guida sui peli incarniti</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">Massaggio + Barba + Guarigione</span>
+            <span className="text-[10px] text-gray-400 font-semibold">4 Parti • Metodo Diviso per Zone</span>
           </div>
         </div>
       </div>
