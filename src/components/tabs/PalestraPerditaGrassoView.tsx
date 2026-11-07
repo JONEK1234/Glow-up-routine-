@@ -30,7 +30,7 @@ interface PalestraPerditaGrassoViewProps {
 }
 
 export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra'>('tutte');
+  const [activeTab, setActiveTab] = useState<'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra' | 'piegamenti_lavoro'>('tutte');
 
   // Scroll solo all'apertura della nota (mount)
   React.useEffect(() => {
@@ -308,7 +308,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           {/* 7# Informazioni: Zucchero in Palestra & Calorie (Stabilità 120-130) */}
           <div
             onClick={() => setActiveTab('bustine_palestra')}
-            className="p-3 rounded-2xl bg-gradient-to-r from-emerald-950/50 via-teal-950/40 to-black/70 border border-emerald-500/40 hover:border-emerald-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-emerald-500/20 col-span-1 sm:col-span-2 lg:col-span-1"
+            className="p-3 rounded-2xl bg-gradient-to-r from-emerald-950/50 via-teal-950/40 to-black/70 border border-emerald-500/40 hover:border-emerald-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-emerald-500/20"
           >
             <div className="flex items-center space-x-2.5">
               <span className="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 group-hover:bg-emerald-500 group-hover:text-black transition-all shrink-0">
@@ -324,6 +324,29 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
               </div>
             </div>
             <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 group-hover:bg-emerald-500 group-hover:text-black transition-all shrink-0">
+              Apri ➔
+            </span>
+          </div>
+
+          {/* 8# Informazioni: Piegamenti & Lavoro Fisico */}
+          <div
+            onClick={() => setActiveTab('piegamenti_lavoro')}
+            className="p-3 rounded-2xl bg-gradient-to-r from-cyan-950/50 via-blue-950/40 to-black/70 border border-cyan-500/40 hover:border-cyan-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-cyan-500/20 col-span-1 sm:col-span-2 lg:col-span-1"
+          >
+            <div className="flex items-center space-x-2.5">
+              <span className="p-2 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 group-hover:bg-cyan-500 group-hover:text-black transition-all shrink-0">
+                <Activity className="w-4 h-4 text-cyan-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" /> 8# Info: Piegamenti & Lavoro
+                </span>
+                <h3 className="text-xs font-extrabold text-white group-hover:text-cyan-200 transition-colors line-clamp-1">
+                  Piegamenti (Flessioni) & Lavoro Fisico vs Palestra
+                </h3>
+              </div>
+            </div>
+            <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 group-hover:bg-cyan-500 group-hover:text-black transition-all shrink-0">
               Apri ➔
             </span>
           </div>
@@ -521,6 +544,20 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           >
             <Zap className="w-3.5 h-3.5 text-emerald-400" />
             14. 7# Info: Bustine & 120-130
+          </button>
+
+          {/* 15. 8# Info: Piegamenti e Lavoro Fisico */}
+          <button
+            type="button"
+            onClick={() => setActiveTab('piegamenti_lavoro')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'piegamenti_lavoro'
+                ? 'bg-cyan-400 text-black shadow-md shadow-cyan-500/30 font-extrabold'
+                : 'bg-cyan-500/10 text-cyan-300 hover:text-white border border-cyan-500/30'
+            }`}
+          >
+            <Activity className="w-3.5 h-3.5 text-cyan-400" />
+            15. 8# Info: Piegamenti & Lavoro
           </button>
         </div>
       </div>
@@ -2498,6 +2535,188 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
                     Quell'energia è servita solo allo sforzo immediato. Finita la palestra, grazie al deficit calorico giornaliero e al riposo notturno, il corpo continua a bruciare i grassi di riserva senza sosta!
                   </p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 8: RIEPILOGO: PIEGAMENTI E LAVORO FISICO             */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'piegamenti_lavoro') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                <Activity className="w-4 h-4" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400">
+                  8# Info • Flessioni & Adattamento Fisico
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Riepilogo: Piegamenti e Lavoro Fisico
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
+              Schema Motorio & Memoria Muscolare
+            </span>
+          </div>
+
+          <div className="p-5 rounded-3xl glass-card border-2 border-cyan-500/40 space-y-5 bg-gradient-to-br from-cyan-950/40 via-blue-950/30 to-black/90 shadow-[0_0_30px_rgba(6,182,212,0.15)]">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+              <span className="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-black uppercase tracking-wider border border-cyan-500/30 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                Guida Pratica & Biomeccanica
+              </span>
+              <span className="text-xs text-gray-400 font-semibold">
+                Flessioni al Giovedì • Lavoro vs Palestra
+              </span>
+            </div>
+
+            {/* 1. Protocollo per i Piegamenti sulle Braccia (Flessioni) */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-cyan-500/30 space-y-4">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                    <Target className="w-4 h-4 text-cyan-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    1. Protocollo per i Piegamenti sulle Braccia (Flessioni)
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-[10px] font-bold border border-cyan-500/30">
+                  Pratica Pura
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {/* Giorno Ideale */}
+                <div className="p-3.5 rounded-xl bg-cyan-950/20 border border-cyan-500/20 space-y-1.5">
+                  <div className="flex items-center space-x-2">
+                    <Clock className="w-4 h-4 text-cyan-400" />
+                    <span className="text-xs font-extrabold text-cyan-300 uppercase tracking-wider">
+                      Il Giorno Ideale: Il Giovedì
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Il <strong>Giovedì</strong> è il giorno strategico perfetto: si trova esattamente a metà settimana tra le due sedute dedicate alla parte superiore (Lunedì e Mercoledì) e la seduta gambe di Venerdì. In questo modo si ottiene una stimolazione neurale pulita senza intralciare il recupero muscolare profondo della sala pesi.
+                  </p>
+                </div>
+
+                {/* Obiettivo: Schema Motorio */}
+                <div className="p-3.5 rounded-xl bg-blue-950/20 border border-blue-500/20 space-y-1.5">
+                  <div className="flex items-center space-x-2">
+                    <Zap className="w-4 h-4 text-blue-400" />
+                    <span className="text-xs font-extrabold text-blue-300 uppercase tracking-wider">
+                      Obiettivo: Schema Motorio (Zero Cedimento)
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    L'obiettivo NON è "bruciare" il muscolo o arrivare all'esaurimento/acido lattico. È la <strong>pratica pura e pulita del gesto motorio</strong> (controllo, traiettoria e propriocezione). Bisogna mantenere sempre un <strong>ampio buffer</strong> (lasciare 3-4 ripetizioni di margine per serie) e fermarsi non appena la velocità o la pulizia tecnica iniziano a calare.
+                  </p>
+                </div>
+              </div>
+
+              {/* Dettagli Esecuzione Corretta */}
+              <div className="space-y-2.5 pt-1">
+                <span className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
+                  Esecuzione Corretta Passo-Passo (Biomeccanica Protettiva):
+                </span>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                  <div className="p-3 rounded-xl bg-black/70 border border-white/10 space-y-1">
+                    <strong className="text-cyan-300 block text-xs">1. Posizione delle Mani:</strong>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Mani posizionate <strong>leggermente più larghe delle spalle</strong>, con dita ben aperte e ben piantate al suolo per scaricare la pressione in modo uniforme sull'articolazione del polso.
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-black/70 border border-cyan-500/30 space-y-1">
+                    <strong className="text-cyan-300 block text-xs">2. Gomiti a 45° a Freccia (Mai a Croce):</strong>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      I gomiti devono scendere tracciando una <strong>freccia a circa 45°</strong> rispetto al busto. <em>Vietato allargarli a 90° (a croce/T)</em>: la posizione a croce comprime lo spazio sub-acromiale e logora la cuffia dei rotatori!
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-black/70 border border-white/10 space-y-1">
+                    <strong className="text-blue-300 block text-xs">3. Core e Glutei di Marmo:</strong>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Addome contratto a blocco e glutei serrati, mantenendo il bacino neutro/retroverso. Il corpo deve scendere e risalire come <strong>un'asta d'acciaio dritta</strong>, senza mai inarcare la schiena lombare verso il pavimento.
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-black/70 border border-cyan-500/30 space-y-1">
+                    <strong className="text-blue-300 block text-xs">4. Il Rialzo (Tavolo / Panca) se Cede la Postura:</strong>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      L'escursione deve essere completa (petto a un pugno dal suolo). Se la postura cede o la schiena si inarca, <strong>utilizzare subito un piano rialzato stabile (un tavolo robusto o una panca)</strong>. Rialzare le mani riduce il carico gravitazionale preservando l'assetto biomeccanico perfetto, anziché sporcare le ripetizioni a terra.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Lavoro Fisico vs. Palestra */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-blue-500/30 space-y-4">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                    <Layers className="w-4 h-4 text-blue-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    2. Lavoro Fisico vs. Palestra: Adattamento, Densità Capillare & Memoria
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">
+                  Fisiologia Muscolare
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {/* Adattamento Cronico */}
+                <div className="p-3.5 rounded-xl bg-blue-950/20 border border-blue-500/20 space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <ShieldCheck className="w-4 h-4 text-blue-400" />
+                    <span className="text-xs font-extrabold text-blue-300 uppercase tracking-wider">
+                      Lavoro Fisico: Omeostasi & Densità Capillare
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Il lavoro fisico pesante quotidiano genera un <strong>adattamento a lungo termine (omeostasi da stress cronico)</strong>. Il corpo risponde aumentando enormemente la <strong>densità dei vasi capillari sanguigni</strong> all'interno dei muscoli, migliorando la resistenza alla fatica, l'ossigenazione e la capacità cardiorespiratoria.
+                  </p>
+                  <p className="text-[11px] text-gray-400 leading-relaxed">
+                    <em>Perché non basta da solo per ipertrofizzare come in palestra?</em> Perché nel lavoro lo sforzo è distribuito e aspecifico, mentre la palestra applica una <strong>tensione meccanica mirata, isolata e progressiva</strong>, indispensabile per allargare il diametro delle miofibrille.
+                  </p>
+                </div>
+
+                {/* Gestione Estiva e Memoria Muscolare */}
+                <div className="p-3.5 rounded-xl bg-cyan-950/20 border border-cyan-500/20 space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <Flame className="w-4 h-4 text-cyan-400" />
+                    <span className="text-xs font-extrabold text-cyan-300 uppercase tracking-wider">
+                      Gestione Estiva, Calorie & Memoria Muscolare
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    In estate o durante periodi di intenso lavoro fisico, il <strong>dispendio calorico giornaliero è enorme</strong>: questo tiene il metabolismo attivo al massimo, brucia grasso di riserva e conserva un tono muscolare scolpito e scattante.
+                  </p>
+                  <p className="text-[11px] text-gray-400 leading-relaxed">
+                    Se si sospende temporaneamente la sala pesi, si perde unicamente una quota di <strong>picco di forza neurale</strong> (la capacità del cervello di reclutare contemporaneamente tutte le unità motorie ad alta soglia su carichi pesantissimi). Questa forza <strong>rimbalza in pochissime settimane</strong> al ritorno ai pesi grazie alla <strong>memoria muscolare cellulare (i mionuclei rimangono vivi per anni)</strong>!
+                  </p>
+                </div>
+              </div>
+
+              {/* Sintesi Strategica */}
+              <div className="p-3 rounded-xl bg-gradient-to-r from-cyan-950/40 via-blue-950/40 to-black/70 border border-cyan-500/40 text-xs text-gray-200">
+                <strong className="text-cyan-300 block text-xs font-bold mb-1">
+                  💡 Sintesi Chiave:
+                </strong>
+                <p className="text-[11px] text-gray-300 leading-relaxed">
+                  Il lavoro manuale è una formidabile "fornace metabolica" che costruisce resistenza e capillarizzazione; la palestra scolpisce e mantiene la massa muscolare nobile. L'unione intelligente di pesi a inizio settimana, flessioni tecniche al giovedì e lavoro fisico costante crea un fisico robusto, asciutto e resistente nel tempo.
+                </p>
               </div>
             </div>
           </div>

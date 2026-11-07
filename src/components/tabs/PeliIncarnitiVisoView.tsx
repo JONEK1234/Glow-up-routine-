@@ -16,7 +16,11 @@ import {
   HeartPulse,
   Layers,
   XCircle,
-  Sliders
+  Sliders,
+  BookOpen,
+  Ban,
+  Compass,
+  Moon
 } from 'lucide-react';
 import { scrollToTop } from '../../utils/scrollHelper';
 
@@ -65,7 +69,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
         </h1>
 
         <p className="text-xs text-gray-300 leading-relaxed font-medium">
-          Guida pratica e strutturata divisa in 4 parti: massaggio mattutino preparatorio, routine completa per la rasatura della barba a prova di irritazioni, informazioni sui tempi reali di guarigione e turnover cellulare della pelle, e il metodo diviso per zone con strumenti specifici e regole schiuma.
+          Guida pratica e strutturata divisa in 4 parti: massaggio mattutino preparatorio, routine completa per la rasatura della barba a prova di irritazioni, informazioni sui tempi reali di guarigione e turnover cellulare della pelle, e il metodo diviso per zone con la Guida Definitiva per la rasatura perfetta.
         </p>
 
         {/* Tab Filters */}
@@ -127,7 +131,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
-            4. Metodo Diviso (Zone & Strumenti)
+            4. Metodo Diviso & Guida Definitiva
           </button>
         </div>
       </div>
@@ -506,10 +510,10 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
       )}
 
       {/* ============================================================= */}
-      {/* SEZIONE 4: METODO DIVISO PER ZONE & STRUMENTI DEDICATI        */}
+      {/* SEZIONE 4: METODO DIVISO PER ZONE & GUIDA DEFINITIVA          */}
       {/* ============================================================= */}
       {(activeTab === 'tutte' || activeTab === 'metodo_diviso') && (
-        <div className="space-y-4 animate-in fade-in duration-200">
+        <div className="space-y-5 animate-in fade-in duration-200">
           <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
             <div className="flex items-center space-x-2">
               <span className="p-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
@@ -520,12 +524,12 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
                   Parte 4 • Nuova Nota Strategica
                 </span>
                 <h2 className="text-base sm:text-lg font-black text-white">
-                  Metodo Diviso per Zone & Strumenti (Regole & Schiuma)
+                  Metodo Diviso per Zone & Guida Definitiva Rasatura
                 </h2>
               </div>
             </div>
             <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-              3 Zone • Zero Stress
+              Zero Stress • Anti-Cocci
             </span>
           </div>
 
@@ -551,16 +555,16 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
             </div>
           </div>
 
-          {/* INTRODUZIONE AL METODO DIVISO */}
+          {/* METODO DIVISO: LE 2 ZONE PRINCIPALI */}
           <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-emerald-500/30 space-y-4 shadow-[0_0_20px_rgba(16,185,129,0.1)]">
             <div className="p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 text-xs text-gray-200 leading-relaxed font-medium">
-              Dividere le zone in questo modo ti permette di <strong className="text-emerald-300">sfruttare il punto di forza di ogni strumento</strong> ed <strong className="text-emerald-300">evitare di stressare inutilmente la pelle</strong>.
+              Dividere le zone in questo modo ti permette di <strong className="text-emerald-300">sfruttare il punto di forza di ogni strumento</strong> ed <strong className="text-emerald-300">evitare di stressare inutilmente la pelle</strong>:
             </div>
 
-            {/* LE 3 ZONE */}
-            <div className="space-y-3">
+            {/* LE 2 ZONE CHIAVE */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* 1. GUANCE */}
-              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-emerald-500/30 transition-colors space-y-2">
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-emerald-500/30 space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <span className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-xs font-black">
@@ -589,7 +593,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
               </div>
 
               {/* 2. BAFFI */}
-              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-cyan-500/30 transition-colors space-y-2">
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-cyan-500/30 space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <span className="w-6 h-6 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-xs font-black">
@@ -616,35 +620,6 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
                   </span>
                 </div>
               </div>
-
-              {/* 3. SOTTOMENTO E COLLO */}
-              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-amber-500/30 transition-colors space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <span className="w-6 h-6 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center text-xs font-black">
-                      3
-                    </span>
-                    <h3 className="text-xs sm:text-sm font-black text-white">
-                      Sottomento e Collo <span className="text-gray-400 text-xs font-medium">(Zona morbida, pieghe e contropelo)</span>
-                    </h3>
-                  </div>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30">
-                    Shaver Elettrico Squadrato (Foto 1)
-                  </span>
-                </div>
-
-                <p className="text-xs text-gray-300 leading-relaxed pl-8">
-                  Usa lo <strong className="text-white">shaver elettrico squadrato (Foto 1)</strong>. Raschia il pelo vicinissimo alla pelle ma <strong className="text-amber-200">senza che la lama tagli sotto-cuticola</strong>, salvandoti dai peli incarniti nelle zone più delicate e soggette a pieghe.
-                </p>
-
-                <div className="ml-8 mt-2 p-2.5 rounded-xl bg-black/50 border border-white/10 flex items-center justify-between text-[11px]">
-                  <span className="text-gray-400 font-medium">Gestione Schiuma:</span>
-                  <span className="font-extrabold text-amber-300 flex items-center gap-1">
-                    <XCircle className="w-3.5 h-3.5 text-amber-400" />
-                    NO, A SECCO su pelle asciutta e pulita
-                  </span>
-                </div>
-              </div>
             </div>
 
             {/* REGOLA FONDAMENTALE ZERO SOVRAPPOSIZIONE */}
@@ -662,115 +637,352 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
                 Passare due strumenti consecutivi moltiplica i passaggi, rimuove lo strato corneo protettivo della pelle e finisce per tagliare il pelo troppo in profondità, facendolo incurvare sotto pelle.
               </p>
             </div>
-          </div>
 
-          {/* SCHEMA RIEPILOGATIVO: SCHIUMA VS A SECCO */}
-          <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-white/10 space-y-3">
-            <span className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5">
-              <Droplet className="w-4 h-4 text-cyan-400" />
-              Guida alla Schiuma: Come Regolarsi su Ognuno dei Tre
-            </span>
+            {/* GUIDA ALLA SCHIUMA PER LE DUE MODALITÀ */}
+            <div className="pt-2 border-t border-white/10 space-y-2.5">
+              <span className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5">
+                <Droplet className="w-4 h-4 text-cyan-400" />
+                Guida alla Schiuma: Come Regolarsi
+              </span>
+              <p className="text-xs text-gray-300 font-medium">
+                No, non su tutti nello stesso modo. Di seguito come gestire la schiuma:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="p-3.5 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-white">Monolama Gillette (Guance)</span>
+                    <span className="text-[10px] font-black text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-md border border-emerald-500/30">
+                      SÌ, SEMPRE
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-gray-300">
+                    Sempre con schiuma o gel da barba. La lama necessita del cuscino lubrificante protettivo per scorrere senza intaccare la cute.
+                  </p>
+                </div>
 
-            <p className="text-xs text-gray-300 font-medium">
-              No, non su tutti e tre nello stesso modo. Di seguito come gestire la schiuma per ogni strumento:
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
-              {/* Card Monolama */}
-              <div className="p-3.5 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-white">Monolama Gillette</span>
-                  <span className="text-[10px] font-black text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded-md border border-emerald-500/30">
-                    Guance
-                  </span>
+                <div className="p-3.5 rounded-2xl bg-cyan-950/20 border border-cyan-500/30 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-white">Rifinitore Nikai (Baffi)</span>
+                    <span className="text-[10px] font-black text-cyan-300 bg-cyan-500/20 px-2 py-0.5 rounded-md border border-cyan-500/30">
+                      NO, A SECCO
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-gray-300">
+                    Rigorosamente a secco su pelle asciutta. La schiuma farebbe impastare e appiccicare i peli tagliati, frenando le lame.
+                  </p>
                 </div>
-                <div className="text-xs font-black text-emerald-300 flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                  SÌ, SEMPRE
-                </div>
-                <p className="text-[11px] text-gray-300 leading-relaxed">
-                  Con schiuma o gel da barba. La lama ha bisogno di uno strato di scivolamento idratante per non irritare la pelle.
-                </p>
-              </div>
-
-              {/* Card Shaver */}
-              <div className="p-3.5 rounded-2xl bg-amber-950/20 border border-amber-500/30 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-white">Shaver Squadrato</span>
-                  <span className="text-[10px] font-black text-amber-400 bg-amber-500/20 px-2 py-0.5 rounded-md border border-amber-500/30">
-                    Sottomento/Collo
-                  </span>
-                </div>
-                <div className="text-xs font-black text-amber-300 flex items-center gap-1">
-                  <XCircle className="w-3.5 h-3.5 text-amber-400" />
-                  NO, A SECCO
-                </div>
-                <p className="text-[11px] text-gray-300 leading-relaxed">
-                  Su pelle asciutta e pulita. La schiuma intasa le micro-lamine e può danneggiare i rasoi non impermeabili.
-                </p>
-              </div>
-
-              {/* Card Nikai */}
-              <div className="p-3.5 rounded-2xl bg-cyan-950/20 border border-cyan-500/30 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-white">Rifinitore Nikai</span>
-                  <span className="text-[10px] font-black text-cyan-400 bg-cyan-500/20 px-2 py-0.5 rounded-md border border-cyan-500/30">
-                    Baffi
-                  </span>
-                </div>
-                <div className="text-xs font-black text-cyan-300 flex items-center gap-1">
-                  <XCircle className="w-3.5 h-3.5 text-cyan-400" />
-                  NO, A SECCO
-                </div>
-                <p className="text-[11px] text-gray-300 leading-relaxed">
-                  Su pelle asciutta. La schiuma farebbe appiccicare i peli tagliati tra loro bloccando il movimento dei dentini.
-                </p>
               </div>
             </div>
           </div>
 
-          {/* SEQUENZA CRONOLOGICA DI UTILIZZO */}
-          <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-br from-emerald-950/40 via-black/85 to-teal-950/30 border-2 border-emerald-400/50 space-y-3 shadow-neon">
-            <span className="text-xs font-black text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
-              <Zap className="w-4 h-4 text-emerald-400" />
-              La Sequenza Operativa Pratica (Dopo la Guarigione)
-            </span>
-
-            <div className="space-y-2.5 text-xs">
-              <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
-                <div className="flex items-center space-x-2">
-                  <span className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold text-[11px]">
-                    1
+          {/* ============================================================= */}
+          {/* GUIDA DEFINITIVA: GESTIONE PELLE E RASATURA PERFETTA         */}
+          {/* ============================================================= */}
+          <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-indigo-950/50 via-black/90 to-purple-950/40 border-2 border-indigo-400/60 shadow-[0_0_35px_rgba(99,102,241,0.25)] space-y-5">
+            <div className="flex items-center justify-between border-b border-indigo-400/20 pb-3">
+              <div className="flex items-center space-x-2.5">
+                <span className="p-2 rounded-2xl bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">
+                  <BookOpen className="w-5 h-5 text-indigo-400" />
+                </span>
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-indigo-400 block">
+                    Protocollo Completo & Riferimento Scientifico
                   </span>
-                  <strong className="text-white">Fase a Secco (Pelle Asciutta & Pulita):</strong>
+                  <h3 className="text-base sm:text-xl font-black text-white">
+                    Guida Definitiva: Gestione Pelle e Rasatura Perfetta
+                  </h3>
                 </div>
-                <p className="text-[11px] text-gray-300 pl-7 leading-relaxed">
-                  Prima regola i baffi con il <strong className="text-cyan-300">rifinitore Nikai (Foto 2)</strong>, poi passa delicatamente lo <strong className="text-amber-300">shaver squadrato (Foto 1)</strong> su collo e sottomento senza premere.
-                </p>
+              </div>
+              <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-xl bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 hidden sm:inline-block">
+                Tutto in Ordine
+              </span>
+            </div>
+
+            {/* 1. IL MECCANISMO SCIENTIFICO */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-indigo-500/30 space-y-3">
+              <div className="flex items-center space-x-2">
+                <span className="w-6 h-6 rounded-lg bg-indigo-500/20 text-indigo-300 flex items-center justify-center font-black text-xs">
+                  1
+                </span>
+                <h4 className="text-sm font-black text-white uppercase tracking-wider">
+                  Il Meccanismo Scientifico: Perché Si Formano i "Cocci"
+                </h4>
               </div>
 
-              <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
-                <div className="flex items-center space-x-2">
-                  <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-bold text-[11px]">
-                    2
-                  </span>
-                  <strong className="text-white">Fase Schiuma (Solo sulle Guance):</strong>
+              <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                I brufoli e la follicolite non sono inevitabili; nascono dall'interazione tra la struttura del pelo, il sebo e il taglio errato:
+              </p>
+
+              <div className="space-y-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-indigo-300 font-bold block flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-indigo-400"></span>
+                    Predisposizione Genetica:
+                  </strong>
+                  <p className="text-[11px] text-gray-300 pl-3.5 leading-relaxed">
+                    I tuoi peli hanno una crescita inclinata/curva e i pori tendono ad accumulare sebo. Chi fa il contropelo senza problemi ha peli dritti e pelle poco reattiva.
+                  </p>
                 </div>
-                <p className="text-[11px] text-gray-300 pl-7 leading-relaxed">
-                  Inumidisci con acqua tiepida solo le guance, applica schiuma o gel da barba e passa il <strong className="text-emerald-300">monolama Gillette a 30 gradi</strong> con movimenti lineari e mano leggera.
-                </p>
+
+                <div className="p-3 rounded-xl bg-black/60 border border-rose-500/30 space-y-1">
+                  <strong className="text-rose-300 font-bold block flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-rose-400"></span>
+                    Effetto Contropelo:
+                  </strong>
+                  <p className="text-[11px] text-gray-300 pl-3.5 leading-relaxed">
+                    Tagliare dal basso verso l'alto spinge la lama sotto il livello dell'epidermide. Quando la pelle si riassesta, la punta del pelo sprofonda sotto la cute e, trovando il poro ostruito dal sebo, si piega verso l'interno scatenando l'infiammazione (pelo incarnito).
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/60 border border-emerald-500/30 space-y-1">
+                  <strong className="text-emerald-300 font-bold block flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    Fase di Purging (Spurgo):
+                  </strong>
+                  <p className="text-[11px] text-gray-300 pl-3.5 leading-relaxed">
+                    L'acido salicilico sta liberando i pori dall'interno. Questa fase di sfogo è temporanea: una volta riassorbita l'infiammazione e liberati i pori, la pelle tornerà pulita.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. STRUMENTI E ROUTINE COMBINATA (TABELLA) */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-cyan-500/30 space-y-3">
+              <div className="flex items-center space-x-2">
+                <span className="w-6 h-6 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-black text-xs">
+                  2
+                </span>
+                <h4 className="text-sm font-black text-white uppercase tracking-wider">
+                  Strumenti e Routine Combinata
+                </h4>
               </div>
 
-              <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
-                <div className="flex items-center space-x-2">
-                  <span className="w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center font-bold text-[11px]">
-                    3
+              <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                Per ridurre al minimo lo stress cutaneo, ogni strumento va usato solo nella zona in cui è più efficace, senza mai sovrapporli nella stessa sessione:
+              </p>
+
+              {/* Tabella Styled */}
+              <div className="overflow-x-auto rounded-xl border border-white/10">
+                <table className="w-full text-left text-xs text-gray-300 border-collapse">
+                  <thead className="bg-white/[0.05] text-[10px] font-black uppercase text-gray-300 border-b border-white/10">
+                    <tr>
+                      <th className="p-3">Strumento</th>
+                      <th className="p-3">Zona del Viso</th>
+                      <th className="p-3">Modalità d'Uso</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 text-[11px]">
+                    <tr className="hover:bg-white/[0.02] transition-colors">
+                      <td className="p-3 font-bold text-cyan-300 flex items-center gap-1.5">
+                        <Scissors className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                        Nikai (Regolabarba)
+                      </td>
+                      <td className="p-3 text-white font-medium">
+                        Baffi e rifiniture di precisione
+                      </td>
+                      <td className="p-3 text-gray-300">
+                        <span className="text-cyan-300 font-bold">A secco.</span> Taglia in superficie senza micro-lesioni.
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-white/[0.02] transition-colors">
+                      <td className="p-3 font-bold text-emerald-300 flex items-center gap-1.5">
+                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        Monolama Gillette (Rasoio di sicurezza)
+                      </td>
+                      <td className="p-3 text-white font-medium">
+                        Guance e zone ampie
+                      </td>
+                      <td className="p-3 text-gray-300">
+                        <span className="text-emerald-300 font-bold">Con schiuma/gel.</span> Inclinazione a 30°, pressione zero.
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-white/[0.02] transition-colors">
+                      <td className="p-3 font-bold text-amber-300 flex items-center gap-1.5">
+                        <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                        Shaver Elettrico Squadrato
+                      </td>
+                      <td className="p-3 text-white font-medium">
+                        Sottomento e collo
+                      </td>
+                      <td className="p-3 text-gray-300">
+                        <span className="text-amber-300 font-bold">A secco.</span> Raschia il pelo vicino alla cute senza tagliarlo sotto-cuticola.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* 3. TECNICA DI RASATURA PER ZONA */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-emerald-500/30 space-y-3.5">
+              <div className="flex items-center space-x-2">
+                <span className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-black text-xs">
+                  3
+                </span>
+                <h4 className="text-sm font-black text-white uppercase tracking-wider">
+                  Tecnica di Rasatura per Zona
+                </h4>
+              </div>
+
+              {/* Sottozona A: Guance */}
+              <div className="p-3.5 rounded-xl bg-black/60 border border-emerald-500/30 space-y-2">
+                <div className="flex items-center justify-between">
+                  <h5 className="text-xs font-black text-emerald-300 uppercase tracking-wider">
+                    A. Guance (Monolama Gillette)
+                  </h5>
+                  <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded-md">
+                    Inclinazione 30°
                   </span>
-                  <strong className="text-white">Chiusura & Ripristino Barriera:</strong>
                 </div>
-                <p className="text-[11px] text-gray-300 pl-7 leading-relaxed">
-                  Sciacqua con acqua fresca per calmare la cute, tampona delicatamente con asciugamano pulito e applica la crema idratante / lenitiva.
+
+                <p className="text-[11px] text-gray-300 leading-relaxed font-medium">
+                  Per ottenere una pelle liscia senza ricorrere al contropelo diretto (dal basso verso l'alto, che è vietato):
                 </p>
+
+                <div className="space-y-1.5 text-xs text-gray-300 pl-2">
+                  <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/5 space-y-0.5">
+                    <strong className="text-white block font-bold text-[11px]">
+                      • Primo Passaggio - Verso del pelo (WTG):
+                    </strong>
+                    <ul className="text-[11px] text-gray-300 space-y-0.5 pl-3 list-disc">
+                      <li>Muovi il rasoio dall'alto verso il basso (dallo zigomo alla mascella).</li>
+                      <li>Mantieni un'inclinazione di 30° sfruttando il peso del rasoio, senza premere.</li>
+                    </ul>
+                  </div>
+
+                  <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/5 space-y-0.5">
+                    <strong className="text-white block font-bold text-[11px]">
+                      • Secondo Passaggio - Di traverso (XTG):
+                    </strong>
+                    <ul className="text-[11px] text-gray-300 space-y-0.5 pl-3 list-disc">
+                      <li>Riapplica la schiuma da barba.</li>
+                      <li>Muovi il rasoio in orizzontale (dall'orecchio verso la bocca/naso), mantenendo l'impugnatura verticale e parallela al pavimento.</li>
+                    </ul>
+                  </div>
+
+                  <div className="p-2.5 rounded-lg bg-red-950/40 border border-red-500/30 flex items-center gap-2">
+                    <Ban className="w-4 h-4 text-red-400 shrink-0" />
+                    <span className="text-[11px] text-red-200 font-bold">
+                      Divieto Assoluto: Mai salire dal basso verso l'alto (contropelo puro).
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sottozona B: Sottomento e Collo */}
+              <div className="p-3.5 rounded-xl bg-black/60 border border-amber-500/30 space-y-2">
+                <div className="flex items-center justify-between">
+                  <h5 className="text-xs font-black text-amber-300 uppercase tracking-wider">
+                    B. Sottomento e Collo (Gestione della Zona Difficile)
+                  </h5>
+                  <span className="text-[10px] font-bold text-amber-400 bg-amber-500/20 px-2 py-0.5 rounded-md">
+                    2 Opzioni
+                  </span>
+                </div>
+
+                <div className="space-y-2 text-xs">
+                  {/* Opzione Consigliata */}
+                  <div className="p-3 rounded-lg bg-white/[0.02] border border-emerald-500/30 space-y-1">
+                    <span className="text-[10px] font-black uppercase text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded-md inline-block">
+                      Opzione Consigliata
+                    </span>
+                    <strong className="text-white block font-bold text-[11px]">
+                      Shaver Elettrico:
+                    </strong>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Usa lo shaver a secco con micro-movimenti circolari o lineari veloci. È la scelta migliore per ridurre a zero i peli incarniti nelle pieghe del collo.
+                    </p>
+                  </div>
+
+                  {/* Opzione Secondaria */}
+                  <div className="p-3 rounded-lg bg-white/[0.02] border border-white/10 space-y-1.5">
+                    <span className="text-[10px] font-black uppercase text-gray-400 bg-white/10 px-2 py-0.5 rounded-md inline-block">
+                      Opzione Secondaria (Solo a Pelle Totalmente Guarita)
+                    </span>
+                    <strong className="text-white block font-bold text-[11px]">
+                      Monolama Gillette:
+                    </strong>
+                    <ul className="text-[11px] text-gray-300 space-y-1 pl-3 list-disc">
+                      <li>
+                        <strong className="text-gray-200">Mappatura (Grain Mapping):</strong> Tocca i peli per capire la direzione di crescita (spesso dall'alto verso il basso, dal mento al pomo d'Adamo).
+                      </li>
+                      <li>
+                        <strong className="text-gray-200">Passaggio 1 (WTG):</strong> Scendi dritto verso la base del collo seguendo il verso del pelo.
+                      </li>
+                      <li>
+                        <strong className="text-gray-200">Passaggio 2 (XTG):</strong> Riapplica la schiuma e muovi il rasoio in orizzontale (dal centro del collo verso l'esterno/mascella), parallelo al terreno.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 4. FLUSSO DI LAVORO PRATICO */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-purple-500/30 space-y-3">
+              <div className="flex items-center space-x-2">
+                <span className="w-6 h-6 rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center font-black text-xs">
+                  4
+                </span>
+                <h4 className="text-sm font-black text-white uppercase tracking-wider">
+                  Flusso di Lavoro Pratico
+                </h4>
+              </div>
+
+              <div className="space-y-2.5 text-xs">
+                {/* Fase 1 */}
+                <div className="p-3 rounded-xl bg-black/60 border border-amber-500/30 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <strong className="text-amber-300 font-bold block text-xs">
+                      Fase 1: Riposo e Guarigione (2-3 Giorni)
+                    </strong>
+                    <span className="text-[10px] font-bold text-amber-400 bg-amber-500/20 px-2 py-0.5 rounded-md">
+                      Pausa Totale
+                    </span>
+                  </div>
+                  <ul className="text-[11px] text-gray-300 space-y-0.5 pl-3 list-disc">
+                    <li>Sospendi completamente rasoio e acido salicilico.</li>
+                    <li>Detergi delicatamente il viso e applica la crema solare la mattina.</li>
+                  </ul>
+                </div>
+
+                {/* Fase 2 */}
+                <div className="p-3 rounded-xl bg-black/60 border border-cyan-500/30 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <strong className="text-cyan-300 font-bold block text-xs">
+                      Fase 2: Giorno della Rasatura
+                    </strong>
+                    <span className="text-[10px] font-bold text-cyan-400 bg-cyan-500/20 px-2 py-0.5 rounded-md">
+                      Procedura Corretta
+                    </span>
+                  </div>
+                  <ul className="text-[11px] text-gray-300 space-y-0.5 pl-3 list-disc">
+                    <li>Passa il Nikai a secco sui baffi e nei punti di precisione.</li>
+                    <li>Passa lo shaver elettrico a secco su sottomento e collo.</li>
+                    <li>Bagna il viso e applica la schiuma/gel sulle guance.</li>
+                    <li>Passa il Gillette monolama (passaggio 1 in verticale verso il basso; passaggio 2 in orizzontale da orecchio a bocca).</li>
+                    <li>Sciacqua con acqua fredda per richiudere i pori.</li>
+                  </ul>
+                </div>
+
+                {/* Fase 3 */}
+                <div className="p-3 rounded-xl bg-black/60 border border-purple-500/30 space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <strong className="text-purple-300 font-bold block text-xs flex items-center gap-1.5">
+                      <Moon className="w-3.5 h-3.5 text-purple-400" />
+                      Fase 3: Post-Rasatura e Cura Notturna
+                    </strong>
+                    <span className="text-[10px] font-bold text-purple-400 bg-purple-500/20 px-2 py-0.5 rounded-md">
+                      Leave-On Notturno
+                    </span>
+                  </div>
+                  <ul className="text-[11px] text-gray-300 space-y-1 pl-3 list-disc">
+                    <li>La sera, a pelle pulita e asciutta, applica la crema all'acido salicilico.</li>
+                    <li>
+                      <strong className="text-white">Proprietà Leave-On:</strong> La crema <strong className="text-purple-300">NON va risciacquata</strong>; deve rimanere sulla pelle per agire tutta la notte liberando i pori in profondità.
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

@@ -1741,7 +1741,7 @@ export const NoteTab: React.FC = () => {
                   <Scissors className="w-3 h-3 text-emerald-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">4 Parti: Mattina • Barba • Info • Metodo Diviso</span>
+                <span className="text-[10px] text-gray-400 font-semibold">4 Parti: Mattina • Barba • Info • Guida Definitiva</span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-emerald-300 transition-colors uppercase tracking-tight">
@@ -1749,7 +1749,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Massaggio mattutino preparatorio (30-60s), routine rasatura con monolama, turnover cellulare e nuovo Metodo Diviso per zone: monolama Gillette su guance con schiuma, rifinitore Nikai su baffi a secco, shaver squadrato su collo a secco, e pausa 2-3 giorni per sfiammare.
+                Massaggio mattutino (30-60s), routine rasatura con monolama, turnover cellulare e Guida Definitiva: perché si formano i cocci, metodo diviso per zone, tecnica WTG/XTG senza contropelo e flusso pratico con acido salicilico leave-on.
               </p>
             </div>
 
@@ -1763,7 +1763,7 @@ export const NoteTab: React.FC = () => {
               <span>Tocca per aprire la guida sui peli incarniti</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">4 Parti • Metodo Diviso per Zone</span>
+            <span className="text-[10px] text-gray-400 font-semibold">4 Parti • Guida Definitiva Rasatura</span>
           </div>
         </div>
       </div>
@@ -1817,103 +1817,7 @@ export const NoteTab: React.FC = () => {
       </div>
 
       {/* ------------------------------------------------------------- */}
-      {/* CARD: "PALESTRA E ORGANIZZAZIONE PER PERDERE GRASSO"          */}
-      {/* ------------------------------------------------------------- */}
-      <div className="space-y-2">
-        <span className="text-[11px] font-bold text-orange-400 uppercase tracking-wider block pl-1">
-          Nuova Nota Personale • Allenamento & Ricomposizione Corporea
-        </span>
-
-        <div
-          onClick={() => handleOpenView('palestra_grasso')}
-          className="p-5 rounded-3xl glass-card border-2 border-orange-500/70 hover:border-orange-400 bg-gradient-to-br from-orange-500/20 via-black/85 to-amber-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
-        >
-          <div className="absolute -top-12 -right-12 w-32 h-32 bg-orange-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
-
-          <div className="flex items-start justify-between relative z-10">
-            <div className="space-y-2 flex-1 pr-3">
-              <div className="flex items-center space-x-2">
-                <span className="px-2.5 py-0.5 rounded-full bg-orange-400/20 text-orange-300 text-[10px] font-black uppercase tracking-wider border border-orange-400/40 shadow-sm flex items-center gap-1">
-                  <Dumbbell className="w-3 h-3 text-orange-400" />
-                  ★ Note Scritte Da Me
-                </span>
-                <span className="text-[10px] text-gray-400 font-semibold">14 Pilastri • 5# & 6# Affiancate + 7# Bustine & Stabilità</span>
-              </div>
-
-              <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-orange-300 transition-colors uppercase tracking-tight">
-                Palestra e organizzazione per perdere grasso
-              </h2>
-
-              <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Tecnica dei pesi e buffer, deficit senza fame, Quadro Completo, turnover 1g/kg, proteine in eccesso (5# Parti 1 & 2 affiancate), biochimica dei grassi alimentari vs corporei (6# Parti 1 & 2 affiancate) e i conti delle bustine di zucchero con target 120–130 mg/dL.
-              </p>
-            </div>
-
-            <div className="p-3 rounded-2xl bg-orange-500/20 group-hover:bg-orange-500 text-orange-300 group-hover:text-black border border-orange-400/50 shadow-neon transition-all shrink-0 mt-1">
-              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
-            </div>
-          </div>
-
-          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
-            <span className="text-orange-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire la guida su palestra e dimagrimento</span>
-              <Sparkles className="w-3.5 h-3.5" />
-            </span>
-            <span className="text-[10px] text-gray-400 font-semibold">5# Proteine (Sx/Dx) + 6# Grassi (Sx/Dx) + 7# Bustine 120-130</span>
-          </div>
-        </div>
-      </div>
-
-      {/* ------------------------------------------------------------- */}
-      {/* CARD: "COSE DA COMPRARE (I MIEI REGALI DI NATALE)"           */}
-      {/* ------------------------------------------------------------- */}
-      <div className="space-y-2">
-        <span className="text-[11px] font-bold text-emerald-400 uppercase tracking-wider block pl-1">
-          Nuova Nota Personale • Wishlist & Acquisti Ufficiali
-        </span>
-
-        <div
-          onClick={() => handleOpenView('regali_natale')}
-          className="p-5 rounded-3xl glass-card border-2 border-emerald-500/70 hover:border-emerald-400 bg-gradient-to-br from-emerald-500/20 via-black/85 to-teal-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
-        >
-          <div className="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
-
-          <div className="flex items-start justify-between relative z-10">
-            <div className="space-y-2 flex-1 pr-3">
-              <div className="flex items-center space-x-2">
-                <span className="px-2.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300 text-[10px] font-black uppercase tracking-wider border border-emerald-400/40 shadow-sm flex items-center gap-1">
-                  <Gift className="w-3 h-3 text-emerald-400" />
-                  ★ Note Scritte Da Me
-                </span>
-                <span className="text-[10px] text-gray-400 font-semibold">Regali & Cura Personale</span>
-              </div>
-
-              <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-emerald-300 transition-colors uppercase tracking-tight">
-                Cose da comprare (i miei regali di natale)
-              </h2>
-
-              <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                I 4 regali ufficiali: Rasoio King C. Gillette + lamette platino (15 €) su Amazon, federa 100% pura seta Mulberry 22 Momme (49 €) su Offtopic, il diffusore per phon (fisica dei micro-flussi e fissaggio dei legami a idrogeno) e le gomme da masticare mewing ad alta resistenza per l'allenamento dei masseteri.
-              </p>
-            </div>
-
-            <div className="p-3 rounded-2xl bg-emerald-500/20 group-hover:bg-emerald-500 text-emerald-300 group-hover:text-black border border-emerald-400/50 shadow-neon transition-all shrink-0 mt-1">
-              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
-            </div>
-          </div>
-
-          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
-            <span className="text-emerald-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire la lista dei 4 regali di Natale</span>
-              <Sparkles className="w-3.5 h-3.5" />
-            </span>
-            <span className="text-[10px] text-gray-400 font-semibold">Rasoio + Seta 49€ + Diffusore + Gomme Mewing</span>
-          </div>
-        </div>
-      </div>
-
-      {/* ------------------------------------------------------------- */}
-      {/* CARD: "CAPELLI TEXTURE FORMA PIEGA LISCIA"                    */}
+      {/* CARD: "CAPELLI TEXTURE FORMA PIEGA LISCIA" (AFFIANCATA)        */}
       {/* ------------------------------------------------------------- */}
       <div className="space-y-2">
         <span className="text-[11px] font-bold text-cyan-300 uppercase tracking-wider block pl-1">
@@ -1978,6 +1882,101 @@ export const NoteTab: React.FC = () => {
       </div>
 
       {/* ------------------------------------------------------------- */}
+      {/* CARD: "PALESTRA E ORGANIZZAZIONE PER PERDERE GRASSO"          */}
+      {/* ------------------------------------------------------------- */}
+      <div className="space-y-2">
+        <span className="text-[11px] font-bold text-orange-400 uppercase tracking-wider block pl-1">
+          Nuova Nota Personale • Allenamento & Ricomposizione Corporea
+        </span>
+
+        <div
+          onClick={() => handleOpenView('palestra_grasso')}
+          className="p-5 rounded-3xl glass-card border-2 border-orange-500/70 hover:border-orange-400 bg-gradient-to-br from-orange-500/20 via-black/85 to-amber-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
+        >
+          <div className="absolute -top-12 -right-12 w-32 h-32 bg-orange-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
+
+          <div className="flex items-start justify-between relative z-10">
+            <div className="space-y-2 flex-1 pr-3">
+              <div className="flex items-center space-x-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-orange-400/20 text-orange-300 text-[10px] font-black uppercase tracking-wider border border-orange-400/40 shadow-sm flex items-center gap-1">
+                  <Dumbbell className="w-3 h-3 text-orange-400" />
+                  ★ Note Scritte Da Me
+                </span>
+                <span className="text-[10px] text-gray-400 font-semibold">15 Pilastri • 5# & 6# Affiancate + 7# Bustine + 8# Piegamenti</span>
+              </div>
+
+              <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-orange-300 transition-colors uppercase tracking-tight">
+                Palestra e organizzazione per perdere grasso
+              </h2>
+
+              <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
+                Tecnica dei pesi e buffer, deficit senza fame, Quadro Completo, turnover 1g/kg, proteine in eccesso (5# Parti 1 & 2), biochimica dei grassi (6# Parti 1 & 2), bustine 120–130 mg/dL e 8# Piegamenti al giovedì & Lavoro fisico vs palestra.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-orange-500/20 group-hover:bg-orange-500 text-orange-300 group-hover:text-black border border-orange-400/50 shadow-neon transition-all shrink-0 mt-1">
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
+            <span className="text-orange-300 font-bold flex items-center gap-1.5">
+              <span>Tocca per aprire la guida su palestra e dimagrimento</span>
+              <Sparkles className="w-3.5 h-3.5" />
+            </span>
+            <span className="text-[10px] text-gray-400 font-semibold">5# (Sx/Dx) + 6# (Sx/Dx) + 7# Bustine + 8# Piegamenti</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ------------------------------------------------------------- */}
+      {/* CARD: "COSE DA COMPRARE (I MIEI REGALI DI NATALE)"           */}
+      {/* ------------------------------------------------------------- */}
+      <div className="space-y-2">
+        <span className="text-[11px] font-bold text-emerald-400 uppercase tracking-wider block pl-1">
+          Nuova Nota Personale • Wishlist & Acquisti Ufficiali
+        </span>
+
+        <div
+          onClick={() => handleOpenView('regali_natale')}
+          className="p-5 rounded-3xl glass-card border-2 border-emerald-500/70 hover:border-emerald-400 bg-gradient-to-br from-emerald-500/20 via-black/85 to-teal-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
+        >
+          <div className="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
+
+          <div className="flex items-start justify-between relative z-10">
+            <div className="space-y-2 flex-1 pr-3">
+              <div className="flex items-center space-x-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300 text-[10px] font-black uppercase tracking-wider border border-emerald-400/40 shadow-sm flex items-center gap-1">
+                  <Gift className="w-3 h-3 text-emerald-400" />
+                  ★ Note Scritte Da Me
+                </span>
+                <span className="text-[10px] text-gray-400 font-semibold">Regali & Cura Personale</span>
+              </div>
+
+              <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-emerald-300 transition-colors uppercase tracking-tight">
+                Cose da comprare (i miei regali di natale)
+              </h2>
+
+              <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
+                I 4 regali ufficiali: Rasoio King C. Gillette + lamette platino (15 €) su Amazon, federa 100% pura seta Mulberry 22 Momme (49 €) su Offtopic, il diffusore per phon (fisica dei micro-flussi e fissaggio dei legami a idrogeno) e le gomme da masticare mewing ad alta resistenza per l'allenamento dei masseteri.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-emerald-500/20 group-hover:bg-emerald-500 text-emerald-300 group-hover:text-black border border-emerald-400/50 shadow-neon transition-all shrink-0 mt-1">
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
+            <span className="text-emerald-300 font-bold flex items-center gap-1.5">
+              <span>Tocca per aprire la lista dei 4 regali di Natale</span>
+              <Sparkles className="w-3.5 h-3.5" />
+            </span>
+            <span className="text-[10px] text-gray-400 font-semibold">Rasoio + Seta 49€ + Diffusore + Gomme Mewing</span>
+          </div>
+        </div>
+      </div>
+      {/* ------------------------------------------------------------- */}
       {/* CARD: "DIABETE, GLICEMIA E PALESTRA" (RICHIESTA SPECIFICA)    */}
       {/* ------------------------------------------------------------- */}
       <div className="space-y-2">
@@ -2010,6 +2009,9 @@ export const NoteTab: React.FC = () => {
                 <span className="text-[10px] text-purple-300 font-extrabold bg-purple-500/15 px-2 py-0.5 rounded-md border border-purple-500/30">
                   📊 5: Iperglicemia &gt;180
                 </span>
+                <span className="text-[10px] text-cyan-300 font-extrabold bg-cyan-500/15 px-2 py-0.5 rounded-md border border-cyan-500/30">
+                  🧬 6: Variabilità & Dimagrimento
+                </span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-rose-300 transition-colors uppercase tracking-tight">
@@ -2017,7 +2019,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Guida fisiologica e metabolica completa: ricarica glicogeno e GLUT-4, Somogyi vs Alba, correzione con bustine vs spuntino con cibo vero, biochimica a 50–60 mg/dL (catabolismo muscolare & ciclo di Krebs) e cosa accade oltre la soglia renale di 180 mg/dL (poliuria, polidipsia e tabella range).
+                Guida fisiologica e metabolica completa: ricarica glicogeno e GLUT-4, correzione con bustine vs cibo vero, catabolismo a 50–60 mg/dL, soglia renale 180 mg/dL e Nota 6 su Variabilità Glicemica, insulina, cortisolo/stress, acidi grassi liberi e dimagrimento.
               </p>
             </div>
 
@@ -2031,7 +2033,7 @@ export const NoteTab: React.FC = () => {
               <span>Tocca per aprire la guida su glicemia e palestra</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">5 Note Speciali + 5 Sezioni Fisiologiche</span>
+            <span className="text-[10px] text-gray-400 font-semibold">6 Note Scientifiche + 5 Sezioni Fisiologiche</span>
           </div>
         </div>
       </div>

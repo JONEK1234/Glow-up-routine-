@@ -13,7 +13,9 @@ import {
   AlertTriangle,
   Bed,
   CheckCircle2,
-  Wind
+  Wind,
+  RefreshCw,
+  HeartPulse
 } from 'lucide-react';
 import { scrollToTop } from '../../utils/scrollHelper';
 
@@ -108,7 +110,7 @@ const WEEK_DAYS: RoutineDay[] = [
 ];
 
 export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutte' | 'tabella' | 'notti' | 'polverina'>('tutte');
+  const [activeTab, setActiveTab] = useState<'tutte' | 'tabella' | 'notti' | 'polverina' | 'refresh'>('tutte');
   const [selectedDayIndex, setSelectedDayIndex] = useState<number | null>(null);
 
   // Scroll solo all'apertura della nota (mount)
@@ -200,6 +202,18 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
           >
             <Sparkles className="w-3.5 h-3.5" />
             3. Guida Polverina
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('refresh')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'refresh'
+                ? 'bg-emerald-400 text-black shadow-md shadow-emerald-400/30 font-extrabold'
+                : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
+            }`}
+          >
+            <RefreshCw className="w-3.5 h-3.5" />
+            4. Refresh & Scienza
           </button>
         </div>
       </div>
@@ -543,6 +557,111 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
               <div className="p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 text-xs text-emerald-200 leading-relaxed font-medium mt-2">
                 ✨ <strong>Risultato:</strong> Facendo così, anche se ti sembra che sulle mani non ci sia più niente, appena entri nella chioma sentirai subito i capelli che prendono aderenza, volume e texture solida!
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 4: NOTA CONSIDERAZIONI FINALI - REFRESH & SCIENZA     */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'refresh') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                <RefreshCw className="w-4 h-4" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400">
+                  Parte 4 • Nuova Nota Strategica
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  📌 Nota Considerazioni Finali - Refresh Mattutino e Scienza del Capello
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+              Reset Scientifico
+            </span>
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl bg-black/70 border border-emerald-500/30 space-y-4 shadow-[0_0_20px_rgba(16,185,129,0.15)]">
+            {/* Cosa succede durante la notte */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-950/40 via-orange-950/20 to-black/60 border border-amber-500/30 space-y-2">
+              <div className="flex items-center space-x-2">
+                <Moon className="w-4 h-4 text-amber-400" />
+                <h3 className="text-xs sm:text-sm font-black text-amber-300 uppercase tracking-wider">
+                  Cosa succede durante la notte
+                </h3>
+              </div>
+              <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                A causa del sudore, del sebo prodotto dal cuoio capelluto e dello sfregamento sul cuscino, i capelli perdono la piega e i legami strutturali si deformano. La mattina la piega (specialmente il look liscio/graffiato) va inevitabilmente in frantumi.
+              </p>
+            </div>
+
+            {/* La spiegazione scientifica del Refresh (Senza Shampoo) */}
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-emerald-950/40 via-black/80 to-teal-950/30 border-2 border-emerald-400/50 space-y-3 shadow-neon">
+              <div className="flex items-center space-x-2">
+                <Sparkles className="w-4 h-4 text-emerald-400" />
+                <h3 className="text-xs sm:text-sm font-black text-white uppercase tracking-wider">
+                  La spiegazione scientifica del Refresh (Senza Shampoo)
+                </h3>
+              </div>
+
+              <div className="space-y-2.5 text-xs">
+                {/* 1. Rottura e reset dei legami a idrogeno */}
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <div className="flex items-center space-x-2 text-white font-bold">
+                    <span className="w-5 h-5 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[11px] shrink-0 font-black">
+                      1
+                    </span>
+                    <span className="text-cyan-300">Rottura e reset dei legami a idrogeno:</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-gray-300 pl-7">
+                    Bagnando i capelli, le molecole d'acqua penetrano nella corteccia e rompono temporaneamente i legami a idrogeno della cheratina. Questo cancella la "memoria" della piega storta della notte e rende il capello di nuovo malleabile.
+                  </p>
+                </div>
+
+                {/* 2. Rispetto del film idrolipidico */}
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <div className="flex items-center space-x-2 text-white font-bold">
+                    <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-[11px] shrink-0 font-black">
+                      2
+                    </span>
+                    <span className="text-emerald-300">Rispetto del film idrolipidico:</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-gray-300 pl-7">
+                    Evitando lo shampoo quotidiano, non si aggredisce la cute e non si elimina completamente il sebo protettivo naturale, evitando l'effetto secco e stopposo.
+                  </p>
+                </div>
+
+                {/* 3. L'azione del balsamo */}
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <div className="flex items-center space-x-2 text-white font-bold">
+                    <span className="w-5 h-5 rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center text-[11px] shrink-0 font-black">
+                      3
+                    </span>
+                    <span className="text-purple-300">L'azione del balsamo:</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-gray-300 pl-7">
+                    Una micro-goccia di balsamo riappiana le cuticole senza appesantire, intrappolando la giusta idratazione e neutralizzando i residui leggeri.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Riflessione finale */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-950/40 via-cyan-950/30 to-black/70 border border-cyan-400/40 space-y-2">
+              <div className="flex items-center space-x-2">
+                <HeartPulse className="w-4 h-4 text-cyan-400" />
+                <h3 className="text-xs sm:text-sm font-black text-cyan-300 uppercase tracking-wider">
+                  Riflessione Finale
+                </h3>
+              </div>
+              <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                Accettare e valorizzare la propria struttura naturale ridurrebbe la necessità di combattere ogni mattina contro la piega che si scompone, ma finché si mantiene uno stile liscio/graffiato, questo metodo di refresh mattutino è indispensabile per resettare i capelli in modo scientifico, pratico e veloce senza rovinarli con lavaggi continui.
+              </p>
             </div>
           </div>
         </div>

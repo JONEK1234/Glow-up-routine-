@@ -34,6 +34,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
     | 'bustine_spuntino'
     | 'correggi_vs_non'
     | 'guida_iperglicemia'
+    | 'variabilita_glicemica'
     | 'palestra'
     | 'notte'
     | 'colazione'
@@ -114,6 +115,20 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           >
             <TrendingUp className="w-3 h-3" />
             <span>{activeTab === 'guida_iperglicemia' ? 'Chiudi' : 'Nota 5: Guida & Iper >180'}</span>
+          </button>
+
+          {/* Tasto Rapido Nota 6 */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'variabilita_glicemica' ? 'tutta' : 'variabilita_glicemica')}
+            className={`flex items-center space-x-1 py-1.5 px-2 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'variabilita_glicemica'
+                ? 'bg-gradient-to-r from-teal-400 to-cyan-400 text-black border-teal-300 shadow-neon'
+                : 'bg-teal-500/15 hover:bg-teal-500/25 text-teal-300 border-teal-500/30'
+            }`}
+          >
+            <Activity className="w-3 h-3" />
+            <span>{activeTab === 'variabilita_glicemica' ? 'Chiudi' : 'Nota 6: Variabilità & Insulina'}</span>
           </button>
         </div>
       </div>
@@ -297,6 +312,45 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
               </div>
             </button>
           </div>
+
+          {/* Card Nota 6: Variabilità Glicemica, Insulina e Dimagrimento */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'variabilita_glicemica' ? 'tutta' : 'variabilita_glicemica')}
+            className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+              activeTab === 'variabilita_glicemica'
+                ? 'bg-gradient-to-r from-teal-950/90 via-cyan-950/70 to-black/90 border-teal-400 shadow-neon ring-2 ring-teal-400/30'
+                : 'bg-gradient-to-r from-teal-950/40 via-cyan-950/30 to-black/70 border-teal-500/40 hover:border-teal-400'
+            }`}
+          >
+            <div className="flex items-center space-x-2.5">
+              <div className="p-2 rounded-xl bg-teal-500/20 text-teal-300 border border-teal-500/30 group-hover:scale-105 transition-transform shrink-0">
+                <Activity className="w-4 h-4 text-teal-400" />
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-teal-400 block">
+                    {activeTab === 'variabilita_glicemica' ? '✓ Attiva' : 'Nota 6'}
+                  </span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-teal-500/20 text-teal-300 font-extrabold border border-teal-500/40">
+                    Insulina &amp; Lipolisi
+                  </span>
+                </div>
+                <h4 className="text-xs font-black text-white group-hover:text-teal-200 transition-colors">
+                  Variabilità Glicemica, Insulina e Dimagrimento
+                </h4>
+                <p className="text-[10px] text-gray-400">Digestione, sensibilità muscolare, stress e acidi grassi liberi</p>
+              </div>
+            </div>
+            <div className={`flex items-center space-x-1 text-[11px] font-black px-2.5 py-1.5 rounded-xl shrink-0 transition-all ${
+              activeTab === 'variabilita_glicemica'
+                ? 'bg-red-500/20 text-red-300 border border-red-500/30'
+                : 'bg-teal-400 text-black shadow-neon'
+            }`}>
+              <span>{activeTab === 'variabilita_glicemica' ? 'Chiudi' : 'Apri'}</span>
+              {activeTab === 'variabilita_glicemica' ? <X className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
+            </div>
+          </button>
         </div>
 
         {/* Tab Filters */}
@@ -367,6 +421,20 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           >
             <TrendingUp className="w-3.5 h-3.5 text-purple-400" />
             <span>Nota 5: Iperglicemia &gt;180</span>
+          </button>
+
+          {/* TAB NOTA 6 */}
+          <button
+            type="button"
+            onClick={() => setActiveTab(activeTab === 'variabilita_glicemica' ? 'tutta' : 'variabilita_glicemica')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'variabilita_glicemica'
+                ? 'bg-gradient-to-r from-teal-400 to-cyan-400 text-black shadow-neon font-black ring-2 ring-teal-300'
+                : 'bg-teal-500/20 text-teal-300 hover:text-white border border-teal-500/40'
+            }`}
+          >
+            <Activity className="w-3.5 h-3.5 text-teal-400" />
+            <span>Nota 6: Variabilità &amp; Dimagrimento</span>
           </button>
 
           <button
@@ -1044,6 +1112,195 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
                   type="button"
                   onClick={() => setActiveTab('tutta')}
                   className="w-full sm:w-auto py-3 px-6 rounded-2xl bg-gradient-to-r from-purple-400 to-indigo-400 hover:from-purple-300 hover:to-indigo-300 text-black font-black text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-neon flex items-center justify-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Torna alla Guida Completa</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* NOTA 6: VARIABILITÀ GLICEMICA, INSULINA E DIMAGRIMENTO        */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutta' || activeTab === 'variabilita_glicemica') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-teal-500/20 text-teal-300 border border-teal-500/30">
+                <Activity className="w-4 h-4 text-teal-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-teal-400">
+                  Nota 6 • Fisiologia Metabolica
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  📝 Nota Scientifica: Variabilità Glicemica, Insulina e Dimagrimento
+                </h2>
+              </div>
+            </div>
+            {activeTab === 'variabilita_glicemica' ? (
+              <button
+                type="button"
+                onClick={() => setActiveTab('tutta')}
+                className="flex items-center space-x-1 py-1 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all active:scale-95 cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Chiudi</span>
+              </button>
+            ) : (
+              <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-teal-500/15 text-teal-300 border border-teal-500/30">
+                4 Pilastri Fisiologici
+              </span>
+            )}
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border border-teal-500/30 space-y-4 bg-black/75 shadow-[0_0_25px_rgba(20,184,166,0.15)]">
+            <p className="text-xs text-gray-200 leading-relaxed font-medium bg-teal-950/30 p-3.5 rounded-2xl border border-teal-500/30">
+              Spiegazione scientifica dettagliata e completa, strutturata punto per punto, che chiarisce esattamente perché <strong className="text-teal-300">lo stesso pasto a volte richiede dosi di insulina diverse</strong> e come tutto questo si collega al <strong className="text-teal-300">dimagrimento e all'uso dei grassi (lipolisi)</strong>.
+            </p>
+
+            {/* 1. La velocità di digestione e il carico glicemico nascosto */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
+              <div className="flex items-center space-x-2 text-white font-bold text-xs sm:text-sm">
+                <span className="w-6 h-6 rounded-lg bg-teal-500/20 text-teal-300 flex items-center justify-center font-black text-xs shrink-0">
+                  1
+                </span>
+                <span className="text-teal-300 uppercase tracking-wider font-extrabold">
+                  La velocità di digestione e il carico glicemico nascosto
+                </span>
+              </div>
+              <p className="text-xs text-gray-300 leading-relaxed pl-8 font-medium">
+                Il cibo non viene processato dall'organismo sempre alla stessa velocità.
+              </p>
+              <div className="space-y-2 text-xs pl-8 pt-1">
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-white block font-bold text-[11px]">
+                    • Il fattore cottura e composizione:
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Anche mangiando lo stesso identico piatto (es. pasta e pane in mensa), variazioni minime nella cottura (pasta più o meno al dente), la presenza di condimenti diversi o l'abbinamento con fibre e grassi modificano i tempi di svuotamento gastrico.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-white block font-bold text-[11px]">
+                    • L'impatto glicemico:
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Se un alimento viene digerito più lentamente, il glucosio entra nel sangue in modo graduale. Se invece la digestione è più rapida (es. carboidrati più cotti o semplici), il picco glicemico arriva prima e con più forza, rendendo la stessa dose di insulina meno efficiente nel coprirlo.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. L'attività precedente e la sensibilità muscolare */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
+              <div className="flex items-center space-x-2 text-white font-bold text-xs sm:text-sm">
+                <span className="w-6 h-6 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-black text-xs shrink-0">
+                  2
+                </span>
+                <span className="text-cyan-300 uppercase tracking-wider font-extrabold">
+                  L'attività precedente e la sensibilità muscolare
+                </span>
+              </div>
+              <p className="text-xs text-gray-300 leading-relaxed pl-8 font-medium">
+                I muscoli scheletrici sono i principali "consumatori" di glucosio del corpo e agiscono come spugne per l'insulina.
+              </p>
+              <div className="space-y-2 text-xs pl-8 pt-1">
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-cyan-300 block font-bold text-[11px]">
+                    • Effetto allenamento:
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Se nei giorni precedenti ti sei allenato o hai camminato molto, i tuoi muscoli hanno svuotato le scorte di glicogeno e aumentano drasticamente la loro sensibilità all'insulina (il recettore cellulare risponde molto meglio, quindi serve meno insulina).
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-amber-300 block font-bold text-[11px]">
+                    • Effetto riposo/recupero:
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Nei giorni in cui l'attività fisica è stata inferiore o i muscoli sono in fase di pieno recupero/riparazione, la sensibilità temporanea all'insulina si abbassa. A parità di cibo ingerito, le cellule richiedono più ormone per ottenere lo stesso risultato.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Fattori ormonali e stress */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 space-y-2">
+              <div className="flex items-center space-x-2 text-white font-bold text-xs sm:text-sm">
+                <span className="w-6 h-6 rounded-lg bg-rose-500/20 text-rose-300 flex items-center justify-center font-black text-xs shrink-0">
+                  3
+                </span>
+                <span className="text-rose-300 uppercase tracking-wider font-extrabold">
+                  Fattori ormonali e stress
+                </span>
+              </div>
+              <p className="text-xs text-gray-300 leading-relaxed pl-8 font-medium">
+                Il sistema endocrino risponde a qualsiasi stimolo esterno o interno, alterando la glicemia indipendentemente da ciò che si è mangiato.
+              </p>
+              <div className="p-3 rounded-xl bg-black/60 border border-rose-500/30 text-xs ml-8 space-y-1">
+                <strong className="text-rose-300 block font-bold text-[11px]">
+                  • Ormoni dello stress (cortisolo e adrenalina):
+                </strong>
+                <p className="text-[11px] text-gray-300 leading-relaxed">
+                  Una notte di sonno non ottimale, lo stress scolastico o le normali tensioni quotidiane provocano il rilascio di cortisolo e adrenalina. Questi ormoni agiscono come "antagonisti" dell'insulina: ordinano al fegato di rilasciare glucosio nel sangue e riducono l'efficacia del bolo insulinico.
+                </p>
+              </div>
+            </div>
+
+            {/* 4. Il deficit calorico e l'uso dei grassi (Lipolisi) */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-amber-950/40 via-black/85 to-orange-950/30 border-2 border-amber-400/50 space-y-3 shadow-neon">
+              <div className="flex items-center space-x-2 text-white font-bold text-xs sm:text-sm">
+                <span className="w-6 h-6 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-black text-xs shrink-0">
+                  4
+                </span>
+                <span className="text-amber-300 uppercase tracking-wider font-extrabold">
+                  Il deficit calorico e l'uso dei grassi (Lipolisi)
+                </span>
+              </div>
+              <p className="text-xs text-gray-200 leading-relaxed pl-8 font-medium">
+                Questo è il punto chiave quando si punta al dimagrimento e alla ricomposizione corporea:
+              </p>
+
+              <div className="space-y-2.5 text-xs pl-8">
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-amber-200 block font-bold text-[11px]">
+                    • Adattamento al deficit:
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Quando introduci meno energia di quella che consumi (mangiando in modo controllato o riducendo le porzioni), il corpo attiva la lipolisi, cioè la scissione dei tessuti adiposi per ricavare energia sotto forma di acidi grassi liberi.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/60 border border-amber-500/30 space-y-1">
+                  <strong className="text-amber-300 block font-bold text-[11px]">
+                    • L'interferenza metabolica (Resistenza transitoria):
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    La scienza ha dimostrato che quando la concentrazione di acidi grassi liberi nel sangue aumenta perché il corpo sta bruciando attivamente i grassi di riserva, si verifica una temporanea riduzione della sensibilità periferica all'insulina. In parole semplici: mentre il corpo brucia grassi in modo efficace per dimagrire, le cellule diventano leggermente più "sorde" all'insulina.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-gradient-to-r from-teal-950/50 to-emerald-950/40 border border-teal-400/40 space-y-1">
+                  <strong className="text-teal-300 block font-bold text-[11px]">
+                    • La conseguenza pratica:
+                  </strong>
+                  <p className="text-[11px] text-gray-200 leading-relaxed">
+                    Questo spiega scientificamente perché, man mano che il corpo si adatta al deficit calorico e mobilita i grassi, le dosi di insulina a cui eri abituato potrebbero temporaneamente "non bastare più", richiedendo un ricalcolo e una gestione attenta in accordo con il medico.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {activeTab === 'variabilita_glicemica' && (
+              <div className="pt-2 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('tutta')}
+                  className="w-full sm:w-auto py-3 px-6 rounded-2xl bg-gradient-to-r from-teal-400 to-cyan-400 hover:from-teal-300 hover:to-cyan-300 text-black font-black text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-neon flex items-center justify-center gap-2"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   <span>Torna alla Guida Completa</span>
