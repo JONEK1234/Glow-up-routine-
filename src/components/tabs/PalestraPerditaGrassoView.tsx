@@ -21,7 +21,8 @@ import {
   Droplet,
   Moon,
   Target,
-  LineChart
+  LineChart,
+  Calendar
 } from 'lucide-react';
 import { scrollToTop } from '../../utils/scrollHelper';
 
@@ -30,7 +31,7 @@ interface PalestraPerditaGrassoViewProps {
 }
 
 export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra' | 'piegamenti_lavoro'>('tutte');
+  const [activeTab, setActiveTab] = useState<'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra' | 'piegamenti_lavoro' | 'strategia_personale'>('tutte');
 
   // Scroll solo all'apertura della nota (mount)
   React.useEffect(() => {
@@ -350,6 +351,32 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
               Apri ➔
             </span>
           </div>
+
+          {/* 9# Informazioni: Strategia Chirurgica Personale (16 anni • 75 kg • Settimana al Millimetro) */}
+          <div
+            onClick={() => setActiveTab('strategia_personale')}
+            className="p-3.5 rounded-2xl bg-gradient-to-r from-rose-950/60 via-orange-950/40 to-black/80 border-2 border-rose-500/50 hover:border-rose-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-rose-500/25 col-span-1 sm:col-span-2 lg:col-span-3"
+          >
+            <div className="flex items-center space-x-3">
+              <span className="p-2.5 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30 group-hover:bg-rose-500 group-hover:text-black transition-all shrink-0">
+                <Sparkles className="w-4 h-4 text-rose-400 group-hover:text-black" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-rose-400 flex items-center gap-1.5">
+                  <Flame className="w-3 h-3 text-rose-400" /> 9# Info: Strategia Personale Chirurgica • Dati Biometrici (16a • 1,75m • 75kg)
+                </span>
+                <h3 className="text-xs sm:text-sm font-black text-white group-hover:text-rose-200 transition-colors">
+                  Skinny-Fat ad Asciutto: Deficit 700-900 kcal, Proteine 1,5-1,6g/kg, Camminata "Emblema d'Oro" & Settimana al Millimetro
+                </h3>
+                <p className="text-[11px] text-gray-300 line-clamp-1 mt-0.5">
+                  Lun-Sab a 1.400-1.600 kcal, cardio 10+10 min, recupero gambe al sabato, domenica leptina e destino delle proteine se salti i pesi.
+                </p>
+              </div>
+            </div>
+            <span className="text-xs font-black px-3 py-1.5 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30 group-hover:bg-rose-500 group-hover:text-black transition-all shrink-0 ml-2">
+              Apri ➔
+            </span>
+          </div>
         </div>
 
         {/* Tab Filters */}
@@ -558,6 +585,20 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           >
             <Activity className="w-3.5 h-3.5 text-cyan-400" />
             15. 8# Info: Piegamenti & Lavoro
+          </button>
+
+          {/* 16. 9# Info: Strategia Personale (16a • 75kg) */}
+          <button
+            type="button"
+            onClick={() => setActiveTab('strategia_personale')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'strategia_personale'
+                ? 'bg-rose-500 text-white shadow-md shadow-rose-500/30 font-extrabold'
+                : 'bg-rose-500/10 text-rose-300 hover:text-white border border-rose-500/30'
+            }`}
+          >
+            <Flame className="w-3.5 h-3.5 text-rose-400" />
+            16. 9# Info: Strategia Personale (16a • 75kg)
           </button>
         </div>
       </div>
@@ -2717,6 +2758,464 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
                 <p className="text-[11px] text-gray-300 leading-relaxed">
                   Il lavoro manuale è una formidabile "fornace metabolica" che costruisce resistenza e capillarizzazione; la palestra scolpisce e mantiene la massa muscolare nobile. L'unione intelligente di pesi a inizio settimana, flessioni tecniche al giovedì e lavoro fisico costante crea un fisico robusto, asciutto e resistente nel tempo.
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 9: STRATEGIA CHIRURGICA PERSONALE & FISIOLOGIA COMPLETA */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'strategia_personale') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                <Flame className="w-4 h-4 text-rose-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-rose-400">
+                  9# Info • Strategia Chirurgica Personale
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Strategia Ricalcolata, Fisiologia del Deficit & Settimana al Millimetro
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-rose-500/15 text-rose-300 border border-rose-500/30">
+              16 Anni • 75 kg • Skinny-Fat
+            </span>
+          </div>
+
+          <div className="p-5 sm:p-6 rounded-3xl glass-card border-2 border-rose-500/40 space-y-6 bg-gradient-to-br from-rose-950/40 via-orange-950/30 to-black/90 shadow-[0_0_35px_rgba(244,63,94,0.15)]">
+            {/* Header Box */}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+              <span className="px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-black uppercase tracking-wider border border-rose-500/30 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-rose-400" />
+                Piano Su Misura al Millimetro
+              </span>
+              <span className="text-xs text-gray-400 font-semibold">
+                16 Anni • 1,75 m • 75 kg • ~115–120g Proteine/die
+              </span>
+            </div>
+
+            <p className="text-xs text-gray-200 leading-relaxed font-medium">
+              Inserendo i tuoi parametri biometrici reali, la scienza della ricomposizione corporea (passaggio da profilo <em>skinny-fat</em> a fisico asciutto, denso e muscoloso) diventa precisa e chirurgica. Con 75 kg su 1,75 m, la priorità assoluta <strong>non è perdere chili alla cieca sulla bilancia</strong>, bensì abbassare drasticamente la percentuale di massa grassa blindando ed espandendo la massa muscolare nobile.
+            </p>
+
+            {/* 1. I NUMERI BIOLOGICI DI BASE */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-rose-500/30 space-y-3">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                    <Scale className="w-4 h-4 text-rose-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    1. I Tuoi Numeri Biologici di Base (Il Motore Metabolico)
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 text-[10px] font-bold border border-rose-500/30">
+                  Parametri Fisiologici
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="p-3.5 rounded-xl bg-gradient-to-br from-rose-950/30 to-black/60 border border-rose-500/20 space-y-1.5">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-rose-400 flex items-center gap-1">
+                    <Activity className="w-3 h-3" /> Fabbisogno Reale (TDEE)
+                  </span>
+                  <h4 className="text-sm font-extrabold text-white">
+                    2.200 – 2.400 kcal/die
+                  </h4>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Con 75 kg, la tua altezza, 3 allenamenti pesanti coi pesi a settimana, cardio, scooter e il movimento quotidiano, questo è il consumo calorico reale del tuo corpo.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-gradient-to-br from-orange-950/30 to-black/60 border border-orange-500/20 space-y-1.5">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-orange-400 flex items-center gap-1">
+                    <TrendingDown className="w-3 h-3" /> Deficit Lunedì–Sabato
+                  </span>
+                  <h4 className="text-sm font-extrabold text-white">
+                    1.400 – 1.600 kcal/die
+                  </h4>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Crei un deficit profondo e pulito di <strong>700 – 900 kcal al giorno</strong>. È un taglio importante che costringe il corpo a intaccare il tessuto adiposo senza intaccare la lucidità mentale.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-gradient-to-br from-amber-950/30 to-black/60 border border-amber-500/20 space-y-1.5">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1">
+                    <ShieldCheck className="w-3 h-3" /> Quota Proteica
+                  </span>
+                  <h4 className="text-sm font-extrabold text-white">
+                    115 – 120 g/die (~1,5–1,6 g/kg)
+                  </h4>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    A 16 anni sotto sovraccarico, 1,5–1,6 g per chilo è una quota d'oro: fornisce tutti gli amminoacidi necessari per riparare e blindare le fibre muscolari in pieno deficit.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. LA SETTIMANA ORGANIZZATA AL MILLIMETRO */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-orange-500/30 space-y-4">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-orange-500/20 text-orange-300 border border-orange-500/30">
+                    <Calendar className="w-4 h-4 text-orange-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    2. La Settimana al Millimetro & Gestione Strategica del Recupero Gambe
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-300 text-[10px] font-bold border border-orange-500/30">
+                  Cardio 10+10 min
+                </span>
+              </div>
+
+              {/* Box Cardio Intelligente */}
+              <div className="p-3 rounded-xl bg-orange-950/20 border border-orange-500/20 space-y-1.5">
+                <strong className="text-xs font-bold text-orange-300 flex items-center gap-1.5">
+                  <HeartPulse className="w-3.5 h-3.5 text-orange-400" />
+                  Cardio Integrato: 10 Minuti All'Inizio + 10 Minuti Alla Fine (20 min totali a seduta)
+                </strong>
+                <p className="text-[11px] text-gray-300 leading-relaxed">
+                  Suddividere il cardio in <strong>10 minuti di riscaldamento iniziale</strong> (per attivare il sistema cardiovascolare e scaldare le articolazioni) e <strong>10 minuti di defaticamento finale</strong> (per sbollire e avviare il drenaggio dei metaboliti) è infinitamente più intelligente rispetto a un'ora continua, perché preserva la freschezza neurale e non brucia la massa muscolare.
+                </p>
+              </div>
+
+              {/* Il dilemma del Giovedì vs Sabato per le Gambe */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div className="p-3.5 rounded-xl bg-red-950/20 border border-red-500/20 space-y-1.5">
+                  <strong className="text-red-300 block text-xs font-bold flex items-center gap-1.5">
+                    <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
+                    Il Giovedì: Riposo Totale Gambe (La Vigilia)
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Il Venerdì fai la seduta pesante per le gambe. Se il Giovedì fai camminate lunghe o intense, sovraccarichi cosce, polpacci e tendine plantare: arriveresti al Venerdì con glicogeno locale parziale e muscoli stanchi, riducendo i carichi. <strong>Regola ferrea:</strong> il giorno prima delle gambe si fa solo riposo o movimento leggero quotidiano (+ flessioni a buffer per l'upper).
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-emerald-950/20 border border-emerald-500/20 space-y-1.5">
+                  <strong className="text-emerald-300 block text-xs font-bold flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    Il Sabato: Il Momento Aureo per la Camminata Lunga (45-60 min)
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Dopo aver "spaccato" le gambe il Venerdì, fare una camminata lunga costante il Sabato mattina (tapis roulant con pendenza o all'aperto) è il toccasana definitivo: stimola il microcircolo, irrora le fibre indolenzite (DOMS) di ossigeno e nutrienti, velocizza il recupero e massimizza l'ossidazione dei grassi.
+                  </p>
+                </div>
+              </div>
+
+              {/* Calendario Day-by-Day */}
+              <div className="space-y-1.5 pt-1">
+                <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 block pl-0.5">
+                  Il Calendario Settimanale Perfetto:
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-[11px]">
+                  <div className="p-2.5 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                    <strong className="text-orange-300 block font-bold">Lunedì (Upper Body)</strong>
+                    <p className="text-gray-300 text-[10px] leading-tight">10m warmup + Pesi pesanti a cedimento (10-12 reps) + 10m defaticamento.</p>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                    <strong className="text-gray-300 block font-bold">Martedì (Riposo Attivo)</strong>
+                    <p className="text-gray-300 text-[10px] leading-tight">Passi normali o camminata tranquilla, recupero per la parte superiore.</p>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                    <strong className="text-orange-300 block font-bold">Mercoledì (Upper Body)</strong>
+                    <p className="text-gray-300 text-[10px] leading-tight">10m warmup + Pesi pesanti a cedimento (10-12 reps) + 10m defaticamento.</p>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-black/60 border border-cyan-500/30 space-y-1">
+                    <strong className="text-cyan-300 block font-bold">Giovedì (Vigilia Gambe)</strong>
+                    <p className="text-gray-300 text-[10px] leading-tight">Gambe a riposo (no camminata lunga) + Piegamenti/flessioni a buffer.</p>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-black/60 border border-orange-500/40 space-y-1">
+                    <strong className="text-orange-400 block font-bold">Venerdì (Giorno Gambe)</strong>
+                    <p className="text-gray-300 text-[10px] leading-tight">10m warmup + Gambe pesanti alla massima freschezza + 10m defaticamento.</p>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-black/60 border border-emerald-500/40 space-y-1">
+                    <strong className="text-emerald-300 block font-bold">Sabato (Camminata Lunga)</strong>
+                    <p className="text-gray-300 text-[10px] leading-tight">45–60 min camminata costante: drenaggio DOMS e brucia-grassi pulito.</p>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-black/60 border border-amber-500/40 space-y-1 sm:col-span-2">
+                    <strong className="text-amber-300 block font-bold">Domenica (Ricarica & Stacco)</strong>
+                    <p className="text-gray-300 text-[10px] leading-tight">Ricarica calorica controllata (proteine alte), reset leptina, ricarica glicogeno e abbattimento cortisolo.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. BIOCHIMICA INFRASETTIMANALE (LUNEDÌ - SABATO) */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-rose-500/30 space-y-3">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                    <Zap className="w-4 h-4 text-rose-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    3. Cosa Accade a Livello Biochimico dal Lunedì al Sabato
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 text-[10px] font-bold border border-rose-500/30">
+                  Lipolisi & Segnale
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-black/70 border border-white/10 space-y-1">
+                  <strong className="text-rose-300 block text-xs font-bold">1. Insulina Bassa & Lipolisi:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    A 1.400–1.600 kcal con alto dispendio, l'insulina resta minima per tutta la giornata. Questo "sblocca" i recettori degli adipociti skinny-fat: i trigliceridi immagazzinati vengono scissi in acidi grassi liberi ed entrano nel sangue.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/70 border border-white/10 space-y-1">
+                  <strong className="text-cyan-300 block text-xs font-bold">2. Ossidazione Mitocondriale:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Gli acidi grassi nel sangue arrivano ai mitocondri dei muscoli. Grazie al flusso costante e aerobico di ossigeno della camminata, questi lipidi vengono letteralmente "bruciati" per produrre energia pulita (ATP).
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/70 border border-white/10 space-y-1">
+                  <strong className="text-amber-300 block text-xs font-bold">3. Scudo Meccanico dei Pesi:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    I 115–120g di proteine uniti agli allenamenti a cedimento nel range 10–12 ripetizioni (Lun/Mer/Ven) urlano al cervello: <em>"Il tessuto muscolare serve a sopravvivere, non si tocca!"</em>. Il corpo è obbligato a consumare solo grasso.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 4. LA DOMENICA DI RICARICA */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-amber-500/30 space-y-3">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                    <RefreshCw className="w-4 h-4 text-amber-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    4. La Domenica: Cosa Succede con la Ricarica Calorica & Reset
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold border border-amber-500/30">
+                  Reset Ormonale
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-200 leading-relaxed">
+                Stare a 1.400–1.600 kcal per 6 giorni a 75 kg con tanto movimento attiva le difese biologiche: la <strong>leptina</strong> (l'ormone maestro del metabolismo e della sazietà) cala progressivamente per fare economia di energia. Ecco perché la ricarica domenicale è fondamentale:
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-amber-950/20 border border-amber-500/20 space-y-1">
+                  <strong className="text-amber-300 block text-xs font-bold">1. Reset Metabolico (Leptina):</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Mangiare di più la domenica (mantenendo alte le proteine) fa impennare la leptina, segnalando al cervello che non c'è carestia. Il metabolismo non si addormenta e rimane attivo.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-amber-950/20 border border-amber-500/20 space-y-1">
+                  <strong className="text-amber-300 block text-xs font-bold">2. Ricarica del Glicogeno:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Le calorie e i carboidrati in più ricaricano al 100% i serbatoi muscolari: arrivi al Lunedì mattina pieno, tonico e con la massima forza esplosiva per caricare sui pesi.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-amber-950/20 border border-amber-500/20 space-y-1">
+                  <strong className="text-amber-300 block text-xs font-bold">3. Crollo del Cortisolo:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Staccare la spina mentalmente con il pasto libero abbatte il cortisolo (ormone dello stress cronico), azzerando la ritenzione idrica e aiutandoti ad asciugarti nei giorni successivi.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 5. COSA SUCCEDE SE SALTI LA PALESTRA MA CAMMINI IN DEFICIT */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-blue-500/30 space-y-3">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                    <Clock className="w-4 h-4 text-blue-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    5. Cosa Succede se Salti la Palestra ma Cammini ed Entri in Deficit?
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">
+                  Dilemma Frequente
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-200 leading-relaxed">
+                <strong>Risposta scientifica:</strong> No, non ti "mangi il muscolo" dall'oggi al domani. Il tessuto muscolare non evapora in 24 o 48 ore. Ma cambia radicalmente il <em>bersaglio</em> di ciò che il tuo corpo consuma:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div className="p-3 rounded-xl bg-black/70 border border-white/10 space-y-1.5">
+                  <strong className="text-blue-300 block font-bold">Se Succede Una Tantum (es. un Mercoledì o Venerdì saltato):</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Non accade assolutamente nulla di grave! Il corpo continua a smaltire grasso grazie alla camminata e alle 1.400–1.600 kcal. I muscoli restano lì dove sono, protetti dall'alto apporto dei 115–120g di proteine e dalla memoria neuromuscolare della sessione precedente.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/70 border border-red-500/20 space-y-1.5">
+                  <strong className="text-red-300 block font-bold">Se Diventa un'Abitudine Prolungata (saltare per settimane):</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Senza lo stimolo a cedimento dei pesi, il cervello capisce che la forza non serve più per sopravvivere. La priorità di protezione muscolare decade: il corpo smette di mantenere un tessuto metabolicamente costoso, portandoti a un fisico magro ma flaccido invece che scolpito.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 6. IL DESTINO DELLE PROTEINE SENZA ALLENAMENTO */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-purple-500/30 space-y-3">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                    <ShieldCheck className="w-4 h-4 text-purple-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    6. Che Fine Fanno le Proteine (115–120g) se Salti l'Allenamento coi Pesi?
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-bold border border-purple-500/30">
+                  Biochimica Digestiva
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-200 leading-relaxed">
+                Le proteine ingerite non sono "mattoncini intelligenti" dotati di occhi che vanno a cercarsi il bicipite da sole. Vengono scomposte in amminoacidi formando il <strong>pool amminoacidico</strong> nel sangue. Senza il richiamo di micro-danni da pesi pesanti, il corpo non ha serbatoi di stoccaggio per le proteine, quindi le destina a 3 compiti:
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-purple-950/20 border border-purple-500/20 space-y-1">
+                  <strong className="text-purple-300 block text-xs font-bold">1. Turnover Quotidiano:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Manutenzione ordinaria vitale: rigenerazione continua di pelle, unghie, capelli, enzimi digestivi, ormoni e cellule intestinali. Questo assorbe gran parte della quota giornaliera.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-purple-950/20 border border-purple-500/20 space-y-1">
+                  <strong className="text-purple-300 block text-xs font-bold">2. Gluconeogenesi Epatica:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    In deficit calorico mentre cammini, il fegato prende gli amminoacidi eccedenti, li priva dell'azoto e li converte in glucosio pulito per alimentare cervello e muscoli.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-purple-950/20 border border-purple-500/20 space-y-1">
+                  <strong className="text-purple-300 block text-xs font-bold">3. Espulsione dell'Azoto:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    La parte di scarto azotata degli amminoacidi non utilizzati per la sintesi viene convertita in urea dai reni ed eliminata fisiologicamente con le urine.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-black/80 border border-purple-500/30 text-xs text-purple-200">
+                <strong>Verdetto Chiave:</strong> Le proteine non vanno sprecate né si trasformano istantaneamente in grasso, ma <em>solo l'allenamento pesante coi pesi</em> ordina al corpo di usarle per costruire nuovo tessuto muscolare!
+              </div>
+            </div>
+
+            {/* 7. GENETICA E GRASSO OSTINATO (SKINNY-FAT) */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-amber-500/30 space-y-3">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                    <Target className="w-4 h-4 text-amber-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    7. Genetica, Distribuzione del Grasso e "Grasso Ostinato" (Recettori Alfa-2)
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold border border-amber-500/30">
+                  Fine Inestetismo
+                </span>
+              </div>
+
+              <div className="space-y-2.5 text-xs text-gray-200 leading-relaxed">
+                <div className="p-3 rounded-xl bg-black/70 border border-white/10 space-y-1">
+                  <strong className="text-amber-300 block text-xs font-bold">Il Mito del Dimagrimento Localizzato & I Recettori Alfa-2:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Il corpo rilascia acidi grassi nel flusso sanguigno da tutto il corpo in modo sistemico: non si può scegliere da dove toglierli prima. Il grasso ostinato tipico dello skinny-fat (basso addome, fianchi, mento) è zeppo di <strong>recettori alfa-2</strong>, che bloccano la lipolisi per autodifesa biologica. Il corpo consuma prima le riserve facili (braccia, spalle, gambe, torace).
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-gradient-to-r from-amber-950/30 to-black/70 border border-amber-500/30 space-y-1">
+                  <strong className="text-amber-300 block text-xs font-bold">Come Sfinire la Genetica con la Costanza:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Molti mollano vedendo le braccia più magre mentre la pancia sembra resistere. Ma il corpo <strong>non può fabbricare calorie dal nulla</strong>! Se mantieni il deficit (1.400–1.600 kcal), continui a camminare e spingi coi pesi, una volta esaurite le riserve facili l'organismo è <strong>biologicamente costretto</strong> a sbloccare i recettori alfa-2 e divorare il grasso ostinato della pancia. È un'inevitabilità fisiologica: vince chi non molla.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 8. LA CAMMINATA: L'EMBLEMA D'ORO DEL DIMAGRIMENTO */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-emerald-500/30 space-y-3">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    <HeartPulse className="w-4 h-4 text-emerald-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    8. La Camminata: L'Emblema d'Oro per Bruciare Grassi Senza Stress
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold border border-emerald-500/30">
+                  Arma di Precisione
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                Se l'allenamento pesante coi pesi è lo scudo che protegge e costruisce il muscolo, la <strong>camminata</strong> (in casa, per strada o sul tapis roulant) è l'arma di precisione definitiva. È l'emblema d'oro perché compie 3 prodigi contemporaneamente:
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/20 space-y-1">
+                  <strong className="text-emerald-300 block text-xs font-bold">1. Brucia-Grassi Puro:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Mantiene il battito cardiaco nella perfetta fascia aerobica lipolitica, dove il corpo usa quasi solo acidi grassi come carburante, senza debito d'ossigeno o svuotamento del glicogeno.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/20 space-y-1">
+                  <strong className="text-emerald-300 block text-xs font-bold">2. Zero Stress & Danno:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Non carica le articolazioni e non crea micro-lesioni muscolari. Puoi accumulare migliaia di passi senza interferire con il recupero delle tue sedute a cedimento di Lun/Mer/Ven.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/20 space-y-1">
+                  <strong className="text-emerald-300 block text-xs font-bold">3. No Fame Nervosa:</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    A differenza della corsa prolungata che scatena tempeste di grelina e una fame da lupi, la camminata consuma 300–400 calorie in modo silenzioso, senza farti sgarrare il deficit.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* SINTESI FINALE: LA FORMULA A PROVA DI BOMBA */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-rose-950/50 via-orange-950/40 to-black/85 border-2 border-rose-500/50 space-y-2.5 text-xs">
+              <div className="flex items-center space-x-2">
+                <Sparkles className="w-4 h-4 text-rose-400" />
+                <h4 className="text-sm font-black text-white uppercase tracking-wider">
+                  Sintesi Finale: La Formula Scientifica Imbattibile
+                </h4>
+              </div>
+
+              <p className="text-[11px] text-gray-200 leading-relaxed">
+                Con <strong>75 kg su 1,75 m a 16 anni</strong>, possiedi la combinazione biologica perfetta per una trasformazione radicale:
+              </p>
+
+              <ul className="list-disc list-inside text-[11px] text-gray-300 space-y-1 pl-1">
+                <li><strong>Pesi Pesanti (Lun/Mer/Ven):</strong> per dare forma a spalle, petto, braccia e gambe nel range 10–12 ripetizioni a cedimento.</li>
+                <li><strong>Deficit 1.400–1.600 kcal (Lun-Sab):</strong> 700–900 calorie in meno al giorno per sciogliere il grasso adiposo.</li>
+                <li><strong>115–120g di Proteine al Giorno:</strong> quota protettiva totale per nutrire organi e blindare i muscoli.</li>
+                <li><strong>Cardio 10+10 min + Sabato Camminata Lunga:</strong> ossidazione mitocondriale e rigenerazione delle gambe.</li>
+                <li><strong>Domenica di Ricarica:</strong> reset della leptina, ricarica glicogeno per il lunedì e stop al cortisolo.</li>
+              </ul>
+
+              <div className="p-2.5 rounded-xl bg-black/70 border border-white/10 text-center font-bold text-rose-300 text-[11px]">
+                ⚡ Nessuna perdita di tempo: testa bassa, disciplina scientifica e il risultato arriverà per pura legge biologica!
               </div>
             </div>
           </div>

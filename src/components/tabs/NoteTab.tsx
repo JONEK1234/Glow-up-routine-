@@ -1902,7 +1902,7 @@ export const NoteTab: React.FC = () => {
                   <Dumbbell className="w-3 h-3 text-orange-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">15 Pilastri • 5# & 6# Affiancate + 7# Bustine + 8# Piegamenti</span>
+                <span className="text-[10px] text-gray-400 font-semibold">16 Pilastri • 5# & 6# Affiancate + 7# + 8# + 9# Strategia Personale (16a • 75kg)</span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-orange-300 transition-colors uppercase tracking-tight">
@@ -1910,7 +1910,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Tecnica dei pesi e buffer, deficit senza fame, Quadro Completo, turnover 1g/kg, proteine in eccesso (5# Parti 1 & 2), biochimica dei grassi (6# Parti 1 & 2), bustine 120–130 mg/dL e 8# Piegamenti al giovedì & Lavoro fisico vs palestra.
+                Tecnica dei pesi e buffer, deficit senza fame, proteine e grassi (5# & 6# affiancate), bustine 120-130, flessioni al giovedì e 9# Strategia Personale ricalcolata: 16 anni, 75 kg, ricomposizione skinny-fat, deficit 700-900 kcal, cardio 10+10 min, camminata sabato e ricarica domenicale.
               </p>
             </div>
 
@@ -1924,7 +1924,7 @@ export const NoteTab: React.FC = () => {
               <span>Tocca per aprire la guida su palestra e dimagrimento</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">5# (Sx/Dx) + 6# (Sx/Dx) + 7# Bustine + 8# Piegamenti</span>
+            <span className="text-[10px] text-gray-400 font-semibold">5# & 6# (Sx/Dx) + 7# + 8# + 9# Strategia Personale (16a • 75kg)</span>
           </div>
         </div>
       </div>
