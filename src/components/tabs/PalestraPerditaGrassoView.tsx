@@ -31,7 +31,7 @@ interface PalestraPerditaGrassoViewProps {
 }
 
 export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra' | 'piegamenti_lavoro' | 'strategia_personale'>('tutte');
+  const [activeTab, setActiveTab] = useState<'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra' | 'piegamenti_lavoro' | 'strategia_personale' | 'volume_calisthenics'>('tutte');
 
   // Scroll solo all'apertura della nota (mount)
   React.useEffect(() => {
@@ -377,6 +377,32 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
               Apri ➔
             </span>
           </div>
+
+          {/* 10# Informazioni: Volume Extra, Cedimento 6 vs 14, Bicipiti & Calisthenics Off */}
+          <div
+            onClick={() => setActiveTab('volume_calisthenics')}
+            className="p-3.5 rounded-2xl bg-gradient-to-r from-indigo-950/60 via-violet-950/40 to-black/80 border-2 border-indigo-500/50 hover:border-indigo-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-indigo-500/25 col-span-1 sm:col-span-2 lg:col-span-3"
+          >
+            <div className="flex items-center space-x-3">
+              <span className="p-2.5 rounded-xl bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 group-hover:bg-indigo-500 group-hover:text-black transition-all shrink-0">
+                <Dumbbell className="w-4 h-4 text-indigo-400 group-hover:text-black" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-indigo-400 flex items-center gap-1.5">
+                  <Zap className="w-3 h-3 text-indigo-400" /> 10# Info: Gestione Serie, Bicipiti & Calisthenics nei Giorni Off
+                </span>
+                <h3 className="text-xs sm:text-sm font-black text-white group-hover:text-indigo-200 transition-colors">
+                  Stimolare Senza Annientare, Blocco a 6 vs 14 Reps, 9 kg x 12, Serie di Avvicinamento & Recupero Attivo Braccia
+                </h3>
+                <p className="text-[11px] text-gray-300 line-clamp-1 mt-0.5">
+                  Cortisolo da volume extra, ATP/acido lattico, drop-set e warm-up sets per bicipiti, dips/trazioni al 50-60% nei giorni off.
+                </p>
+              </div>
+            </div>
+            <span className="text-xs font-black px-3 py-1.5 rounded-xl bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 group-hover:bg-indigo-500 group-hover:text-black transition-all shrink-0 ml-2">
+              Apri ➔
+            </span>
+          </div>
         </div>
 
         {/* Tab Filters */}
@@ -599,6 +625,20 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           >
             <Flame className="w-3.5 h-3.5 text-rose-400" />
             16. 9# Info: Strategia Personale (16a • 75kg)
+          </button>
+
+          {/* 17. 10# Info: Volume, Serie, Bicipiti & Calisthenics */}
+          <button
+            type="button"
+            onClick={() => setActiveTab('volume_calisthenics')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'volume_calisthenics'
+                ? 'bg-indigo-500 text-white shadow-md shadow-indigo-500/30 font-extrabold'
+                : 'bg-indigo-500/10 text-indigo-300 hover:text-white border border-indigo-500/30'
+            }`}
+          >
+            <Dumbbell className="w-3.5 h-3.5 text-indigo-400" />
+            17. 10# Info: Serie, Bicipiti & Calisthenics Off
           </button>
         </div>
       </div>
@@ -3216,6 +3256,315 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
 
               <div className="p-2.5 rounded-xl bg-black/70 border border-white/10 text-center font-bold text-rose-300 text-[11px]">
                 ⚡ Nessuna perdita di tempo: testa bassa, disciplina scientifica e il risultato arriverà per pura legge biologica!
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 10: VOLUME, GESTIONE SERIE, BICIPITI & CALISTHENICS   */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'volume_calisthenics') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                <Dumbbell className="w-4 h-4 text-indigo-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-indigo-400">
+                  10# Info • Scienza delle Serie, Carichi & Braccia
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Gestione Volume, Cedimento 6 vs 14, Bicipiti & Calisthenics Off
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">
+              Stimolare, Non Annientare
+            </span>
+          </div>
+
+          <div className="p-5 sm:p-6 rounded-3xl glass-card border-2 border-indigo-500/40 space-y-6 bg-gradient-to-br from-indigo-950/40 via-violet-950/25 to-black/90 shadow-[0_0_35px_rgba(99,102,241,0.15)]">
+            {/* Header Box */}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+              <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-black uppercase tracking-wider border border-indigo-500/30 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+                Protocollo Chirurgico Sala Pesi & Corpo Libero
+              </span>
+              <span className="text-xs text-gray-400 font-semibold">
+                9 kg x 12 Reps • Warm-Up Sets • Active Recovery
+              </span>
+            </div>
+
+            {/* 1. PERCHÉ STIMOLARE E NON ANNIENTARE (VOLUME EXTRA IN DEFICIT) */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-red-500/30 space-y-3">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-red-500/20 text-red-300 border border-red-500/30">
+                    <AlertTriangle className="w-4 h-4 text-red-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    1. La Regola d'Oro: Stimolare, Non Annientare (I 4 Effetti del Volume Extra)
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-red-500/20 text-red-300 text-[10px] font-bold border border-red-500/30">
+                  Debito Biologico
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-200 leading-relaxed">
+                Quando accumuli troppo volume extra aggiungendo serie su serie oltre le 3 effettive, il corpo in deficit calorico (1.400–1.600 kcal) non cresce di più: attiva i <strong>sistemi di emergenza</strong> e crea un debito biologico che non può pagare. Ecco i 4 meccanismi in sequenza:
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div className="p-3.5 rounded-xl bg-red-950/20 border border-red-500/20 space-y-1.5">
+                  <strong className="text-red-300 block font-bold">1. Il Cortisolo Sale alle Stelle (Catabolismo)</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Esagerare con le serie su muscoli già svuotati segnala al sistema nervoso un pericolo acuto. Le ghiandole surrenali rilasciano <strong>cortisolo</strong>, ormone catabolico che demolisce le proteine muscolari per liberare energia rapida: remi contro la ricomposizione corporea.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-orange-950/20 border border-orange-500/20 space-y-1.5">
+                  <strong className="text-orange-300 block font-bold">2. Glicogeno a Zero & Blocco Sintesi Proteica</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Il glicogeno intramuscolare si azzera: la cellula perde pressione idrostatica e forza contrattile. Senza carburante, il corpo fatica enormemente a sintetizzare nuove proteine nelle ore successive e spende risorse solo per tornare allo stato base.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-amber-950/20 border border-amber-500/20 space-y-1.5">
+                  <strong className="text-amber-300 block font-bold">3. Sovraccarico Sistema Nervoso Centrale (SNC)</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    La stanchezza sistemica parte da cervello e midollo spinale: i motoneuroni accumulano fatica centrale e la connessione mente-muscolo si appanna, togliendo esplosività e reclutamento nelle sedute successive (petto e gambe).
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-rose-950/20 border border-rose-500/20 space-y-1.5">
+                  <strong className="text-rose-300 block font-bold">4. Recupero Lungo 4–6 Giorni & Stallo Totale</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    L'allenamento è solo la scintilla, il recupero è l'incendio. Con danni esagerati servono 4–6 giorni solo per "sanare" la ferita; in deficit le energie finiscono lì senza "mattoni" per crescere. Risultato: stallo, calo forza e svuotamento.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-black/80 border border-red-500/30 text-xs text-red-200">
+                <strong>Sintesi Operativa:</strong> Colpisci duro con le tue <strong>3 serie pesanti a cedimento</strong>, chiudi l'esercizio, lascia recuperare il sistema e torna a spingere più forte la volta successiva!
+              </div>
+            </div>
+
+            {/* 2. SCHEDA ATTUALE, ADATTAMENTO NEURALE & IL CARICO DA 9 KG */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-indigo-500/30 space-y-3">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                    <Target className="w-4 h-4 text-indigo-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    2. La Scheda Attuale & Il Tuo Carico Ideale (9 kg x 12 Reps)
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 text-[10px] font-bold border border-indigo-500/30">
+                  Mese 1 • 75 kg • 16a
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div className="p-3.5 rounded-xl bg-indigo-950/20 border border-indigo-500/20 space-y-1.5">
+                  <strong className="text-indigo-300 block font-bold">Perché NON Cambiare Scheda Adesso (~1 Mese di Palestra):</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Cambiare scheda ora farebbe perdere tempo prezioso. Il tuo sistema nervoso sta imparando i movimenti base e la coordinazione, mentre i tendini si adattano. I muscoli crescono con la <strong>familiarità del gesto</strong>: solo quando il movimento è consolidato il cervello toglie i freni inibitori e recluta il 100% delle fibre. Continua così per qualche mese!
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-violet-950/20 border border-violet-500/20 space-y-1.5">
+                  <strong className="text-violet-300 block font-bold">Il Dato Ricalcolato: 9 kg x 12 Ripetizioni (Shoulder Press):</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Chiudere <strong>12 ripetizioni pulite con 9 kg</strong> arrivando a cedimento è il dato perfetto: stimoli a pieno le fibre nel range ideale dell'ipertrofia (<strong>10–12 reps</strong>) senza costringere l'articolazione della spalla a compensi scorretti. Nessuna fretta di salire col peso: la progressione nel bodybuilding è lenta e chirurgica.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. BIOCHIMICA DELLE RIPETIZIONI: BLOCCO A 6 VS 14 REPS (COME REGOLARSI) */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-amber-500/30 space-y-4">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                    <Zap className="w-4 h-4 text-amber-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    3. Gestione Pratica del Carico: Blocco a 6 Reps vs 14 Reps
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold border border-amber-500/30">
+                  Range d'Oro 8–12 Reps
+                </span>
+              </div>
+
+              {/* Caso A: Blocco a 6 */}
+              <div className="p-3.5 rounded-xl bg-amber-950/20 border border-amber-500/25 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <strong className="text-amber-300 text-xs font-black uppercase tracking-wider">
+                    Caso A • Cedimento Anticipato Reale (Target 10, Ti Pianti a 6)
+                  </strong>
+                  <span className="text-[10px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">
+                    Non è Paura, è Biochimica!
+                  </span>
+                </div>
+                <p className="text-[11px] text-gray-300 leading-relaxed">
+                  Quando il muscolo si pianta di schianto a 6 ripetizioni succede anche ai professionisti ed è colpa di due muri biologici istantanei:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+                  <div className="p-2.5 rounded-lg bg-black/60 border border-white/10">
+                    <strong className="text-cyan-300 block mb-0.5">1. Esaurimento ATP-CP (Energia Immediata):</strong>
+                    <p className="text-gray-300 leading-relaxed">L'ATP pronto nei muscoli finisce subito se il carico è tosto o il recupero precedente era corto. Crolla la tensione e il muscolo non si contrae più.</p>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-black/60 border border-white/10">
+                    <strong className="text-rose-300 block mb-0.5">2. Accumulo Ioni H+ (Acido Lattico & pH):</strong>
+                    <p className="text-gray-300 leading-relaxed">Gli scarti acidificano bruscamente l'ambiente cellulare: gli enzimi della contrazione si spengono per autodifesa (il cervello stacca la corrente).</p>
+                  </div>
+                </div>
+                <div className="p-2.5 rounded-lg bg-black/75 border border-amber-500/30 text-[11px] text-gray-200 space-y-1">
+                  <strong className="text-amber-300 block">Come Risolvere Senza Aggiungere Serie Inutili:</strong>
+                  <ul className="list-disc list-inside space-y-0.5 text-gray-300">
+                    <li><strong>Opzione 1 (Recupero o Micro-Scala):</strong> Allunga il recupero tra le serie a <strong>1:30 – 2:00 minuti pieni</strong> (per rigenerare ATP) o abbassa di pochissimo il carico per rientrare a cedimento tra 9–11 reps.</li>
+                    <li><strong>Opzione 2 (Accetta il Cedimento):</strong> Hai tirato 6 reps alla morte? Quella serie vale oro: <strong>non fare 5 serie extra</strong> né altre serie complete pesanti (farebbero fare solo 3-4 reps mandando l'SNC in tilt).</li>
+                    <li><strong>Trucco Avanzato (Drop-Set / Scarico al volo):</strong> Solo se a 6 reps senti ancora un po' di carburante metabolico, scala al volo di un paio di chili e fai subito altre <strong>3–4 reps a bruciare</strong>, poi passa oltre.</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Caso B: Chiudi 14 invece di 12 */}
+              <div className="p-3.5 rounded-xl bg-emerald-950/20 border border-emerald-500/25 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <strong className="text-emerald-300 text-xs font-black uppercase tracking-wider">
+                    Caso B • Carico Leggero (Target 12, Chiudi Agilmente a 14)
+                  </strong>
+                  <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
+                    Mai 4ª Serie Extra
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+                  <div className="p-2.5 rounded-lg bg-black/60 border border-white/10">
+                    <strong className="text-red-300 block mb-0.5">Peso Troppo Basso (14–15+ reps):</strong>
+                    <p className="text-gray-300">Stanchezza da bruciore (acido lattico) e pompaggio, ma minore tensione meccanica sulle fibre profonde. Aggiungere una serie sarebbe <em>volume spazzatura</em>.</p>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-black/60 border border-emerald-500/30">
+                    <strong className="text-emerald-300 block mb-0.5">Range d'Oro (8–12 / 10–12 reps):</strong>
+                    <p className="text-gray-300">Equilibrio perfetto tra tensione meccanica e stress metabolico per spingere la ricomposizione e l'ipertrofia senza sfondare le articolazioni.</p>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-black/60 border border-cyan-500/30">
+                    <strong className="text-cyan-300 block mb-0.5">Test delle 14 Reps (Progressione):</strong>
+                    <p className="text-gray-300">Mantieni sempre le <strong>3 serie</strong>. Se chiudi 14 reps pulite, hai superato quel peso: la seduta dopo aggiungi <strong>+1 kg</strong> (o scatto minimo) per tornare a 10–12 reps!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 4. LA SVOLTA PER I BICIPITI: SERIE DI AVVICINAMENTO (WARM-UP SETS) */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-cyan-500/30 space-y-3">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                    <TrendingDown className="w-4 h-4 text-cyan-400 rotate-180" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    4. La Svolta per i Bicipiti: Le Serie di Avvicinamento (Warm-Up Sets)
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-[10px] font-bold border border-cyan-500/30">
+                  Zero Blocchi a Freddo
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-200 leading-relaxed">
+                I bicipiti sono muscoli piccoli e i tendini vicini a gomito e spalla odiano partire <strong>"a freddo"</strong> con il peso alto: spesso il blocco precoce a 6 ripetizioni avviene proprio perché il sistema neuromuscolare non era pronto. Usare la progressione di carico in avvicinamento sblocca tutte le fibre e protegge i tendini:
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-cyan-950/20 border border-cyan-500/20 space-y-1">
+                  <span className="text-[10px] font-black uppercase text-cyan-400">Step 1 • Non Allenante</span>
+                  <strong className="text-white block text-xs">Serie 1 (Avvicinamento Leggero):</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Carico leggero (da 15–20 reps): fanne <strong>10–12 molto controllate</strong>. Serve solo a oliare gomiti/spalle, mandare sangue al bicipite e insegnare il gesto al cervello.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-blue-950/20 border border-blue-500/20 space-y-1">
+                  <span className="text-[10px] font-black uppercase text-blue-400">Step 2 • Attivazione</span>
+                  <strong className="text-white block text-xs">Serie 2 (Avvicinamento Medio):</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Alzi il peso portandoti vicino al tuo carico di lavoro ed esegui <strong>6–8 ripetizioni fluide</strong> senza affaticarti. Tendini ora caldi e pronti.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-indigo-950/30 border border-indigo-500/40 space-y-1">
+                  <span className="text-[10px] font-black uppercase text-indigo-300">Step 3 • Ipertrofia Pura</span>
+                  <strong className="text-white block text-xs">Serie 3 e 4 (Serie Effettive Pesanti):</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Carico vero per arrivare a cedimento nel range <strong>10–12 ripetizioni al 110%</strong>. Con il sistema sbloccato raggiungi il target col massimo pump e forza!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 5. INTEGRAZIONE CALISTHENICS & RECUPERO ATTIVO BRACCIA NEI GIORNI OFF */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-emerald-500/30 space-y-4">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    <HeartPulse className="w-4 h-4 text-emerald-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    5. Calisthenics per le Braccia & Recupero Attivo nei Giorni Off (Mar / Gio)
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold border border-emerald-500/30">
+                  Active Recovery (50–60%)
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-200 leading-relaxed">
+                L'intuizione di stimolare il flusso sanguigno nelle braccia nei giorni off (martedì o giovedì) senza stravolgere la scheda in palestra si chiama <strong>Active Recovery (Recupero Attivo)</strong> ed è potentissima su muscoli piccoli come bicipiti e tricipiti (che recuperano molto più in fretta di cosce o schiena):
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                {/* Perché funziona scientificamente */}
+                <div className="p-3.5 rounded-xl bg-emerald-950/20 border border-emerald-500/20 space-y-1.5">
+                  <strong className="text-emerald-300 block font-bold">Scienza del Recupero Attivo (Flusso Sanguigno):</strong>
+                  <ul className="list-disc list-inside text-[11px] text-gray-300 space-y-1">
+                    <li><strong>Richiamo Nutrienti & Ossigeno:</strong> Porta sangue ricco di ossigeno e amminoacidi alle fibre in riparazione, facendo un "lavaggio" delle tossine che riduce i DOMS.</li>
+                    <li><strong>Zero Danno Extra:</strong> Fermandoti con ampio margine, non crei nuove micro-lacerazioni; il corpo non spreca calorie preziose a riparare, ma fortifica il tono senza alzare il cortisolo né stancare l'SNC.</li>
+                  </ul>
+                </div>
+
+                {/* Esercizi a casa */}
+                <div className="p-3.5 rounded-xl bg-teal-950/20 border border-teal-500/20 space-y-1.5">
+                  <strong className="text-teal-300 block font-bold">Esercizi a Corpo Libero (Forza Relativa & Densità):</strong>
+                  <ul className="list-disc list-inside text-[11px] text-gray-300 space-y-1">
+                    <li><strong>Tricipiti & Petto:</strong> <em>Dips o Piegamenti a presa stretta / Diamond Push-up</em> (gomiti stretti lungo i fianchi). Catena cinetica chiusa: massimo pompaggio senza stress articolare da carichi esterni.</li>
+                    <li><strong>Bicipiti & Schiena:</strong> <em>Trazioni inverse alla sbarra o Australian Pull-up</em> (sotto un tavolo o struttura sicura). Tensione continua micidiale per bicipiti e dorso.</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Regola anti-cortocircuito */}
+              <div className="p-3.5 rounded-xl bg-gradient-to-r from-emerald-950/40 via-indigo-950/30 to-black/75 border border-emerald-500/40 space-y-1.5 text-xs">
+                <strong className="text-emerald-300 block font-black uppercase tracking-wider text-[11px]">
+                  ⚠️ La Regola Pratica Anti-Cortocircuito (Budget in Deficit 1.400–1.600 kcal):
+                </strong>
+                <p className="text-[11px] text-gray-200 leading-relaxed">
+                  Il corpo libero nei giorni off deve essere solo una <strong>rifinitura di attivazione e pompaggio</strong>, MAI un secondo allenamento pesante parallelo:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-[11px]">
+                  <div className="p-2 rounded-lg bg-black/60 border border-white/10 text-gray-300">
+                    <strong className="text-white">• Volume Basso:</strong> Esegui solo <strong>2 o 3 serie</strong> con tecnica perfetta (niente 10 serie).
+                  </div>
+                  <div className="p-2 rounded-lg bg-black/60 border border-white/10 text-gray-300">
+                    <strong className="text-white">• Intensità 50–60% (No Cedimento):</strong> Lascia sempre <strong>3–4 reps in canna</strong>; il 100% resta esclusiva di Lun/Mer/Ven in palestra!
+                  </div>
+                </div>
               </div>
             </div>
           </div>
