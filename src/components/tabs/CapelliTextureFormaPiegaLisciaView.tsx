@@ -28,7 +28,7 @@ import {
   Sun,
   Moon
 } from 'lucide-react';
-import { scrollToTop } from '../../utils/scrollHelper';
+import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
 interface CapelliTextureFormaPiegaLisciaViewProps {
   onBack: () => void;
@@ -345,6 +345,15 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
     | 'graffiato_prodotto'
   >('tutta');
   const [galleryFilter, setGalleryFilter] = useState<'tutte' | 'prima' | 'dopo'>('tutte');
+  const noteContentRef = useRef<HTMLDivElement>(null);
+
+  const handleSelectTab = (tab: typeof activeTab, toggleIfActive = false) => {
+    const nextTab = toggleIfActive && activeTab === tab ? 'tutta' : tab;
+    setActiveTab(nextTab);
+    if (nextTab !== 'tutta') {
+      scrollToElement(noteContentRef.current, 68);
+    }
+  };
 
   // Scroll solo all'apertura della nota (mount)
   useEffect(() => {
@@ -654,7 +663,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           {/* 1. Tasto Diretto per i Progressi N° 1 */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'progressi' ? 'tutta' : 'progressi')}
+            onClick={() => handleSelectTab('progressi', true)}
             className={`flex items-center space-x-1 py-1.5 px-2.5 rounded-xl text-xs font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
               activeTab === 'progressi'
                 ? 'bg-gradient-to-r from-emerald-400 to-cyan-400 text-black border-emerald-300 shadow-neon'
@@ -668,7 +677,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           {/* 2. Tasto Diretto per Il Primo Risultato Piega Venuta Bene */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'primo_risultato' ? 'tutta' : 'primo_risultato')}
+            onClick={() => handleSelectTab('primo_risultato', true)}
             className={`flex items-center space-x-1 py-1.5 px-2.5 rounded-xl text-xs font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
               activeTab === 'primo_risultato'
                 ? 'bg-gradient-to-r from-cyan-400 to-blue-400 text-black border-cyan-300 shadow-neon'
@@ -682,7 +691,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           {/* 3. Tasto Diretto per Progressi #2 (Viene dopo il Primo Risultato) */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'progressi_2' ? 'tutta' : 'progressi_2')}
+            onClick={() => handleSelectTab('progressi_2', true)}
             className={`flex items-center space-x-1 py-1.5 px-2.5 rounded-xl text-xs font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
               activeTab === 'progressi_2'
                 ? 'bg-gradient-to-r from-amber-400 to-orange-400 text-black border-amber-300 shadow-neon'
@@ -696,7 +705,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           {/* 4. Tasto Diretto per Aggiornamenti #2 (Giorno Dopo) */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'giorno_dopo' ? 'tutta' : 'giorno_dopo')}
+            onClick={() => handleSelectTab('giorno_dopo', true)}
             className={`flex items-center space-x-1 py-1.5 px-2.5 rounded-xl text-xs font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
               activeTab === 'giorno_dopo'
                 ? 'bg-gradient-to-r from-sky-400 to-indigo-400 text-black border-sky-300 shadow-neon'
@@ -710,7 +719,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           {/* 5. Tasto Diretto per Taglio Ciuffo Graffiato (Confronto a 1 Mese) */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'taglio_confronto' ? 'tutta' : 'taglio_confronto')}
+            onClick={() => handleSelectTab('taglio_confronto', true)}
             className={`flex items-center space-x-1 py-1.5 px-2.5 rounded-xl text-xs font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
               activeTab === 'taglio_confronto'
                 ? 'bg-gradient-to-r from-rose-400 to-pink-400 text-black border-rose-300 shadow-neon'
@@ -724,7 +733,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           {/* 6. Tasto Diretto per Graffiato & Spray Sale Marino */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'graffiato_prodotto' ? 'tutta' : 'graffiato_prodotto')}
+            onClick={() => handleSelectTab('graffiato_prodotto', true)}
             className={`flex items-center space-x-1 py-1.5 px-2.5 rounded-xl text-xs font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
               activeTab === 'graffiato_prodotto'
                 ? 'bg-gradient-to-r from-teal-400 to-emerald-400 text-black border-teal-300 shadow-neon'
@@ -762,7 +771,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
             {/* Tasto Progressi (N° 1) */}
             <button
               type="button"
-              onClick={() => setActiveTab(activeTab === 'progressi' ? 'tutta' : 'progressi')}
+              onClick={() => handleSelectTab('progressi', true)}
               className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
                 activeTab === 'progressi'
                   ? 'bg-gradient-to-r from-emerald-950/80 via-teal-950/60 to-black/90 border-emerald-400 shadow-neon'
@@ -796,7 +805,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
             {/* Tasto Il Primo Risultato Piega Venuta Bene */}
             <button
               type="button"
-              onClick={() => setActiveTab(activeTab === 'primo_risultato' ? 'tutta' : 'primo_risultato')}
+              onClick={() => handleSelectTab('primo_risultato', true)}
               className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
                 activeTab === 'primo_risultato'
                   ? 'bg-gradient-to-r from-cyan-950/80 via-blue-950/60 to-black/90 border-cyan-400 shadow-neon'
@@ -832,7 +841,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           <div className="relative">
             <button
               type="button"
-              onClick={() => setActiveTab(activeTab === 'progressi_2' ? 'tutta' : 'progressi_2')}
+              onClick={() => handleSelectTab('progressi_2', true)}
               className={`w-full p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
                 activeTab === 'progressi_2'
                   ? 'bg-gradient-to-r from-amber-950/90 via-orange-950/70 to-black/90 border-amber-400 shadow-neon ring-2 ring-amber-400/30'
@@ -875,7 +884,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           <div className="relative">
             <button
               type="button"
-              onClick={() => setActiveTab(activeTab === 'giorno_dopo' ? 'tutta' : 'giorno_dopo')}
+              onClick={() => handleSelectTab('giorno_dopo', true)}
               className={`w-full p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
                 activeTab === 'giorno_dopo'
                   ? 'bg-gradient-to-r from-sky-950/90 via-indigo-950/70 to-black/90 border-sky-400 shadow-neon ring-2 ring-sky-400/30'
@@ -919,7 +928,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
             {/* Card Taglio Capelli Ciuffo Graffiato */}
             <button
               type="button"
-              onClick={() => setActiveTab(activeTab === 'taglio_confronto' ? 'tutta' : 'taglio_confronto')}
+              onClick={() => handleSelectTab('taglio_confronto', true)}
               className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
                 activeTab === 'taglio_confronto'
                   ? 'bg-gradient-to-r from-rose-950/90 via-pink-950/70 to-black/90 border-rose-400 shadow-neon ring-2 ring-rose-400/30'
@@ -958,7 +967,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
             {/* Card Graffiato & Spray al Sale Marino */}
             <button
               type="button"
-              onClick={() => setActiveTab(activeTab === 'graffiato_prodotto' ? 'tutta' : 'graffiato_prodotto')}
+              onClick={() => handleSelectTab('graffiato_prodotto', true)}
               className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
                 activeTab === 'graffiato_prodotto'
                   ? 'bg-gradient-to-r from-teal-950/90 via-emerald-950/70 to-black/90 border-teal-400 shadow-neon ring-2 ring-teal-400/30'
@@ -1000,7 +1009,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
         <div className="pt-2 flex flex-wrap items-center gap-2 border-t border-white/10">
           <button
             type="button"
-            onClick={() => setActiveTab('tutta')}
+            onClick={() => handleSelectTab('tutta')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'tutta'
                 ? 'bg-cyan-400 text-black shadow-md shadow-cyan-500/30 font-extrabold'
@@ -1013,7 +1022,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           {/* TASTO PROGRESSI RICHIESTO */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'progressi' ? 'tutta' : 'progressi')}
+            onClick={() => handleSelectTab('progressi', true)}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'progressi'
                 ? 'bg-gradient-to-r from-emerald-400 to-cyan-400 text-black shadow-neon font-black ring-2 ring-emerald-300'
@@ -1027,7 +1036,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           {/* TASTO IL PRIMO RISULTATO PIEGA VENUTA BENE (PRIMA DI PROGRESSI #2) */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'primo_risultato' ? 'tutta' : 'primo_risultato')}
+            onClick={() => handleSelectTab('primo_risultato', true)}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'primo_risultato'
                 ? 'bg-gradient-to-r from-cyan-400 to-blue-400 text-black shadow-neon font-black ring-2 ring-cyan-300'
@@ -1041,7 +1050,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           {/* TASTO PROGRESSI #2 (DOPO IL PRIMO RISULTATO) */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'progressi_2' ? 'tutta' : 'progressi_2')}
+            onClick={() => handleSelectTab('progressi_2', true)}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'progressi_2'
                 ? 'bg-gradient-to-r from-amber-400 to-orange-400 text-black shadow-neon font-black ring-2 ring-amber-300'
@@ -1055,7 +1064,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           {/* TASTO TAGLIO CIUFFO GRAFFIATO (CONFRONTO A 1 MESE) */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'taglio_confronto' ? 'tutta' : 'taglio_confronto')}
+            onClick={() => handleSelectTab('taglio_confronto', true)}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'taglio_confronto'
                 ? 'bg-gradient-to-r from-rose-400 to-pink-400 text-black shadow-neon font-black ring-2 ring-rose-300'
@@ -1069,7 +1078,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           {/* TASTO GRAFFIATO & SPRAY SALE MARINO */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'graffiato_prodotto' ? 'tutta' : 'graffiato_prodotto')}
+            onClick={() => handleSelectTab('graffiato_prodotto', true)}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'graffiato_prodotto'
                 ? 'bg-gradient-to-r from-teal-400 to-emerald-400 text-black shadow-neon font-black ring-2 ring-teal-300'
@@ -1082,7 +1091,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
 
           <button
             type="button"
-            onClick={() => setActiveTab('diagnosi')}
+            onClick={() => handleSelectTab('diagnosi')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'diagnosi'
                 ? 'bg-cyan-400 text-black shadow-md shadow-cyan-500/30 font-extrabold'
@@ -1094,7 +1103,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('regole_cima')}
+            onClick={() => handleSelectTab('regole_cima')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'regole_cima'
                 ? 'bg-cyan-400 text-black shadow-md shadow-cyan-500/30 font-extrabold'
@@ -1106,7 +1115,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('routine_4passi')}
+            onClick={() => handleSelectTab('routine_4passi')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'routine_4passi'
                 ? 'bg-cyan-400 text-black shadow-md shadow-cyan-500/30 font-extrabold'
@@ -1118,7 +1127,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('polverina')}
+            onClick={() => handleSelectTab('polverina')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'polverina'
                 ? 'bg-cyan-400 text-black shadow-md shadow-cyan-500/30 font-extrabold'
@@ -1130,7 +1139,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('giorno_dopo')}
+            onClick={() => handleSelectTab('giorno_dopo')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'giorno_dopo'
                 ? 'bg-sky-400 text-black shadow-md shadow-sky-500/30 font-extrabold'
@@ -1142,7 +1151,7 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('fisica')}
+            onClick={() => handleSelectTab('fisica')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'fisica'
                 ? 'bg-cyan-400 text-black shadow-md shadow-cyan-500/30 font-extrabold'
@@ -1154,6 +1163,8 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           </button>
         </div>
       </div>
+
+      <div ref={noteContentRef} className="scroll-mt-16" />
 
       {/* ============================================================= */}
       {/* SEZIONE SPECIALE: PROGRESSI (PROGRESSO NUMERO 1 & BACHECA FOTO) */}

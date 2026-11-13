@@ -1902,7 +1902,7 @@ export const NoteTab: React.FC = () => {
                   <Dumbbell className="w-3 h-3 text-orange-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">17 Pilastri • 5# & 6# Affiancate + 7# + 8# + 9# + 10# Serie, Bicipiti & Calisthenics Off</span>
+                <span className="text-[10px] text-gray-400 font-semibold">18 Pilastri • 5# & 6# Affiancate + 7# + 8# + 9# + 10# + 11# PAP 2ª Serie & Efficienza</span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-orange-300 transition-colors uppercase tracking-tight">
@@ -1910,7 +1910,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Tecnica, deficit 700-900 kcal, proteine/grassi (5# & 6#), bustine 120-130, flessioni al giovedì, 9# Strategia Personale (16a, 75 kg) e 10# Gestione Serie (stimolare non annientare, 9 kg x 12, blocco a 6 vs 14, warm-up bicipiti & recupero attivo off).
+                Tecnica, deficit 700-900 kcal, proteine/grassi (5# & 6#), bustine 120-130, flessioni, 9# Strategia Personale (75 kg), 10# Gestione Serie (9 kg x 12, blocco 6 vs 14, warm-up bicipiti, calisthenics off) e 11# Perché la 2ª serie è più leggera (PAP, viscosità, pump) + regola 3 serie.
               </p>
             </div>
 
@@ -1924,7 +1924,7 @@ export const NoteTab: React.FC = () => {
               <span>Tocca per aprire la guida su palestra e dimagrimento</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">5# & 6# (Sx/Dx) + 7# + 8# + 9# + 10# Serie & Bicipiti</span>
+            <span className="text-[10px] text-gray-400 font-semibold">5# & 6# (Sx/Dx) + 7# + 8# + 9# + 10# + 11# PAP & 3 Serie</span>
           </div>
         </div>
       </div>

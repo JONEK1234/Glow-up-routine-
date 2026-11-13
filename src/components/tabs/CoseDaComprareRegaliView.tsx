@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   ArrowLeft,
   Gift,
@@ -22,7 +22,7 @@ import {
   Atom,
   Waves
 } from 'lucide-react';
-import { scrollToTop } from '../../utils/scrollHelper';
+import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
 interface CoseDaComprareRegaliViewProps {
   onBack: () => void;
@@ -31,6 +31,14 @@ interface CoseDaComprareRegaliViewProps {
 export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState<'tutti' | 'rasatura' | 'seta' | 'diffusore' | 'gomme_mewing'>('tutti');
   const [fullscreenImage, setFullscreenImage] = useState<{ url: string; title: string } | null>(null);
+  const noteContentRef = useRef<HTMLDivElement>(null);
+
+  const handleSelectTab = (tab: typeof activeTab) => {
+    setActiveTab(tab);
+    if (tab !== 'tutti') {
+      scrollToElement(noteContentRef.current, 68);
+    }
+  };
 
   // Scroll solo all'apertura della nota (mount)
   React.useEffect(() => {
@@ -112,7 +120,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
         <div className="pt-2 flex flex-wrap items-center gap-2 border-t border-white/10">
           <button
             type="button"
-            onClick={() => setActiveTab('tutti')}
+            onClick={() => handleSelectTab('tutti')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'tutti'
                 ? 'bg-emerald-500 text-black shadow-md shadow-emerald-500/30 font-extrabold'
@@ -123,7 +131,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('rasatura')}
+            onClick={() => handleSelectTab('rasatura')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'rasatura'
                 ? 'bg-cyan-500 text-black shadow-md shadow-cyan-500/30 font-extrabold'
@@ -135,7 +143,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('seta')}
+            onClick={() => handleSelectTab('seta')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'seta'
                 ? 'bg-sky-400 text-black shadow-md shadow-sky-400/30 font-extrabold'
@@ -147,7 +155,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('diffusore')}
+            onClick={() => handleSelectTab('diffusore')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'diffusore'
                 ? 'bg-purple-500 text-white shadow-md shadow-purple-500/30 font-extrabold'
@@ -159,7 +167,7 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('gomme_mewing')}
+            onClick={() => handleSelectTab('gomme_mewing')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'gomme_mewing'
                 ? 'bg-amber-400 text-black shadow-md shadow-amber-500/30 font-extrabold'
@@ -171,6 +179,8 @@ export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> =
           </button>
         </div>
       </div>
+
+      <div ref={noteContentRef} className="scroll-mt-16" />
 
       {/* ============================================================= */}
       {/* SEZIONE 1: IL RASOIO & LE LAMETTE (AMAZON)                     */}

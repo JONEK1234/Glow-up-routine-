@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   ArrowLeft,
   Info,
@@ -16,7 +16,7 @@ import {
   Check,
   Scale
 } from 'lucide-react';
-import { scrollToTop } from '../../utils/scrollHelper';
+import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
 interface MasticazioneMasseteriViewProps {
   onBack: () => void;
@@ -24,6 +24,14 @@ interface MasticazioneMasseteriViewProps {
 
 export const MasticazioneMasseteriView: React.FC<MasticazioneMasseteriViewProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState<'tutte' | 'tabella' | 'protocollo' | 'anatomia' | 'visivo'>('tutte');
+  const noteContentRef = useRef<HTMLDivElement>(null);
+
+  const handleSelectTab = (tab: typeof activeTab) => {
+    setActiveTab(tab);
+    if (tab !== 'tutte') {
+      scrollToElement(noteContentRef.current, 68);
+    }
+  };
 
   // Scroll solo all'apertura della nota (mount)
   React.useEffect(() => {
@@ -71,7 +79,7 @@ export const MasticazioneMasseteriView: React.FC<MasticazioneMasseteriViewProps>
         <div className="pt-2 flex flex-wrap items-center gap-2 border-t border-white/10">
           <button
             type="button"
-            onClick={() => setActiveTab('tutte')}
+            onClick={() => handleSelectTab('tutte')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'tutte'
                 ? 'bg-amber-400 text-black shadow-md shadow-amber-500/30 font-extrabold'
@@ -82,7 +90,7 @@ export const MasticazioneMasseteriView: React.FC<MasticazioneMasseteriViewProps>
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('tabella')}
+            onClick={() => handleSelectTab('tabella')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'tabella'
                 ? 'bg-amber-400 text-black shadow-md shadow-amber-500/30 font-extrabold'
@@ -94,7 +102,7 @@ export const MasticazioneMasseteriView: React.FC<MasticazioneMasseteriViewProps>
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('protocollo')}
+            onClick={() => handleSelectTab('protocollo')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'protocollo'
                 ? 'bg-amber-400 text-black shadow-md shadow-amber-500/30 font-extrabold'
@@ -106,7 +114,7 @@ export const MasticazioneMasseteriView: React.FC<MasticazioneMasseteriViewProps>
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('anatomia')}
+            onClick={() => handleSelectTab('anatomia')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'anatomia'
                 ? 'bg-amber-400 text-black shadow-md shadow-amber-500/30 font-extrabold'
@@ -118,7 +126,7 @@ export const MasticazioneMasseteriView: React.FC<MasticazioneMasseteriViewProps>
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('visivo')}
+            onClick={() => handleSelectTab('visivo')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'visivo'
                 ? 'bg-amber-400 text-black shadow-md shadow-amber-500/30 font-extrabold'
@@ -144,6 +152,8 @@ export const MasticazioneMasseteriView: React.FC<MasticazioneMasseteriViewProps>
           Mangiare <strong>croste di pane duro o cibi fibrosi</strong> è una forma di allenamento funzionale del tutto naturale e sicura. Riguardo alle <strong>gomme da masticare per la definizione</strong> (come le jawline chewing gum o gomme ad alta durezza/resistenza, spesso a base di mastice naturale o silicone alimentare), la differenza rispetto alle gomme da masticare classiche del supermercato è quasi interamente meccanica e strutturale.
         </p>
       </div>
+
+      <div ref={noteContentRef} className="scroll-mt-16" />
 
       {/* ============================================================= */}
       {/* 1. LA DIFFERENZA SCIENTIFICO-MECCANICA (TABELLA)               */}

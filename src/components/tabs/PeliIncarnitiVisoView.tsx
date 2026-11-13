@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   ArrowLeft,
   Sparkles,
@@ -22,7 +22,7 @@ import {
   Compass,
   Moon
 } from 'lucide-react';
-import { scrollToTop } from '../../utils/scrollHelper';
+import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
 interface PeliIncarnitiVisoViewProps {
   onBack: () => void;
@@ -30,6 +30,14 @@ interface PeliIncarnitiVisoViewProps {
 
 export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState<'tutte' | 'mattina' | 'barba' | 'informazioni' | 'metodo_diviso'>('tutte');
+  const noteContentRef = useRef<HTMLDivElement>(null);
+
+  const handleSelectTab = (tab: typeof activeTab) => {
+    setActiveTab(tab);
+    if (tab !== 'tutte') {
+      scrollToElement(noteContentRef.current, 68);
+    }
+  };
 
   // Scroll solo all'apertura della nota (mount)
   React.useEffect(() => {
@@ -76,7 +84,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
         <div className="pt-2 flex flex-wrap items-center gap-2 border-t border-white/10">
           <button
             type="button"
-            onClick={() => setActiveTab('tutte')}
+            onClick={() => handleSelectTab('tutte')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'tutte'
                 ? 'bg-emerald-500 text-black shadow-md shadow-emerald-500/30 font-extrabold'
@@ -87,7 +95,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('mattina')}
+            onClick={() => handleSelectTab('mattina')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'mattina'
                 ? 'bg-amber-500 text-black shadow-md shadow-amber-500/30 font-extrabold'
@@ -99,7 +107,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('barba')}
+            onClick={() => handleSelectTab('barba')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'barba'
                 ? 'bg-cyan-500 text-black shadow-md shadow-cyan-500/30 font-extrabold'
@@ -111,7 +119,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('informazioni')}
+            onClick={() => handleSelectTab('informazioni')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'informazioni'
                 ? 'bg-purple-500 text-white shadow-md shadow-purple-500/30 font-extrabold'
@@ -123,7 +131,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('metodo_diviso')}
+            onClick={() => handleSelectTab('metodo_diviso')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'metodo_diviso'
                 ? 'bg-emerald-400 text-black shadow-md shadow-emerald-400/30 font-extrabold'
@@ -135,6 +143,8 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
           </button>
         </div>
       </div>
+
+      <div ref={noteContentRef} className="scroll-mt-16" />
 
       {/* ============================================================= */}
       {/* SEZIONE 1: MASSAGGIO DI MATTINA                              */}

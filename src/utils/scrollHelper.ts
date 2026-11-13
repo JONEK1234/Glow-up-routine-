@@ -55,3 +55,42 @@ export const scrollToTop = (smooth: boolean = false) => {
   setTimeout(performScroll, 60);
   setTimeout(performScroll, 150);
 };
+
+/**
+ * Scorre direttamente all'inizio di una specifica nota/sezione aperta,
+ * lasciando il giusto margine sotto la barra di navigazione sticky.
+ */
+export const scrollToElement = (element: HTMLElement | null, offset: number = 68) => {
+  if (typeof window === 'undefined' || !element) return;
+
+  const performScrollToEl = () => {
+    const rect = element.getBoundingClientRect();
+    const currentScrollTop =
+      window.scrollY ||
+      window.pageYOffset ||
+      (document.documentElement ? document.documentElement.scrollTop : 0) ||
+      (document.body ? document.body.scrollTop : 0) ||
+      0;
+
+    const targetTop = Math.max(0, rect.top + currentScrollTop - offset);
+
+    try {
+      window.scrollTo({
+        top: targetTop,
+        left: 0,
+        behavior: 'smooth'
+      });
+    } catch {
+      window.scrollTo(0, targetTop);
+    }
+  };
+
+  if (typeof requestAnimationFrame !== 'undefined') {
+    requestAnimationFrame(() => {
+      setTimeout(performScrollToEl, 30);
+    });
+  } else {
+    setTimeout(performScrollToEl, 40);
+  }
+};
+

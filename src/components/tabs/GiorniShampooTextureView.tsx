@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   ArrowLeft,
   Sparkles,
@@ -17,7 +17,7 @@ import {
   RefreshCw,
   HeartPulse
 } from 'lucide-react';
-import { scrollToTop } from '../../utils/scrollHelper';
+import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
 interface GiorniShampooTextureViewProps {
   onBack: () => void;
@@ -112,6 +112,14 @@ const WEEK_DAYS: RoutineDay[] = [
 export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState<'tutte' | 'tabella' | 'notti' | 'polverina' | 'refresh'>('tutte');
   const [selectedDayIndex, setSelectedDayIndex] = useState<number | null>(null);
+  const noteContentRef = useRef<HTMLDivElement>(null);
+
+  const handleSelectTab = (tab: typeof activeTab) => {
+    setActiveTab(tab);
+    if (tab !== 'tutte') {
+      scrollToElement(noteContentRef.current, 68);
+    }
+  };
 
   // Scroll solo all'apertura della nota (mount)
   React.useEffect(() => {
@@ -158,7 +166,7 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
         <div className="pt-2 flex flex-wrap items-center gap-2 border-t border-white/10">
           <button
             type="button"
-            onClick={() => setActiveTab('tutte')}
+            onClick={() => handleSelectTab('tutte')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'tutte'
                 ? 'bg-cyan-500 text-black shadow-md shadow-cyan-500/30 font-extrabold'
@@ -169,7 +177,7 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('tabella')}
+            onClick={() => handleSelectTab('tabella')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'tabella'
                 ? 'bg-cyan-500 text-black shadow-md shadow-cyan-500/30 font-extrabold'
@@ -181,7 +189,7 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('notti')}
+            onClick={() => handleSelectTab('notti')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'notti'
                 ? 'bg-amber-500 text-black shadow-md shadow-amber-500/30 font-extrabold'
@@ -193,7 +201,7 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('polverina')}
+            onClick={() => handleSelectTab('polverina')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'polverina'
                 ? 'bg-purple-500 text-white shadow-md shadow-purple-500/30 font-extrabold'
@@ -205,7 +213,7 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('refresh')}
+            onClick={() => handleSelectTab('refresh')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'refresh'
                 ? 'bg-emerald-400 text-black shadow-md shadow-emerald-400/30 font-extrabold'
@@ -217,6 +225,8 @@ export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> =
           </button>
         </div>
       </div>
+
+      <div ref={noteContentRef} className="scroll-mt-16" />
 
       {/* ============================================================= */}
       {/* SEZIONE 1: TABELLA ROUTINE SETTIMANALE (CICLO CONTINUO)        */}

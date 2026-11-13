@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   ArrowLeft,
   Moon,
@@ -19,7 +19,7 @@ import {
   Maximize2,
   X
 } from 'lucide-react';
-import { scrollToTop } from '../../utils/scrollHelper';
+import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
 interface SonnoPosizioniViewProps {
   onBack: () => void;
@@ -28,6 +28,14 @@ interface SonnoPosizioniViewProps {
 export const SonnoPosizioniView: React.FC<SonnoPosizioniViewProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState<'tutte' | 'schiena' | 'lato'>('tutte');
   const [fullscreenImage, setFullscreenImage] = useState<{ url: string; title: string } | null>(null);
+  const noteContentRef = useRef<HTMLDivElement>(null);
+
+  const handleSelectTab = (tab: typeof activeTab) => {
+    setActiveTab(tab);
+    if (tab !== 'tutte') {
+      scrollToElement(noteContentRef.current, 68);
+    }
+  };
 
   // Scroll solo all'apertura della nota (mount)
   React.useEffect(() => {
@@ -157,7 +165,7 @@ export const SonnoPosizioniView: React.FC<SonnoPosizioniViewProps> = ({ onBack }
         <div className="pt-2 flex flex-wrap items-center gap-2 border-t border-white/10">
           <button
             type="button"
-            onClick={() => setActiveTab('tutte')}
+            onClick={() => handleSelectTab('tutte')}
             className={`px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'tutte'
                 ? 'bg-indigo-500 text-white shadow-md shadow-indigo-500/30 font-extrabold'
@@ -168,7 +176,7 @@ export const SonnoPosizioniView: React.FC<SonnoPosizioniViewProps> = ({ onBack }
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('schiena')}
+            onClick={() => handleSelectTab('schiena')}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'schiena'
                 ? 'bg-indigo-500 text-white shadow-md shadow-indigo-500/30 font-extrabold'
@@ -180,7 +188,7 @@ export const SonnoPosizioniView: React.FC<SonnoPosizioniViewProps> = ({ onBack }
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('lato')}
+            onClick={() => handleSelectTab('lato')}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'lato'
                 ? 'bg-purple-500 text-white shadow-md shadow-purple-500/30 font-extrabold'
@@ -226,6 +234,8 @@ export const SonnoPosizioniView: React.FC<SonnoPosizioniViewProps> = ({ onBack }
           </div>
         </div>
       )}
+
+      <div ref={noteContentRef} className="scroll-mt-16" />
 
       {/* ============================================================= */}
       {/* SEZIONE 1: A PANCIA IN SU                                     */}

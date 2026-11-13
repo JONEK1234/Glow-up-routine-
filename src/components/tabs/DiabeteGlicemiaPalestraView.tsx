@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   ArrowLeft,
   Activity,
@@ -21,7 +21,7 @@ import {
   X,
   ChevronRight
 } from 'lucide-react';
-import { scrollToTop } from '../../utils/scrollHelper';
+import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
 interface DiabeteGlicemiaPalestraViewProps {
   onBack: () => void;
@@ -41,6 +41,15 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
     | 'succo'
     | 'protocollo'
   >('tutta');
+  const noteContentRef = useRef<HTMLDivElement>(null);
+
+  const handleSelectTab = (tab: typeof activeTab, toggleIfActive = false) => {
+    const nextTab = toggleIfActive && activeTab === tab ? 'tutta' : tab;
+    setActiveTab(nextTab);
+    if (nextTab !== 'tutta') {
+      scrollToElement(noteContentRef.current, 68);
+    }
+  };
 
   // Scroll solo all'apertura della nota (mount)
   useEffect(() => {
@@ -64,7 +73,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           {/* Tasto Rapido Nota 2 */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'brucia_grassi' ? 'tutta' : 'brucia_grassi')}
+            onClick={() => handleSelectTab('brucia_grassi', true)}
             className={`flex items-center space-x-1 py-1.5 px-2 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
               activeTab === 'brucia_grassi'
                 ? 'bg-gradient-to-r from-amber-400 to-orange-400 text-black border-amber-300 shadow-neon'
@@ -78,7 +87,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           {/* Tasto Rapido Nota 3 */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'bustine_spuntino' ? 'tutta' : 'bustine_spuntino')}
+            onClick={() => handleSelectTab('bustine_spuntino', true)}
             className={`flex items-center space-x-1 py-1.5 px-2 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
               activeTab === 'bustine_spuntino'
                 ? 'bg-gradient-to-r from-emerald-400 to-teal-400 text-black border-emerald-300 shadow-neon'
@@ -92,7 +101,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           {/* Tasto Rapido Nota 4 */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'correggi_vs_non' ? 'tutta' : 'correggi_vs_non')}
+            onClick={() => handleSelectTab('correggi_vs_non', true)}
             className={`flex items-center space-x-1 py-1.5 px-2 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
               activeTab === 'correggi_vs_non'
                 ? 'bg-gradient-to-r from-rose-400 to-pink-400 text-black border-rose-300 shadow-neon'
@@ -106,7 +115,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           {/* Tasto Rapido Nota 5 */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'guida_iperglicemia' ? 'tutta' : 'guida_iperglicemia')}
+            onClick={() => handleSelectTab('guida_iperglicemia', true)}
             className={`flex items-center space-x-1 py-1.5 px-2 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
               activeTab === 'guida_iperglicemia'
                 ? 'bg-gradient-to-r from-purple-400 to-indigo-400 text-black border-purple-300 shadow-neon'
@@ -120,7 +129,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           {/* Tasto Rapido Nota 6 */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'variabilita_glicemica' ? 'tutta' : 'variabilita_glicemica')}
+            onClick={() => handleSelectTab('variabilita_glicemica', true)}
             className={`flex items-center space-x-1 py-1.5 px-2 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
               activeTab === 'variabilita_glicemica'
                 ? 'bg-gradient-to-r from-teal-400 to-cyan-400 text-black border-teal-300 shadow-neon'
@@ -157,7 +166,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
             {/* Card Nota 2: Brucia-Grassi (80-90 mg/dL) */}
             <button
               type="button"
-              onClick={() => setActiveTab(activeTab === 'brucia_grassi' ? 'tutta' : 'brucia_grassi')}
+              onClick={() => handleSelectTab('brucia_grassi', true)}
               className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
                 activeTab === 'brucia_grassi'
                   ? 'bg-gradient-to-r from-amber-950/90 via-orange-950/70 to-black/90 border-amber-400 shadow-neon ring-2 ring-amber-400/30'
@@ -196,7 +205,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
             {/* Card Nota 3: Solo Bustine vs Spuntino Cibo Vero */}
             <button
               type="button"
-              onClick={() => setActiveTab(activeTab === 'bustine_spuntino' ? 'tutta' : 'bustine_spuntino')}
+              onClick={() => handleSelectTab('bustine_spuntino', true)}
               className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
                 activeTab === 'bustine_spuntino'
                   ? 'bg-gradient-to-r from-emerald-950/90 via-teal-950/70 to-black/90 border-emerald-400 shadow-neon ring-2 ring-emerald-400/30'
@@ -237,7 +246,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
             {/* Card Nota 4: Biochimica Pura: Correggi Subito vs NON Correggi a 50-60 */}
             <button
               type="button"
-              onClick={() => setActiveTab(activeTab === 'correggi_vs_non' ? 'tutta' : 'correggi_vs_non')}
+              onClick={() => handleSelectTab('correggi_vs_non', true)}
               className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
                 activeTab === 'correggi_vs_non'
                   ? 'bg-gradient-to-r from-rose-950/90 via-pink-950/70 to-black/90 border-rose-400 shadow-neon ring-2 ring-rose-400/30'
@@ -276,7 +285,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
             {/* Card Nota 5: Guida Definitiva: Glicemia, Insulina & Iperglicemia >180 */}
             <button
               type="button"
-              onClick={() => setActiveTab(activeTab === 'guida_iperglicemia' ? 'tutta' : 'guida_iperglicemia')}
+              onClick={() => handleSelectTab('guida_iperglicemia', true)}
               className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
                 activeTab === 'guida_iperglicemia'
                   ? 'bg-gradient-to-r from-purple-950/90 via-indigo-950/70 to-black/90 border-purple-400 shadow-neon ring-2 ring-purple-400/30'
@@ -316,7 +325,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           {/* Card Nota 6: Variabilità Glicemica, Insulina e Dimagrimento */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'variabilita_glicemica' ? 'tutta' : 'variabilita_glicemica')}
+            onClick={() => handleSelectTab('variabilita_glicemica', true)}
             className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
               activeTab === 'variabilita_glicemica'
                 ? 'bg-gradient-to-r from-teal-950/90 via-cyan-950/70 to-black/90 border-teal-400 shadow-neon ring-2 ring-teal-400/30'
@@ -357,7 +366,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
         <div className="pt-2 flex flex-wrap items-center gap-2 border-t border-white/10">
           <button
             type="button"
-            onClick={() => setActiveTab('tutta')}
+            onClick={() => handleSelectTab('tutta')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'tutta'
                 ? 'bg-rose-500 text-white shadow-md shadow-rose-500/30 font-extrabold'
@@ -370,7 +379,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           {/* TAB NOTA 2 */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'brucia_grassi' ? 'tutta' : 'brucia_grassi')}
+            onClick={() => handleSelectTab('brucia_grassi', true)}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'brucia_grassi'
                 ? 'bg-gradient-to-r from-amber-400 to-orange-400 text-black shadow-neon font-black ring-2 ring-amber-300'
@@ -384,7 +393,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           {/* TAB NOTA 3 */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'bustine_spuntino' ? 'tutta' : 'bustine_spuntino')}
+            onClick={() => handleSelectTab('bustine_spuntino', true)}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'bustine_spuntino'
                 ? 'bg-gradient-to-r from-emerald-400 to-teal-400 text-black shadow-neon font-black ring-2 ring-emerald-300'
@@ -398,7 +407,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           {/* TAB NOTA 4 */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'correggi_vs_non' ? 'tutta' : 'correggi_vs_non')}
+            onClick={() => handleSelectTab('correggi_vs_non', true)}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'correggi_vs_non'
                 ? 'bg-gradient-to-r from-rose-400 to-pink-400 text-black shadow-neon font-black ring-2 ring-rose-300'
@@ -412,7 +421,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           {/* TAB NOTA 5 */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'guida_iperglicemia' ? 'tutta' : 'guida_iperglicemia')}
+            onClick={() => handleSelectTab('guida_iperglicemia', true)}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'guida_iperglicemia'
                 ? 'bg-gradient-to-r from-purple-400 to-indigo-400 text-black shadow-neon font-black ring-2 ring-purple-300'
@@ -426,7 +435,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           {/* TAB NOTA 6 */}
           <button
             type="button"
-            onClick={() => setActiveTab(activeTab === 'variabilita_glicemica' ? 'tutta' : 'variabilita_glicemica')}
+            onClick={() => handleSelectTab('variabilita_glicemica', true)}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'variabilita_glicemica'
                 ? 'bg-gradient-to-r from-teal-400 to-cyan-400 text-black shadow-neon font-black ring-2 ring-teal-300'
@@ -439,7 +448,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
 
           <button
             type="button"
-            onClick={() => setActiveTab('palestra')}
+            onClick={() => handleSelectTab('palestra')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'palestra'
                 ? 'bg-rose-500 text-white shadow-md shadow-rose-500/30 font-extrabold'
@@ -451,7 +460,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('notte')}
+            onClick={() => handleSelectTab('notte')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'notte'
                 ? 'bg-rose-500 text-white shadow-md shadow-rose-500/30 font-extrabold'
@@ -463,7 +472,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('colazione')}
+            onClick={() => handleSelectTab('colazione')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'colazione'
                 ? 'bg-rose-500 text-white shadow-md shadow-rose-500/30 font-extrabold'
@@ -475,7 +484,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('succo')}
+            onClick={() => handleSelectTab('succo')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'succo'
                 ? 'bg-rose-500 text-white shadow-md shadow-rose-500/30 font-extrabold'
@@ -487,7 +496,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('protocollo')}
+            onClick={() => handleSelectTab('protocollo')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'protocollo'
                 ? 'bg-rose-500 text-white shadow-md shadow-rose-500/30 font-extrabold'
@@ -499,6 +508,8 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           </button>
         </div>
       </div>
+
+      <div ref={noteContentRef} className="scroll-mt-16" />
 
       {/* ============================================================= */}
       {/* SECONDA NOTA: GLICEMIA, PALESTRA E BRUCIA-GRASSI               */}

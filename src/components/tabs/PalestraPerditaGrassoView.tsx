@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   ArrowLeft,
   Sparkles,
@@ -24,14 +24,22 @@ import {
   LineChart,
   Calendar
 } from 'lucide-react';
-import { scrollToTop } from '../../utils/scrollHelper';
+import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
 interface PalestraPerditaGrassoViewProps {
   onBack: () => void;
 }
 
 export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra' | 'piegamenti_lavoro' | 'strategia_personale' | 'volume_calisthenics'>('tutte');
+  const [activeTab, setActiveTab] = useState<'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra' | 'piegamenti_lavoro' | 'strategia_personale' | 'volume_calisthenics' | 'pap_seconda_serie'>('tutte');
+  const noteContentRef = useRef<HTMLDivElement>(null);
+
+  const handleSelectTab = (tab: typeof activeTab) => {
+    setActiveTab(tab);
+    if (tab !== 'tutte') {
+      scrollToElement(noteContentRef.current, 68);
+    }
+  };
 
   // Scroll solo all'apertura della nota (mount)
   React.useEffect(() => {
@@ -78,7 +86,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
           {/* 1# Informazioni */}
           <div
-            onClick={() => setActiveTab('informazioni')}
+            onClick={() => handleSelectTab('informazioni')}
             className="p-3 rounded-2xl bg-gradient-to-r from-purple-950/50 via-indigo-950/40 to-black/70 border border-purple-500/40 hover:border-purple-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-purple-500/20"
           >
             <div className="flex items-center space-x-2.5">
@@ -101,7 +109,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
 
           {/* 2# Informazioni */}
           <div
-            onClick={() => setActiveTab('informazioni2')}
+            onClick={() => handleSelectTab('informazioni2')}
             className="p-3 rounded-2xl bg-gradient-to-r from-blue-950/50 via-indigo-950/40 to-black/70 border border-blue-500/40 hover:border-blue-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-blue-500/20"
           >
             <div className="flex items-center space-x-2.5">
@@ -124,7 +132,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
 
           {/* 3# Informazioni: Il Quadro Completo */}
           <div
-            onClick={() => setActiveTab('quadro_completo')}
+            onClick={() => handleSelectTab('quadro_completo')}
             className="p-3 rounded-2xl bg-gradient-to-r from-emerald-950/50 via-teal-950/40 to-black/70 border border-emerald-500/40 hover:border-emerald-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-emerald-500/20"
           >
             <div className="flex items-center space-x-2.5">
@@ -147,7 +155,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
 
           {/* 4# Informazioni: Proteine & Grasso */}
           <div
-            onClick={() => setActiveTab('proteine_scienza')}
+            onClick={() => handleSelectTab('proteine_scienza')}
             className="p-3 rounded-2xl bg-gradient-to-r from-amber-950/50 via-rose-950/40 to-black/70 border border-amber-500/40 hover:border-amber-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-amber-500/20"
           >
             <div className="flex items-center space-x-2.5">
@@ -183,7 +191,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {/* 5# Parte 1 (Sinistra) */}
               <div
-                onClick={() => setActiveTab('fabbisogno_tid')}
+                onClick={() => handleSelectTab('fabbisogno_tid')}
                 className={`p-2.5 rounded-xl border transition-all cursor-pointer group flex items-center justify-between ${
                   activeTab === 'fabbisogno_tid'
                     ? 'bg-rose-500/20 border-rose-400 shadow-md shadow-rose-500/20'
@@ -210,7 +218,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
 
               {/* 5# Parte 2 (Destra) */}
               <div
-                onClick={() => setActiveTab('fabbisogno_tid_2')}
+                onClick={() => handleSelectTab('fabbisogno_tid_2')}
                 className={`p-2.5 rounded-xl border transition-all cursor-pointer group flex items-center justify-between ${
                   activeTab === 'fabbisogno_tid_2'
                     ? 'bg-orange-500/20 border-orange-400 shadow-md shadow-orange-500/20'
@@ -252,7 +260,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {/* 6# Parte 1 (Sinistra) */}
               <div
-                onClick={() => setActiveTab('grassi_scienza')}
+                onClick={() => handleSelectTab('grassi_scienza')}
                 className={`p-2.5 rounded-xl border transition-all cursor-pointer group flex items-center justify-between ${
                   activeTab === 'grassi_scienza'
                     ? 'bg-yellow-500/20 border-yellow-400 shadow-md shadow-yellow-500/20'
@@ -279,7 +287,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
 
               {/* 6# Parte 2 (Destra) */}
               <div
-                onClick={() => setActiveTab('grassi_scienza_2')}
+                onClick={() => handleSelectTab('grassi_scienza_2')}
                 className={`p-2.5 rounded-xl border transition-all cursor-pointer group flex items-center justify-between ${
                   activeTab === 'grassi_scienza_2'
                     ? 'bg-amber-500/20 border-amber-400 shadow-md shadow-amber-500/20'
@@ -308,7 +316,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
 
           {/* 7# Informazioni: Zucchero in Palestra & Calorie (Stabilità 120-130) */}
           <div
-            onClick={() => setActiveTab('bustine_palestra')}
+            onClick={() => handleSelectTab('bustine_palestra')}
             className="p-3 rounded-2xl bg-gradient-to-r from-emerald-950/50 via-teal-950/40 to-black/70 border border-emerald-500/40 hover:border-emerald-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-emerald-500/20"
           >
             <div className="flex items-center space-x-2.5">
@@ -331,7 +339,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
 
           {/* 8# Informazioni: Piegamenti & Lavoro Fisico */}
           <div
-            onClick={() => setActiveTab('piegamenti_lavoro')}
+            onClick={() => handleSelectTab('piegamenti_lavoro')}
             className="p-3 rounded-2xl bg-gradient-to-r from-cyan-950/50 via-blue-950/40 to-black/70 border border-cyan-500/40 hover:border-cyan-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-cyan-500/20 col-span-1 sm:col-span-2 lg:col-span-1"
           >
             <div className="flex items-center space-x-2.5">
@@ -354,7 +362,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
 
           {/* 9# Informazioni: Strategia Chirurgica Personale (16 anni • 75 kg • Settimana al Millimetro) */}
           <div
-            onClick={() => setActiveTab('strategia_personale')}
+            onClick={() => handleSelectTab('strategia_personale')}
             className="p-3.5 rounded-2xl bg-gradient-to-r from-rose-950/60 via-orange-950/40 to-black/80 border-2 border-rose-500/50 hover:border-rose-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-rose-500/25 col-span-1 sm:col-span-2 lg:col-span-3"
           >
             <div className="flex items-center space-x-3">
@@ -380,7 +388,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
 
           {/* 10# Informazioni: Volume Extra, Cedimento 6 vs 14, Bicipiti & Calisthenics Off */}
           <div
-            onClick={() => setActiveTab('volume_calisthenics')}
+            onClick={() => handleSelectTab('volume_calisthenics')}
             className="p-3.5 rounded-2xl bg-gradient-to-r from-indigo-950/60 via-violet-950/40 to-black/80 border-2 border-indigo-500/50 hover:border-indigo-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-indigo-500/25 col-span-1 sm:col-span-2 lg:col-span-3"
           >
             <div className="flex items-center space-x-3">
@@ -403,13 +411,39 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
               Apri ➔
             </span>
           </div>
+
+          {/* 11# Informazioni: Seconda Serie più Leggera (PAP) & Regola delle 3 Serie */}
+          <div
+            onClick={() => handleSelectTab('pap_seconda_serie')}
+            className="p-3.5 rounded-2xl bg-gradient-to-r from-fuchsia-950/60 via-purple-950/40 to-black/80 border-2 border-fuchsia-500/50 hover:border-fuchsia-400 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-fuchsia-500/25 col-span-1 sm:col-span-2 lg:col-span-3"
+          >
+            <div className="flex items-center space-x-3">
+              <span className="p-2.5 rounded-xl bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/30 group-hover:bg-fuchsia-500 group-hover:text-black transition-all shrink-0">
+                <Sparkles className="w-4 h-4 text-fuchsia-400 group-hover:text-black" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-fuchsia-400 flex items-center gap-1.5">
+                  <Zap className="w-3 h-3 text-fuchsia-400" /> 11# Info: Seconda Serie più "Leggera" (PAP) & Efficienza 3 Serie
+                </span>
+                <h3 className="text-xs sm:text-sm font-black text-white group-hover:text-fuchsia-200 transition-colors">
+                  Neurofisiologia PAP, Viscosità & Pump + Perché NON Tornare su un Muscolo Già Allenato (Tricipiti / Sinergici)
+                </h3>
+                <p className="text-[11px] text-gray-300 line-clamp-1 mt-0.5">
+                  Reclutamento fibre rapide, liquido sinoviale, finestra magica 2ª-3ª serie e massima intensità sulle 3 serie a cedimento.
+                </p>
+              </div>
+            </div>
+            <span className="text-xs font-black px-3 py-1.5 rounded-xl bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/30 group-hover:bg-fuchsia-500 group-hover:text-black transition-all shrink-0 ml-2">
+              Apri ➔
+            </span>
+          </div>
         </div>
 
         {/* Tab Filters */}
         <div className="pt-2 flex flex-wrap items-center gap-2 border-t border-white/10">
           <button
             type="button"
-            onClick={() => setActiveTab('tutte')}
+            onClick={() => handleSelectTab('tutte')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'tutte'
                 ? 'bg-orange-500 text-black shadow-md shadow-orange-500/30 font-extrabold'
@@ -420,7 +454,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('palestra')}
+            onClick={() => handleSelectTab('palestra')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'palestra'
                 ? 'bg-orange-500 text-black shadow-md shadow-orange-500/30 font-extrabold'
@@ -432,7 +466,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('deficit')}
+            onClick={() => handleSelectTab('deficit')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'deficit'
                 ? 'bg-amber-500 text-black shadow-md shadow-amber-500/30 font-extrabold'
@@ -444,7 +478,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('biologia')}
+            onClick={() => handleSelectTab('biologia')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'biologia'
                 ? 'bg-red-500 text-white shadow-md shadow-red-500/30 font-extrabold'
@@ -456,7 +490,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('sessione')}
+            onClick={() => handleSelectTab('sessione')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'sessione'
                 ? 'bg-cyan-500 text-black shadow-md shadow-cyan-500/30 font-extrabold'
@@ -468,7 +502,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('nutrizione')}
+            onClick={() => handleSelectTab('nutrizione')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'nutrizione'
                 ? 'bg-emerald-500 text-black shadow-md shadow-emerald-500/30 font-extrabold'
@@ -480,7 +514,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('informazioni')}
+            onClick={() => handleSelectTab('informazioni')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'informazioni'
                 ? 'bg-purple-500 text-white shadow-md shadow-purple-500/30 font-extrabold'
@@ -492,7 +526,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('informazioni2')}
+            onClick={() => handleSelectTab('informazioni2')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'informazioni2'
                 ? 'bg-blue-500 text-white shadow-md shadow-blue-500/30 font-extrabold'
@@ -504,7 +538,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('quadro_completo')}
+            onClick={() => handleSelectTab('quadro_completo')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'quadro_completo'
                 ? 'bg-teal-500 text-black shadow-md shadow-teal-500/30 font-extrabold'
@@ -516,7 +550,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('proteine_scienza')}
+            onClick={() => handleSelectTab('proteine_scienza')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'proteine_scienza'
                 ? 'bg-amber-500 text-black shadow-md shadow-amber-500/30 font-extrabold'
@@ -531,7 +565,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           <div className="inline-flex items-center gap-1 p-1 rounded-2xl bg-gradient-to-r from-rose-950/40 to-orange-950/40 border border-orange-500/40 shadow-sm shrink-0">
             <button
               type="button"
-              onClick={() => setActiveTab('fabbisogno_tid')}
+              onClick={() => handleSelectTab('fabbisogno_tid')}
               className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeTab === 'fabbisogno_tid'
                   ? 'bg-rose-500 text-white shadow-md shadow-rose-500/30 font-extrabold'
@@ -544,7 +578,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
             <span className="text-gray-500 font-bold text-xs">/</span>
             <button
               type="button"
-              onClick={() => setActiveTab('fabbisogno_tid_2')}
+              onClick={() => handleSelectTab('fabbisogno_tid_2')}
               className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeTab === 'fabbisogno_tid_2'
                   ? 'bg-orange-500 text-white shadow-md shadow-orange-500/30 font-extrabold'
@@ -560,7 +594,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           <div className="inline-flex items-center gap-1 p-1 rounded-2xl bg-gradient-to-r from-yellow-950/40 to-amber-950/40 border border-yellow-500/40 shadow-sm shrink-0">
             <button
               type="button"
-              onClick={() => setActiveTab('grassi_scienza')}
+              onClick={() => handleSelectTab('grassi_scienza')}
               className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeTab === 'grassi_scienza'
                   ? 'bg-yellow-500 text-black shadow-md shadow-yellow-500/30 font-extrabold'
@@ -573,7 +607,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
             <span className="text-gray-500 font-bold text-xs">/</span>
             <button
               type="button"
-              onClick={() => setActiveTab('grassi_scienza_2')}
+              onClick={() => handleSelectTab('grassi_scienza_2')}
               className={`px-2.5 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeTab === 'grassi_scienza_2'
                   ? 'bg-amber-500 text-black shadow-md shadow-amber-500/30 font-extrabold'
@@ -588,7 +622,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           {/* 14. 7# Info: Zucchero in Palestra, Calorie & Stabilità 120-130 mg/dL */}
           <button
             type="button"
-            onClick={() => setActiveTab('bustine_palestra')}
+            onClick={() => handleSelectTab('bustine_palestra')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'bustine_palestra'
                 ? 'bg-emerald-400 text-black shadow-md shadow-emerald-500/30 font-extrabold'
@@ -602,7 +636,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           {/* 15. 8# Info: Piegamenti e Lavoro Fisico */}
           <button
             type="button"
-            onClick={() => setActiveTab('piegamenti_lavoro')}
+            onClick={() => handleSelectTab('piegamenti_lavoro')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'piegamenti_lavoro'
                 ? 'bg-cyan-400 text-black shadow-md shadow-cyan-500/30 font-extrabold'
@@ -616,7 +650,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           {/* 16. 9# Info: Strategia Personale (16a • 75kg) */}
           <button
             type="button"
-            onClick={() => setActiveTab('strategia_personale')}
+            onClick={() => handleSelectTab('strategia_personale')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'strategia_personale'
                 ? 'bg-rose-500 text-white shadow-md shadow-rose-500/30 font-extrabold'
@@ -630,7 +664,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           {/* 17. 10# Info: Volume, Serie, Bicipiti & Calisthenics */}
           <button
             type="button"
-            onClick={() => setActiveTab('volume_calisthenics')}
+            onClick={() => handleSelectTab('volume_calisthenics')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'volume_calisthenics'
                 ? 'bg-indigo-500 text-white shadow-md shadow-indigo-500/30 font-extrabold'
@@ -640,8 +674,24 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
             <Dumbbell className="w-3.5 h-3.5 text-indigo-400" />
             17. 10# Info: Serie, Bicipiti & Calisthenics Off
           </button>
+
+          {/* 18. 11# Info: Seconda Serie (PAP) & Regola 3 Serie */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('pap_seconda_serie')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'pap_seconda_serie'
+                ? 'bg-fuchsia-500 text-white shadow-md shadow-fuchsia-500/30 font-extrabold'
+                : 'bg-fuchsia-500/10 text-fuchsia-300 hover:text-white border border-fuchsia-500/30'
+            }`}
+          >
+            <Zap className="w-3.5 h-3.5 text-fuchsia-400" />
+            18. 11# Info: PAP 2ª Serie & Regola 3 Serie
+          </button>
         </div>
       </div>
+
+      <div ref={noteContentRef} className="scroll-mt-16" />
 
       {/* ============================================================= */}
       {/* SEZIONE 1: GUIDA ALLENAMENTO & RECUPERO IN PALESTRA          */}
@@ -1954,7 +2004,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
                 </div>
                 <button
                   type="button"
-                  onClick={() => setActiveTab('fabbisogno_tid_2')}
+                  onClick={() => handleSelectTab('fabbisogno_tid_2')}
                   className="py-2 px-3.5 rounded-xl bg-orange-500 hover:bg-orange-400 text-black text-xs font-black transition-all active:scale-95 cursor-pointer shrink-0 shadow-md flex items-center justify-center gap-1.5"
                 >
                   <span>Apri Parte 2</span>
@@ -1990,7 +2040,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
               {activeTab === 'fabbisogno_tid_2' && (
                 <button
                   type="button"
-                  onClick={() => setActiveTab('fabbisogno_tid')}
+                  onClick={() => handleSelectTab('fabbisogno_tid')}
                   className="hidden sm:flex items-center gap-1 text-[11px] font-bold text-rose-300 bg-rose-500/10 px-2.5 py-1 rounded-xl border border-rose-500/20 hover:bg-rose-500/20 transition-all cursor-pointer"
                 >
                   ⬅ Torna a Parte 1
@@ -2394,7 +2444,7 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
               {activeTab === 'grassi_scienza_2' && (
                 <button
                   type="button"
-                  onClick={() => setActiveTab('grassi_scienza')}
+                  onClick={() => handleSelectTab('grassi_scienza')}
                   className="hidden sm:flex items-center gap-1 text-[11px] font-bold text-yellow-300 bg-yellow-500/10 px-2.5 py-1 rounded-xl border border-yellow-500/20 hover:bg-yellow-500/20 transition-all cursor-pointer"
                 >
                   ⬅ Torna a Parte 1
@@ -3565,6 +3615,181 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
                     <strong className="text-white">• Intensità 50–60% (No Cedimento):</strong> Lascia sempre <strong>3–4 reps in canna</strong>; il 100% resta esclusiva di Lun/Mer/Ven in palestra!
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 11: PAP 2ª SERIE PIÙ LEGGERA & REGOLA 3 SERIE         */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'pap_seconda_serie') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/30">
+                <Zap className="w-4 h-4 text-fuchsia-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-fuchsia-400">
+                  11# Info • Neurofisiologia Neuromuscolare & Efficienza
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Seconda Serie più "Leggera" (PAP) & Perché NON Tornare su un Muscolo
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-fuchsia-500/15 text-fuchsia-300 border border-fuchsia-500/30">
+              PAP • Viscosità • Cedimento
+            </span>
+          </div>
+
+          <div className="p-5 sm:p-6 rounded-3xl glass-card border-2 border-fuchsia-500/40 space-y-6 bg-gradient-to-br from-fuchsia-950/35 via-purple-950/25 to-black/90 shadow-[0_0_35px_rgba(217,70,239,0.15)]">
+            {/* Header Box */}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+              <span className="px-3 py-1 rounded-full bg-fuchsia-500/20 text-fuchsia-300 text-xs font-black uppercase tracking-wider border border-fuchsia-500/30 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-fuchsia-400" />
+                Neurofisiologia del Workout
+              </span>
+              <span className="text-xs text-gray-400 font-semibold">
+                Finestra Magica 2ª–3ª Serie • Regola 3 Serie Chirurgiche
+              </span>
+            </div>
+
+            {/* PARTE 1: PERCHÉ LA SECONDA SERIE SEMBRA PIÙ LEGGERA */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-fuchsia-500/30 space-y-4">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/30">
+                    <Activity className="w-4 h-4 text-fuchsia-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    1. Perché la Seconda Serie (o la Terza) Sembra più "Leggera" della Prima
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-fuchsia-500/20 text-fuchsia-300 text-[10px] font-bold border border-fuchsia-500/30">
+                  3 Cause Scientifiche
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-200 leading-relaxed">
+                Arrivi alla seconda serie convinto di fare più fatica e invece bilanciere o manubri sembrano improvvisamente più leggeri, il gesto diventa più fluido e chiudi le ripetizioni più facilmente. Non è impressione né magia: è pura <strong>neurofisiologia del sistema neuromuscolare</strong>.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                {/* 1. PAP */}
+                <div className="p-3.5 rounded-xl bg-fuchsia-950/20 border border-fuchsia-500/25 space-y-2">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-fuchsia-400 block">
+                    Motivo 1 • Cervello & Midollo
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-black text-white">
+                    Potenziamento Post-Attivazione (PAP)
+                  </h4>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Il sistema nervoso non è un interruttore on/off e i soli 10 minuti di cardio non bastano a svegliarlo del tutto. Nella <strong>1ª serie</strong> molte fibre profonde a contrazione rapida (le più grandi e forti) restano "addormentate" e poco coordinate.
+                  </p>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Subito dopo scatta il <strong>PAP (Post-Activation Potentiation)</strong>: il sistema nervoso ha misurato il carico, ha aperto i canali nel midollo spinale e nella <strong>2ª serie</strong> recluta molte più fibre in modo sincronizzato. Risultato: efficienza neurale massima!
+                  </p>
+                </div>
+
+                {/* 2. Viscosità */}
+                <div className="p-3.5 rounded-xl bg-purple-950/20 border border-purple-500/25 space-y-2">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-purple-400 block">
+                    Motivo 2 • Attriti & Calore
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-black text-white">
+                    Viscosità Muscolare & Lubrificazione Articolare
+                  </h4>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Muscoli, tendini e articolazioni contengono collagene e fluidi che <strong>a freddo</strong> sono più "viscosi", rigidi e creano resistenza meccanica interna.
+                  </p>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    La contrazione forzata della 1ª serie genera calore locale, pompa sangue ossigenato, riduce la viscosità tissutale e rilascia <strong>liquido sinoviale</strong> nelle articolazioni: come un motore che entra in temperatura, dalla 2ª serie gli attriti interni crollano e le fibre diventano elastiche.
+                  </p>
+                </div>
+
+                {/* 3. Pompata */}
+                <div className="p-3.5 rounded-xl bg-pink-950/20 border border-pink-500/25 space-y-2">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-pink-400 block">
+                    Motivo 3 • Vasodilatazione
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-black text-white">
+                    La "Pompata" (Afflusso di Sangue & Nutrienti)
+                  </h4>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Mentre esegui la prima serie, i vasi sanguigni nei muscoli lavorati si dilatano (<strong>vasodilatazione</strong>) e il sangue ricco di ossigeno e carboidrati viene risucchiato dentro il tessuto creando il celebre <em>pump</em>.
+                  </p>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Dalla seconda serie in poi il muscolo è già "pieno", pressurizzato e metabolicamente reattivo, pronto a esprimere forza in maniera brillante.
+                  </p>
+                </div>
+              </div>
+
+              {/* Finestra Magica */}
+              <div className="p-3 rounded-xl bg-gradient-to-r from-fuchsia-950/40 to-black/75 border border-fuchsia-500/40 text-xs text-gray-200 flex items-start gap-2.5">
+                <Clock className="w-4 h-4 text-fuchsia-400 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="text-fuchsia-300 block mb-0.5">⏳ Attenzione: La Finestra "Magica" Dura Poco!</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Questo picco di super-efficienza dura tra la <strong>seconda e la terza serie</strong>: significa che la macchina è entrata in coppia perfetta con tutti i cilindri accesi. Se però continui ad aggiungere serie su serie senza recuperare abbastanza, subentra l'esatto opposto: accumulo di acido lattico, crollo del glicogeno locale e vera fatica muscolare.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* PARTE 2: TORNARE SU UN MUSCOLO A FINE ALLENAMENTO */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-orange-500/30 space-y-4">
+              <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="p-1.5 rounded-lg bg-orange-500/20 text-orange-300 border border-orange-500/30">
+                    <ShieldCheck className="w-4 h-4 text-orange-400" />
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    2. Tornare su un Muscolo a Fine Allenamento ("Lo Sento Riposato")?
+                  </h3>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-300 text-[10px] font-bold border border-orange-500/30">
+                  Regola delle 3 Serie
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-200 leading-relaxed">
+                Quando hai già chiuso le tue 3 serie pesanti a cedimento (es. sui tricipiti) e dopo altri esercizi pensi <em>"lo sento riposato e ho ancora energia, ne faccio ancora"</em>, la risposta della fisiologia è <strong>NO, non conviene quasi mai farlo</strong> (a meno di protocolli specifici programmati come <em>back-off set</em> o <em>drop set</em> studiati a tavolino). Ecco i 3 motivi chiave:
+              </p>
+
+              <div className="space-y-2.5 text-xs">
+                <div className="p-3.5 rounded-xl bg-orange-950/20 border border-orange-500/20 space-y-1">
+                  <strong className="text-orange-300 block font-bold">1. Lo Stimolo Ipertrofico Ha un "Dosaggio" Preciso (Volume Effettivo)</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Il muscolo cresce per uno stimolo meccanico ad alta intensità che attiva la sintesi proteica, non per farlo soffrire ore. Appena hai dato tutto nelle tue <strong>3 serie pesanti a cedimento</strong>, il muscolo ha già ricevuto il messaggio biologico di crescita: aggiungere altre serie dopo crea solo danno extra e stanchezza sistemica che rubano energie al recupero.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-red-950/20 border border-red-500/20 space-y-1">
+                  <strong className="text-red-300 block font-bold">2. L'Illusione del "Riposato" & Il Lavoro dei Muscoli Sinergici</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Se dopo i tricipiti passi ad allenare <strong>petto o spalle</strong> (es. panca piana o spinte), i tricipiti NON si stanno riposando davvero: stanno lavorando duramente come <strong>muscoli sinergici di supporto</strong>. Riattaccarli direttamente a fine seduta perché ti sembrano freschi impedisce loro di ripararsi, portandoti al <strong>sovrallenamento locale</strong>.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-emerald-950/20 border border-emerald-500/20 space-y-1">
+                  <strong className="text-emerald-300 block font-bold">3. La Regola dell'Efficienza nel Workout (In Deficit 1.400–1.600 kcal)</strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Il tuo allenamento deve essere chirurgico, rapido e pesantemente efficace: <strong>entri ➔ colpisci il bersaglio con 3 serie pesanti a cedimento ➔ passi all'esercizio successivo ➔ finisci ed esci</strong>. Se a fine esercizio hai ancora energie per farne altri sullo stesso muscolo, significa solo che potevi spingere o caricare di più prima!
+                  </p>
+                </div>
+              </div>
+
+              {/* Verdetto Finale */}
+              <div className="p-3.5 rounded-xl bg-gradient-to-r from-fuchsia-950/45 via-orange-950/35 to-black/80 border border-fuchsia-500/40 text-xs text-gray-200">
+                <strong className="text-fuchsia-300 block font-bold mb-1">
+                  🔥 Come Incanalare Quell'Energia Extra:
+                </strong>
+                <p className="text-[11px] text-gray-300 leading-relaxed">
+                  Invece di aggiungere esercizi a caso a fine seduta perché ti senti fresco, incanala tutta quella cattiveria nel rendere le <strong>3 serie principali così pesanti e tirate</strong> che, alla fine dell'esercizio, alzare le braccia anche solo per bere l'acqua diventi un'impresa. Così si stimola la crescita vera!
+                </p>
               </div>
             </div>
           </div>
