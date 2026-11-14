@@ -1741,7 +1741,7 @@ export const NoteTab: React.FC = () => {
                   <Scissors className="w-3 h-3 text-emerald-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">4 Parti: Mattina • Barba • Info • Guida Definitiva</span>
+                <span className="text-[10px] text-gray-400 font-semibold">5 Parti: Mattina • Barba • Info • Guida Definitiva • Strategia</span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-emerald-300 transition-colors uppercase tracking-tight">
@@ -1749,7 +1749,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Massaggio mattutino (30-60s), routine rasatura con monolama, turnover cellulare e Guida Definitiva: perché si formano i cocci, metodo diviso per zone, tecnica WTG/XTG senza contropelo e flusso pratico con acido salicilico leave-on.
+                Massaggio mattutino, metodo diviso per zone, Guida Definitiva (WTG/XTG + salicilico leave-on), differenza tra razor burn immediato e peli incarniti, e strategia pratica per guance alte e brufoli attivi.
               </p>
             </div>
 
@@ -1763,7 +1763,7 @@ export const NoteTab: React.FC = () => {
               <span>Tocca per aprire la guida sui peli incarniti</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">4 Parti • Guida Definitiva Rasatura</span>
+            <span className="text-[10px] text-gray-400 font-semibold">5 Parti • Razor Burn & Strategia Pelle</span>
           </div>
         </div>
       </div>

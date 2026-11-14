@@ -29,7 +29,7 @@ interface PeliIncarnitiVisoViewProps {
 }
 
 export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutte' | 'mattina' | 'barba' | 'informazioni' | 'metodo_diviso'>('tutte');
+  const [activeTab, setActiveTab] = useState<'tutte' | 'mattina' | 'barba' | 'informazioni' | 'metodo_diviso' | 'razor_burn_strategia'>('tutte');
   const noteContentRef = useRef<HTMLDivElement>(null);
 
   const handleSelectTab = (tab: typeof activeTab) => {
@@ -77,7 +77,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
         </h1>
 
         <p className="text-xs text-gray-300 leading-relaxed font-medium">
-          Guida pratica e strutturata divisa in 4 parti: massaggio mattutino preparatorio, routine completa per la rasatura della barba a prova di irritazioni, informazioni sui tempi reali di guarigione e turnover cellulare della pelle, e il metodo diviso per zone con la Guida Definitiva per la rasatura perfetta.
+          Guida pratica e strutturata divisa in 5 parti: massaggio mattutino preparatorio, routine completa per la rasatura della barba a prova di irritazioni, informazioni sui tempi reali di guarigione e turnover cellulare della pelle, metodo diviso per zone con Guida Definitiva, e riconoscimento del razor burn immediato con strategia pratica per guance alte e brufoli attivi.
         </p>
 
         {/* Tab Filters */}
@@ -91,7 +91,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
                 : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
             }`}
           >
-            Tutte le 4 Parti
+            Tutte le 5 Parti
           </button>
           <button
             type="button"
@@ -140,6 +140,18 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
           >
             <Layers className="w-3.5 h-3.5" />
             4. Metodo Diviso & Guida Definitiva
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSelectTab('razor_burn_strategia')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'razor_burn_strategia'
+                ? 'bg-rose-500 text-white shadow-md shadow-rose-500/30 font-extrabold'
+                : 'bg-rose-500/10 text-rose-300 hover:text-white border border-rose-500/30'
+            }`}
+          >
+            <Flame className="w-3.5 h-3.5 text-rose-400" />
+            5. Razor Burn & Strategia Pelle
           </button>
         </div>
       </div>
@@ -992,6 +1004,226 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
                       <strong className="text-white">Proprietà Leave-On:</strong> La crema <strong className="text-purple-300">NON va risciacquata</strong>; deve rimanere sulla pelle per agire tutta la notte liberando i pori in profondità.
                     </li>
                   </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 5: RAZOR BURN IMMEDIATO & STRATEGIA RASATURA/PELLE    */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'razor_burn_strategia') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                <Flame className="w-4 h-4 text-rose-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-rose-400">
+                  Parte 5 • Diagnosi Immediata & Piano Pratico
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Razor Burn Follicolare vs Peli Incarniti & Strategia Pelle
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-rose-500/15 text-rose-300 border border-rose-500/30">
+              12–24 Ore & Strategia
+            </span>
+          </div>
+
+          {/* Card 1: Irritazione Meccanica Acuta da Lama (Razor Burn Follicolare) */}
+          <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-br from-rose-950/35 via-black/85 to-amber-950/20 border-2 border-rose-500/40 space-y-4 shadow-[0_0_25px_rgba(244,63,94,0.15)]">
+            <div className="flex items-start justify-between gap-2 border-b border-white/10 pb-3">
+              <div className="flex items-center space-x-2.5">
+                <span className="p-2 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30 shrink-0">
+                  <AlertTriangle className="w-4 h-4 text-rose-400" />
+                </span>
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-rose-400 block">
+                    Puntini Usciti Subito Dopo il Rasoio
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white">
+                    Non Sono Peli Incarniti: È Irritazione Meccanica Acuta (Razor Burn Follicolare)
+                  </h3>
+                </div>
+              </div>
+              <span className="text-[10px] font-black px-2 py-0.5 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30 shrink-0">
+                12–24h
+              </span>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-black/60 border border-rose-500/30 text-xs text-gray-200 leading-relaxed font-medium">
+              Se i puntini rossi si sono formati <strong className="text-white">subito dopo aver passato il rasoio</strong>, non sono peli incarniti: a un pelo incarnito servono almeno <strong className="text-rose-300">2-3 giorni di ricrescita</strong> per formarsi. Si tratta di <strong className="text-rose-300">irritazione meccanica acuta da lama (razor burn follicolare)</strong>.
+            </div>
+
+            {/* 3 Meccanismi al momento del passaggio */}
+            <div className="space-y-2.5">
+              <span className="text-[11px] font-black uppercase tracking-wider text-rose-300 flex items-center gap-1.5 pl-1">
+                <Zap className="w-3.5 h-3.5 text-rose-400" />
+                Cosa È Successo Esattamente al Momento del Passaggio
+              </span>
+
+              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
+                <strong className="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-amber-400 shrink-0" />
+                  1. Micro-abrasione dell'imbocco del poro
+                </strong>
+                <p className="text-xs text-gray-300 leading-relaxed pl-3.5">
+                  Lungo la linea della mascella e sul collo, i follicoli piliferi sporgono leggermente rispetto al piano della pelle (come dei piccolissimi rilievi attorno a ogni pelo). Quando la lama passa sopra quella curvatura, tende a "spuntare" o grattare via lo strato microscopico di pelle che circonda il singolo pelo.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-rose-500/25 space-y-1">
+                <strong className="text-xs font-bold text-rose-300 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-rose-400 shrink-0" />
+                  2. Vasodilatazione immediata (Istamina)
+                </strong>
+                <p className="text-xs text-gray-300 leading-relaxed pl-3.5">
+                  Appena la lama irrita il bordo del follicolo, la pelle rilascia <strong className="text-white">istamina</strong> per difendersi. Questo provoca un afflusso istantaneo di sangue nel singolo poro, creando quei puntini rossi in rilievo nel giro di pochi minuti (proprio come quando ti graffi leggermente e si forma subito il segno rosso).
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/10 space-y-1">
+                <strong className="text-xs font-bold text-cyan-300 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
+                  3. Perché succede lì (Mascella & Sottomento)
+                </strong>
+                <p className="text-xs text-gray-300 leading-relaxed pl-3.5">
+                  Sulla mascella e sul sottomento l'osso fa da spigolo e la pelle cambia angolazione. Anche andando piano, basta cambiare leggermente l'inclinazione del polso (scendendo sotto o sopra i 30°) o passare due volte sullo stesso punto perché la lama raschi via il bordo del poro.
+                </p>
+              </div>
+            </div>
+
+            {/* La buona notizia */}
+            <div className="p-3.5 rounded-2xl bg-emerald-950/35 border border-emerald-500/35 space-y-1">
+              <div className="flex items-center space-x-2 text-emerald-300 font-black uppercase text-[11px] tracking-wider">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>La Buona Notizia</span>
+              </div>
+              <p className="text-xs text-emerald-100 leading-relaxed font-medium">
+                Proprio perché è una reazione immediata da sfregamento e non un pelo intrappolato sotto pelle, <strong className="text-white">si sgonfia molto più in fretta (spesso già entro 12–24 ore)</strong>.
+              </p>
+            </div>
+
+            {/* Cosa fare adesso nelle prossime ore */}
+            <div className="p-4 rounded-2xl bg-black/70 border border-cyan-500/30 space-y-2.5">
+              <span className="text-xs font-black uppercase tracking-wider text-cyan-300 flex items-center gap-1.5">
+                <Clock className="w-4 h-4 text-cyan-400" />
+                Cosa Fare Adesso (Nelle Prossime Ore)
+              </span>
+              <div className="space-y-2 text-xs text-gray-200">
+                <div className="flex items-start space-x-2 p-2.5 rounded-xl bg-red-950/35 border border-red-500/30">
+                  <Ban className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                  <p className="leading-relaxed">
+                    <strong className="text-red-300">NON mettere l'acido salicilico stasera</strong> su quei puntini appena usciti: su una micro-abrasione fresca brucerebbe e aumenterebbe il rossore.
+                  </p>
+                </div>
+                <div className="flex items-start space-x-2 p-2.5 rounded-xl bg-cyan-950/30 border border-cyan-500/25">
+                  <Droplet className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                  <p className="leading-relaxed">
+                    Applica <strong className="text-white">solo qualcosa di lenitivo/idratante</strong> (va benissimo il gel detergente delicato per lavarti e la tua crema idratante leggera o un po' di acqua fresca) per far rientrare la vasodilatazione.
+                  </p>
+                </div>
+                <div className="flex items-start space-x-2 p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-500/25">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <p className="leading-relaxed">
+                    <strong className="text-emerald-300">Verifica domani mattina:</strong> vedrai già la differenza. Se si sono sgonfiati o scoloriti, hai la conferma al 100% che era solo arrossamento da lama e non peli incarniti.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 2: Strategia Rasatura e Cura Pelle */}
+          <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-br from-emerald-950/40 via-black/90 to-teal-950/30 border-2 border-emerald-400/50 space-y-4 shadow-[0_0_25px_rgba(16,185,129,0.18)]">
+            <div className="flex items-center justify-between border-b border-emerald-400/20 pb-3">
+              <div className="flex items-center space-x-2.5">
+                <span className="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                  <ShieldCheck className="w-5 h-5 text-emerald-400" />
+                </span>
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400 block">
+                    Nota Completa & Operativa
+                  </span>
+                  <h3 className="text-base sm:text-lg font-black text-white">
+                    Strategia Rasatura e Cura Pelle
+                  </h3>
+                </div>
+              </div>
+              <span className="text-[10px] font-black uppercase px-2.5 py-1 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                Piano 3–4 Settimane
+              </span>
+            </div>
+
+            {/* Situazione guance alte + Gestione della rasatura */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-3.5 rounded-2xl bg-black/60 border border-amber-500/30 space-y-1.5">
+                <span className="text-[11px] font-black uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                  <Info className="w-3.5 h-3.5 text-amber-400" />
+                  Situazione Guance Alte
+                </span>
+                <p className="text-xs text-gray-200 leading-relaxed">
+                  I puntini rossi sullo zigomo <strong className="text-white">non sono causati dal rasoio</strong>, ma sono acne/follicolite giovanile e <strong className="text-amber-300">purging dell'acido salicilico</strong> che elimina il sebo. La zona della mascella e del collo dove passo la lama è pulita e senza tagli.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-black/60 border border-cyan-500/30 space-y-1.5">
+                <span className="text-[11px] font-black uppercase tracking-wider text-cyan-300 flex items-center gap-1.5">
+                  <Scissors className="w-3.5 h-3.5 text-cyan-400" />
+                  Gestione della Rasatura
+                </span>
+                <p className="text-xs text-gray-200 leading-relaxed">
+                  Vado cauto e <strong className="text-white">non faccio una rasatura a fondo</strong> per evitare di irritare i brufoletti esistenti. Nelle zone alte delle guance dove ci sono i punti rossi <strong className="text-cyan-300">evito del tutto la lama</strong>.
+                </p>
+              </div>
+            </div>
+
+            {/* Strategia pratica dei prossimi giorni */}
+            <div className="p-4 rounded-2xl bg-white/[0.03] border border-emerald-500/30 space-y-2.5">
+              <span className="text-xs font-black uppercase tracking-wider text-emerald-300 flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                Strategia Pratica dei Prossimi Giorni
+              </span>
+
+              <div className="space-y-2 text-xs text-gray-200">
+                <div className="flex items-start space-x-2.5 p-2.5 rounded-xl bg-black/50 border border-white/10">
+                  <span className="w-5 h-5 rounded-md bg-emerald-500/20 text-emerald-300 font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5">
+                    1
+                  </span>
+                  <p className="leading-relaxed">
+                    <strong className="text-white">Stop sopra lo zigomo:</strong> Evito di passare la lama sopra i brufoli attivi e mi fermo sotto lo zigomo.
+                  </p>
+                </div>
+
+                <div className="flex items-start space-x-2.5 p-2.5 rounded-xl bg-black/50 border border-white/10">
+                  <span className="w-5 h-5 rounded-md bg-cyan-500/20 text-cyan-300 font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5">
+                    2
+                  </span>
+                  <p className="leading-relaxed">
+                    <strong className="text-white">Nikai a secco nei giorni di sfogo:</strong> Uso il regolabarba Nikai a secco nei giorni di sfogo per accorciare a zero e lasciare respirare i brufoli senza toccare l'epidermide.
+                  </p>
+                </div>
+
+                <div className="flex items-start space-x-2.5 p-2.5 rounded-xl bg-black/50 border border-white/10">
+                  <span className="w-5 h-5 rounded-md bg-purple-500/20 text-purple-300 font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5">
+                    3
+                  </span>
+                  <p className="leading-relaxed">
+                    <strong className="text-white">Costanza con l'acido salicilico la sera:</strong> Applico con costanza l'acido salicilico la sera (evitandolo la sera stessa della rasatura se avverto bruciore), lasciando agire il trattamento per <strong className="text-purple-300">3-4 settimane</strong>.
+                  </p>
+                </div>
+
+                <div className="flex items-start space-x-2.5 p-2.5 rounded-xl bg-black/50 border border-white/10">
+                  <span className="w-5 h-5 rounded-md bg-amber-500/20 text-amber-300 font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5">
+                    4
+                  </span>
+                  <p className="leading-relaxed">
+                    <strong className="text-white">Taglio pulito, non a specchio:</strong> Accetto un taglio pulito ma non a specchio, limitandomi al passaggio dall'alto verso il basso (WTG) o di traverso (XTG) sulle zone sane della mascella finché i pori non si sgonfiano.
+                  </p>
                 </div>
               </div>
             </div>
