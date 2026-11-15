@@ -33,7 +33,8 @@ import {
   Dumbbell,
   Gift,
   Wind,
-  Search
+  Search,
+  ShieldCheck
 } from 'lucide-react';
 import { UserNote } from '../../types';
 import { storageHelper } from '../../utils/storage';
@@ -46,6 +47,7 @@ import { CoseDaComprareRegaliView } from './CoseDaComprareRegaliView';
 import { MasticazioneMasseteriView } from './MasticazioneMasseteriView';
 import { CapelliTextureFormaPiegaLisciaView } from './CapelliTextureFormaPiegaLisciaView';
 import { DiabeteGlicemiaPalestraView } from './DiabeteGlicemiaPalestraView';
+import { PrevenzioneEtaArticolazioniView } from './PrevenzioneEtaArticolazioniView';
 import { scrollToTop } from '../../utils/scrollHelper';
 import { NoteSectionViewId, searchNotesIndex } from '../../utils/notesSearchIndex';
 
@@ -96,7 +98,7 @@ const SCHEMA_IMAGES = [
 ];
 
 export const NoteTab: React.FC = () => {
-  const [activeView, setActiveView] = useState<'list' | 'asimmetria' | 'ortodonzia' | 'postura_occhi' | 'sonno_posizioni' | 'peli_incarniti' | 'shampoo_texture' | 'palestra_grasso' | 'regali_natale' | 'asimmetria_masticazione' | 'capelli_texture' | 'diabete_glicemia'>('list');
+  const [activeView, setActiveView] = useState<'list' | 'asimmetria' | 'ortodonzia' | 'postura_occhi' | 'sonno_posizioni' | 'peli_incarniti' | 'shampoo_texture' | 'palestra_grasso' | 'regali_natale' | 'asimmetria_masticazione' | 'capelli_texture' | 'diabete_glicemia' | 'prevenzione_eta'>('list');
   const [userNotes, setUserNotes] = useState<UserNote[]>(() => storageHelper.getUserNotes());
   const [fullscreenImg, setFullscreenImg] = useState<{ url: string; title: string } | null>(null);
   const [faceComparisonMode, setFaceComparisonMode] = useState<'overlay' | 'sideBySide' | 'swipe'>('overlay');
@@ -428,6 +430,13 @@ export const NoteTab: React.FC = () => {
   // -------------------------------------------------------------
   if (activeView === 'diabete_glicemia') {
     return <DiabeteGlicemiaPalestraView onBack={() => handleOpenView('list')} initialTab={initialSubTab} />;
+  }
+
+  // -------------------------------------------------------------
+  // VIEW: PREVENZIONE ETÀ E ARTICOLAZIONI
+  // -------------------------------------------------------------
+  if (activeView === 'prevenzione_eta') {
+    return <PrevenzioneEtaArticolazioniView onBack={() => handleOpenView('list')} initialTab={initialSubTab} />;
   }
 
   // -------------------------------------------------------------
@@ -1821,7 +1830,7 @@ export const NoteTab: React.FC = () => {
             <Zap className="w-3 h-3 text-cyan-400" />
             Accesso Rapido • Apri Subito
           </span>
-          <span className="text-[10px] font-bold text-gray-500">9 Guide</span>
+          <span className="text-[10px] font-bold text-gray-500">10 Guide</span>
         </div>
 
         <div className="flex flex-wrap gap-1.5">
@@ -1904,6 +1913,15 @@ export const NoteTab: React.FC = () => {
           >
             <Activity className="w-3 h-3 text-rose-400 shrink-0" />
             <span>Diabete & Glicemia</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleOpenView('prevenzione_eta')}
+            className="px-2.5 py-1.5 rounded-xl bg-lime-500/15 hover:bg-lime-500/25 text-lime-200 border border-lime-500/30 text-[11px] font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+          >
+            <ShieldCheck className="w-3 h-3 text-lime-400 shrink-0" />
+            <span>Prevenzione Età</span>
           </button>
         </div>
       </div>
@@ -2372,6 +2390,59 @@ export const NoteTab: React.FC = () => {
               <Sparkles className="w-3.5 h-3.5" />
             </span>
             <span className="text-[10px] text-gray-400 font-semibold">★ Calcolo Insulina + 7 Note + 5 Sezioni</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ------------------------------------------------------------- */}
+      {/* CARD: "PREVENZIONE ETÀ E ARTICOLAZIONI" (2 NOTE)               */}
+      {/* ------------------------------------------------------------- */}
+      <div className="space-y-2">
+        <span className="text-[11px] font-bold text-lime-400 uppercase tracking-wider block pl-1">
+          Nuova Nota Personale • Longevità, Articolazioni &amp; Lavoro
+        </span>
+
+        <div
+          onClick={() => handleOpenView('prevenzione_eta')}
+          className="p-5 rounded-3xl glass-card border-2 border-lime-500/70 hover:border-lime-400 bg-gradient-to-br from-lime-500/20 via-black/85 to-emerald-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
+        >
+          <div className="absolute -top-12 -right-12 w-32 h-32 bg-lime-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
+
+          <div className="flex items-start justify-between relative z-10">
+            <div className="space-y-2 flex-1 pr-3">
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full bg-lime-400/20 text-lime-300 text-[10px] font-black uppercase tracking-wider border border-lime-400/40 shadow-sm flex items-center gap-1">
+                  <ShieldCheck className="w-3 h-3 text-lime-400" />
+                  ★ Note Scritte Da Me
+                </span>
+                <span className="text-[10px] text-emerald-300 font-extrabold bg-emerald-500/15 px-2 py-0.5 rounded-md border border-emerald-500/30">
+                  🦴 1. Età, Super-Aging &amp; Mionuclei
+                </span>
+                <span className="text-[10px] text-amber-300 font-extrabold bg-amber-500/15 px-2 py-0.5 rounded-md border border-amber-500/30">
+                  💼 2. Massa &amp; Lavoro Manuale
+                </span>
+              </div>
+
+              <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-lime-300 transition-colors uppercase tracking-tight">
+                Prevenzione età e articolazioni
+              </h2>
+
+              <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
+                Nota 1: &quot;Banca dei muscoli e delle ossa&quot;, mobilità articolare attiva, Super-Aging, mionuclei permanenti e armatura contro il mal di schiena. Nota 2: organizzazione tra lavoro manuale pesante, cortisolo e strategia del Richiamo Minimo.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-lime-500/20 group-hover:bg-lime-500 text-lime-300 group-hover:text-black border border-lime-400/50 shadow-neon transition-all shrink-0 mt-1">
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
+            <span className="text-lime-300 font-bold flex items-center gap-1.5">
+              <span>Tocca per aprire le 2 note complete</span>
+              <Sparkles className="w-3.5 h-3.5" />
+            </span>
+            <span className="text-[10px] text-gray-400 font-semibold">1. Età &amp; Articolazioni • 2. Massa &amp; Lavoro</span>
           </div>
         </div>
       </div>

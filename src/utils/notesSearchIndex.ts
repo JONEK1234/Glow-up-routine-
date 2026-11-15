@@ -8,7 +8,8 @@ export type NoteSectionViewId =
   | 'capelli_texture'
   | 'palestra_grasso'
   | 'regali_natale'
-  | 'diabete_glicemia';
+  | 'diabete_glicemia'
+  | 'prevenzione_eta';
 
 export interface NoteSearchEntry {
   id: string;
@@ -398,6 +399,28 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     subTabId: 'palestra',
     subTitle: 'Allenamento Serale, Effetto Spugna & Notte / Colazione',
     text: 'Palestra glicogeno effetto spugna sensibilità insulinica 12-24 ore ipoglicemia notturna colazione succo protocollo.'
+  },
+
+  // =========================================================================
+  // 10. PREVENZIONE ETÀ E ARTICOLAZIONI
+  // =========================================================================
+  {
+    id: 'prevenzione_eta_articolazioni',
+    viewId: 'prevenzione_eta',
+    sectionTitle: 'Prevenzione età e articolazioni',
+    sectionBadgeColor: 'lime',
+    subTabId: 'eta_articolazioni',
+    subTitle: '1. Età, Ossa, Mobilità, Super-Aging, Mionuclei & Mal di Schiena',
+    text: 'Prevenzione età articolazioni assicurazione biologica 16 anni discesa biologica 30-35 anni sarcopenia perdita muscolo osteopenia osteoporosi densità ossea elasticità tessuti tendini legamenti cartilagine banca muscoli ossa picco massa ossea 70 anni 50 anni cemento armato stretching mobilità articolare attiva fascia liquido sinoviale arrugginirsi inossidabile super-aging successful aging 10000 passi pendenza calisthenics densità ossea sistema cardiovascolare sostenibilità maratona scatto long-runner infortuni tendini memoria muscolare mionuclei nuclei cellulari staminali usa o perdi 50-60 anni carichi moderati elastici corpo libero leggero 70-80% mal di schiena core addominali profondi lombari glutei dischi intervertebrali osmosi armatura protettiva.'
+  },
+  {
+    id: 'prevenzione_massa_lavoro',
+    viewId: 'prevenzione_eta',
+    sectionTitle: 'Prevenzione età e articolazioni',
+    sectionBadgeColor: 'lime',
+    subTabId: 'massa_lavoro',
+    subTitle: '2. Organizzazione: Mantenere Massa, Lavoro & Giovane vs Adulto vs Anziano',
+    text: 'Organizzazione mantenere massa lavoro manuale pesante palestra principio adattamento tensione meccanica progressiva resistenza fatica cronica bassa intensità fisico asciutto strutturato stress cortisolo usura asimmetrica squilibri posturali mal di schiena stanco marcio stangato acido lattico cedimento vietato richiamo minimo minimum effective dose dose minima efficace 2-3 sedute brevi manubri calisthenics controllato lavoro come cardio attivo differenza giovane 16-25 anni adulto 30-50 anni anziano 60-70 anni recupero fulmineo difesa massa rendita biologica zero usura.'
   }
 ];
 
