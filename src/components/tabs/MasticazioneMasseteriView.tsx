@@ -20,23 +20,30 @@ import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
 interface MasticazioneMasseteriViewProps {
   onBack: () => void;
+  initialTab?: string;
 }
 
-export const MasticazioneMasseteriView: React.FC<MasticazioneMasseteriViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutte' | 'tabella' | 'protocollo' | 'anatomia' | 'visivo'>('tutte');
+export const MasticazioneMasseteriView: React.FC<MasticazioneMasseteriViewProps> = ({ onBack, initialTab }) => {
+  type MasticazioneTab = 'tutte' | 'tabella' | 'protocollo' | 'anatomia' | 'visivo';
+  const [activeTab, setActiveTab] = useState<MasticazioneTab>((initialTab as MasticazioneTab) || 'tutte');
   const noteContentRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectTab = (tab: typeof activeTab) => {
+  const handleSelectTab = (tab: MasticazioneTab) => {
     setActiveTab(tab);
     if (tab !== 'tutte') {
       scrollToElement(noteContentRef.current, 68);
     }
   };
 
-  // Scroll solo all'apertura della nota (mount)
+  // Scroll all'apertura (o al tab specifico se aperto dalla ricerca)
   React.useEffect(() => {
-    scrollToTop();
-  }, []);
+    if (initialTab && initialTab !== 'tutte') {
+      setActiveTab(initialTab as MasticazioneTab);
+      setTimeout(() => scrollToElement(noteContentRef.current, 68), 80);
+    } else {
+      scrollToTop();
+    }
+  }, [initialTab]);
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">

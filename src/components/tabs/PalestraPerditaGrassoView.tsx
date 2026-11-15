@@ -28,23 +28,30 @@ import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
 interface PalestraPerditaGrassoViewProps {
   onBack: () => void;
+  initialTab?: string;
 }
 
-export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra' | 'piegamenti_lavoro' | 'strategia_personale' | 'volume_calisthenics' | 'pap_seconda_serie'>('tutte');
+export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps> = ({ onBack, initialTab }) => {
+  type PalestraTab = 'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra' | 'piegamenti_lavoro' | 'strategia_personale' | 'volume_calisthenics' | 'pap_seconda_serie';
+  const [activeTab, setActiveTab] = useState<PalestraTab>((initialTab as PalestraTab) || 'tutte');
   const noteContentRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectTab = (tab: typeof activeTab) => {
+  const handleSelectTab = (tab: PalestraTab) => {
     setActiveTab(tab);
     if (tab !== 'tutte') {
       scrollToElement(noteContentRef.current, 68);
     }
   };
 
-  // Scroll solo all'apertura della nota (mount)
+  // Scroll all'apertura (o al tab specifico se aperto dalla ricerca)
   React.useEffect(() => {
-    scrollToTop();
-  }, []);
+    if (initialTab && initialTab !== 'tutte') {
+      setActiveTab(initialTab as PalestraTab);
+      setTimeout(() => scrollToElement(noteContentRef.current, 68), 80);
+    } else {
+      scrollToTop();
+    }
+  }, [initialTab]);
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">

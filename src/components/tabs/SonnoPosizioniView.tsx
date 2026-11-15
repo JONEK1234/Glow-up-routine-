@@ -23,24 +23,31 @@ import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
 interface SonnoPosizioniViewProps {
   onBack: () => void;
+  initialTab?: string;
 }
 
-export const SonnoPosizioniView: React.FC<SonnoPosizioniViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutte' | 'schiena' | 'lato'>('tutte');
+export const SonnoPosizioniView: React.FC<SonnoPosizioniViewProps> = ({ onBack, initialTab }) => {
+  type SonnoTab = 'tutte' | 'schiena' | 'lato';
+  const [activeTab, setActiveTab] = useState<SonnoTab>((initialTab as SonnoTab) || 'tutte');
   const [fullscreenImage, setFullscreenImage] = useState<{ url: string; title: string } | null>(null);
   const noteContentRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectTab = (tab: typeof activeTab) => {
+  const handleSelectTab = (tab: SonnoTab) => {
     setActiveTab(tab);
     if (tab !== 'tutte') {
       scrollToElement(noteContentRef.current, 68);
     }
   };
 
-  // Scroll solo all'apertura della nota (mount)
+  // Scroll all'apertura (o al tab specifico se aperto dalla ricerca)
   React.useEffect(() => {
-    scrollToTop();
-  }, []);
+    if (initialTab && initialTab !== 'tutte') {
+      setActiveTab(initialTab as SonnoTab);
+      setTimeout(() => scrollToElement(noteContentRef.current, 68), 80);
+    } else {
+      scrollToTop();
+    }
+  }, [initialTab]);
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">

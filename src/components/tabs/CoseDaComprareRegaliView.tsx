@@ -26,24 +26,31 @@ import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
 interface CoseDaComprareRegaliViewProps {
   onBack: () => void;
+  initialTab?: string;
 }
 
-export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutti' | 'rasatura' | 'seta' | 'diffusore' | 'gomme_mewing'>('tutti');
+export const CoseDaComprareRegaliView: React.FC<CoseDaComprareRegaliViewProps> = ({ onBack, initialTab }) => {
+  type RegaliTab = 'tutti' | 'rasatura' | 'seta' | 'diffusore' | 'gomme_mewing';
+  const [activeTab, setActiveTab] = useState<RegaliTab>((initialTab as RegaliTab) || 'tutti');
   const [fullscreenImage, setFullscreenImage] = useState<{ url: string; title: string } | null>(null);
   const noteContentRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectTab = (tab: typeof activeTab) => {
+  const handleSelectTab = (tab: RegaliTab) => {
     setActiveTab(tab);
     if (tab !== 'tutti') {
       scrollToElement(noteContentRef.current, 68);
     }
   };
 
-  // Scroll solo all'apertura della nota (mount)
+  // Scroll all'apertura (o al tab specifico se aperto dalla ricerca)
   React.useEffect(() => {
-    scrollToTop();
-  }, []);
+    if (initialTab && initialTab !== 'tutti') {
+      setActiveTab(initialTab as RegaliTab);
+      setTimeout(() => scrollToElement(noteContentRef.current, 68), 80);
+    } else {
+      scrollToTop();
+    }
+  }, [initialTab]);
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">

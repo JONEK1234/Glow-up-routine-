@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { WaterLog } from '../../types';
 import { storageHelper } from '../../utils/storage';
-import { Droplets, Sun, Activity, Sparkles, Utensils, Moon, Play, Pause, RotateCcw, Check, ChevronRight, Plus, Trash2, Clock, Video, ArrowLeft, Dumbbell, Image as ImageIcon, Maximize2, X, ExternalLink, Zap } from 'lucide-react';
+import { fullAppBackup, BackupSummaryStats } from '../../utils/fullAppBackup';
+import { Droplets, Sun, Activity, Sparkles, Utensils, Moon, Play, Pause, RotateCcw, Check, ChevronRight, Plus, Trash2, Clock, Video, ArrowLeft, Dumbbell, Image as ImageIcon, Maximize2, X, ExternalLink, Zap, Download, FolderUp, HardDrive, Share2, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { DynamicStretchingView } from './DynamicStretchingView';
 
-export const HomeRoutineTab: React.FC = () => {
+interface HomeRoutineTabProps {
+  onDataRestored?: () => void;
+}
+
+export const HomeRoutineTab: React.FC<HomeRoutineTabProps> = ({ onDataRestored }) => {
   // Water state
   const [water, setWater] = useState<WaterLog>(() => storageHelper.getWaterLog());
   const [waterInput, setWaterInput] = useState<string>('');
@@ -29,10 +34,115 @@ export const HomeRoutineTab: React.FC = () => {
     step_shave: false
   });
 
+  // Full App Data Backup & Restore states
+  const [backupStats, setBackupStats] = useState<BackupSummaryStats | null>(null);
+  const [isBackupBusy, setIsBackupBusy] = useState(false);
+  const [backupFeedback, setBackupFeedback] = useState<{
+    type: 'success' | 'error';
+    message: string;
+  } | null>(null);
+  const restoreInputRef = useRef<HTMLInputElement | null>(null);
+
+  const refreshBackupStats = async () => {
+    const stats = await fullAppBackup.getCurrentStats();
+    setBackupStats(stats);
+  };
+
+  useEffect(() => {
+    refreshBackupStats();
+  }, []);
+
   // Save water updates
   useEffect(() => {
     storageHelper.saveWaterLog(water);
   }, [water]);
+
+  const showBackupToast = (type: 'success' | 'error', message: string) => {
+    setBackupFeedback({ type, message });
+    setTimeout(() => {
+      setBackupFeedback((curr) => (curr?.message === message ? null : curr));
+    }, 6500);
+  };
+
+  const handleExportAllData = async (useShareSheet: boolean = false) => {
+    setIsBackupBusy(true);
+    try {
+      const bundle = await fullAppBackup.buildFullBackupBundle();
+      const jsonStr = JSON.stringify(bundle);
+      const dateStamp = new Date().toISOString().split('T')[0];
+      const fileName = `glowup-tutti-i-dati-${dateStamp}.json`;
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+
+      if (useShareSheet && typeof navigator !== 'undefined' && navigator.share) {
+        const file = new File([blob], fileName, { type: 'application/json' });
+        if ((navigator as any).canShare?.({ files: [file] })) {
+          await navigator.share({
+            title: 'Backup Completo App GlowUp',
+            text: 'Tutti i dati salvati (data inizio, progressi, checklist, note e foto)',
+            files: [file]
+          });
+          showBackupToast('success', 'File backup completo condiviso con successo!');
+          return;
+        }
+      }
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      const keysCount = Object.keys(bundle.localStorageData).length;
+      showBackupToast(
+        'success',
+        `Dati scaricati in "${fileName}" (${keysCount} sezioni + ${bundle.shavingSessions.length} sessioni rasatura)!`
+      );
+    } catch (err: any) {
+      showBackupToast('error', err?.message || 'Errore durante lo scaricamento dei dati');
+    } finally {
+      setIsBackupBusy(false);
+    }
+  };
+
+  const handleTriggerRestoreData = () => {
+    if (restoreInputRef.current) {
+      restoreInputRef.current.value = '';
+      restoreInputRef.current.click();
+    }
+  };
+
+  const handleRestoreFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsBackupBusy(true);
+    try {
+      const rawText = await file.text();
+      const result = await fullAppBackup.importFullBackupContent(rawText);
+      setWater(storageHelper.getWaterLog());
+      await refreshBackupStats();
+      onDataRestored?.();
+
+      if (result.type === 'full') {
+        showBackupToast(
+          'success',
+          `Tutti i dati caricati su questo telefono! Ripristinati data di inizio, streak, note, checklist (${result.localStorageKeysRestored} blocchi) e ${result.shavingPhotosRestored} foto rasatura.`
+        );
+      } else {
+        showBackupToast(
+          'success',
+          `Caricate ${result.shavingSessionsRestored} sessioni e ${result.shavingPhotosRestored} foto Peli Incarniti.`
+        );
+      }
+    } catch (err: any) {
+      showBackupToast('error', err?.message || 'File di backup non valido o illeggibile.');
+    } finally {
+      setIsBackupBusy(false);
+    }
+  };
 
   const addWater = (amountLiters: number) => {
     setWater(prev => {
@@ -578,6 +688,101 @@ export const HomeRoutineTab: React.FC = () => {
         <p className="text-xs text-gray-400 mt-1 leading-relaxed font-medium">
           Segui la sequenza consigliata della mattina e mantieni la disciplina durante la giornata.
         </p>
+      </div>
+
+      {/* BACKUP UNIVERSALE DATI ALL'INIZIO: SCARICA DATI & CARICA DATI */}
+      <div className="p-4 rounded-3xl bg-gradient-to-br from-emerald-950/35 via-[#0B0F17] to-cyan-950/35 border border-emerald-500/35 space-y-3 shadow-lg">
+        <input
+          ref={restoreInputRef}
+          type="file"
+          accept=".json,application/json"
+          onChange={handleRestoreFileChange}
+          className="hidden"
+        />
+
+        <div className="flex items-start gap-2.5">
+          <span className="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shrink-0">
+            <HardDrive className="w-4 h-4" />
+          </span>
+          <div className="flex-1">
+            <h3 className="text-xs sm:text-sm font-black text-white">
+              I Tuoi Dati su Qualunque Telefono
+            </h3>
+            <p className="text-[11px] text-gray-300 leading-relaxed mt-0.5">
+              Le note sono già fisse nell&apos;app per tutti i telefoni. Per spostare o salvare i <strong className="text-emerald-300">tuoi dati personali</strong> (da quando hai iniziato, giorni streak, acqua, checklist, note scritte da te e tutte le foto) usa questi due tasti:
+            </p>
+          </div>
+        </div>
+
+        {backupStats && (
+          <div className="flex flex-wrap gap-1.5 text-[10px] font-bold">
+            <span className="px-2 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-300">
+              Inizio: <strong className="text-white">{backupStats.startDateFormatted || 'Oggi'}</strong>
+            </span>
+            <span className="px-2 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-300">
+              Streak: <strong className="text-cyan-300">{backupStats.streakDays}g</strong>
+            </span>
+            <span className="px-2 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-300">
+              Foto Rasature: <strong className="text-emerald-300">{backupStats.shavingPhotosCount}</strong>
+            </span>
+            {backupStats.userNotesCount > 0 && (
+              <span className="px-2 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-300">
+                Note Tue: <strong className="text-amber-300">{backupStats.userNotesCount}</strong>
+              </span>
+            )}
+          </div>
+        )}
+
+        {backupFeedback && (
+          <div
+            className={`p-3 rounded-2xl border text-[11px] font-bold flex items-start gap-2 ${
+              backupFeedback.type === 'success'
+                ? 'bg-emerald-950/70 border-emerald-400/50 text-emerald-200'
+                : 'bg-rose-950/70 border-rose-400/50 text-rose-200'
+            }`}
+          >
+            {backupFeedback.type === 'success' ? (
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+            ) : (
+              <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+            )}
+            <span className="leading-relaxed">{backupFeedback.message}</span>
+          </div>
+        )}
+
+        <div className="grid grid-cols-2 gap-2.5">
+          <button
+            type="button"
+            disabled={isBackupBusy}
+            onClick={() => handleExportAllData(false)}
+            className="w-full py-3 px-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-black text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-500/20 active:scale-95 transition-all cursor-pointer min-h-[44px] disabled:opacity-50"
+          >
+            <Download className="w-4 h-4 shrink-0" />
+            <span>Scarica Dati</span>
+          </button>
+
+          <button
+            type="button"
+            disabled={isBackupBusy}
+            onClick={handleTriggerRestoreData}
+            className="w-full py-3 px-3 rounded-2xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-200 border border-cyan-400/50 font-black text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all cursor-pointer min-h-[44px] disabled:opacity-50"
+          >
+            <FolderUp className="w-4 h-4 shrink-0 text-cyan-300" />
+            <span>Carica Dati</span>
+          </button>
+        </div>
+
+        {typeof navigator !== 'undefined' && 'share' in navigator && (
+          <button
+            type="button"
+            disabled={isBackupBusy}
+            onClick={() => handleExportAllData(true)}
+            className="w-full py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 text-[11px] font-bold flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+          >
+            <Share2 className="w-3.5 h-3.5 text-cyan-300" />
+            <span>Invia file dati su WhatsApp / Drive (per altro telefono)</span>
+          </button>
+        )}
       </div>
 
       {/* SECTION 1: MATTINA */}

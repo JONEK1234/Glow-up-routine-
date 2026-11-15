@@ -32,6 +32,7 @@ import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
 interface CapelliTextureFormaPiegaLisciaViewProps {
   onBack: () => void;
+  initialTab?: string;
 }
 
 export interface HairProgressPhoto {
@@ -329,8 +330,8 @@ export const PRIMO_RISULTATO_PIEGA_PHOTOS: HairProgressPhoto[] = [
   }
 ];
 
-export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPiegaLisciaViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<
+export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPiegaLisciaViewProps> = ({ onBack, initialTab }) => {
+  type CapelliTab =
     | 'tutta'
     | 'progressi'
     | 'progressi_2'
@@ -343,11 +344,14 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
     | 'fisica'
     | 'taglio_confronto'
     | 'graffiato_prodotto'
-  >('tutta');
+    | 'shampoo_vs_balsamo'
+    | 'spruzzino_mullet';
+
+  const [activeTab, setActiveTab] = useState<CapelliTab>((initialTab as CapelliTab) || 'tutta');
   const [galleryFilter, setGalleryFilter] = useState<'tutte' | 'prima' | 'dopo'>('tutte');
   const noteContentRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectTab = (tab: typeof activeTab, toggleIfActive = false) => {
+  const handleSelectTab = (tab: CapelliTab, toggleIfActive = false) => {
     const nextTab = toggleIfActive && activeTab === tab ? 'tutta' : tab;
     setActiveTab(nextTab);
     if (nextTab !== 'tutta') {
@@ -355,10 +359,15 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
     }
   };
 
-  // Scroll solo all'apertura della nota (mount)
+  // Scroll all'apertura (o al tab specifico se aperto dalla ricerca)
   useEffect(() => {
-    scrollToTop();
-  }, []);
+    if (initialTab && initialTab !== 'tutta') {
+      setActiveTab(initialTab as CapelliTab);
+      setTimeout(() => scrollToElement(noteContentRef.current, 68), 80);
+    } else {
+      scrollToTop();
+    }
+  }, [initialTab]);
 
   // Mini gallery & Fullscreen modal states
   const [activeGalleryCollection, setActiveGalleryCollection] = useState<'progressi' | 'primo_risultato'>('progressi');
@@ -1003,6 +1012,89 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
               </div>
             </button>
           </div>
+
+          {/* Card Affiancate: Scienza Shampoo vs Balsamo & Tecnica Spruzzino + Mullet */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <button
+              type="button"
+              onClick={() => handleSelectTab('shampoo_vs_balsamo', true)}
+              className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+                activeTab === 'shampoo_vs_balsamo'
+                  ? 'bg-gradient-to-r from-violet-950/90 via-indigo-950/75 to-black/90 border-violet-400 shadow-neon ring-2 ring-violet-400/30'
+                  : 'bg-gradient-to-r from-violet-950/40 via-indigo-950/30 to-black/75 border-violet-500/45 hover:border-violet-400'
+              }`}
+            >
+              <div className="flex items-center space-x-2.5">
+                <div className="p-2 rounded-xl bg-violet-500/20 text-violet-300 border border-violet-500/30 group-hover:scale-105 transition-transform shrink-0">
+                  <Atom className="w-4 h-4 text-violet-300" />
+                </div>
+                <div>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-violet-300 block">
+                      {activeTab === 'shampoo_vs_balsamo' ? '✓ Attiva' : '7. Scienza'}
+                    </span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-violet-500/20 text-violet-200 font-extrabold border border-violet-500/40">
+                      Cariche + / - &amp; Mosso 2B
+                    </span>
+                  </div>
+                  <h4 className="text-xs font-black text-white group-hover:text-violet-200 transition-colors">
+                    Solo Shampoo vs. Balsamo
+                  </h4>
+                  <p className="text-[10px] text-gray-400">
+                    Effetto sale, micro-goccia &amp; crunch
+                  </p>
+                </div>
+              </div>
+              <div className={`flex items-center space-x-1 text-[11px] font-black px-2.5 py-1.5 rounded-xl shrink-0 transition-all ${
+                activeTab === 'shampoo_vs_balsamo'
+                  ? 'bg-red-500/20 text-red-300 border border-red-500/30'
+                  : 'bg-gradient-to-r from-violet-400 to-fuchsia-400 text-black shadow-neon'
+              }`}>
+                <span>{activeTab === 'shampoo_vs_balsamo' ? 'Chiudi' : 'Apri'}</span>
+                {activeTab === 'shampoo_vs_balsamo' ? <X className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
+              </div>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleSelectTab('spruzzino_mullet', true)}
+              className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+                activeTab === 'spruzzino_mullet'
+                  ? 'bg-gradient-to-r from-blue-950/90 via-cyan-950/75 to-black/90 border-blue-400 shadow-neon ring-2 ring-blue-400/30'
+                  : 'bg-gradient-to-r from-blue-950/40 via-cyan-950/30 to-black/75 border-blue-500/45 hover:border-blue-400'
+              }`}
+            >
+              <div className="flex items-center space-x-2.5">
+                <div className="p-2 rounded-xl bg-blue-500/20 text-blue-300 border border-blue-500/30 group-hover:scale-105 transition-transform shrink-0">
+                  <Droplets className="w-4 h-4 text-blue-300" />
+                </div>
+                <div>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-blue-300 block">
+                      {activeTab === 'spruzzino_mullet' ? '✓ Attiva' : '8. Novità'}
+                    </span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-200 font-extrabold border border-blue-500/40">
+                      Mattina &amp; Mullet
+                    </span>
+                  </div>
+                  <h4 className="text-xs font-black text-white group-hover:text-blue-200 transition-colors">
+                    Spruzzino &amp; Parte Dietro
+                  </h4>
+                  <p className="text-[10px] text-gray-400">
+                    Saturazione interna, balsamo &amp; sfumatura
+                  </p>
+                </div>
+              </div>
+              <div className={`flex items-center space-x-1 text-[11px] font-black px-2.5 py-1.5 rounded-xl shrink-0 transition-all ${
+                activeTab === 'spruzzino_mullet'
+                  ? 'bg-red-500/20 text-red-300 border border-red-500/30'
+                  : 'bg-gradient-to-r from-blue-400 to-cyan-400 text-black shadow-neon'
+              }`}>
+                <span>{activeTab === 'spruzzino_mullet' ? 'Chiudi' : 'Apri'}</span>
+                {activeTab === 'spruzzino_mullet' ? <X className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
+              </div>
+            </button>
+          </div>
         </div>
 
         {/* Tab Filters */}
@@ -1087,6 +1179,34 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
           >
             <Droplet className="w-3.5 h-3.5 text-teal-400" />
             <span>Graffiato &amp; Spray Sale</span>
+          </button>
+
+          {/* TASTO SOLO SHAMPOO VS BALSAMO */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('shampoo_vs_balsamo', true)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'shampoo_vs_balsamo'
+                ? 'bg-gradient-to-r from-violet-400 to-fuchsia-400 text-black shadow-neon font-black ring-2 ring-violet-300'
+                : 'bg-violet-500/20 text-violet-300 hover:text-white border border-violet-500/40'
+            }`}
+          >
+            <Atom className="w-3.5 h-3.5 text-violet-400" />
+            <span>Solo Shampoo vs Balsamo</span>
+          </button>
+
+          {/* TASTO SPRUZZINO & MULLET */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('spruzzino_mullet', true)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'spruzzino_mullet'
+                ? 'bg-gradient-to-r from-blue-400 to-cyan-400 text-black shadow-neon font-black ring-2 ring-blue-300'
+                : 'bg-blue-500/20 text-blue-300 hover:text-white border border-blue-500/40'
+            }`}
+          >
+            <Droplets className="w-3.5 h-3.5 text-blue-400" />
+            <span>Spruzzino &amp; Mullet</span>
           </button>
 
           <button
@@ -2777,6 +2897,369 @@ export const CapelliTextureFormaPiegaLisciaView: React.FC<CapelliTextureFormaPie
                   type="button"
                   onClick={() => setActiveTab('tutta')}
                   className="w-full sm:w-auto py-3 px-6 rounded-2xl bg-gradient-to-r from-teal-400 to-emerald-400 hover:from-teal-300 hover:to-emerald-300 text-black font-black text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-neon flex items-center justify-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Torna alla Nota Completa</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ================================================================= */}
+      {/* SEZIONE 7: SOLO SHAMPOO VS SHAMPOO + BALSAMO & STRATEGIA MOSSO   */}
+      {/* ================================================================= */}
+      {(activeTab === 'tutta' || activeTab === 'shampoo_vs_balsamo') && (
+        <div className="space-y-4">
+          <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-br from-violet-950/45 via-black/90 to-indigo-950/40 border-2 border-violet-400/50 space-y-5 shadow-lg">
+            {/* Header Sezione */}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+              <div className="flex items-center space-x-2.5">
+                <span className="p-2 rounded-xl bg-violet-500/20 text-violet-300 border border-violet-500/30">
+                  <Atom className="w-5 h-5 text-violet-300" />
+                </span>
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-violet-300 block">
+                    Chimica del Capello • Perché Cambia la Texture
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white uppercase tracking-tight">
+                    Solo Shampoo vs. Shampoo + Balsamo: Effetto "Sale Marino" &amp; Strategia Mosso
+                  </h3>
+                </div>
+              </div>
+              <span className="text-[10px] px-2.5 py-1 rounded-full bg-violet-500/20 text-violet-200 font-bold border border-violet-500/30">
+                Guida Scientifica Completa
+              </span>
+            </div>
+
+            <p className="text-xs text-gray-200 leading-relaxed bg-black/50 p-3.5 rounded-2xl border border-white/10">
+              Quello che hai notato lavando i capelli con <strong className="text-violet-300">solo shampoo</strong> (sentendoli più rigidi, ruvidi e simili a quando metti lo spray al sale marino) ha una spiegazione chimica e fisica precisissima sulla struttura del fusto e delle squame della cuticola.
+            </p>
+
+            {/* 1. Scienziati a confronto: Solo Shampoo vs Shampoo + Balsamo */}
+            <div className="space-y-3">
+              <h4 className="text-xs sm:text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-lg bg-violet-500/20 text-violet-300 border border-violet-500/30 flex items-center justify-center text-xs font-black">
+                  1
+                </span>
+                <span>Scienziati a Confronto: Cosa Succede alla Fibra</span>
+              </h4>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {/* SOLO SHAMPOO */}
+                <div className="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/35 space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-black text-amber-300 uppercase tracking-wider">
+                      Solo Shampoo (Tensioattivo &amp; pH)
+                    </span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-200 font-bold">
+                      Carica Negativa (-)
+                    </span>
+                  </div>
+                  <ul className="space-y-2 text-xs text-gray-300 leading-relaxed">
+                    <li className="flex items-start gap-2">
+                      <span className="text-amber-400 font-black mt-0.5">•</span>
+                      <span>
+                        <strong className="text-white">Apre le squame:</strong> i tensioattivi aprono leggermente le squame della cuticola (lo scudo esterno) per lavare via sebo, sudore e residui.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-amber-400 font-black mt-0.5">•</span>
+                      <span>
+                        <strong className="text-white">Toglie il film idrolipidico:</strong> spoglia la fibra del sebo naturale e lascia sulla cheratina una <strong className="text-amber-300">carica elettrica negativa</strong>.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-amber-400 font-black mt-0.5">•</span>
+                      <span>
+                        <strong className="text-white">Risultato:</strong> cuticole sollevate, maggiore attrito tra capello e capello, zero lubrificazione e più perdita di idratazione.
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* SHAMPOO + BALSAMO */}
+                <div className="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/35 space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-black text-emerald-300 uppercase tracking-wider">
+                      Shampoo + Balsamo (Cationico)
+                    </span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-200 font-bold">
+                      Carica Positiva (+)
+                    </span>
+                  </div>
+                  <ul className="space-y-2 text-xs text-gray-300 leading-relaxed">
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-400 font-black mt-0.5">•</span>
+                      <span>
+                        <strong className="text-white">Effetto calamita (+ su -):</strong> il balsamo contiene agenti condizionanti con <strong className="text-emerald-300">carica positiva (cationica)</strong> che si legano magneticamente alle zone negative lasciate dallo shampoo.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-400 font-black mt-0.5">•</span>
+                      <span>
+                        <strong className="text-white">Richiude le cuticole:</strong> forma una micropellicola protettiva che appiattisce e sigilla le squame, neutralizzando l'elettricità statica.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-400 font-black mt-0.5">•</span>
+                      <span>
+                        <strong className="text-white">Risultato:</strong> capello morbido, elastico, lucido e che scivola facilmente sotto spazzola e dita.
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Perché Solo Shampoo sembra "Effetto Sale Marino / Rigido" */}
+            <div className="p-4 rounded-2xl bg-cyan-950/20 border border-cyan-500/35 space-y-2">
+              <h4 className="text-xs sm:text-sm font-black text-cyan-300 uppercase tracking-wider flex items-center gap-2">
+                <Droplets className="w-4 h-4 text-cyan-400 shrink-0" />
+                <span>2. Perché Solo Shampoo Crea l'Effetto "Sale Marino / Rigido"</span>
+              </h4>
+              <p className="text-xs text-gray-300 leading-relaxed">
+                Quando salti il balsamo, le cuticole restano sollevate come piccole scaglie ruvide e la cheratina è "nuda": i fusti si agganciano tra loro per <strong className="text-white">attrito meccanico</strong> invece di scivolare via. È quasi identico a quello che fa il <strong className="text-cyan-300">Sea Salt Spray</strong> (che asciuga leggermente la superficie e deposita micro-cristalli ruvidi): aumenta il <strong className="text-white">grip</strong>, dà corpo rigido e fa restare in piedi o in forma la ciocca con più facilità.
+              </p>
+            </div>
+
+            {/* 3. Balsamo ogni giorno? Micro-goccia & Pantene vs Buildup */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-indigo-400/35 space-y-2.5">
+              <h4 className="text-xs sm:text-sm font-black text-indigo-300 uppercase tracking-wider flex items-center gap-2">
+                <Layers className="w-4 h-4 text-indigo-400 shrink-0" />
+                <span>3. Balsamo Ogni Giorno? Regola della Micro-Goccia &amp; Rischio Buildup</span>
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 space-y-1">
+                  <span className="font-black text-emerald-300 block">✓ Come Usarlo Senza Appesantire</span>
+                  <p className="text-gray-300 leading-relaxed text-[11px]">
+                    Se lavi spesso, usa una <strong className="text-white">micro-goccia</strong> solo su <strong className="text-white">punte e lunghezze</strong> (mai sulla cute!) e fai un <strong className="text-emerald-300">risciacquo veloce ma completo</strong>. Protegge le squame senza togliere tutto il volume.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 space-y-1">
+                  <span className="font-black text-rose-300 block">✕ Evita il Buildup (Pantene / Leave-in)</span>
+                  <p className="text-gray-300 leading-relaxed text-[11px]">
+                    Mettere tutti i giorni noci abbondanti di balsamo o creme senza risciacquo (tipo <strong className="text-white">Pantene leave-in</strong>) crea <strong className="text-rose-300">buildup</strong>: strati cerosi che soffocano l'onda, sporcano prima e fanno afflosciare il ciuffo.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 4. Il Mosso (Tipo 2B): Grip Positivo vs Rischio Crespo & Strategia Migliore */}
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-fuchsia-950/30 via-black/75 to-violet-950/30 border border-fuchsia-400/40 space-y-3">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <h4 className="text-xs sm:text-sm font-black text-fuchsia-300 uppercase tracking-wider flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-fuchsia-400 shrink-0" />
+                  <span>4. Sul Mosso (Tipo 2B): Pro, Rischi &amp; Strategia Migliore</span>
+                </h4>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                <div className="p-3 rounded-xl bg-black/55 border border-emerald-500/30 space-y-1">
+                  <span className="font-black text-emerald-300 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                    Lato Positivo del Grip
+                  </span>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Un capello con leggero grip non scivola piatto: le onde si sostengono a vicenda e mantengono più volume e tenuta meccanica naturale.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-black/55 border border-amber-500/30 space-y-1">
+                  <span className="font-black text-amber-300 flex items-center gap-1.5">
+                    <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                    Rischio "Solo Shampoo" Sempre
+                  </span>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Alla lunga disidrata la fibra: i capelli diventano <strong className="text-white">crespi, elettrici, secchi</strong> e le ciocche si separano a paglia anziché unirsi in onde pulite.
+                  </p>
+                </div>
+              </div>
+
+              {/* Strategia Perfetta per il Mosso */}
+              <div className="p-3.5 rounded-2xl bg-black/70 border border-violet-400/40 space-y-2">
+                <span className="text-[11px] font-black uppercase tracking-wider text-violet-300 block">
+                  ★ La Strategia Migliore per Fare il Mosso Perfetto
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-gray-200">
+                  <div className="flex items-start gap-2 bg-white/[0.03] p-2.5 rounded-xl border border-white/10">
+                    <span className="w-5 h-5 rounded-md bg-violet-500/25 text-violet-200 font-black flex items-center justify-center shrink-0">
+                      1
+                    </span>
+                    <span>
+                      <strong>Shampoo solo in radice:</strong> pulisci la cute lasciando che la schiuma scenda naturalmente sulle punte senza sfregarle troppo.
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-2 bg-white/[0.03] p-2.5 rounded-xl border border-white/10">
+                    <span className="w-5 h-5 rounded-md bg-violet-500/25 text-violet-200 font-black flex items-center justify-center shrink-0">
+                      2
+                    </span>
+                    <span>
+                      <strong>Micro-balsamo sciacquato quasi tutto:</strong> solo sulle punte per sigillare ed evitare il crespo, lasciando comunque un leggero grip.
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-2 bg-white/[0.03] p-2.5 rounded-xl border border-white/10">
+                    <span className="w-5 h-5 rounded-md bg-violet-500/25 text-violet-200 font-black flex items-center justify-center shrink-0">
+                      3
+                    </span>
+                    <span>
+                      <strong>Crunch con le mani:</strong> da umidi, premi le ciocche dal basso verso la cute ("scrunch") per compattare e definire le onde.
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-2 bg-white/[0.03] p-2.5 rounded-xl border border-white/10">
+                    <span className="w-5 h-5 rounded-md bg-violet-500/25 text-violet-200 font-black flex items-center justify-center shrink-0">
+                      4
+                    </span>
+                    <span>
+                      <strong>Aria naturale o Diffusore (NO beccuccio!):</strong> il diffusore disperde l'aria fissando i legami a idrogeno senza disfare le onde né alzare il crespo.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {activeTab === 'shampoo_vs_balsamo' && (
+              <div className="pt-2 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('tutta')}
+                  className="w-full sm:w-auto py-3 px-6 rounded-2xl bg-gradient-to-r from-violet-400 to-fuchsia-400 hover:from-violet-300 hover:to-fuchsia-300 text-black font-black text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-neon flex items-center justify-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Torna alla Nota Completa</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ================================================================= */}
+      {/* SEZIONE 8: FISICA DELLO SPRUZZINO & GESTIONE DIETRO (MULLET)      */}
+      {/* ================================================================= */}
+      {(activeTab === 'tutta' || activeTab === 'spruzzino_mullet') && (
+        <div className="space-y-4">
+          <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-br from-blue-950/45 via-black/90 to-cyan-950/40 border-2 border-blue-400/50 space-y-5 shadow-lg">
+            {/* Header Sezione */}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+              <div className="flex items-center space-x-2.5">
+                <span className="p-2 rounded-xl bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                  <Droplets className="w-5 h-5 text-blue-300" />
+                </span>
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-blue-300 block">
+                    Refresh Senza Rubinetto • Tecnica Mattutina
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black text-white uppercase tracking-tight">
+                    Perché lo Spruzzino Fallisce in Superficie &amp; Gestione Dietro (Mullet)
+                  </h3>
+                </div>
+              </div>
+              <span className="text-[10px] px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-200 font-bold border border-blue-500/30">
+                Fisica dell&apos;Acqua &amp; Sfumatura
+              </span>
+            </div>
+
+            {/* 1. Il Problema Fisico dello Spruzzino */}
+            <div className="p-4 rounded-2xl bg-rose-950/20 border border-rose-500/35 space-y-2">
+              <h4 className="text-xs sm:text-sm font-black text-rose-300 uppercase tracking-wider flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
+                <span>1. Il Problema Fisico dello Spruzzino (Solo Superficie)</span>
+              </h4>
+              <p className="text-xs text-gray-200 leading-relaxed">
+                Lo spruzzino nebulizza l&apos;acqua <strong className="text-white">solo in superficie</strong>. Se l&apos;acqua non penetra dentro la fibra fino alla radice, <strong className="text-rose-300">non riesce a rompere i legami a idrogeno</strong> della piega notturna, quindi le ciocche sotto restano storte e rigide.
+              </p>
+              <p className="text-xs text-gray-300 leading-relaxed">
+                Quando poi ci passi il balsamo sopra, il prodotto si attacca a capelli <strong className="text-amber-300">mezzo asciutti e mezzo bagnati</strong>, creando un risultato disomogeneo e un po&apos; pesante.
+              </p>
+            </div>
+
+            {/* 2. I 3 Passaggi per Farlo Funzionare Senza Aprire il Rubinetto */}
+            <div className="space-y-3">
+              <h4 className="text-xs sm:text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-lg bg-blue-500/20 text-blue-300 border border-blue-500/30 flex items-center justify-center text-xs font-black">
+                  2
+                </span>
+                <span>Come Far Funzionare Davvero lo Spruzzino Ogni Mattina</span>
+              </h4>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                {/* Step 1 */}
+                <div className="p-3.5 rounded-2xl bg-black/65 border border-cyan-500/35 space-y-1.5">
+                  <span className="text-[11px] font-black uppercase tracking-wider text-cyan-300 block">
+                    1. Satura a Zone, Non a Caso
+                  </span>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Non spruzzare solo da fuori. Solleva i capelli con una mano e spruzza <strong className="text-white">direttamente sotto, verso la radice e negli strati interni</strong>, finché non senti la chioma <strong className="text-cyan-300">fredda e pesante al tatto</strong> (quasi fradicia, non solo umida in superficie).
+                  </p>
+                </div>
+
+                {/* Step 2 */}
+                <div className="p-3.5 rounded-2xl bg-black/65 border border-blue-500/35 space-y-1.5">
+                  <span className="text-[11px] font-black uppercase tracking-wider text-blue-300 block">
+                    2. Distribuisci con Mani o Pettine
+                  </span>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Dopo aver spruzzato bene, passa le <strong className="text-white">mani bagnate o il pettine a denti larghi</strong> per portare l&apos;umidità in modo uniforme dalla radice alle punte. Solo quando tutte le ciocche sono <strong className="text-blue-300">bagnate uguali</strong>, passi quella micro-goccia di balsamo.
+                  </p>
+                </div>
+
+                {/* Step 3: Trucco Furbo */}
+                <div className="p-3.5 rounded-2xl bg-emerald-950/25 border border-emerald-500/40 space-y-1.5">
+                  <span className="text-[11px] font-black uppercase tracking-wider text-emerald-300 flex items-center gap-1">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    3. Trucco Furbo (Mix)
+                  </span>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Metti direttamente una <strong className="text-white">puntina minuscola di balsamo dentro l&apos;acqua dello spruzzino</strong> e agita bene. Così spruzzi acqua già condizionata in modo perfettamente uniforme ed <strong className="text-emerald-300">eviti di impastare singole ciocche</strong>.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Parte Dietro (Parte Bassa del Mullet) */}
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-indigo-950/35 via-black/70 to-blue-950/30 border border-indigo-400/40 space-y-2.5">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <h4 className="text-xs sm:text-sm font-black text-indigo-300 uppercase tracking-wider flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>3. Capelli Dietro (Parte Bassa del Mullet): Mossa Intelligente</span>
+                </h4>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                  Risparmio Tempo Approvato
+                </span>
+              </div>
+              <p className="text-xs text-gray-200 leading-relaxed">
+                Non succede assolutamente nulla se non li bagni, anzi <strong className="text-emerald-300">è una mossa intelligente</strong>: dietro hai bisogno di meno controllo rispetto al <strong className="text-white">ciuffo frontale e alla corona</strong>, e risparmi tempo sull&apos;asciugatura.
+              </p>
+              <div className="p-3 rounded-xl bg-black/60 border border-cyan-500/30 text-[11px] text-gray-300 leading-relaxed">
+                <strong className="text-cyan-300">L&apos;unico accorgimento:</strong> sfuma bene il passaggio tra i capelli sopra (bagnati e appena asciugati col beccuccio) e quelli dietro (rimasti asciutti), passandoci rapidamente <strong className="text-white">le dita o un colpo d&apos;aria veloce alla fine</strong>, così non si vede stacco di volume o di lucentezza.
+              </div>
+            </div>
+
+            {/* 4. Due Opzioni Pratiche per la Mattina */}
+            <div className="p-3.5 rounded-2xl bg-black/70 border border-blue-400/40 space-y-2">
+              <span className="text-[11px] font-black uppercase tracking-wider text-blue-300 block">
+                ⚡ Scegli il Metodo per Domani Mattina:
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-gray-200">
+                <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                  <strong className="text-cyan-300 block mb-0.5">Opzione A • Saturazione Interna</strong>
+                  Solleva e satura bene sotto fino alle radici, pettina a denti larghi per uniformare e poi micro-goccia di balsamo.
+                </div>
+                <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                  <strong className="text-emerald-300 block mb-0.5">Opzione B • Spruzzino Pre-Condizionato</strong>
+                  Diluire direttamente un velo minuscolo di balsamo nell&apos;acqua dello spruzzino, agitare bene e saturare a zone.
+                </div>
+              </div>
+            </div>
+
+            {activeTab === 'spruzzino_mullet' && (
+              <div className="pt-2 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('tutta')}
+                  className="w-full sm:w-auto py-3 px-6 rounded-2xl bg-gradient-to-r from-blue-400 to-cyan-400 hover:from-blue-300 hover:to-cyan-300 text-black font-black text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-neon flex items-center justify-center gap-2"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   <span>Torna alla Nota Completa</span>

@@ -84,3 +84,54 @@ export interface StoreProductVideo {
   highlights: string[];
   conversionCta: string;
 }
+
+export type ShavingAngle = 'left' | 'front' | 'right';
+
+export interface ShavingPhotoSlot {
+  id?: string;
+  dataUrl: string;
+  uploadedAtIso: string;
+  dayLabel: string;
+  dateStr: string;
+  timeStr: string;
+  caption?: string;
+}
+
+export interface ShavingAnglePhotos {
+  before?: ShavingPhotoSlot;
+  after?: ShavingPhotoSlot;
+  beforeList?: ShavingPhotoSlot[];
+  afterList?: ShavingPhotoSlot[];
+}
+
+export interface ShavingExtraShot {
+  id: string;
+  label: string;
+  beforeList: ShavingPhotoSlot[];
+  afterList: ShavingPhotoSlot[];
+}
+
+export interface ShavingSession {
+  id: string;
+  createdAtIso: string;
+  updatedAtIso: string;
+  dayLabel: string;
+  dateStr: string;
+  timeStr: string;
+  title: string;
+  notes?: string;
+  photos: {
+    left: ShavingAnglePhotos;
+    front: ShavingAnglePhotos;
+    right: ShavingAnglePhotos;
+  };
+  extraShots?: ShavingExtraShot[];
+}
+
+export interface ShavingBackupBundle {
+  app: 'glowup-peli-incarniti-backup';
+  version: 1;
+  exportedAtIso: string;
+  sessions: ShavingSession[];
+}
+

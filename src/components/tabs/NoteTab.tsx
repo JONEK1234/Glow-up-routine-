@@ -32,13 +32,14 @@ import {
   Droplets,
   Dumbbell,
   Gift,
-  Wind
+  Wind,
+  Search
 } from 'lucide-react';
 import { UserNote } from '../../types';
 import { storageHelper } from '../../utils/storage';
 import { MentoPosturaOcchiView } from './MentoPosturaOcchiView';
 import { SonnoPosizioniView } from './SonnoPosizioniView';
-import { PeliIncarnitiVisoView } from './PeliIncarnitiVisoView';
+import { PeliIncarnitiVisoView, PeliIncarnitiTabId } from './PeliIncarnitiVisoView';
 import { GiorniShampooTextureView } from './GiorniShampooTextureView';
 import { PalestraPerditaGrassoView } from './PalestraPerditaGrassoView';
 import { CoseDaComprareRegaliView } from './CoseDaComprareRegaliView';
@@ -46,6 +47,7 @@ import { MasticazioneMasseteriView } from './MasticazioneMasseteriView';
 import { CapelliTextureFormaPiegaLisciaView } from './CapelliTextureFormaPiegaLisciaView';
 import { DiabeteGlicemiaPalestraView } from './DiabeteGlicemiaPalestraView';
 import { scrollToTop } from '../../utils/scrollHelper';
+import { NoteSectionViewId, searchNotesIndex } from '../../utils/notesSearchIndex';
 
 const FACE_PHOTOS = [
   {
@@ -104,10 +106,14 @@ export const NoteTab: React.FC = () => {
   const [swipeOffset, setSwipeOffset] = useState<number>(0);
   const [isSwiping, setIsSwiping] = useState<boolean>(false);
   const [isOrtodonziaExpanded, setIsOrtodonziaExpanded] = useState(false);
+  const [initialSubTab, setInitialSubTab] = useState<string | undefined>(undefined);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedSearchSection, setSelectedSearchSection] = useState<NoteSectionViewId | 'all'>('all');
 
   // Helper unificato per cambiare vista resettando istantaneamente lo scroll in cima
-  const handleOpenView = (view: typeof activeView) => {
+  const handleOpenView = (view: typeof activeView, subTab?: string) => {
     scrollToTop();
+    setInitialSubTab(subTab);
     setActiveView(view);
   };
 
@@ -374,56 +380,61 @@ export const NoteTab: React.FC = () => {
   // VIEW: SONNO E POSIZIONI (RICHIESTA SPECIFICA UTENTE)
   // -------------------------------------------------------------
   if (activeView === 'sonno_posizioni') {
-    return <SonnoPosizioniView onBack={() => handleOpenView('list')} />;
+    return <SonnoPosizioniView onBack={() => handleOpenView('list')} initialTab={initialSubTab} />;
   }
 
   // -------------------------------------------------------------
   // VIEW: PELI INCARNITI VISO (RICHIESTA SPECIFICA UTENTE)
   // -------------------------------------------------------------
   if (activeView === 'peli_incarniti') {
-    return <PeliIncarnitiVisoView onBack={() => handleOpenView('list')} />;
+    return (
+      <PeliIncarnitiVisoView
+        onBack={() => handleOpenView('list')}
+        initialTab={initialSubTab as PeliIncarnitiTabId | undefined}
+      />
+    );
   }
 
   // -------------------------------------------------------------
   // VIEW: GIORNI DI SHAMPOO E GIORNI TEXTURE (RICHIESTA SPECIFICA UTENTE)
   // -------------------------------------------------------------
   if (activeView === 'shampoo_texture') {
-    return <GiorniShampooTextureView onBack={() => handleOpenView('list')} />;
+    return <GiorniShampooTextureView onBack={() => handleOpenView('list')} initialTab={initialSubTab} />;
   }
 
   // -------------------------------------------------------------
   // VIEW: PALESTRA E ORGANIZZAZIONE PER PERDERE GRASSO
   // -------------------------------------------------------------
   if (activeView === 'palestra_grasso') {
-    return <PalestraPerditaGrassoView onBack={() => handleOpenView('list')} />;
+    return <PalestraPerditaGrassoView onBack={() => handleOpenView('list')} initialTab={initialSubTab} />;
   }
 
   // -------------------------------------------------------------
   // VIEW: COSE DA COMPRARE (I MIEI REGALI DI NATALE)
   // -------------------------------------------------------------
   if (activeView === 'regali_natale') {
-    return <CoseDaComprareRegaliView onBack={() => handleOpenView('list')} />;
+    return <CoseDaComprareRegaliView onBack={() => handleOpenView('list')} initialTab={initialSubTab} />;
   }
 
   // -------------------------------------------------------------
   // VIEW: CAPELLI TEXTURE FORMA PIEGA LISCIA
   // -------------------------------------------------------------
   if (activeView === 'capelli_texture') {
-    return <CapelliTextureFormaPiegaLisciaView onBack={() => handleOpenView('list')} />;
+    return <CapelliTextureFormaPiegaLisciaView onBack={() => handleOpenView('list')} initialTab={initialSubTab} />;
   }
 
   // -------------------------------------------------------------
   // VIEW: DIABETE GLICEMIA PALESTRA
   // -------------------------------------------------------------
   if (activeView === 'diabete_glicemia') {
-    return <DiabeteGlicemiaPalestraView onBack={() => handleOpenView('list')} />;
+    return <DiabeteGlicemiaPalestraView onBack={() => handleOpenView('list')} initialTab={initialSubTab} />;
   }
 
   // -------------------------------------------------------------
   // VIEW: INFORMAZIONI MASTICAZIONE & MASSETERI (SEZIONE DEDICATA)
   // -------------------------------------------------------------
   if (activeView === 'asimmetria_masticazione') {
-    return <MasticazioneMasseteriView onBack={() => handleOpenView('asimmetria')} />;
+    return <MasticazioneMasseteriView onBack={() => handleOpenView('asimmetria')} initialTab={initialSubTab} />;
   }
 
   // -------------------------------------------------------------
@@ -1579,6 +1590,229 @@ export const NoteTab: React.FC = () => {
       </div>
 
       {/* ------------------------------------------------------------- */}
+      {/* RICERCA PAROLE NELLE NOTE (1° SEZIONE -> 2° SOTTO-NOTE)       */}
+      {/* ------------------------------------------------------------- */}
+      {(() => {
+        const trimmedQuery = searchQuery.trim();
+        const groupedResults = trimmedQuery ? searchNotesIndex(trimmedQuery) : [];
+        const customUserMatches = trimmedQuery
+          ? userNotes.filter((n) => {
+              const hay = `${n.title} ${n.content} ${n.category}`.toLowerCase();
+              return trimmedQuery
+                .toLowerCase()
+                .split(/\s+/)
+                .filter(Boolean)
+                .every((tok) => hay.includes(tok));
+            })
+          : [];
+
+        const visibleGroups =
+          selectedSearchSection === 'all'
+            ? groupedResults
+            : groupedResults.filter((g) => g.viewId === selectedSearchSection);
+
+        const highlightText = (text: string, query: string) => {
+          const tokens = query
+            .trim()
+            .split(/\s+/)
+            .filter((t) => t.length > 0)
+            .map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+          if (tokens.length === 0) return text;
+          const regex = new RegExp(`(${tokens.join('|')})`, 'gi');
+          const parts = text.split(regex);
+          return parts.map((part, idx) =>
+            tokens.some((tok) => new RegExp(`^${tok}$`, 'i').test(part)) ? (
+              <mark
+                key={idx}
+                className="bg-amber-400/30 text-amber-200 px-1 rounded font-extrabold border border-amber-400/40"
+              >
+                {part}
+              </mark>
+            ) : (
+              <React.Fragment key={idx}>{part}</React.Fragment>
+            )
+          );
+        };
+
+        return (
+          <div className="p-3.5 rounded-3xl bg-white/[0.03] border border-cyan-500/30 space-y-3">
+            <div className="relative">
+              <Search className="w-4 h-4 text-cyan-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setSelectedSearchSection('all');
+                }}
+                placeholder="Cerca parola nelle note (es. salicilico, insulina, nikai...)"
+                className="w-full pl-10 pr-10 py-2.5 rounded-2xl bg-black/60 border border-white/15 text-white text-xs placeholder:text-gray-500 focus:border-cyan-400 focus:outline-none min-h-[44px]"
+              />
+              {trimmedQuery && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery('');
+                    setSelectedSearchSection('all');
+                  }}
+                  aria-label="Cancella ricerca"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-gray-300 cursor-pointer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+
+            {trimmedQuery && (
+              <div className="space-y-3 animate-in fade-in duration-150">
+                {groupedResults.length === 0 && customUserMatches.length === 0 ? (
+                  <div className="p-4 rounded-2xl bg-black/50 border border-white/10 text-center text-xs text-gray-400">
+                    Nessuna nota trovata per <strong className="text-white">"{trimmedQuery}"</strong>. Prova con un'altra parola chiave.
+                  </div>
+                ) : (
+                  <>
+                    {/* STEP 1: Prima spunta le sezioni principali delle note dove compare */}
+                    {groupedResults.length > 0 && (
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between px-0.5">
+                          <span className="text-[10px] font-black uppercase tracking-wider text-cyan-300">
+                            1. Sezioni Note con "{trimmedQuery}" ({groupedResults.length})
+                          </span>
+                          {selectedSearchSection !== 'all' && (
+                            <button
+                              type="button"
+                              onClick={() => setSelectedSearchSection('all')}
+                              className="text-[10px] font-bold text-gray-300 hover:text-white underline cursor-pointer"
+                            >
+                              Mostra tutte
+                            </button>
+                          )}
+                        </div>
+
+                        <div className="flex flex-wrap gap-1.5">
+                          {groupedResults.map((group) => {
+                            const isSelected = selectedSearchSection === group.viewId;
+                            return (
+                              <button
+                                key={group.viewId}
+                                type="button"
+                                onClick={() =>
+                                  setSelectedSearchSection((prev) =>
+                                    prev === group.viewId ? 'all' : group.viewId
+                                  )
+                                }
+                                className={`px-3 py-1.5 rounded-xl text-xs font-extrabold border transition-all cursor-pointer flex items-center gap-1.5 min-h-[38px] ${
+                                  isSelected
+                                    ? 'bg-cyan-400 text-black border-cyan-300 shadow-sm'
+                                    : 'bg-black/60 hover:bg-white/10 text-white border-white/15'
+                                }`}
+                              >
+                                <span>{group.sectionTitle}</span>
+                                <span
+                                  className={`text-[10px] px-1.5 py-0.5 rounded-md font-black tabular-nums ${
+                                    isSelected
+                                      ? 'bg-black/20 text-black'
+                                      : 'bg-cyan-500/20 text-cyan-300'
+                                  }`}
+                                >
+                                  {group.subMatches.length}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* STEP 2: Poi spunta esattamente in quali note / parti ci sono queste parole */}
+                    {visibleGroups.length > 0 && (
+                      <div className="space-y-2 pt-1 border-t border-white/10">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-emerald-300 block px-0.5">
+                          2. In quali note compaiono queste parole (clicca per aprire subito)
+                        </span>
+
+                        <div className="space-y-2 max-h-[340px] overflow-y-auto pr-1">
+                          {visibleGroups.map((group) => (
+                            <div
+                              key={group.viewId}
+                              className="p-3 rounded-2xl bg-black/65 border border-white/10 space-y-2"
+                            >
+                              <div className="flex items-center justify-between border-b border-white/10 pb-1.5">
+                                <span className="text-xs font-black text-cyan-300">
+                                  {group.sectionTitle}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => handleOpenView(group.viewId)}
+                                  className="text-[10px] font-extrabold text-black bg-cyan-400 hover:bg-cyan-300 px-2.5 py-1 rounded-lg cursor-pointer"
+                                >
+                                  Apri Sezione →
+                                </button>
+                              </div>
+
+                              <div className="space-y-1.5">
+                                {group.subMatches.map((m) => (
+                                  <button
+                                    key={m.entry.id}
+                                    type="button"
+                                    onClick={() => handleOpenView(m.entry.viewId, m.entry.subTabId)}
+                                    className="w-full text-left p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-cyan-400/40 transition-all cursor-pointer group flex items-start justify-between gap-2"
+                                  >
+                                    <div className="space-y-1 flex-1 min-w-0">
+                                      <div className="text-xs font-extrabold text-white group-hover:text-cyan-300 transition-colors">
+                                        {highlightText(m.entry.subTitle, trimmedQuery)}
+                                      </div>
+                                      <p className="text-[11px] text-gray-300 leading-relaxed line-clamp-2">
+                                        {highlightText(m.snippet, trimmedQuery)}
+                                      </p>
+                                    </div>
+                                    <ChevronRight className="w-4 h-4 text-cyan-400 shrink-0 mt-1 group-hover:translate-x-0.5 transition-transform" />
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Note personali dell'utente corrispondenti */}
+                    {customUserMatches.length > 0 && (
+                      <div className="space-y-1.5 pt-1 border-t border-white/10">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-amber-300 block px-0.5">
+                          Nel Tuo Diario Personale ({customUserMatches.length})
+                        </span>
+                        <div className="space-y-1.5">
+                          {customUserMatches.map((note) => (
+                            <button
+                              key={note.id}
+                              type="button"
+                              onClick={() => setSelectedNote(note)}
+                              className="w-full text-left p-2.5 rounded-xl bg-black/60 hover:bg-white/[0.07] border border-amber-500/25 flex items-center justify-between gap-2 cursor-pointer"
+                            >
+                              <div className="min-w-0">
+                                <div className="text-xs font-bold text-white truncate">
+                                  {highlightText(note.title, trimmedQuery)}
+                                </div>
+                                <p className="text-[11px] text-gray-300 line-clamp-1">
+                                  {highlightText(note.content, trimmedQuery)}
+                                </p>
+                              </div>
+                              <ChevronRight className="w-4 h-4 text-amber-300 shrink-0" />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      })()}
+
+      {/* ------------------------------------------------------------- */}
       {/* ACCESSO RAPIDO COMPATTO IN ALTO PER APRIRE SUBITO LE NOTE      */}
       {/* ------------------------------------------------------------- */}
       <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 space-y-2">
@@ -1837,7 +2071,7 @@ export const NoteTab: React.FC = () => {
                   <Scissors className="w-3 h-3 text-emerald-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">5 Parti: Mattina • Barba • Info • Guida Definitiva • Strategia</span>
+                <span className="text-[10px] text-gray-400 font-semibold">6 Parti: 5 Guide + 📸 Foto Prima & Dopo</span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-emerald-300 transition-colors uppercase tracking-tight">
@@ -1845,7 +2079,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Massaggio mattutino, metodo diviso per zone, Guida Definitiva (WTG/XTG + salicilico leave-on), differenza tra razor burn immediato e peli incarniti, e strategia pratica per guance alte e brufoli attivi.
+                Massaggio mattutino, metodo diviso per zone, Guida Definitiva, razor burn vs peli incarniti, strategia pelle e <strong className="text-cyan-300">nuovo menu Foto Prima & Dopo</strong> (Laterale Sinistro, Frontale, Laterale Destro) con data/ora automatiche e backup tra telefoni.
               </p>
             </div>
 
@@ -1856,10 +2090,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-emerald-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire la guida sui peli incarniti</span>
+              <span>Tocca per aprire guida & diario foto rasatura</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">5 Parti • Razor Burn & Strategia Pelle</span>
+            <span className="text-[10px] text-gray-400 font-semibold">6 Parti • Foto Prima/Dopo & Backup</span>
           </div>
         </div>
       </div>
@@ -1951,6 +2185,12 @@ export const NoteTab: React.FC = () => {
                 <span className="text-[10px] text-teal-300 font-extrabold bg-teal-500/15 px-2 py-0.5 rounded-md border border-teal-500/30">
                   🌊 Spray Sale Marino
                 </span>
+                <span className="text-[10px] text-violet-300 font-extrabold bg-violet-500/15 px-2 py-0.5 rounded-md border border-violet-500/30">
+                  🧪 Shampoo vs Balsamo
+                </span>
+                <span className="text-[10px] text-blue-300 font-extrabold bg-blue-500/15 px-2 py-0.5 rounded-md border border-blue-500/30">
+                  💦 Spruzzino & Mullet
+                </span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-cyan-300 transition-colors uppercase tracking-tight">
@@ -1958,7 +2198,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Diagnosi reale Tipo 2B, Progresso N° 1 (7 Foto), bacheca 16 foto del Primo Risultato Piega, tutorial Spazzola Sopra & Ciuffo Graffiato, reset del giorno dopo se persa, confronto Taglio a 1 mese (liscio forzato vs mosso 2B) e routine Sea Salt Spray.
+                Diagnosi Tipo 2B, gallerie Progressi (7 &amp; 16 foto), Ciuffo Graffiato, reset giorno dopo, Taglio 1 mese, Sea Salt Spray, scienza Solo Shampoo vs Balsamo e tecnica Spruzzino (saturazione interna + parte dietro mullet).
               </p>
             </div>
 
@@ -1972,7 +2212,7 @@ export const NoteTab: React.FC = () => {
               <span>Tocca per aprire nota, gallerie & novità styling</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-cyan-300 font-bold">1. Progressi → 2. Risultato → 3. Tutorial → 4. Giorno Dopo → 5. Taglio 1 Mese → 6. Spray Sale</span>
+            <span className="text-[10px] text-cyan-300 font-bold">1. Progressi → 6. Spray Sale → 7. Shampoo vs Balsamo → 8. Spruzzino</span>
           </div>
         </div>
       </div>

@@ -21,6 +21,7 @@ import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
 interface GiorniShampooTextureViewProps {
   onBack: () => void;
+  initialTab?: string;
 }
 
 interface RoutineDay {
@@ -109,22 +110,28 @@ const WEEK_DAYS: RoutineDay[] = [
   }
 ];
 
-export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutte' | 'tabella' | 'notti' | 'polverina' | 'refresh'>('tutte');
+export const GiorniShampooTextureView: React.FC<GiorniShampooTextureViewProps> = ({ onBack, initialTab }) => {
+  type ShampooTab = 'tutte' | 'tabella' | 'notti' | 'polverina' | 'refresh';
+  const [activeTab, setActiveTab] = useState<ShampooTab>((initialTab as ShampooTab) || 'tutte');
   const [selectedDayIndex, setSelectedDayIndex] = useState<number | null>(null);
   const noteContentRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectTab = (tab: typeof activeTab) => {
+  const handleSelectTab = (tab: ShampooTab) => {
     setActiveTab(tab);
     if (tab !== 'tutte') {
       scrollToElement(noteContentRef.current, 68);
     }
   };
 
-  // Scroll solo all'apertura della nota (mount)
+  // Scroll all'apertura (o al tab specifico se aperto dalla ricerca)
   React.useEffect(() => {
-    scrollToTop();
-  }, []);
+    if (initialTab && initialTab !== 'tutte') {
+      setActiveTab(initialTab as ShampooTab);
+      setTimeout(() => scrollToElement(noteContentRef.current, 68), 80);
+    } else {
+      scrollToTop();
+    }
+  }, [initialTab]);
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">

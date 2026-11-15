@@ -25,10 +25,11 @@ import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
 interface DiabeteGlicemiaPalestraViewProps {
   onBack: () => void;
+  initialTab?: string;
 }
 
-export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<
+export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewProps> = ({ onBack, initialTab }) => {
+  type DiabeteTab =
     | 'tutta'
     | 'brucia_grassi'
     | 'bustine_spuntino'
@@ -42,11 +43,12 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
     | 'notte'
     | 'colazione'
     | 'succo'
-    | 'protocollo'
-  >('tutta');
+    | 'protocollo';
+
+  const [activeTab, setActiveTab] = useState<DiabeteTab>((initialTab as DiabeteTab) || 'tutta');
   const noteContentRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectTab = (tab: typeof activeTab, toggleIfActive = false) => {
+  const handleSelectTab = (tab: DiabeteTab, toggleIfActive = false) => {
     const nextTab = toggleIfActive && activeTab === tab ? 'tutta' : tab;
     setActiveTab(nextTab);
     if (nextTab !== 'tutta') {
@@ -54,10 +56,15 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
     }
   };
 
-  // Scroll solo all'apertura della nota (mount)
+  // Scroll all'apertura (o al tab specifico se aperto dalla ricerca)
   useEffect(() => {
-    scrollToTop();
-  }, []);
+    if (initialTab && initialTab !== 'tutta') {
+      setActiveTab(initialTab as DiabeteTab);
+      setTimeout(() => scrollToElement(noteContentRef.current, 68), 80);
+    } else {
+      scrollToTop();
+    }
+  }, [initialTab]);
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">

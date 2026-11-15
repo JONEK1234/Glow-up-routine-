@@ -20,29 +20,46 @@ import {
   BookOpen,
   Ban,
   Compass,
-  Moon
+  Moon,
+  Camera
 } from 'lucide-react';
 import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
+import { ShavingPhotoTrackerSection } from './ShavingPhotoTrackerSection';
+
+export type PeliIncarnitiTabId =
+  | 'tutte'
+  | 'mattina'
+  | 'barba'
+  | 'informazioni'
+  | 'metodo_diviso'
+  | 'razor_burn_strategia'
+  | 'foto_rasatura';
 
 interface PeliIncarnitiVisoViewProps {
   onBack: () => void;
+  initialTab?: PeliIncarnitiTabId;
 }
 
-export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ onBack }) => {
-  const [activeTab, setActiveTab] = useState<'tutte' | 'mattina' | 'barba' | 'informazioni' | 'metodo_diviso' | 'razor_burn_strategia'>('tutte');
+export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ onBack, initialTab }) => {
+  const [activeTab, setActiveTab] = useState<PeliIncarnitiTabId>(initialTab || 'tutte');
   const noteContentRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectTab = (tab: typeof activeTab) => {
+  const handleSelectTab = (tab: PeliIncarnitiTabId) => {
     setActiveTab(tab);
     if (tab !== 'tutte') {
       scrollToElement(noteContentRef.current, 68);
     }
   };
 
-  // Scroll solo all'apertura della nota (mount)
+  // Scroll all'apertura (o al tab specifico se aperto dalla ricerca)
   React.useEffect(() => {
-    scrollToTop();
-  }, []);
+    if (initialTab && initialTab !== 'tutte') {
+      setActiveTab(initialTab);
+      setTimeout(() => scrollToElement(noteContentRef.current, 68), 80);
+    } else {
+      scrollToTop();
+    }
+  }, [initialTab]);
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">
@@ -56,10 +73,18 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
           <ArrowLeft className="w-4 h-4" />
           <span>Tutte le Note</span>
         </button>
-        <span className="text-[11px] font-bold text-emerald-300 bg-emerald-500/10 px-3 py-1 rounded-xl border border-emerald-500/20 flex items-center gap-1.5">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-          Skincare & Rasatura
-        </span>
+        <button
+          type="button"
+          onClick={() => handleSelectTab(activeTab === 'foto_rasatura' ? 'tutte' : 'foto_rasatura')}
+          className={`flex items-center space-x-1.5 py-2 px-3 rounded-2xl text-xs font-extrabold border transition-all active:scale-95 cursor-pointer ${
+            activeTab === 'foto_rasatura'
+              ? 'bg-cyan-400 text-black border-cyan-300 shadow-neon'
+              : 'bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border-cyan-500/35'
+          }`}
+        >
+          <Camera className="w-3.5 h-3.5" />
+          <span>Foto Prima/Dopo</span>
+        </button>
       </div>
 
       {/* Hero Header Card */}
@@ -77,7 +102,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
         </h1>
 
         <p className="text-xs text-gray-300 leading-relaxed font-medium">
-          Guida pratica e strutturata divisa in 5 parti: massaggio mattutino preparatorio, routine completa per la rasatura della barba a prova di irritazioni, informazioni sui tempi reali di guarigione e turnover cellulare della pelle, metodo diviso per zone con Guida Definitiva, e riconoscimento del razor burn immediato con strategia pratica per guance alte e brufoli attivi.
+          Guida pratica e diario fotografico in 6 parti: massaggio mattutino, routine completa di rasatura, tempi reali di guarigione, metodo diviso per zone con Guida Definitiva, riconoscimento del razor burn immediato e <strong className="text-cyan-300">menu Foto Prima & Dopo ogni rasatura</strong> (Laterale Sinistro, Frontale, Laterale Destro) con salvataggio sul telefono e backup tra dispositivi.
         </p>
 
         {/* Tab Filters */}
@@ -91,7 +116,19 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
                 : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
             }`}
           >
-            Tutte le 5 Parti
+            Tutte le 5 Guide
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSelectTab('foto_rasatura')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'foto_rasatura'
+                ? 'bg-cyan-400 text-black shadow-md shadow-cyan-400/30 font-black'
+                : 'bg-cyan-500/15 text-cyan-300 hover:text-white border border-cyan-500/35'
+            }`}
+          >
+            <Camera className="w-3.5 h-3.5" />
+            6. Foto Prima & Dopo
           </button>
           <button
             type="button"
@@ -1228,6 +1265,38 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 6: MENU FOTO PRIMA & DOPO OGNI RASATURA               */}
+      {/* ============================================================= */}
+      {activeTab === 'foto_rasatura' && <ShavingPhotoTrackerSection />}
+
+      {activeTab === 'tutte' && (
+        <div
+          onClick={() => handleSelectTab('foto_rasatura')}
+          className="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-cyan-950/60 via-black/85 to-emerald-950/50 border-2 border-cyan-400/60 hover:border-cyan-300 cursor-pointer transition-all flex items-center justify-between gap-3 active:scale-[0.98]"
+        >
+          <div className="flex items-center gap-3">
+            <span className="p-2.5 rounded-2xl bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shrink-0">
+              <Camera className="w-5 h-5" />
+            </span>
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-wider text-cyan-300 block">
+                Parte 6 • Nuovo Menu Interattivo
+              </span>
+              <h3 className="text-sm font-black text-white">
+                Foto Prima & Dopo Ogni Rasatura (Sinistro · Frontale · Destro)
+              </h3>
+              <p className="text-[11px] text-gray-300 mt-0.5">
+                Carica le foto dal telefono con giorno/ora automatici, vedi le differenze e fai il backup tra telefoni.
+              </p>
+            </div>
+          </div>
+          <span className="px-3 py-2 rounded-xl bg-cyan-400 text-black font-black text-xs shrink-0">
+            Apri Foto
+          </span>
         </div>
       )}
 
