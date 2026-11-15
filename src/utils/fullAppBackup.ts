@@ -11,7 +11,9 @@ export interface FullAppBackupBundle {
 
 export interface BackupSummaryStats {
   hasStartDate: boolean;
+  startDateIso: string | null;
   startDateFormatted: string | null;
+  daysElapsed: number;
   streakDays: number;
   userNotesCount: number;
   shavingSessionsCount: number;
@@ -20,21 +22,69 @@ export interface BackupSummaryStats {
   hasPosturePhotos: boolean;
 }
 
+export function parseLocalDateFromIso(startIso: string | null): Date | null {
+  if (!startIso) return null;
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(startIso.trim());
+  let d: Date;
+  if (match) {
+    d = new Date(parseInt(match[1], 10), parseInt(match[2], 10) - 1, parseInt(match[3], 10));
+  } else {
+    d = new Date(startIso);
+  }
+  if (Number.isNaN(d.getTime())) return null;
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+export function formatDateItFromIso(startIso: string | null): string | null {
+  const d = parseLocalDateFromIso(startIso);
+  if (!d) return null;
+  return d.toLocaleDateString('it-IT', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+}
+
+export function calcDaysElapsedFromIso(startIso: string | null): number {
+  const start = parseLocalDateFromIso(startIso);
+  if (!start) return 1;
+
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  today.setHours(0, 0, 0, 0);
+
+  const diffTime = today.getTime() - start.getTime();
+  const days = Math.floor(diffTime / (1000 * 3600 * 24)) + 1;
+  return days > 0 ? days : 1;
+}
+
+export function calcStartIsoFromDaysElapsed(daysCount: number): string {
+  const safeDays = Math.max(1, Math.min(36500, Math.floor(daysCount) || 1));
+  const now = new Date();
+  const target = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (safeDays - 1));
+  const year = target.getFullYear();
+  const month = String(target.getMonth() + 1).padStart(2, '0');
+  const day = String(target.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+export function notifyAppDataUpdated(): void {
+  if (typeof window === 'undefined') return;
+  try {
+    window.dispatchEvent(new Event('glowup-data-restored'));
+    window.dispatchEvent(new Event('storage'));
+  } catch {
+    // ignore
+  }
+}
+
 export const fullAppBackup = {
   getCurrentStats: async (): Promise<BackupSummaryStats> => {
     const startIso =
       typeof window !== 'undefined' ? window.localStorage.getItem('glowup_ordine_start_date_v1') : null;
-    let startDateFormatted: string | null = null;
-    if (startIso) {
-      const d = new Date(startIso);
-      if (!Number.isNaN(d.getTime())) {
-        startDateFormatted = d.toLocaleDateString('it-IT', {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric'
-        });
-      }
-    }
+    const startDateFormatted = formatDateItFromIso(startIso);
+    const daysElapsed = calcDaysElapsedFromIso(startIso);
 
     const streakRaw =
       typeof window !== 'undefined' ? window.localStorage.getItem('glowup_streak_v1') : null;
@@ -89,7 +139,9 @@ export const fullAppBackup = {
 
     return {
       hasStartDate: Boolean(startIso),
+      startDateIso: startIso,
       startDateFormatted,
+      daysElapsed,
       streakDays,
       userNotesCount,
       shavingSessionsCount: shavingSessions.length,
@@ -136,6 +188,8 @@ export const fullAppBackup = {
     localStorageKeysRestored: number;
     shavingSessionsRestored: number;
     shavingPhotosRestored: number;
+    restoredDaysElapsed: number;
+    restoredStartDateFormatted: string | null;
   }> => {
     const parsed = JSON.parse(rawText);
 
@@ -171,11 +225,20 @@ export const fullAppBackup = {
         );
       }
 
+      const startIso =
+        typeof window !== 'undefined' ? window.localStorage.getItem('glowup_ordine_start_date_v1') : null;
+      const restoredDaysElapsed = calcDaysElapsedFromIso(startIso);
+      const restoredStartDateFormatted = formatDateItFromIso(startIso);
+
+      notifyAppDataUpdated();
+
       return {
         type: 'full',
         localStorageKeysRestored: keysRestored,
         shavingSessionsRestored,
-        shavingPhotosRestored
+        shavingPhotosRestored,
+        restoredDaysElapsed,
+        restoredStartDateFormatted
       };
     }
 
@@ -183,6 +246,11 @@ export const fullAppBackup = {
     const shavingOnlySessions = shavingPhotoDb.parseBackupFileContent(rawText);
     await shavingPhotoDb.importSessions(shavingOnlySessions);
     await shavingPhotoDb.requestPersistentStorage();
+    const startIso =
+      typeof window !== 'undefined' ? window.localStorage.getItem('glowup_ordine_start_date_v1') : null;
+
+    notifyAppDataUpdated();
+
     return {
       type: 'shaving-only',
       localStorageKeysRestored: 0,
@@ -190,7 +258,9 @@ export const fullAppBackup = {
       shavingPhotosRestored: shavingOnlySessions.reduce(
         (acc, s) => acc + shavingPhotoDb.countPhotos(s),
         0
-      )
+      ),
+      restoredDaysElapsed: calcDaysElapsedFromIso(startIso),
+      restoredStartDateFormatted: formatDateItFromIso(startIso)
     };
   }
 };

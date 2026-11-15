@@ -50,6 +50,16 @@ export const HomeRoutineTab: React.FC<HomeRoutineTabProps> = ({ onDataRestored }
 
   useEffect(() => {
     refreshBackupStats();
+    const handleExternalDataChange = () => {
+      setWater(storageHelper.getWaterLog());
+      refreshBackupStats();
+    };
+    window.addEventListener('glowup-data-restored', handleExternalDataChange);
+    window.addEventListener('storage', handleExternalDataChange);
+    return () => {
+      window.removeEventListener('glowup-data-restored', handleExternalDataChange);
+      window.removeEventListener('storage', handleExternalDataChange);
+    };
   }, []);
 
   // Save water updates
@@ -129,7 +139,9 @@ export const HomeRoutineTab: React.FC<HomeRoutineTabProps> = ({ onDataRestored }
       if (result.type === 'full') {
         showBackupToast(
           'success',
-          `Tutti i dati caricati su questo telefono! Ripristinati data di inizio, streak, note, checklist (${result.localStorageKeysRestored} blocchi) e ${result.shavingPhotosRestored} foto rasatura.`
+          `Dati caricati! Giorno aggiornato a ${result.restoredDaysElapsed}D (Inizio: ${
+            result.restoredStartDateFormatted || 'Oggi'
+          }), ${result.localStorageKeysRestored} blocchi e ${result.shavingPhotosRestored} foto rasatura.`
         );
       } else {
         showBackupToast(
@@ -716,11 +728,14 @@ export const HomeRoutineTab: React.FC<HomeRoutineTabProps> = ({ onDataRestored }
 
         {backupStats && (
           <div className="flex flex-wrap gap-1.5 text-[10px] font-bold">
+            <span className="px-2 py-1 rounded-lg bg-[#00FFD1]/10 border border-[#00FFD1]/30 text-cyan-200">
+              Giorno: <strong className="text-[#00FFD1] font-mono">{backupStats.daysElapsed}D</strong>
+            </span>
             <span className="px-2 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-300">
               Inizio: <strong className="text-white">{backupStats.startDateFormatted || 'Oggi'}</strong>
             </span>
             <span className="px-2 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-300">
-              Streak: <strong className="text-cyan-300">{backupStats.streakDays}g</strong>
+              Checklist Streak: <strong className="text-cyan-300">{backupStats.streakDays}g</strong>
             </span>
             <span className="px-2 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-300">
               Foto Rasature: <strong className="text-emerald-300">{backupStats.shavingPhotosCount}</strong>

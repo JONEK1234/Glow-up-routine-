@@ -1,26 +1,41 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Flame, Calendar, Clock, Rocket, Zap, PartyPopper, RotateCcw, X, Info, AlertTriangle, Check } from 'lucide-react';
+import { Flame, Calendar, Clock, Rocket, Zap, PartyPopper, RotateCcw, X, AlertTriangle, Check, Edit3 } from 'lucide-react';
 import { storageHelper } from '../utils/storage';
+import {
+  calcDaysElapsedFromIso,
+  calcStartIsoFromDaysElapsed,
+  notifyAppDataUpdated,
+  parseLocalDateFromIso
+} from '../utils/fullAppBackup';
 
 interface HeaderBarProps {
   streak: number;
+  dataRefreshKey?: number;
 }
 
-export const HeaderBar: React.FC<HeaderBarProps> = () => {
+export const HeaderBar: React.FC<HeaderBarProps> = ({ dataRefreshKey = 0 }) => {
   const [startDate, setStartDate] = useState<string | null>(() => storageHelper.getOrdineStartDate());
   const [showStartModal, setShowStartModal] = useState<boolean>(false);
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const [showResetConfirm, setShowResetConfirm] = useState<boolean>(false);
   const [justReset, setJustReset] = useState<boolean>(false);
+  const [manualDayInput, setManualDayInput] = useState<string>('');
+  const [manualDateInput, setManualDateInput] = useState<string>('');
+  const [manualSavedNotice, setManualSavedNotice] = useState<string | null>(null);
 
-  // Poll/sync start date from storage periodically or on focus
+  // Sync start date on same-tab restores, cross-tab storage changes, and prop refresh keys
   useEffect(() => {
-    const handleStorageChange = () => {
+    const syncStartDate = () => {
       setStartDate(storageHelper.getOrdineStartDate());
     };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+    syncStartDate();
+    window.addEventListener('storage', syncStartDate);
+    window.addEventListener('glowup-data-restored', syncStartDate);
+    return () => {
+      window.removeEventListener('storage', syncStartDate);
+      window.removeEventListener('glowup-data-restored', syncStartDate);
+    };
+  }, [dataRefreshKey]);
 
   // Today formatted text
   const todayFormatted = useMemo(() => {
@@ -41,34 +56,29 @@ export const HeaderBar: React.FC<HeaderBarProps> = () => {
 
   // Calculate elapsed days starting from 1D
   const daysElapsed = useMemo(() => {
-    if (!startDate) return 1;
-    const parts = startDate.split('-');
-    let start: Date;
-    if (parts.length === 3) {
-      start = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-    } else {
-      start = new Date(startDate);
-    }
-    start.setHours(0, 0, 0, 0);
-
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    today.setHours(0, 0, 0, 0);
-
-    const diffTime = today.getTime() - start.getTime();
-    const days = Math.floor(diffTime / (1000 * 3600 * 24)) + 1;
-    return days > 0 ? days : 1;
+    return calcDaysElapsedFromIso(startDate);
   }, [startDate]);
+
+  useEffect(() => {
+    if (showInfoModal) {
+      setManualDayInput(String(daysElapsed));
+      const parsed = parseLocalDateFromIso(startDate);
+      if (parsed) {
+        const y = parsed.getFullYear();
+        const m = String(parsed.getMonth() + 1).padStart(2, '0');
+        const d = String(parsed.getDate()).padStart(2, '0');
+        setManualDateInput(`${y}-${m}-${d}`);
+      } else {
+        setManualDateInput(getTodayIso());
+      }
+      setManualSavedNotice(null);
+    }
+  }, [showInfoModal, daysElapsed, startDate]);
 
   const formatStartDateText = (startIso: string | null): string => {
     if (!startIso) return 'Non ancora avviato';
-    const parts = startIso.split('-');
-    let dateObj: Date;
-    if (parts.length === 3) {
-      dateObj = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-    } else {
-      dateObj = new Date(startIso);
-    }
+    const dateObj = parseLocalDateFromIso(startIso);
+    if (!dateObj) return 'Non ancora avviato';
     return dateObj.toLocaleDateString('it-IT', {
       day: 'numeric',
       month: 'long',
@@ -76,19 +86,20 @@ export const HeaderBar: React.FC<HeaderBarProps> = () => {
     });
   };
 
-  const getTodayIso = () => {
+  function getTodayIso() {
     const now = new Date();
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, '0');
     const day = String(now.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
-  };
+  }
 
   const handle1DClick = () => {
     if (!startDate) {
       const todayIso = getTodayIso();
       storageHelper.saveOrdineStartDate(todayIso);
       setStartDate(todayIso);
+      notifyAppDataUpdated();
     }
     setJustReset(false);
     setShowStartModal(true);
@@ -102,11 +113,29 @@ export const HeaderBar: React.FC<HeaderBarProps> = () => {
     setShowInfoModal(false);
     setJustReset(true);
     setShowStartModal(true);
+    notifyAppDataUpdated();
+  };
 
-    // Notify other components if needed
-    try {
-      window.dispatchEvent(new Event('storage'));
-    } catch (e) {}
+  const handleApplyManualDay = (e: React.FormEvent) => {
+    e.preventDefault();
+    const parsedDay = parseInt(manualDayInput, 10);
+    if (Number.isNaN(parsedDay) || parsedDay < 1) return;
+    const computedStartIso = calcStartIsoFromDaysElapsed(parsedDay);
+    storageHelper.saveOrdineStartDate(computedStartIso);
+    setStartDate(computedStartIso);
+    setManualDateInput(computedStartIso);
+    setManualSavedNotice(`Giorno impostato su ${parsedDay}D!`);
+    notifyAppDataUpdated();
+  };
+
+  const handleApplyManualDate = () => {
+    if (!manualDateInput) return;
+    storageHelper.saveOrdineStartDate(manualDateInput);
+    setStartDate(manualDateInput);
+    const updatedDays = calcDaysElapsedFromIso(manualDateInput);
+    setManualDayInput(String(updatedDays));
+    setManualSavedNotice(`Data salvata! Contatore: ${updatedDays}D`);
+    notifyAppDataUpdated();
   };
 
   return (
@@ -236,7 +265,7 @@ export const HeaderBar: React.FC<HeaderBarProps> = () => {
       {/* MODAL 2: START DATE INFO MODAL (Replaces Console) */}
       {showInfoModal && (
         <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-in zoom-in-95 fade-in duration-200">
-          <div className="w-full max-w-sm glass-card p-6 rounded-3xl border border-[#00FFD1]/40 shadow-2xl relative overflow-hidden space-y-4">
+          <div className="w-full max-w-sm max-h-[90vh] overflow-y-auto glass-card p-5 rounded-3xl border border-[#00FFD1]/40 shadow-2xl relative space-y-4">
             <button
               onClick={() => setShowInfoModal(false)}
               className="absolute top-3 right-3 p-2 rounded-full bg-white/10 text-gray-300 hover:text-white"
@@ -285,6 +314,66 @@ export const HeaderBar: React.FC<HeaderBarProps> = () => {
                   {daysElapsed}D ({daysElapsed} {daysElapsed === 1 ? 'giorno completato' : 'giorni completati'})
                 </p>
               </div>
+            </div>
+
+            {/* MANUAL ANCHOR EDITOR: IMPOSTA GIORNO (ES. 61D) O DATA INIZIO */}
+            <div className="p-3.5 rounded-2xl bg-cyan-950/25 border border-cyan-500/30 space-y-3 text-left">
+              <div className="flex items-center gap-1.5 text-[11px] font-black text-cyan-300 uppercase tracking-wider">
+                <Edit3 className="w-3.5 h-3.5" />
+                <span>Modifica Giorno o Data Inizio</span>
+              </div>
+
+              <form onSubmit={handleApplyManualDay} className="space-y-1.5">
+                <label className="text-[10px] text-gray-300 font-semibold block">
+                  Imposta giorno attuale (es. 61 per 61D):
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    min={1}
+                    max={36500}
+                    value={manualDayInput}
+                    onChange={(e) => setManualDayInput(e.target.value)}
+                    placeholder="Es. 61"
+                    className="flex-1 min-w-0 py-2 px-3 rounded-xl bg-black/60 border border-white/15 text-white text-xs font-mono font-bold focus:outline-none focus:border-[#00FFD1]"
+                  />
+                  <button
+                    type="submit"
+                    className="py-2 px-3 rounded-xl bg-[#00FFD1] hover:bg-[#00FFD1]/90 text-black font-black text-xs transition-all active:scale-95 cursor-pointer shrink-0 min-h-[38px]"
+                  >
+                    Imposta
+                  </button>
+                </div>
+              </form>
+
+              <div className="space-y-1.5 pt-2 border-t border-white/10">
+                <label className="text-[10px] text-gray-300 font-semibold block">
+                  Oppure scegli la data di inizio esatta:
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="date"
+                    value={manualDateInput}
+                    max={getTodayIso()}
+                    onChange={(e) => setManualDateInput(e.target.value)}
+                    className="flex-1 min-w-0 py-2 px-2.5 rounded-xl bg-black/60 border border-white/15 text-white text-xs focus:outline-none focus:border-[#00FFD1]"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleApplyManualDate}
+                    className="py-2 px-3 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-200 border border-cyan-400/40 font-black text-xs transition-all active:scale-95 cursor-pointer shrink-0 min-h-[38px]"
+                  >
+                    Salva Data
+                  </button>
+                </div>
+              </div>
+
+              {manualSavedNotice && (
+                <div className="flex items-center gap-1.5 text-[11px] font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-500/40 rounded-xl px-2.5 py-1.5">
+                  <Check className="w-3.5 h-3.5 shrink-0" />
+                  <span>{manualSavedNotice}</span>
+                </div>
+              )}
             </div>
 
             <div className="space-y-2 pt-1">
