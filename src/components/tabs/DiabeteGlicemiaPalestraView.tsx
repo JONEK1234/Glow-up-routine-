@@ -35,6 +35,9 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
     | 'correggi_vs_non'
     | 'guida_iperglicemia'
     | 'variabilita_glicemica'
+    | 'onda_lunga'
+    | 'calcolo_insulina'
+    | 'calcoli_importanti'
     | 'palestra'
     | 'notte'
     | 'colazione'
@@ -70,6 +73,34 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
         </button>
 
         <div className="flex items-center space-x-1.5 overflow-x-auto no-scrollbar py-0.5">
+          {/* Tasto Rapido ★ IMPORTANTE: Calcolo Insulina */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('calcolo_insulina', true)}
+            className={`flex items-center space-x-1 py-1.5 px-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'calcolo_insulina'
+                ? 'bg-gradient-to-r from-yellow-300 via-amber-400 to-cyan-300 text-black border-yellow-200 shadow-neon'
+                : 'bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 border-yellow-400/50'
+            }`}
+          >
+            <Sparkles className="w-3 h-3" />
+            <span>{activeTab === 'calcolo_insulina' ? 'Chiudi' : '★ Calcolo Insulina'}</span>
+          </button>
+
+          {/* Tasto Rapido ⚡ Solo Calcoli Importanti */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('calcoli_importanti', true)}
+            className={`flex items-center space-x-1 py-1.5 px-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'calcoli_importanti'
+                ? 'bg-gradient-to-r from-cyan-400 to-emerald-400 text-black border-cyan-300 shadow-neon'
+                : 'bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border-cyan-400/50'
+            }`}
+          >
+            <Zap className="w-3 h-3" />
+            <span>{activeTab === 'calcoli_importanti' ? 'Chiudi' : 'Solo Calcoli'}</span>
+          </button>
+
           {/* Tasto Rapido Nota 2 */}
           <button
             type="button"
@@ -139,6 +170,20 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
             <Activity className="w-3 h-3" />
             <span>{activeTab === 'variabilita_glicemica' ? 'Chiudi' : 'Nota 6: Variabilità & Insulina'}</span>
           </button>
+
+          {/* Tasto Rapido Nota 7 */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('onda_lunga', true)}
+            className={`flex items-center space-x-1 py-1.5 px-2 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'onda_lunga'
+                ? 'bg-gradient-to-r from-orange-400 to-amber-400 text-black border-orange-300 shadow-neon'
+                : 'bg-orange-500/15 hover:bg-orange-500/25 text-orange-300 border-orange-500/30'
+            }`}
+          >
+            <Clock className="w-3 h-3" />
+            <span>{activeTab === 'onda_lunga' ? 'Chiudi' : 'Nota 7: Onda Lunga 3h'}</span>
+          </button>
         </div>
       </div>
 
@@ -160,8 +205,72 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           Analisi completa e scientifica su cosa accade nel corpo dopo la palestra serale: assorbimento del glicogeno, effetto "spugna" per 12-24 ore, distinzione tra Fenomeno dell'Alba ed Effetto Somogyi (il crollo notturno con rimbalzo a 120 e 180), l'errore del succo di frutta e le colazioni strategiche per stabilizzare i livelli.
         </p>
 
-        {/* Griglia Card Rapide per le 4 Note Speciali */}
+        {/* Griglia Card Rapide per le Note Speciali */}
         <div className="pt-1 space-y-2.5">
+          {/* BOX IMPORTANTE IN PRIMO PIANO: CALCOLO INSULINA + TASTO SOLO CALCOLI */}
+          <div
+            className={`p-3.5 rounded-2xl border-2 transition-all space-y-2.5 ${
+              activeTab === 'calcolo_insulina' || activeTab === 'calcoli_importanti'
+                ? 'bg-gradient-to-r from-yellow-950/80 via-cyan-950/60 to-black/90 border-yellow-400 shadow-[0_0_25px_rgba(250,204,21,0.28)]'
+                : 'bg-gradient-to-r from-yellow-950/40 via-amber-950/30 to-cyan-950/30 border-yellow-400/60 hover:border-yellow-300 shadow-[0_0_20px_rgba(250,204,21,0.15)]'
+            }`}
+          >
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+              <div
+                onClick={() => handleSelectTab('calcolo_insulina', true)}
+                className="flex items-center space-x-2.5 cursor-pointer group flex-1"
+              >
+                <div className="p-2.5 rounded-xl bg-yellow-400/20 text-yellow-300 border border-yellow-400/40 group-hover:scale-105 transition-transform shrink-0">
+                  <Sparkles className="w-5 h-5 text-yellow-300" />
+                </div>
+                <div>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-yellow-400 text-black">
+                      ★ IMPORTANTE
+                    </span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-extrabold border border-cyan-500/40">
+                      Microinfusore • 40–45 U/die
+                    </span>
+                  </div>
+                  <h4 className="text-xs sm:text-sm font-black text-white group-hover:text-yellow-200 transition-colors mt-0.5">
+                    Calcolo Insulina: Rapporto I:C (1:11–12), Regola 500 &amp; 1800 (40–45)
+                  </h4>
+                  <p className="text-[10px] text-gray-300">
+                    Formula carboidrati, fattore di correzione reale dai tuoi grafici e variazioni palestra/cordon bleu
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1.5 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => handleSelectTab('calcoli_importanti', true)}
+                  className={`px-3 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider transition-all active:scale-95 cursor-pointer flex items-center gap-1.5 border ${
+                    activeTab === 'calcoli_importanti'
+                      ? 'bg-cyan-400 text-black border-cyan-200 shadow-neon ring-2 ring-cyan-300/50'
+                      : 'bg-cyan-500/20 hover:bg-cyan-400 hover:text-black text-cyan-300 border-cyan-400/50'
+                  }`}
+                >
+                  <Zap className="w-3.5 h-3.5" />
+                  <span>{activeTab === 'calcoli_importanti' ? 'Chiudi Solo Calcoli' : 'Solo Calcoli'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleSelectTab('calcolo_insulina', true)}
+                  className={`px-3 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider transition-all active:scale-95 cursor-pointer flex items-center gap-1 ${
+                    activeTab === 'calcolo_insulina'
+                      ? 'bg-red-500/25 text-red-200 border border-red-400/40'
+                      : 'bg-yellow-400 hover:bg-yellow-300 text-black shadow-neon'
+                  }`}
+                >
+                  <span>{activeTab === 'calcolo_insulina' ? 'Chiudi' : 'Apri Nota'}</span>
+                  {activeTab === 'calcolo_insulina' ? <X className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {/* Card Nota 2: Brucia-Grassi (80-90 mg/dL) */}
             <button
@@ -360,6 +469,45 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
               {activeTab === 'variabilita_glicemica' ? <X className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
             </div>
           </button>
+
+          {/* Card Nota 7: Picco Ritardato "Onda Lunga" (Grassi, Impanati & Cordon Bleu) */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('onda_lunga', true)}
+            className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+              activeTab === 'onda_lunga'
+                ? 'bg-gradient-to-r from-orange-950/90 via-amber-950/70 to-black/90 border-orange-400 shadow-neon ring-2 ring-orange-400/30'
+                : 'bg-gradient-to-r from-orange-950/40 via-amber-950/30 to-black/70 border-orange-500/40 hover:border-orange-400'
+            }`}
+          >
+            <div className="flex items-center space-x-2.5">
+              <div className="p-2 rounded-xl bg-orange-500/20 text-orange-300 border border-orange-500/30 group-hover:scale-105 transition-transform shrink-0">
+                <Clock className="w-4 h-4 text-orange-400" />
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-orange-400 block">
+                    {activeTab === 'onda_lunga' ? '✓ Attiva' : 'Nota 7'}
+                  </span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-orange-500/20 text-orange-300 font-extrabold border border-orange-500/40">
+                    Picco 3h (280 mg/dL)
+                  </span>
+                </div>
+                <h4 className="text-xs font-black text-white group-hover:text-orange-200 transition-colors">
+                  Picco Ritardato "Onda Lunga": Cordon Bleu, Patate &amp; Impanati
+                </h4>
+                <p className="text-[10px] text-gray-400">Controllo spia a 3 ore, errore 10 UI subito, micro-correzione &amp; bolo sdoppiato</p>
+              </div>
+            </div>
+            <div className={`flex items-center space-x-1 text-[11px] font-black px-2.5 py-1.5 rounded-xl shrink-0 transition-all ${
+              activeTab === 'onda_lunga'
+                ? 'bg-red-500/20 text-red-300 border border-red-500/30'
+                : 'bg-orange-400 text-black shadow-neon'
+            }`}>
+              <span>{activeTab === 'onda_lunga' ? 'Chiudi' : 'Apri'}</span>
+              {activeTab === 'onda_lunga' ? <X className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
+            </div>
+          </button>
         </div>
 
         {/* Tab Filters */}
@@ -374,6 +522,33 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
             }`}
           >
             Tutta la Guida
+          </button>
+
+          {/* TAB IMPORTANTE: CALCOLO INSULINA & SOLO CALCOLI */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('calcolo_insulina', true)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'calcolo_insulina'
+                ? 'bg-gradient-to-r from-yellow-300 to-amber-400 text-black shadow-neon ring-2 ring-yellow-300'
+                : 'bg-yellow-500/20 text-yellow-300 hover:text-white border border-yellow-400/50'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>★ IMPORTANTE: Calcolo Insulina</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleSelectTab('calcoli_importanti', true)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'calcoli_importanti'
+                ? 'bg-gradient-to-r from-cyan-400 to-emerald-400 text-black shadow-neon ring-2 ring-cyan-300'
+                : 'bg-cyan-500/20 text-cyan-300 hover:text-white border border-cyan-400/50'
+            }`}
+          >
+            <Zap className="w-3.5 h-3.5" />
+            <span>⚡ Solo Calcoli Importanti</span>
           </button>
 
           {/* TAB NOTA 2 */}
@@ -446,6 +621,20 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
             <span>Nota 6: Variabilità &amp; Dimagrimento</span>
           </button>
 
+          {/* TAB NOTA 7 */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('onda_lunga', true)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'onda_lunga'
+                ? 'bg-gradient-to-r from-orange-400 to-amber-400 text-black shadow-neon font-black ring-2 ring-orange-300'
+                : 'bg-orange-500/20 text-orange-300 hover:text-white border border-orange-500/40'
+            }`}
+          >
+            <Clock className="w-3.5 h-3.5 text-orange-400" />
+            <span>Nota 7: Onda Lunga (3 Ore)</span>
+          </button>
+
           <button
             type="button"
             onClick={() => handleSelectTab('palestra')}
@@ -510,6 +699,345 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
       </div>
 
       <div ref={noteContentRef} className="scroll-mt-16" />
+
+      {/* ============================================================= */}
+      {/* VISTA RAPIDA: SOLO I CALCOLI IMPORTANTI (1 CLICK)             */}
+      {/* ============================================================= */}
+      {activeTab === 'calcoli_importanti' && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex flex-wrap items-center justify-between gap-2 pl-1 border-b border-cyan-400/30 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-400/40">
+                <Zap className="w-4 h-4 text-cyan-300" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
+                  <span className="px-1.5 py-0.5 rounded bg-yellow-400 text-black font-black">★ IMPORTANTE</span>
+                  Schermata Rapida • Solo Numeri &amp; Formule
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  ⚡ Solo Calcoli Importanti Insulina (Microinfusore)
+                </h2>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => handleSelectTab('calcolo_insulina')}
+                className="py-1.5 px-2.5 rounded-xl bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-200 border border-yellow-400/40 text-[11px] font-bold transition-all active:scale-95 cursor-pointer"
+              >
+                Spiegazione Completa
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('tutta')}
+                className="flex items-center space-x-1 py-1.5 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-[11px] font-bold transition-all active:scale-95 cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Tutta la Guida</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-cyan-400/60 space-y-4 bg-gradient-to-br from-cyan-950/40 via-black/90 to-yellow-950/25 shadow-[0_0_30px_rgba(34,211,238,0.22)]">
+            {/* 3 Numeri Chiave dai Grafici Reali */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <div className="p-3.5 rounded-2xl bg-black/75 border border-yellow-400/45 space-y-1">
+                <span className="text-[10px] font-black uppercase tracking-wider text-yellow-300 block">
+                  1. Insulina Totale Media
+                </span>
+                <div className="text-xl font-black text-white font-mono">40–45 U/die</div>
+                <p className="text-[11px] text-gray-300 leading-snug">
+                  Basale + Bolo (display: 45U, 40.6U, 41.4U, 50.7U • Peso: <strong className="text-white">75 kg</strong>).
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-black/75 border border-cyan-400/50 space-y-1">
+                <span className="text-[10px] font-black uppercase tracking-wider text-cyan-300 block">
+                  2. Rapporto I:C (ICR) • Regola 500
+                </span>
+                <div className="text-xl font-black text-cyan-300 font-mono">~1 : 11 / 12</div>
+                <p className="text-[11px] text-gray-200 leading-snug">
+                  <strong className="text-white">1 U rapida</strong> copre circa <strong className="text-cyan-300">11–12 g</strong> di carboidrati (<code className="text-cyan-200">500 ÷ 40–45</code>).
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-black/75 border border-emerald-400/50 space-y-1">
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-300 block">
+                  3. Fattore Correzione • Regola 1800
+                </span>
+                <div className="text-xl font-black text-emerald-300 font-mono">~40–45 mg/dL</div>
+                <p className="text-[11px] text-gray-200 leading-snug">
+                  <strong className="text-white">1 U rapida</strong> abbassa di <strong className="text-emerald-300">40–45 mg/dL</strong> (<code className="text-emerald-200">1800 ÷ 40–45</code>).
+                </p>
+              </div>
+            </div>
+
+            {/* Formule Pratiche Immediate */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-4 rounded-2xl bg-cyan-950/35 border border-cyan-400/40 space-y-2">
+                <span className="text-xs font-black uppercase tracking-wider text-cyan-300 block">
+                  Formula Pasto (Carboidrati)
+                </span>
+                <div className="p-2.5 rounded-xl bg-black/80 border border-cyan-500/30 font-mono text-xs text-white text-center font-bold">
+                  Unità Pasto = Grammi Carboidrati ÷ 11 o 12
+                </div>
+                <div className="text-[11px] text-gray-200 space-y-1">
+                  <div>• <strong className="text-white">Esempio Pasta (60 g pesati ≈ 45 g CHO):</strong> <span className="font-mono text-cyan-300 font-bold">45 ÷ 11,5 ≈ 4 U</span></div>
+                  <div>• <strong className="text-gray-300">Con rapporto 1:10 (40 g CHO):</strong> <span className="font-mono text-gray-200">40 ÷ 10 = 4 U</span></div>
+                  <div>• <strong className="text-gray-300">Con rapporto 1:5 (40 g CHO):</strong> <span className="font-mono text-gray-200">40 ÷ 5 = 8 U</span></div>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-emerald-950/35 border border-emerald-400/40 space-y-2">
+                <span className="text-xs font-black uppercase tracking-wider text-emerald-300 block">
+                  Formula Correzione Glicemia Alta
+                </span>
+                <div className="p-2.5 rounded-xl bg-black/80 border border-emerald-500/30 font-mono text-xs text-white text-center font-bold">
+                  Unità = (Glicemia - Target 120) ÷ 40–45
+                </div>
+                <div className="text-[11px] text-gray-200 space-y-1">
+                  <div>• <strong className="text-white">Esempio a 240 mg/dL (target 120):</strong></div>
+                  <div>• <span className="font-mono text-emerald-300 font-bold">240 - 120 = 120 punti ➔ 120 ÷ 40 = 3 U</span></div>
+                  <div className="text-[10px] text-gray-400">Verifica sempre se hai ancora insulina attiva sul microinfusore!</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Quando il Rapporto Cambia */}
+            <div className="p-3.5 rounded-2xl bg-black/70 border border-amber-500/35 space-y-2">
+              <span className="text-[11px] font-black uppercase tracking-wider text-amber-300 block">
+                Quando I Numeri Si Spostano (Attenzione!)
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+                <div className="p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-500/30">
+                  <strong className="text-emerald-300 block">Palestra / Movimento</strong>
+                  <span className="text-gray-200">Muscoli "spugne": <code className="text-white">1:10 ➔ 1:12 o 1:15</code> (serve MENO insulina).</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-rose-950/30 border border-rose-500/30">
+                  <strong className="text-rose-300 block">Stress / Studio / Cortisolo</strong>
+                  <span className="text-gray-200">Più resistenza: <code className="text-white">1:10 ➔ 1:8</code> (serve PIÙ insulina).</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-orange-950/30 border border-orange-500/30">
+                  <strong className="text-orange-300 block">Grassi &amp; Cordon Bleu</strong>
+                  <span className="text-gray-200">Digestione in 3–4h ("Onda Lunga"): controllo spia a 3 ore.</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Frase pronta per il Diabetologo */}
+            <div className="p-3.5 rounded-2xl bg-yellow-950/30 border border-yellow-400/45 text-xs space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-yellow-300 block">
+                Da Chiedere al Controllo in Ospedale / Diabetologo
+              </span>
+              <p className="text-gray-100 italic leading-relaxed">
+                "Ho visto che la mia insulina totale si aggira sulle 40-45 unità: verifichiamo insieme se il mio ICR e il mio fattore di correzione sul microinfusore sono tarati esattamente su questi valori?"
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* NOTA IMPORTANTE: CALCOLO INSULINA (ICR, REGOLA 500 & 1800)    */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutta' || activeTab === 'calcolo_insulina') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex flex-wrap items-center justify-between gap-2 pl-1 border-b border-yellow-400/30 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-yellow-400/20 text-yellow-300 border border-yellow-400/40">
+                <Sparkles className="w-4 h-4 text-yellow-300" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-yellow-300 flex items-center gap-1.5">
+                  <span className="px-1.5 py-0.5 rounded bg-yellow-400 text-black font-black">★ IMPORTANTE</span>
+                  Pilastro Fondamentale • Microinfusore &amp; Autonomia Pasti
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  🧮 Calcolo Insulina: Rapporto I:C (ICR), Regola 500 &amp; 1800
+                </h2>
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => handleSelectTab('calcoli_importanti')}
+                className="flex items-center space-x-1 py-1.5 px-2.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-400 hover:text-black text-cyan-300 border border-cyan-400/40 text-[11px] font-black uppercase tracking-wider transition-all active:scale-95 cursor-pointer"
+              >
+                <Zap className="w-3.5 h-3.5" />
+                <span>Solo Calcoli</span>
+              </button>
+              {activeTab === 'calcolo_insulina' && (
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('tutta')}
+                  className="flex items-center space-x-1 py-1.5 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all active:scale-95 cursor-pointer"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Torna alla Guida</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-yellow-400/60 space-y-4 bg-gradient-to-br from-yellow-950/30 via-black/85 to-cyan-950/25 shadow-[0_0_35px_rgba(250,204,21,0.2)]">
+            {/* 1. Cos'è il Rapporto Insulina/Carboidrati (I:C o ICR) */}
+            <div className="p-4 rounded-2xl bg-black/70 border border-cyan-500/35 space-y-2.5">
+              <span className="text-xs font-black uppercase tracking-wider text-cyan-300 flex items-center gap-1.5">
+                <Info className="w-4 h-4 text-cyan-400" />
+                1. Cos'è Scientificamente il Rapporto Insulina/Carboidrati (I:C o ICR)?
+              </span>
+              <p className="text-xs text-gray-200 leading-relaxed font-medium">
+                È il calcolo esatto usato dai diabetologi per darti autonomia nei pasti: ti dice <strong className="text-white">quanti grammi di carboidrati vengono coperti da 1 sola unità di insulina rapida</strong>.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[11px]">
+                <div className="p-3 rounded-xl bg-cyan-950/30 border border-cyan-500/30 space-y-1">
+                  <strong className="text-cyan-300 font-bold block">Esempio Rapporto 1:10</strong>
+                  <p className="text-gray-300 leading-relaxed">
+                    1 unità copre 10 g di carboidrati. Se mangi un piatto di pasta con <strong className="text-white">40 g di carboidrati</strong>: <strong className="text-cyan-300 font-mono">40 ÷ 10 = 4 unità</strong>.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-purple-950/30 border border-purple-500/30 space-y-1">
+                  <strong className="text-purple-300 font-bold block">Esempio Rapporto 1:5</strong>
+                  <p className="text-gray-300 leading-relaxed">
+                    Se in quel momento della giornata hai sensibilità insulinica più bassa, per gli stessi <strong className="text-white">40 g di carboidrati</strong> servono <strong className="text-purple-300 font-mono">40 ÷ 5 = 8 unità</strong>.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Dati Reali del Tuo Microinfusore + Regola 500 + Regola 1800 */}
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-yellow-950/35 via-black/80 to-emerald-950/30 border-2 border-yellow-400/50 space-y-3.5">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="text-xs font-black uppercase tracking-wider text-yellow-300 flex items-center gap-1.5">
+                  <Activity className="w-4 h-4 text-yellow-400" />
+                  2. I Tuoi Dati Reali dal Microinfusore (40–45 U/die • 75 kg)
+                </span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-yellow-400/20 text-yellow-200 border border-yellow-400/40 font-mono">
+                  Storico: 45U • 40.6U • 41.4U • 50.7U
+                </span>
+              </div>
+
+              <p className="text-xs text-gray-200 leading-relaxed">
+                Dallo storico dei tuoi display (somma di basale + boli dei pasti: <strong className="text-white">45 U</strong> schermata principale, <strong className="text-white">40.6 U</strong> il 14 nov, <strong className="text-white">41.4 U</strong> il 12 nov, <strong className="text-white">50.7 U</strong> l'8 nov), la tua media giornaliera è <strong className="text-yellow-300">40–45 unità al giorno</strong> (su <strong className="text-white">75 kg</strong> di peso).
+              </p>
+
+              {/* Regola dei 500 */}
+              <div className="p-3.5 rounded-xl bg-black/75 border border-cyan-400/40 space-y-2 text-xs">
+                <div className="flex items-center justify-between">
+                  <strong className="text-cyan-300 font-black uppercase text-[11px]">
+                    A. "Regola dei 500" ➔ Rapporto I:C (ICR)
+                  </strong>
+                  <span className="text-[10px] font-mono text-cyan-200 bg-cyan-500/15 px-2 py-0.5 rounded">
+                    500 ÷ Totale Giornaliero
+                  </span>
+                </div>
+                <p className="text-[11px] text-gray-300 leading-relaxed">
+                  Con un totale medio di <strong className="text-white">40–45 U/giorno</strong> (esempio teorico con 40 U: <code className="text-gray-200">500 ÷ 40 = 12,5 g</code>):
+                </p>
+                <div className="p-2.5 rounded-lg bg-cyan-950/40 border border-cyan-500/30 font-mono text-[11px] text-cyan-200 space-y-1">
+                  <div>• <strong>500 ÷ 40–45 ≈ 11–12 g</strong> ➔ Rapporto teorico <strong>~1:11 / 1:12</strong></div>
+                  <div>• <strong>Esempio Pasta 60g pesati (~45g carboidrati):</strong> 45 ÷ 11,5 ≈ <strong>4 unità</strong></div>
+                </div>
+              </div>
+
+              {/* Regola dei 1800 */}
+              <div className="p-3.5 rounded-xl bg-black/75 border border-emerald-400/40 space-y-2 text-xs">
+                <div className="flex items-center justify-between">
+                  <strong className="text-emerald-300 font-black uppercase text-[11px]">
+                    B. "Regola dei 1800" ➔ Fattore di Correzione
+                  </strong>
+                  <span className="text-[10px] font-mono text-emerald-200 bg-emerald-500/15 px-2 py-0.5 rounded">
+                    1800 ÷ Totale Giornaliero
+                  </span>
+                </div>
+                <p className="text-[11px] text-gray-300 leading-relaxed">
+                  Indica di quanti mg/dL scende la glicemia con <strong className="text-white">1 unità di insulina rapida</strong> sul microinfusore:
+                </p>
+                <div className="p-2.5 rounded-lg bg-emerald-950/40 border border-emerald-500/30 font-mono text-[11px] text-emerald-200 space-y-1">
+                  <div>• <strong>1800 ÷ 40–45 ≈ 40–45 mg/dL</strong> abbassati per ogni 1 unità</div>
+                  <div>• <strong>Esempio a 240 mg/dL (target sicuro 120):</strong> 240 - 120 = 120 punti ➔ 120 ÷ 40 = <strong>3 unità</strong></div>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Perché non è mai fisso al 100% */}
+            <div className="p-4 rounded-2xl bg-black/70 border border-amber-500/35 space-y-2.5">
+              <span className="text-xs font-black uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                <AlertTriangle className="w-4 h-4 text-amber-400" />
+                3. Perché Questo Numero NON È Fisso al 100%?
+              </span>
+              <div className="space-y-2 text-[11px] text-gray-300">
+                <div className="p-2.5 rounded-xl bg-white/[0.03] border border-emerald-500/25">
+                  <strong className="text-emerald-300">• Palestra e movimento:</strong> I muscoli diventano "spugne" super sensibili; quel 1:10 può diventare <strong className="text-white">1:12 o 1:15</strong> (ti serve meno insulina per gli stessi carboidrati, altrimenti rischi l'ipoglicemia!). Cambia anche tra mattina e sera.
+                </div>
+                <div className="p-2.5 rounded-xl bg-white/[0.03] border border-orange-500/25">
+                  <strong className="text-orange-300">• Grassi e proteine (es. cordon bleu e patate):</strong> Non basta contare solo i carboidrati; i grassi rallentano lo svuotamento gastrico e richiedono la gestione dei tempi ("Onda Lunga" a 3 ore).
+                </div>
+                <div className="p-2.5 rounded-xl bg-white/[0.03] border border-rose-500/25">
+                  <strong className="text-rose-300">• Stress, studio intenso e ormoni:</strong> Il cortisolo alza la resistenza all'insulina; quel 1:10 può temporaneamente diventare <strong className="text-white">1:8</strong> (serve più insulina).
+                </div>
+              </div>
+            </div>
+
+            {/* 4. Riepilogo Dati Pronti & Dialogo col Diabetologo */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-yellow-950/40 via-black/80 to-cyan-950/35 border border-yellow-400/50 space-y-3">
+              <span className="text-xs font-black uppercase tracking-wider text-yellow-300 flex items-center gap-1.5">
+                <Stethoscope className="w-4 h-4 text-yellow-400" />
+                4. Riepilogo Numeri Teorici &amp; Cosa Chiedere al Diabetologo
+              </span>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+                <div className="p-2.5 rounded-xl bg-black/70 border border-white/15">
+                  <span className="text-gray-400 block text-[10px] font-bold uppercase">Totale Medio Giornaliero</span>
+                  <strong className="text-white font-black">~40–45 unità/die</strong>
+                </div>
+                <div className="p-2.5 rounded-xl bg-black/70 border border-cyan-500/30">
+                  <span className="text-cyan-400 block text-[10px] font-bold uppercase">ICR Teorico</span>
+                  <strong className="text-white font-black">~1:11 / 1:12 (11-12g CHO/U)</strong>
+                </div>
+                <div className="p-2.5 rounded-xl bg-black/70 border border-emerald-500/30">
+                  <span className="text-emerald-400 block text-[10px] font-bold uppercase">Fattore Correzione</span>
+                  <strong className="text-white font-black">~40–45 mg/dL per 1 U</strong>
+                </div>
+              </div>
+
+              <div className="space-y-1.5 text-[11px] text-gray-200">
+                <div className="p-2.5 rounded-xl bg-black/60 border border-yellow-500/30 italic">
+                  <strong className="text-yellow-300 not-italic block text-[10px] uppercase mb-0.5">Per impostare i parametri sul tuo peso (75 kg) e palestra:</strong>
+                  "Vorrei impostare il mio Rapporto Insulina/Carboidrati (ICR) e il mio Fattore di Correzione, così posso calcolare le unità esatte pesando i carboidrati del piatto."
+                </div>
+                <div className="p-2.5 rounded-xl bg-black/60 border border-cyan-500/30 italic">
+                  <strong className="text-cyan-300 not-italic block text-[10px] uppercase mb-0.5">Verifica taratura microinfusore al controllo:</strong>
+                  "Ho visto che la mia insulina totale si aggira sulle 40-45 unità: verifichiamo insieme se il mio ICR e il mio fattore di correzione sul microinfusore sono tarati esattamente su questi valori?"
+                </div>
+              </div>
+            </div>
+
+            {activeTab === 'calcolo_insulina' && (
+              <div className="pt-2 flex flex-wrap justify-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleSelectTab('calcoli_importanti')}
+                  className="py-3 px-5 rounded-2xl bg-cyan-400 hover:bg-cyan-300 text-black font-black text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-neon flex items-center justify-center gap-2"
+                >
+                  <Zap className="w-4 h-4" />
+                  <span>Vedi Solo Calcoli Importanti</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('tutta')}
+                  className="py-3 px-5 rounded-2xl bg-gradient-to-r from-yellow-400 to-amber-400 hover:from-yellow-300 hover:to-amber-300 text-black font-black text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-neon flex items-center justify-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Torna alla Guida Completa</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* ============================================================= */}
       {/* SECONDA NOTA: GLICEMIA, PALESTRA E BRUCIA-GRASSI               */}
@@ -1312,6 +1840,206 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
                   type="button"
                   onClick={() => setActiveTab('tutta')}
                   className="w-full sm:w-auto py-3 px-6 rounded-2xl bg-gradient-to-r from-teal-400 to-cyan-400 hover:from-teal-300 hover:to-cyan-300 text-black font-black text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-neon flex items-center justify-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Torna alla Guida Completa</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SETTIMA NOTA: PICCO RITARDATO "ONDA LUNGA" (GRASSI & IMPANATI)*/}
+      {/* ============================================================= */}
+      {(activeTab === 'tutta' || activeTab === 'onda_lunga') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-orange-500/20 text-orange-300 border border-orange-500/30">
+                <Clock className="w-4 h-4 text-orange-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-orange-400">
+                  Settima Nota Specifica • Effetto "Onda Lunga" (Mensa &amp; Impanati)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  🌊 Picco Ritardato a 3 Ore: Cordon Bleu, Patate &amp; Grassi
+                </h2>
+              </div>
+            </div>
+            {activeTab === 'onda_lunga' ? (
+              <button
+                type="button"
+                onClick={() => setActiveTab('tutta')}
+                className="flex items-center space-x-1 py-1 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all active:scale-95 cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Torna alla Guida Completa</span>
+              </button>
+            ) : (
+              <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-orange-500/15 text-orange-300 border border-orange-500/30">
+                Nuova Aggiunta
+              </span>
+            )}
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-orange-400/50 space-y-4 bg-gradient-to-br from-orange-950/35 via-black/85 to-amber-950/25 shadow-[0_0_30px_rgba(249,115,22,0.2)]">
+            {/* Caso pratico introduttivo */}
+            <div className="p-3.5 rounded-2xl bg-black/60 border border-orange-500/30 space-y-1.5 text-xs">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-black uppercase tracking-wider text-orange-400">
+                  Il "Grande Classico": Effetto Onda Lunga (Picco Tardivo)
+                </span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-red-500/20 text-red-300 border border-red-500/30 font-mono">
+                  12:45 ➔ 16:00 (280 mg/dL)
+                </span>
+              </div>
+              <p className="text-gray-200 leading-relaxed font-medium">
+                Mangi alle <strong className="text-white">12:45</strong> (es. patate + cordon bleu in mensa) con le tue solite <strong className="text-white">8 unità</strong> di insulina rapida e la glicemia schizza a <strong className="text-red-300">280 mg/dL verso le 16:00</strong> (più di 3 ore dopo). Non hai sbagliato dose: quelle 8 unità erano tarate sulla normale velocità di digestione (tipo pasta in bianco), ma il cibo ha fatto un vero e proprio <strong className="text-orange-300">"ritardo di consegna"</strong> nell'intestino.
+              </p>
+            </div>
+
+            {/* 1. Meccanismo Scientifico */}
+            <div className="p-4 rounded-2xl bg-black/70 border border-amber-500/30 space-y-3">
+              <div className="flex items-center space-x-2 text-amber-300 font-black uppercase text-xs tracking-wider">
+                <Zap className="w-4 h-4 text-amber-400" />
+                <span>1. Perché Sale Così Tardi (3+ Ore Dopo)?</span>
+              </div>
+
+              <div className="space-y-2 text-xs text-gray-300">
+                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 space-y-1">
+                  <strong className="text-white block font-bold text-[11px]">
+                    • Finestra della tua insulina rapida (8 UI):
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Il picco massimo dell'insulina rapida si concentra tra <strong className="text-amber-300">1 ora e mezza e 2 ore</strong> dopo l'iniezione, per poi esaurirsi intorno alle 3 ore.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-white/[0.03] border border-orange-500/25 space-y-1">
+                  <strong className="text-orange-300 block font-bold text-[11px]">
+                    • L'effetto "Grassi e Proteine" (Cordon Bleu &amp; Impanati):
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Un cordon bleu unisce <strong className="text-white">panatura</strong> (amido di farina/pangrattato + olio di cottura/frittura) e <strong className="text-white">prosciutto + formaggio</strong> (proteine e grassi pesanti). Grassi e proteine rallentano drasticamente lo svuotamento gastrico: il cibo resta <strong className="text-orange-300">"parcheggiato" nello stomaco</strong> molto più a lungo e scende nell'intestino a goccia a goccia. Inoltre una parte di grassi e proteine viene convertita lentamente in glucosio dal fegato (<strong className="text-white">gluconeogenesi</strong>).
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-white/[0.03] border border-red-500/25 space-y-1">
+                  <strong className="text-red-300 block font-bold text-[11px]">
+                    • Il mix letale con le Patate + Seconda Ondata:
+                  </strong>
+                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                    Le patate (al forno o fritte) hanno indice glicemico alto: la prima quota di zuccheri viene coperta dalle tue 8 unità iniziali. Ma proprio dopo le 3 ore, quando l'insulina ha ormai terminato il turno, la <strong className="text-white">seconda ondata di grassi, panatura e carboidrati</strong> entra in circolo tutta insieme. Risultato: <strong className="text-red-300">insulina esaurita + cibo tardivo = picco a 280 mg/dL</strong>.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Cibi Specialisti & Segnali d'Allarme */}
+            <div className="p-4 rounded-2xl bg-amber-950/25 border border-amber-500/35 space-y-2">
+              <div className="flex items-center space-x-2 text-amber-300 font-black uppercase text-xs tracking-wider">
+                <AlertTriangle className="w-4 h-4 text-amber-400" />
+                <span>2. I "Segnali d'Allarme" nel Piatto (Digestione in 3–4 Ore)</span>
+              </div>
+              <p className="text-[11px] text-gray-200 leading-relaxed">
+                Tutti i cibi impanati, fritti o ripieni sono gli <strong className="text-white">"specialisti" del picco glicemico ritardato</strong>: <strong className="text-amber-300">cordon bleu, cotolette, nuggets, panzerotti, fast food</strong>, fritture, panature spesse, formaggi fusi o carni elaborate. Quando li vedi nel piatto, sai già che non verranno digeriti in 2 ore ma in <strong className="text-white">3–4 ore</strong>.
+              </p>
+            </div>
+
+            {/* 3. Perché NON Aumentare Subito la Dose Iniziale */}
+            <div className="p-4 rounded-2xl bg-red-950/35 border-2 border-red-500/45 space-y-2.5">
+              <div className="flex items-center space-x-2 text-red-300 font-black uppercase text-xs tracking-wider">
+                <ShieldAlert className="w-4 h-4 text-red-400" />
+                <span>3. Perché Fare Più Unità Subito (es. 8 ➔ 10 UI) È un Errore Pericoloso</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[11px]">
+                <div className="p-3 rounded-xl bg-black/60 border border-red-500/30 space-y-1">
+                  <strong className="text-red-300 block font-bold">1. Ipoglicemia immediata (60–90 min):</strong>
+                  <p className="text-gray-300 leading-relaxed">
+                    La rapida entra subito in azione mentre il cibo è ancora bloccato nello stomaco dai grassi. Senza zucchero da abbassare, rischi un crollo glicemico pesante a 1 ora dal pasto.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-black/60 border border-rose-500/30 space-y-1">
+                  <strong className="text-rose-300 block font-bold">2. Le "Montagne Russe" perfette:</strong>
+                  <p className="text-gray-300 leading-relaxed">
+                    Per salvarti dall'ipoglicemia iniziale devi prendere bustine di zucchero. Poi, 3 ore dopo, cordon bleu e patate si digeriscono comunque e schizzi a <strong className="text-white">270 mg/dL</strong>: ipo all'inizio + iper alla fine!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 4. Protocollo Pratico & Tempi di Controllo */}
+            <div className="p-4 rounded-2xl bg-black/70 border border-cyan-500/35 space-y-3">
+              <div className="flex items-center space-x-2 text-cyan-300 font-black uppercase text-xs tracking-wider">
+                <CheckCircle2 className="w-4 h-4 text-cyan-400" />
+                <span>4. Protocollo Pratico per Gestire l'Onda Lunga in Sicurezza</span>
+              </div>
+
+              <div className="space-y-2 text-xs">
+                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-md bg-cyan-500/20 text-cyan-300 font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5">1</span>
+                  <div>
+                    <strong className="text-white block text-[11px]">Controllo Standard (1h – 2h dopo il pasto)</strong>
+                    <p className="text-[11px] text-gray-300 leading-relaxed">
+                      Verifica come ha lavorato il bolo iniziale. <strong className="text-cyan-300">Attenzione:</strong> leggere 130–140 mg/dL qui NON significa che il pericolo sia scampato.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-orange-950/30 border border-orange-500/35 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-md bg-orange-500/20 text-orange-300 font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5">2</span>
+                  <div>
+                    <strong className="text-orange-300 block text-[11px]">Il Controllo "Spia" Fondamentale (A 3 Ore dal Pasto)</strong>
+                    <p className="text-[11px] text-gray-200 leading-relaxed">
+                      È il momento chiave in cui grassi e panatura finiscono di svuotarsi dallo stomaco e parte il picco. Misurarla a 3 ore ti permette di <strong className="text-white">beccare la salita sul nascere</strong> prima che arrivi a 280–300 mg/dL.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/35 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-md bg-emerald-500/20 text-emerald-300 font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5">3</span>
+                  <div>
+                    <strong className="text-emerald-300 block text-[11px]">Opzione 1 • Micro-Correzione Mirata (Se sale a 3 ore)</strong>
+                    <p className="text-[11px] text-gray-200 leading-relaxed">
+                      Se a 3 ore sta risalendo (es. da 130 verso 180–200 mg/dL in salita), fai una <strong className="text-white">piccola correzione di insulina rapida</strong> basata esclusivamente sul tuo <strong className="text-emerald-300">fattore di correzione stabilito dal medico</strong> (es. 1–2 UI al massimo). Mai a occhio né dosi grosse che farebbero crollare la glicemia la sera!
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-purple-950/30 border border-purple-500/35 flex items-start gap-2.5">
+                  <span className="w-5 h-5 rounded-md bg-purple-500/20 text-purple-300 font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5">4</span>
+                  <div>
+                    <strong className="text-purple-300 block text-[11px]">Opzione 2 • Prevenzione &amp; Diabetologo ("Bolo Sdoppiato")</strong>
+                    <p className="text-[11px] text-gray-200 leading-relaxed">
+                      Annota questi episodi e parlane col diabetologo: per pasti grassi/impanati si può valutare il <strong className="text-white">bolo doppio/quadrato</strong> (microinfusore) o la divisione in due iniezioni (una parte subito e una piccola quota dopo 1h–1h30). <strong className="text-rose-300">Mai farlo da solo senza indicazione medica.</strong> Una <strong className="text-purple-200">passeggiata leggera</strong> post-pranzo aiuta inoltre i muscoli ad assorbire il glucosio lento.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Checklist Rapida */}
+              <div className="p-3 rounded-xl bg-gradient-to-r from-orange-950/45 to-amber-950/35 border border-orange-400/40 text-[11px] text-gray-200 space-y-1">
+                <strong className="text-orange-300 font-black uppercase tracking-wider block text-[10px]">
+                  Checklist Rapida Pasto Grasso / Impanato
+                </strong>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 pt-0.5">
+                  <div>1. Bolo standard iniziale (non aumentare a caso)</div>
+                  <div>2. Controllo a 1–2 ore (vedi l'avvio)</div>
+                  <div>3. Controllo "spia" a 3 ore (becca l'onda lunga)</div>
+                  <div>4. Micro-correzione medica solo se sale davvero</div>
+                </div>
+              </div>
+            </div>
+
+            {activeTab === 'onda_lunga' && (
+              <div className="pt-2 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('tutta')}
+                  className="w-full sm:w-auto py-3 px-6 rounded-2xl bg-gradient-to-r from-orange-400 to-amber-400 hover:from-orange-300 hover:to-amber-300 text-black font-black text-xs uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-neon flex items-center justify-center gap-2"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   <span>Torna alla Guida Completa</span>

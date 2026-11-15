@@ -1579,6 +1579,102 @@ export const NoteTab: React.FC = () => {
       </div>
 
       {/* ------------------------------------------------------------- */}
+      {/* ACCESSO RAPIDO COMPATTO IN ALTO PER APRIRE SUBITO LE NOTE      */}
+      {/* ------------------------------------------------------------- */}
+      <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/10 space-y-2">
+        <div className="flex items-center justify-between px-0.5">
+          <span className="text-[10px] font-black uppercase tracking-widest text-gray-400 flex items-center gap-1.5">
+            <Zap className="w-3 h-3 text-cyan-400" />
+            Accesso Rapido • Apri Subito
+          </span>
+          <span className="text-[10px] font-bold text-gray-500">9 Guide</span>
+        </div>
+
+        <div className="flex flex-wrap gap-1.5">
+          <button
+            type="button"
+            onClick={() => handleOpenView('asimmetria')}
+            className="px-2.5 py-1.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-200 border border-cyan-500/30 text-[11px] font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+          >
+            <Scale className="w-3 h-3 text-cyan-400 shrink-0" />
+            <span>Asimmetria</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleOpenView('postura_occhi')}
+            className="px-2.5 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-200 border border-amber-500/30 text-[11px] font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+          >
+            <Eye className="w-3 h-3 text-amber-400 shrink-0" />
+            <span>Postura & Occhi</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleOpenView('sonno_posizioni')}
+            className="px-2.5 py-1.5 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-200 border border-indigo-500/30 text-[11px] font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+          >
+            <Moon className="w-3 h-3 text-indigo-400 shrink-0" />
+            <span>Sonno</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleOpenView('peli_incarniti')}
+            className="px-2.5 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-200 border border-emerald-500/30 text-[11px] font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+          >
+            <Scissors className="w-3 h-3 text-emerald-400 shrink-0" />
+            <span>Peli Incarniti</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleOpenView('shampoo_texture')}
+            className="px-2.5 py-1.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-200 border border-cyan-500/30 text-[11px] font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+          >
+            <Droplets className="w-3 h-3 text-cyan-400 shrink-0" />
+            <span>Shampoo & Texture</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleOpenView('capelli_texture')}
+            className="px-2.5 py-1.5 rounded-xl bg-sky-500/15 hover:bg-sky-500/25 text-sky-200 border border-sky-500/30 text-[11px] font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+          >
+            <Wind className="w-3 h-3 text-sky-400 shrink-0" />
+            <span>Capelli & Piega</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleOpenView('palestra_grasso')}
+            className="px-2.5 py-1.5 rounded-xl bg-orange-500/15 hover:bg-orange-500/25 text-orange-200 border border-orange-500/30 text-[11px] font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+          >
+            <Dumbbell className="w-3 h-3 text-orange-400 shrink-0" />
+            <span>Palestra & Grasso</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleOpenView('regali_natale')}
+            className="px-2.5 py-1.5 rounded-xl bg-teal-500/15 hover:bg-teal-500/25 text-teal-200 border border-teal-500/30 text-[11px] font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+          >
+            <Gift className="w-3 h-3 text-teal-400 shrink-0" />
+            <span>Cose da Comprare</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleOpenView('diabete_glicemia')}
+            className="px-2.5 py-1.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-200 border border-rose-500/30 text-[11px] font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+          >
+            <Activity className="w-3 h-3 text-rose-400 shrink-0" />
+            <span>Diabete & Glicemia</span>
+          </button>
+        </div>
+      </div>
+
+      {/* ------------------------------------------------------------- */}
       {/* IL QUADRATINO CHIAVE: "LA MIA ASIMMETRIA" (RICHIESTA SPECIFICA) */}
       {/* ------------------------------------------------------------- */}
       <div className="space-y-2">
@@ -1993,9 +2089,8 @@ export const NoteTab: React.FC = () => {
           <div className="flex items-start justify-between relative z-10">
             <div className="space-y-2 flex-1 pr-3">
               <div className="flex flex-wrap items-center gap-1.5">
-                <span className="px-2.5 py-0.5 rounded-full bg-rose-400/20 text-rose-300 text-[10px] font-black uppercase tracking-wider border border-rose-400/40 shadow-sm flex items-center gap-1">
-                  <Activity className="w-3 h-3 text-rose-400" />
-                  ★ Note Scritte Da Me
+                <span className="px-2.5 py-0.5 rounded-full bg-yellow-400 text-black text-[10px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1">
+                  ★ IMPORTANTE: Calcolo Insulina (1:11–12 • 40–45)
                 </span>
                 <span className="text-[10px] text-amber-300 font-extrabold bg-amber-500/15 px-2 py-0.5 rounded-md border border-amber-500/30">
                   ⚡ 2: Brucia-Grassi (80-90)
@@ -2012,6 +2107,9 @@ export const NoteTab: React.FC = () => {
                 <span className="text-[10px] text-cyan-300 font-extrabold bg-cyan-500/15 px-2 py-0.5 rounded-md border border-cyan-500/30">
                   🧬 6: Variabilità & Dimagrimento
                 </span>
+                <span className="text-[10px] text-orange-300 font-extrabold bg-orange-500/15 px-2 py-0.5 rounded-md border border-orange-500/30">
+                  🌊 7: Onda Lunga (3h • Cordon Bleu)
+                </span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-rose-300 transition-colors uppercase tracking-tight">
@@ -2019,7 +2117,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Guida fisiologica e metabolica completa: ricarica glicogeno e GLUT-4, correzione con bustine vs cibo vero, catabolismo a 50–60 mg/dL, soglia renale 180 mg/dL e Nota 6 su Variabilità Glicemica, insulina, cortisolo/stress, acidi grassi liberi e dimagrimento.
+                ★ IMPORTANTE: Calcolo Insulina (tasto rapido Solo Calcoli: ICR ~1:11/1:12 Regola 500, Correzione ~40-45 Regola 1800 su 40-45 U/die) + Onda Lunga 3h, variabilità glicemica, bustine vs cibo vero e gestione allenamento serale.
               </p>
             </div>
 
@@ -2030,10 +2128,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-rose-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire la guida su glicemia e palestra</span>
+              <span>Tocca per aprire guida e calcoli insulina</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">6 Note Scientifiche + 5 Sezioni Fisiologiche</span>
+            <span className="text-[10px] text-gray-400 font-semibold">★ Calcolo Insulina + 7 Note + 5 Sezioni</span>
           </div>
         </div>
       </div>
