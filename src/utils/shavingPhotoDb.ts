@@ -120,20 +120,113 @@ export async function compressPhoneImage(file: File): Promise<string> {
   });
 }
 
+const FIRST_SHAVING_SEED_FLAG = 'glowup_seeded_first_shaving_14nov_v1';
+
+function createInitialFirstShavingSession(): ShavingSession {
+  const fixedDate = new Date(2026, 10, 14, 9, 30, 0); // Sabato 14 Novembre 2026, 09:30
+  const iso = fixedDate.toISOString();
+  const baseSlot = {
+    uploadedAtIso: iso,
+    dayLabel: 'Sab',
+    dateStr: '14/11/2026',
+    timeStr: '09:30'
+  };
+
+  const mk = (id: string, dataUrl: string, caption: string): ShavingPhotoSlot => ({
+    id,
+    dataUrl,
+    caption,
+    ...baseSlot
+  });
+
+  const leftBefore1 = mk('seed_1124', 'https://i.ibb.co/q3cGydYz/IMG-1124.jpg', 'Laterale 1 - Panoramica Prima');
+  const leftBefore2 = mk('seed_1125', 'https://i.ibb.co/dXfx7tH/IMG-1125.jpg', 'Laterale 1 - Zoom Guancia Prima');
+  const leftAfter1 = mk('seed_1127', 'https://i.ibb.co/dwCkWxrJ/IMG-1127.jpg', 'Laterale 1 - Guancia/Mascella Dopo');
+  const leftAfter2 = mk('seed_1129', 'https://i.ibb.co/99dd14HQ/IMG-1129.jpg', 'Laterale 1 - Mascella e Collo Dopo');
+
+  const frontBefore1 = mk('seed_1123', 'https://i.ibb.co/FkVgGqgT/IMG-1123.jpg', 'Frontale Prima');
+
+  const rightBefore1 = mk('seed_1126', 'https://i.ibb.co/JwZZsrW9/IMG-1126.jpg', 'Laterale 2 - Prima');
+  const rightAfter1 = mk('seed_1130', 'https://i.ibb.co/fYTX7GZd/IMG-1130.jpg', 'Laterale 2 - Guancia/Mascella Dopo');
+  const rightAfter2 = mk('seed_1131', 'https://i.ibb.co/gZ2Y3PDj/IMG-1131.jpg', 'Laterale 2 - Mascella e Sottomento Dopo');
+
+  return {
+    id: 'shave_prima_rasatura_2026_11_14',
+    createdAtIso: iso,
+    updatedAtIso: iso,
+    dayLabel: 'Sab',
+    dateStr: '14/11/2026',
+    timeStr: '09:30',
+    title: '1ª Rasatura — Sab 14/11/2026',
+    notes: '',
+    photos: {
+      left: {
+        before: leftBefore1,
+        after: leftAfter1,
+        beforeList: [leftBefore1, leftBefore2],
+        afterList: [leftAfter1, leftAfter2]
+      },
+      front: {
+        before: frontBefore1,
+        beforeList: [frontBefore1],
+        afterList: []
+      },
+      right: {
+        before: rightBefore1,
+        after: rightAfter1,
+        beforeList: [rightBefore1],
+        afterList: [rightAfter1, rightAfter2]
+      }
+    },
+    extraShots: []
+  };
+}
+
 export const shavingPhotoDb = {
   async getAllSessions(): Promise<ShavingSession[]> {
     const db = await openDatabase();
-    return new Promise((resolve, reject) => {
+    let list = await new Promise<ShavingSession[]>((resolve, reject) => {
       const tx = db.transaction(STORE_NAME, 'readonly');
       const store = tx.objectStore(STORE_NAME);
       const req = store.getAll();
       req.onsuccess = () => {
-        const list = (req.result as ShavingSession[]) || [];
-        list.sort((a, b) => new Date(b.createdAtIso).getTime() - new Date(a.createdAtIso).getTime());
-        resolve(list);
+        resolve((req.result as ShavingSession[]) || []);
       };
       req.onerror = () => reject(req.error || new Error('Errore lettura sessioni'));
     });
+
+    const alreadySeeded =
+      typeof window !== 'undefined' &&
+      window.localStorage.getItem(FIRST_SHAVING_SEED_FLAG) === 'true';
+    const hasSeedSession = list.some((s) => s.id === 'shave_prima_rasatura_2026_11_14');
+
+    if (!alreadySeeded && !hasSeedSession) {
+      const seedSession = createInitialFirstShavingSession();
+      try {
+        await new Promise<void>((resolve, reject) => {
+          const tx = db.transaction(STORE_NAME, 'readwrite');
+          const store = tx.objectStore(STORE_NAME);
+          store.put(seedSession);
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => reject(tx.error);
+        });
+        list = [...list, seedSession];
+        if (typeof window !== 'undefined') {
+          window.localStorage.setItem(FIRST_SHAVING_SEED_FLAG, 'true');
+        }
+      } catch {
+        // Ignore seed write error and return loaded list
+      }
+    } else if (hasSeedSession && !alreadySeeded && typeof window !== 'undefined') {
+      try {
+        window.localStorage.setItem(FIRST_SHAVING_SEED_FLAG, 'true');
+      } catch {
+        // ignore
+      }
+    }
+
+    list.sort((a, b) => new Date(b.createdAtIso).getTime() - new Date(a.createdAtIso).getTime());
+    return list;
   },
 
   async saveSession(session: ShavingSession): Promise<void> {

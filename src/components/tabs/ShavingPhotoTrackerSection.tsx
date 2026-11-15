@@ -835,6 +835,7 @@ export const ShavingPhotoTrackerSection: React.FC = () => {
                 <img
                   src={activePhoto.dataUrl}
                   alt={`${title} ${isBefore ? 'Prima' : 'Dopo'} ${activeIdx + 1}`}
+                  referrerPolicy="no-referrer"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                 />
                 {list.length > 1 && (
@@ -872,7 +873,7 @@ export const ShavingPhotoTrackerSection: React.FC = () => {
                           : 'border-white/15 opacity-60 hover:opacity-100'
                       }`}
                     >
-                      <img src={slot.dataUrl} alt="" className="w-full h-full object-cover" />
+                      <img src={slot.dataUrl} alt="" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
                       <span className="absolute bottom-0 right-0 px-1 bg-black/80 text-[8px] font-black text-white">
                         {idx + 1}
                       </span>
@@ -1013,6 +1014,7 @@ export const ShavingPhotoTrackerSection: React.FC = () => {
                   <img
                     src={overlayPhase === 'before' ? activeBefore.dataUrl : activeAfter.dataUrl}
                     alt={`${title} confronto`}
+                    referrerPolicy="no-referrer"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
@@ -1055,6 +1057,7 @@ export const ShavingPhotoTrackerSection: React.FC = () => {
                   <img
                     src={activeAfter.dataUrl}
                     alt="Dopo rasatura"
+                    referrerPolicy="no-referrer"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   {/* Clip: PRIMA */}
@@ -1065,6 +1068,7 @@ export const ShavingPhotoTrackerSection: React.FC = () => {
                     <img
                       src={activeBefore.dataUrl}
                       alt="Prima di rasare"
+                      referrerPolicy="no-referrer"
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -1578,7 +1582,7 @@ export const ShavingPhotoTrackerSection: React.FC = () => {
                         <div className="rounded-xl overflow-hidden border border-white/15 bg-black aspect-[3/4] relative">
                           {pA ? (
                             <>
-                              <img src={pA.dataUrl} alt="Giorno A" className="w-full h-full object-cover" />
+                              <img src={pA.dataUrl} alt="Giorno A" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
                               <span className="absolute bottom-1.5 left-1.5 px-2 py-0.5 rounded-lg bg-black/80 text-[10px] font-bold text-amber-300">
                                 {pA.dateStr} • {pA.timeStr}
                               </span>
@@ -1592,7 +1596,7 @@ export const ShavingPhotoTrackerSection: React.FC = () => {
                         <div className="rounded-xl overflow-hidden border border-emerald-400/40 bg-black aspect-[3/4] relative">
                           {pB ? (
                             <>
-                              <img src={pB.dataUrl} alt="Giorno B" className="w-full h-full object-cover" />
+                              <img src={pB.dataUrl} alt="Giorno B" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
                               <span className="absolute bottom-1.5 left-1.5 px-2 py-0.5 rounded-lg bg-black/80 text-[10px] font-bold text-emerald-300">
                                 {pB.dateStr} • {pB.timeStr}
                               </span>
@@ -1826,6 +1830,7 @@ export const ShavingPhotoTrackerSection: React.FC = () => {
                     <img
                       src={currentSlot.dataUrl}
                       alt={titleLabel}
+                      referrerPolicy="no-referrer"
                       onClick={() => {
                         if (otherSlot) {
                           setLightboxState({ ...lightboxState, phase: otherPhase, index: 0 });
