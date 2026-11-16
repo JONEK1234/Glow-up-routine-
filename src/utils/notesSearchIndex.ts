@@ -174,12 +174,21 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     text: 'Puntini rossi usciti subito dopo rasoio razor burn follicolare irritazione meccanica acuta da lama micro-abrasione poro vasodilatazione istamina mascella sottomento si sgonfia 12-24 ore non mettere acido salicilico stasera lenitivo idratante guance alte zigomo acne purging Nikai a secco brufoli attivi 3-4 settimane taglio pulito.'
   },
   {
+    id: 'peli_strategia_10_giorni',
+    viewId: 'peli_incarniti',
+    sectionTitle: 'Peli incarniti viso',
+    sectionBadgeColor: 'emerald',
+    subTabId: 'strategia_10_giorni',
+    subTitle: '6. Cadenza 7–10 Giorni, Meccanica Nikai (Baffetti), Diabete & Mantenimento',
+    text: 'Diabete rigenerazione cicatrizzazione pelle lenti microlesione lama ogni 7-10 giorni settimana e mezza 3 volte al mese confronto 3-4 giorni pelo lungo morbido intasa testina accorcia prima Nikai a secco poi Gillette monolama dall alto verso basso zero pressione zero contropelo due testine dentate forbice meccanica 0.4 0.5 mm punta fuori poro baffetti labbro superiore piatto senza premere no 90 gradi 30 gradi brufoletto acne giovanile zigomi guance alte collo mascella mese completo 28-30 giorni cheratinociti cutibacterium acnes pH fase mantenimento acido salicilico 2-3 sere settimana crema solare ogni 2-3 giorni Nikai liscio perfetto ritorni fiamma brufoli isolati 2-3 giorni.'
+  },
+  {
     id: 'peli_foto_rasatura',
     viewId: 'peli_incarniti',
     sectionTitle: 'Peli incarniti viso',
     sectionBadgeColor: 'emerald',
     subTabId: 'foto_rasatura',
-    subTitle: '6. Foto Prima & Dopo Rasatura (Sinistro, Frontale, Destro + Backup)',
+    subTitle: '7. Foto Prima & Dopo Rasatura (Sinistro, Frontale, Destro + Backup)',
     text: 'Diario fotografico rasatura foto prima e dopo ogni rasatura laterale sinistro frontale laterale destro differenze giorno ora automatici salvataggio memoria telefono IndexedDB salva progresso peli incarniti carica progresso backup trasferimento altro telefono.'
   },
 
@@ -402,25 +411,34 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
   },
 
   // =========================================================================
-  // 10. PREVENZIONE ETÀ E ARTICOLAZIONI
+  // 10. PREVENZIONE ETÀ, ARTICOLAZIONI & DIABETE
   // =========================================================================
   {
     id: 'prevenzione_eta_articolazioni',
     viewId: 'prevenzione_eta',
-    sectionTitle: 'Prevenzione età e articolazioni',
+    sectionTitle: 'Prevenzione età, articolazioni & diabete',
     sectionBadgeColor: 'lime',
     subTabId: 'eta_articolazioni',
     subTitle: '1. Età, Ossa, Mobilità, Super-Aging, Mionuclei & Mal di Schiena',
-    text: 'Prevenzione età articolazioni assicurazione biologica 16 anni discesa biologica 30-35 anni sarcopenia perdita muscolo osteopenia osteoporosi densità ossea elasticità tessuti tendini legamenti cartilagine banca muscoli ossa picco massa ossea 70 anni 50 anni cemento armato stretching mobilità articolare attiva fascia liquido sinoviale arrugginirsi inossidabile super-aging successful aging 10000 passi pendenza calisthenics densità ossea sistema cardiovascolare sostenibilità maratona scatto long-runner infortuni tendini memoria muscolare mionuclei nuclei cellulari staminali usa o perdi 50-60 anni carichi moderati elastici corpo libero leggero 70-80% mal di schiena core addominali profondi lombari glutei dischi intervertebrali osmosi armatura protettiva.'
+    text: 'Prevenzione età articolazioni assicurazione biologica 16 anni diabete microinfusore discesa biologica 30-35 anni sarcopenia perdita muscolo osteopenia osteoporosi densità ossea elasticità tessuti tendini legamenti cartilagine banca muscoli ossa picco massa ossea 70 anni 50 anni cemento armato stretching mobilità articolare attiva fascia liquido sinoviale arrugginirsi inossidabile super-aging successful aging 10000 passi pendenza calisthenics densità ossea sistema cardiovascolare sostenibilità maratona scatto long-runner infortuni tendini memoria muscolare mionuclei nuclei cellulari staminali usa o perdi 50-60 anni carichi moderati elastici corpo libero leggero 70-80% mal di schiena core addominali profondi lombari glutei dischi intervertebrali osmosi armatura protettiva.'
   },
   {
     id: 'prevenzione_massa_lavoro',
     viewId: 'prevenzione_eta',
-    sectionTitle: 'Prevenzione età e articolazioni',
+    sectionTitle: 'Prevenzione età, articolazioni & diabete',
     sectionBadgeColor: 'lime',
     subTabId: 'massa_lavoro',
-    subTitle: '2. Organizzazione: Mantenere Massa, Lavoro & Giovane vs Adulto vs Anziano',
-    text: 'Organizzazione mantenere massa lavoro manuale pesante palestra principio adattamento tensione meccanica progressiva resistenza fatica cronica bassa intensità fisico asciutto strutturato stress cortisolo usura asimmetrica squilibri posturali mal di schiena stanco marcio stangato acido lattico cedimento vietato richiamo minimo minimum effective dose dose minima efficace 2-3 sedute brevi manubri calisthenics controllato lavoro come cardio attivo differenza giovane 16-25 anni adulto 30-50 anni anziano 60-70 anni recupero fulmineo difesa massa rendita biologica zero usura.'
+    subTitle: '2. Organizzazione: Mantenere Massa, Lavoro & Giovane vs Adulto vs Anziano (con Diabete)',
+    text: 'Organizzazione mantenere massa lavoro manuale pesante palestra diabete ipoglicemia ritardata microinfusore basale zuccheri rapidi principio adattamento tensione meccanica progressiva resistenza fatica cronica bassa intensità fisico asciutto strutturato stress cortisolo glicemia usura asimmetrica squilibri posturali mal di schiena stanco marcio stangato acido lattico cedimento vietato richiamo minimo minimum effective dose dose minima efficace 2-3 sedute brevi manubri calisthenics controllato lavoro come cardio attivo differenza giovane 16-25 anni adulto 30-50 anni anziano 60-70 anni recupero fulmineo difesa massa rendita biologica zero usura.'
+  },
+  {
+    id: 'prevenzione_diabete_scienza',
+    viewId: 'prevenzione_eta',
+    sectionTitle: 'Prevenzione età, articolazioni & diabete',
+    sectionBadgeColor: 'lime',
+    subTabId: 'diabete_prevenzione',
+    subTitle: '3. Io Che Ho il Diabete: Cosa Mi Succede Scientificamente',
+    text: 'Diabete tipo 1 cosa mi succede scientificamente glicazione collagene AGEs Advanced Glycation End-products tendini legamenti capsule articolari fascia rigidità effetto caramello liquido sinoviale microcircolazione capillari tempi guarigione riparazione tessuti cicatrizzazione infiammazione ossido nitrico 10000 passi muscolo spugna metabolica trasportatori GLUT4 indipendente insulina serbatoio glicogeno effetto spugna 24-48 ore insulino-resistenza cortisolo adrenalina chetoni osteopatia diabetica osteoblasti densità ossea legge di Wolff arterie elasticità.'
   }
 ];
 

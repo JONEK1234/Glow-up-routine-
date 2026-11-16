@@ -33,6 +33,7 @@ export type PeliIncarnitiTabId =
   | 'informazioni'
   | 'metodo_diviso'
   | 'razor_burn_strategia'
+  | 'strategia_10_giorni'
   | 'foto_rasatura';
 
 interface PeliIncarnitiVisoViewProps {
@@ -102,7 +103,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
         </h1>
 
         <p className="text-xs text-gray-300 leading-relaxed font-medium">
-          Guida pratica e diario fotografico in 6 parti: massaggio mattutino, routine completa di rasatura, tempi reali di guarigione, metodo diviso per zone con Guida Definitiva, riconoscimento del razor burn immediato e <strong className="text-cyan-300">menu Foto Prima & Dopo ogni rasatura</strong> (Laterale Sinistro, Frontale, Laterale Destro) con salvataggio sul telefono e backup tra dispositivi.
+          Guida pratica e diario fotografico in 7 parti: massaggio mattutino, routine completa di rasatura, tempi reali di guarigione, metodo diviso per zone, riconoscimento del razor burn immediato, <strong className="text-lime-300">protocollo ogni 7–10 giorni (Nikai, baffetti, diabete &amp; mantenimento)</strong> e <strong className="text-cyan-300">menu Foto Prima &amp; Dopo ogni rasatura</strong>.
         </p>
 
         {/* Tab Filters */}
@@ -116,7 +117,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
                 : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
             }`}
           >
-            Tutte le 5 Guide
+            Tutte le 6 Guide
           </button>
           <button
             type="button"
@@ -128,7 +129,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
             }`}
           >
             <Camera className="w-3.5 h-3.5" />
-            6. Foto Prima & Dopo
+            7. Foto Prima & Dopo
           </button>
           <button
             type="button"
@@ -189,6 +190,18 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
           >
             <Flame className="w-3.5 h-3.5 text-rose-400" />
             5. Razor Burn & Strategia Pelle
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSelectTab('strategia_10_giorni')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'strategia_10_giorni'
+                ? 'bg-lime-400 text-black shadow-md shadow-lime-400/30 font-black'
+                : 'bg-lime-500/10 text-lime-300 hover:text-white border border-lime-500/30'
+            }`}
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-lime-400" />
+            6. Cadenza 7–10 gg, Nikai &amp; Diabete
           </button>
         </div>
       </div>
@@ -1269,7 +1282,137 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
       )}
 
       {/* ============================================================= */}
-      {/* SEZIONE 6: MENU FOTO PRIMA & DOPO OGNI RASATURA               */}
+      {/* SEZIONE 6: PROTOCOLLO 7-10 GIORNI, NIKAI, DIABETE & MANTENIMENTO */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'strategia_10_giorni') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-lime-500/20 text-lime-300 border border-lime-500/30">
+                <ShieldCheck className="w-4 h-4 text-lime-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-lime-400">
+                  Parte 6 • Protocollo Ordinato &amp; Completo
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Cadenza 7–10 Giorni, Meccanica del Nikai, Diabete &amp; Mantenimento
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-lime-500/15 text-lime-300 border border-lime-500/30">
+              ~3 Volte / Mese
+            </span>
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-br from-lime-950/30 via-black/90 to-emerald-950/25 border-2 border-lime-500/40 space-y-4 shadow-[0_0_25px_rgba(132,204,22,0.12)]">
+            {/* 1. PERCHÉ CON IL DIABETE SERVE PIÙ RISPETTO BIOLOGICO */}
+            <div className="p-3.5 rounded-2xl bg-rose-950/30 border border-rose-500/35 space-y-1.5 text-xs text-gray-200 leading-relaxed">
+              <strong className="text-rose-300 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                <HeartPulse className="w-4 h-4 text-rose-400 shrink-0" />
+                1. La Base Biologica: Diabete &amp; Tempi di Rigenerazione Cutanea
+              </strong>
+              <p>
+                Con il <strong className="text-white">diabete</strong> i tempi fisiologici di microcircolazione, rigenerazione dell&apos;epidermide e cicatrizzazione sono più lenti: ogni micro-lesione da lametta resta esposta più a lungo al rischio di infiammarsi o infettarsi. Ridurre al minimo lo stress meccanico sul viso è quindi la strategia più intelligente.
+              </p>
+            </div>
+
+            {/* 2. CONFRONTO 3-4 GIORNI VS 7-10 GIORNI */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div className="p-3.5 rounded-2xl bg-rose-950/20 border border-rose-500/30 space-y-2">
+                <span className="text-[11px] font-black uppercase tracking-wider text-rose-300 block">
+                  ❌ Rasatura Frequente (ogni 3–4 giorni)
+                </span>
+                <ul className="space-y-1.5 text-gray-200 list-disc pl-4 leading-relaxed">
+                  <li><strong>Pelo corto e duro (&quot;puntino&quot;):</strong> più rigido e resistente subito dopo la crescita.</li>
+                  <li><strong>Barriera mai riparata:</strong> la lama passa sullo strato corneo prima che il film idrolipidico sia guarito → micro-infiammazione costante, pori aperti, puntini rossi e razor burn.</li>
+                </ul>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-emerald-950/25 border border-emerald-500/35 space-y-2">
+                <span className="text-[11px] font-black uppercase tracking-wider text-emerald-300 block">
+                  ✅ Rasatura Distanziata (ogni 7–10 giorni • ~3/mese)
+                </span>
+                <ul className="space-y-1.5 text-gray-200 list-disc pl-4 leading-relaxed">
+                  <li><strong>Ciclo di riparazione completo:</strong> 10 giorni chiudono i pori, ricostruiscono difese locali e barriera cutanea senza accumulare traumi.</li>
+                  <li><strong>Taglio più netto:</strong> il pelo più lungo è più morbido; <strong className="text-white">accortezza fondamentale:</strong> se è molto lungo, NON passare subito il monolama (si intasa e richiede più passate). Prima accorcia a secco col Nikai, poi lava il viso, molta schiuma e <strong className="text-emerald-200">1 sola passata pulita col Gillette</strong> dall&apos;alto verso il basso (zero pressione, zero contropelo).</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* 3. COME FUNZIONA IL NIKAI & REGOLA BAFFETTI */}
+            <div className="p-4 rounded-2xl bg-black/60 border border-cyan-500/30 space-y-3 text-xs text-gray-200 leading-relaxed">
+              <strong className="text-cyan-300 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                <Scissors className="w-4 h-4 text-cyan-400 shrink-0" />
+                2. Fisica del Nikai (Zero Microlesioni) &amp; Regola Esatta per i Baffetti
+              </strong>
+
+              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 space-y-1.5">
+                <strong className="text-white block">Come taglia il Nikai senza mai graffiare la pelle:</strong>
+                <p>
+                  Ha due testine dentate sovrapposte (una lama fissa arrotondata che appoggia come guida e una mobile dietro che scorre tipo forbice meccanica). Taglia solo il pelo che entra nei dentini lasciandolo a <strong className="text-cyan-300">0,4–0,5 mm</strong>: poiché la punta rimane fuori dal poro, è fisicamente impossibile che rientri sotto pelle e diventi incarnito.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="p-3 rounded-xl bg-cyan-950/25 border border-cyan-500/25 space-y-1">
+                  <strong className="text-cyan-300 block">Baffetti con Nikai (Consigliato)</strong>
+                  <p>
+                    Appoggiare il regolabarba <strong>piatto a secco</strong> sul labbro superiore è sicuro ed è il modo giusto: scorri leggero senza schiacciare con forza e <strong>non metterlo di punta a 90°</strong> (gli angoli dei dentini possono pizzicare).
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-amber-950/25 border border-amber-500/25 space-y-1">
+                  <strong className="text-amber-300 block">Baffetti con Gillette Monolama</strong>
+                  <p>
+                    La pelle del labbro superiore è più sottile e curva: tieni angolo di ~30° senza premere, tanta schiuma, <strong>1 sola passata dall&apos;alto verso il basso</strong> e gira intorno a eventuali brufoletti attivi (se li decapiti si infiammano).
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 4. COLLO VS ACNE ZIGOMI & IL MESE DI RINNOVAMENTO (28-30 GIORNI) */}
+            <div className="p-4 rounded-2xl bg-purple-950/25 border border-purple-500/30 space-y-2.5 text-xs text-gray-200 leading-relaxed">
+              <strong className="text-purple-300 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                <Clock className="w-4 h-4 text-purple-400 shrink-0" />
+                3. Collo/Mascella vs Acne sugli Zigomi &amp; Ciclo Completo di 1 Mese (28–30 gg)
+              </strong>
+              <ul className="space-y-1.5 list-disc pl-5">
+                <li>
+                  <strong className="text-white">Effetto diretto vs indiretto:</strong> radersi ogni 10 giorni azzera i puntini rossi su collo e mascella; non cura da solo i brufoletti adolescenziali sugli zigomi (che dipendono da ormoni e sebo), <strong>MA fa un&apos;enorme differenza indiretta</strong> perché toglie il trauma continuo e permette alle difese cutanee di concentrarsi al 100% sul guarire i pori con la skincare.
+                </li>
+                <li>
+                  <strong className="text-white">Cosa succede in 1 mese continuo (28–30 giorni):</strong> i cheratinociti completano un intero ciclo di ricambio cellulare. L&apos;acido salicilico liposolubile la sera libera i dotti sebacei, il pH cutaneo si stabilizza frenando il batterio <em>Cutibacterium acnes</em>, lo strato corneo si rinforza (rispettando i tempi del diabete) e la crema solare al mattino protegge dai segni.
+                </li>
+              </ul>
+            </div>
+
+            {/* 5. DOPO LA GUARIGIONE: MANTENIMENTO & FUTURI SFOGHI */}
+            <div className="p-4 rounded-2xl bg-emerald-950/30 border border-emerald-500/35 space-y-2.5 text-xs text-gray-200 leading-relaxed">
+              <strong className="text-emerald-300 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                4. Fase di Mantenimento (A Pelle Guarita) &amp; Eventuali Ritorni di Fiamma
+              </strong>
+              <div className="space-y-2">
+                <div className="p-2.5 rounded-xl bg-black/50 border border-white/10">
+                  <strong className="text-white block">• Come scalare la skincare:</strong>
+                  Quando i pori saranno puliti, l&apos;acido salicilico si scala a <strong>2–3 sere a settimana</strong> (prevenzione leggera); la <strong>protezione solare al mattino</strong> resta fissa. La barriera cutanea risulterà molto più forte contro freddo, vento e sudore.
+                </div>
+                <div className="p-2.5 rounded-xl bg-black/50 border border-white/10">
+                  <strong className="text-white block">• Come radersi più spesso restando sempre in ordine:</strong>
+                  Per vederti pulito ogni <strong>2–3 giorni</strong> passa il <strong className="text-cyan-300">Nikai a secco</strong> (zero microlesioni). Usa il <strong className="text-emerald-300">Gillette monolama</strong> solo 1–2 volte a settimana quando vuoi il liscio totale (lama fresca, molta schiuma, zero pressione, zero contropelo).
+                </div>
+                <div className="p-2.5 rounded-xl bg-black/50 border border-white/10">
+                  <strong className="text-white block">• E se rispunta qualche brufoletto isolato?</strong>
+                  Con la fine dello sviluppo le ghiandole sebacee si calmano definitivamente. Se dovesse uscire un singolo brufolo per stress, cibo o sudore in palestra, basterà applicare l&apos;acido salicilico per spegnerlo in <strong>2–3 giorni</strong> senza mai tornare al punto di partenza.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 7: MENU FOTO PRIMA & DOPO OGNI RASATURA               */}
       {/* ============================================================= */}
       {activeTab === 'foto_rasatura' && <ShavingPhotoTrackerSection />}
 
@@ -1284,10 +1427,10 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
             </span>
             <div>
               <span className="text-[10px] font-black uppercase tracking-wider text-cyan-300 block">
-                Parte 6 • Nuovo Menu Interattivo
+                Parte 7 • Menu Interattivo
               </span>
               <h3 className="text-sm font-black text-white">
-                Foto Prima & Dopo Ogni Rasatura (Sinistro · Frontale · Destro)
+                Foto Prima &amp; Dopo Ogni Rasatura (Sinistro · Frontale · Destro)
               </h3>
               <p className="text-[11px] text-gray-300 mt-0.5">
                 Carica le foto dal telefono con giorno/ora automatici, vedi le differenze e fai il backup tra telefoni.

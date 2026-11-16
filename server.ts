@@ -5,7 +5,7 @@ import { createServer as createViteServer } from "vite";
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
 
   // Support JSON and urlencoded for media uploads
   app.use(express.json({ limit: "15mb" }));
@@ -73,7 +73,11 @@ async function startServer() {
   // Vite middleware in dev mode
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: {
+        middlewareMode: true,
+        allowedHosts: true,
+        hmr: false,
+      },
       appType: "spa",
     });
     app.use(vite.middlewares);
@@ -92,4 +96,5 @@ async function startServer() {
 
 startServer().catch((err) => {
   console.error("Failed to start server:", err);
+  process.exit(1);
 });

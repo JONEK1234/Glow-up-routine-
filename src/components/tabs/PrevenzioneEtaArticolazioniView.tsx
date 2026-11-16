@@ -25,7 +25,7 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
   onBack,
   initialTab
 }) => {
-  type TabId = 'tutte' | 'eta_articolazioni' | 'massa_lavoro';
+  type TabId = 'tutte' | 'eta_articolazioni' | 'massa_lavoro' | 'diabete_prevenzione';
   const [activeTab, setActiveTab] = useState<TabId>((initialTab as TabId) || 'tutte');
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -59,7 +59,7 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
         </button>
         <span className="text-[11px] font-bold text-lime-300 bg-lime-500/10 px-3 py-1 rounded-xl border border-lime-500/20 flex items-center gap-1.5">
           <ShieldCheck className="w-3.5 h-3.5 text-lime-400" />
-          Prevenzione &amp; Longevità
+          Prevenzione &amp; Diabete
         </span>
       </div>
 
@@ -71,20 +71,20 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
             ★ Note Scritte Da Me
           </span>
           <span className="text-[10px] text-gray-400 font-semibold">
-            Assicurazione Biologica • 2 Note Complete
+            Assicurazione Biologica &amp; Diabete Tipo 1 • 3 Note Complete
           </span>
         </div>
 
         <h1 className="text-xl sm:text-2xl font-black text-white leading-tight uppercase tracking-tight">
-          Prevenzione Età e Articolazioni
+          Prevenzione Età, Articolazioni &amp; Diabete
         </h1>
 
         <p className="text-xs text-gray-300 leading-relaxed font-medium">
-          Come quello che costruisci oggi a 16 anni (pesi, 10.000 passi, calisthenics e mobilità) crea una corazza permanente per ossa, muscoli, mionuclei e schiena — e come organizzare il mantenimento della massa anche con un lavoro manuale faticoso.
+          Come quello che costruisci oggi a 16 anni con il <strong className="text-rose-300">diabete</strong> (pesi, 10.000 passi, calisthenics, mobilità e controllo glicemico) crea una corazza permanente per ossa, muscoli, tendini e vasi sanguigni — e come gestire lavoro manuale, massa e fisiologia del diabete nelle varie fasi della vita.
         </p>
 
-        {/* Tasti Rapidi per le 2 Note */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+        {/* Tasti Rapidi per le 3 Note */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
           <button
             type="button"
             onClick={() => handleSelectTab('eta_articolazioni')}
@@ -96,10 +96,10 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
               </span>
               <div className="min-w-0">
                 <span className="text-[10px] font-black uppercase tracking-wider text-lime-400 block">
-                  Nota 1 • Longevità &amp; Schiena
+                  Nota 1 • Longevità
                 </span>
                 <span className="text-xs font-extrabold text-white block truncate">
-                  Età, Ossa, Mionuclei &amp; Articolazioni
+                  Età, Ossa &amp; Articolazioni
                 </span>
               </div>
             </div>
@@ -119,14 +119,37 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
               </span>
               <div className="min-w-0">
                 <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block">
-                  Nota 2 • Lavoro &amp; Palestra
+                  Nota 2 • Lavoro &amp; Età
                 </span>
                 <span className="text-xs font-extrabold text-white block truncate">
-                  Mantenere Massa con Lavoro Pesante
+                  Massa, Lavoro &amp; Diabete
                 </span>
               </div>
             </div>
             <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-amber-500/20 text-amber-300 shrink-0 ml-2">
+              Apri →
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleSelectTab('diabete_prevenzione')}
+            className="p-3 rounded-2xl bg-gradient-to-r from-rose-950/60 via-pink-950/40 to-black/70 border border-rose-500/45 hover:border-rose-400 transition-all cursor-pointer group flex items-center justify-between text-left"
+          >
+            <div className="flex items-center space-x-2.5 min-w-0">
+              <span className="p-2 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30 group-hover:bg-rose-400 group-hover:text-black transition-all shrink-0">
+                <HeartPulse className="w-4 h-4" />
+              </span>
+              <div className="min-w-0">
+                <span className="text-[10px] font-black uppercase tracking-wider text-rose-400 block">
+                  Nota 3 • Scienza Diabete
+                </span>
+                <span className="text-xs font-extrabold text-white block truncate">
+                  Cosa Succede Col Diabete
+                </span>
+              </div>
+            </div>
+            <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-rose-500/20 text-rose-300 shrink-0 ml-2">
               Apri →
             </span>
           </button>
@@ -138,19 +161,19 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
         <button
           type="button"
           onClick={() => handleSelectTab('tutte')}
-          className={`flex-1 min-w-[90px] py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[85px] py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
             activeTab === 'tutte'
               ? 'bg-lime-400 text-black shadow-sm'
               : 'text-gray-300 hover:text-white'
           }`}
         >
           <Layers className="w-3.5 h-3.5" />
-          <span>Tutte (2)</span>
+          <span>Tutte (3)</span>
         </button>
         <button
           type="button"
           onClick={() => handleSelectTab('eta_articolazioni')}
-          className={`flex-1 min-w-[120px] py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[115px] py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
             activeTab === 'eta_articolazioni'
               ? 'bg-emerald-400 text-black shadow-sm'
               : 'text-gray-300 hover:text-white'
@@ -162,7 +185,7 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
         <button
           type="button"
           onClick={() => handleSelectTab('massa_lavoro')}
-          className={`flex-1 min-w-[120px] py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[115px] py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
             activeTab === 'massa_lavoro'
               ? 'bg-amber-400 text-black shadow-sm'
               : 'text-gray-300 hover:text-white'
@@ -170,6 +193,18 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
         >
           <Briefcase className="w-3.5 h-3.5" />
           <span>2. Massa &amp; Lavoro</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => handleSelectTab('diabete_prevenzione')}
+          className={`flex-1 min-w-[115px] py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+            activeTab === 'diabete_prevenzione'
+              ? 'bg-rose-400 text-black shadow-sm'
+              : 'text-rose-200 hover:text-white'
+          }`}
+        >
+          <HeartPulse className="w-3.5 h-3.5" />
+          <span>3. Diabete &amp; Corpo</span>
         </button>
       </div>
 
@@ -281,10 +316,20 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
                     <span className="text-gray-300">Mantiene elastici tendini e articolazioni, prevenendo la rigidità cronica.</span>
                   </div>
                   <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
-                    <strong className="text-amber-300 block">4. Proteine e nutrizione di qualità</strong>
-                    <span className="text-gray-300">Garantiscono i &quot;mattoni&quot; per la manutenzione continua lungo i decenni.</span>
+                    <strong className="text-amber-300 block">4. Proteine, nutrizione &amp; controllo glicemia</strong>
+                    <span className="text-gray-300">Mattoni per la manutenzione e glicemia stabile per proteggere tendini, vasi e ossa dal diabete.</span>
                   </div>
                 </div>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-rose-950/30 border border-rose-500/35 space-y-1.5 text-xs text-gray-200 leading-relaxed">
+                <strong className="text-rose-300 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                  <HeartPulse className="w-4 h-4 text-rose-400 shrink-0" />
+                  Perché con il Diabete Questa Banca Vale Doppio
+                </strong>
+                <p>
+                  Avendo il <strong className="text-white">diabete</strong> (con microinfusore), mantenere muscoli attivi e poca massa grassa viscerale non è solo estetica: il muscolo è il più grande consumatore di glucosio del corpo. Più muscoli + mobilità costruisci oggi, più proteggi tendini (evitando che gli zuccheri li irrigidiscano), ossa e microcircolazione per i prossimi 50 anni. <em className="text-rose-200">(Vedi Nota 3 per la spiegazione scientifica completa).</em>
+                </p>
               </div>
             </div>
 
@@ -540,7 +585,7 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-xs font-black text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
                       <Zap className="w-4 h-4 text-emerald-400 shrink-0" />
-                      1. Tu Ora da Giovane (16–25 anni)
+                      1. Tu Ora da Giovane (16–25 anni • con Diabete)
                     </span>
                     <span className="text-[10px] font-black px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 shrink-0">
                       Costruzione + Lavoro
@@ -548,10 +593,10 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
                   </div>
                   <ul className="text-xs text-gray-200 space-y-1.5 list-disc pl-5 leading-relaxed">
                     <li>
-                      <strong className="text-white">Recupero fulmineo &amp; picco ormonale:</strong> il tuo corpo recupera molto più in fretta rispetto a un adulto. Anche se fai un lavoro manuale (estivo o fisso), puoi ancora <strong>costruire nuova massa, ossa dense e mionuclei permanenti</strong> (&quot;mettere soldi in banca&quot;).
+                      <strong className="text-white">Recupero fulmineo &amp; picco ormonale:</strong> il tuo corpo recupera molto più in fretta rispetto a un adulto. Anche se fai un lavoro manuale, puoi ancora <strong>costruire nuova massa, ossa dense e mionuclei permanenti</strong> (&quot;mettere soldi in banca&quot;), potenziando al massimo la tua sensibilità all&apos;insulina.
                     </li>
                     <li>
-                      <strong className="text-white">Come organizzarti:</strong> fai 2–3 sedute brevi ma intense nei giorni più scarichi o liberi. Nelle sere in cui rientri stanco marcio, <em>niente cedimento distruttivo</em>: mangia proteine a sufficienza e dormi per far lavorare il recupero.
+                      <strong className="text-white">Gestione lavoro + diabete:</strong> il lavoro fisico consuma glucosio per ore (rischio ipoglicemie ritardate se la basale del microinfusore è invariata): tieni sempre zuccheri rapidi in tasca e nelle sere in cui rientri stanco marcio <em>niente cedimento distruttivo</em>, così eviti picchi di cortisolo che alzano la glicemia.
                     </li>
                   </ul>
                 </div>
@@ -561,18 +606,18 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-xs font-black text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
                       <Briefcase className="w-4 h-4 text-amber-400 shrink-0" />
-                      2. Tu da Adulto (30–50 anni)
+                      2. Tu da Adulto (30–50 anni • con Diabete)
                     </span>
                     <span className="text-[10px] font-black px-2 py-0.5 rounded-lg bg-amber-500/20 text-amber-200 border border-amber-400/30 shrink-0">
-                      Difesa Massa &amp; Schiena
+                      Difesa Massa &amp; Tendini
                     </span>
                   </div>
                   <ul className="text-xs text-gray-200 space-y-1.5 list-disc pl-5 leading-relaxed">
                     <li>
-                      <strong className="text-white">Cortisolo più alto &amp; meno tempo:</strong> tra lavoro, orari stretti e responsabilità, il recupero si accorcia e l&apos;usura ripetitiva di spalle, polsi e zona lombare si fa sentire se non la compensi.
+                      <strong className="text-white">Cortisolo più alto &amp; recupero microvascolare:</strong> tra lavoro, orari stretti e diabete, la riparazione cellulare di pelle, tendini e zone lombari richiede più attenzione, e lo stress lavorativo tende ad alzare la glicemia.
                     </li>
                     <li>
-                      <strong className="text-white">Come organizzarti:</strong> usi il lavoro come movimento quotidiano (cardio/passi), e tieni <strong>2–3 Richiami Minimi a settimana (25–35 min)</strong> con esercizi controllati + rinforzo di <em>core, glutei e dorso</em> per annullare le asimmetrie lavorative ed evitare il mal di schiena cronico.
+                      <strong className="text-white">Come organizzarti:</strong> usi il lavoro come movimento quotidiano per bruciare glucosio (abbassando il fabbisogno di insulina), e tieni <strong>2–3 Richiami Minimi a settimana (25–35 min)</strong> + mobilità articolare attiva + rinforzo di <em>core, glutei e dorso</em> per evitare rigidità tendinea e mal di schiena cronico.
                     </li>
                   </ul>
                 </div>
@@ -582,7 +627,7 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-xs font-black text-cyan-300 uppercase tracking-wider flex items-center gap-1.5">
                       <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0" />
-                      3. Tu da Anziano (60–70+ anni)
+                      3. Tu da Anziano (60–70+ anni • con Diabete)
                     </span>
                     <span className="text-[10px] font-black px-2 py-0.5 rounded-lg bg-cyan-500/20 text-cyan-200 border border-cyan-400/30 shrink-0">
                       Rendita &amp; Zero Usura
@@ -590,12 +635,140 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
                   </div>
                   <ul className="text-xs text-gray-200 space-y-1.5 list-disc pl-5 leading-relaxed">
                     <li>
-                      <strong className="text-white">Vivi di rendita biologica:</strong> non devi più rincorrere pesoni o sfinirti dopo una giornata pesante. Qui scatta l&apos;effetto dei mionuclei e della densità ossea costruiti da giovane: il tuo punto di partenza resta enormemente sopra la media.
+                      <strong className="text-white">Vivi di rendita biologica (muscolo = scudo glicemico):</strong> non devi più rincorrere pesoni o sfinirti. Qui scatta l&apos;effetto dei mionuclei e della densità ossea costruiti da giovane: conservi un grande serbatoio muscolare che assorbe gli zuccheri e protegge da osteoporosi e fragilità tipiche del diabete avanzato.
                     </li>
                     <li>
-                      <strong className="text-white">Come organizzarti:</strong> zero massimali e zero cedimento. Bastano stimoli leggeri ma regolari (pesi moderati, elastici, corpo libero dolce, mobilità articolare attiva e camminate) per proteggere le articolazioni, tenere fluido il liquido sinoviale e conservare il <strong>70–80% della struttura</strong> restando forte e autonomo.
+                      <strong className="text-white">Come organizzarti:</strong> zero massimali e zero cedimento (per non rallentare i tempi di recupero). Bastano stimoli leggeri ma regolari (pesi moderati, elastici, mobilità articolare e camminate) per tenere elastico il collagene, attiva la microcircolazione e conservare il <strong>70–80% della struttura</strong>.
                     </li>
                   </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ================================================================= */}
+        {/* NOTA 3: IO CHE HO IL DIABETE — SPIEGAZIONE SCIENTIFICA COMPLETA   */}
+        {/* ================================================================= */}
+        {(activeTab === 'tutte' || activeTab === 'diabete_prevenzione') && (
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2 pl-1 border-b border-white/10 pb-2">
+              <span className="p-1.5 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                <HeartPulse className="w-4 h-4" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-rose-400 block">
+                  Nota 3 • Biologia &amp; Scienza Specifica per Te
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Io Che Ho il Diabete: Cosa Mi Succede Scientificamente (Articolazioni, Muscoli, Ossa &amp; Età)
+                </h2>
+              </div>
+            </div>
+
+            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-rose-500/35 space-y-4 bg-gradient-to-br from-rose-950/25 via-black/80 to-amber-950/20">
+              <div className="space-y-1">
+                <span className="text-[10px] font-black uppercase tracking-widest text-rose-400">
+                  Fisiologia Reale Senza Terrorismo
+                </span>
+                <h3 className="text-sm sm:text-base font-black text-white">
+                  Cosa Cambia Davvero nel Tuo Corpo Col Diabete — e Perché Ciò Che Fai Oggi Ti Protegge al 100%
+                </h3>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  Avere il diabete non significa essere fragili: significa che la gestione dell&apos;energia cellulare (glucosio e insulina) è nelle tue mani invece che automatica. Scientificamente, ecco i <strong className="text-white">4 meccanismi biologici reali</strong> che riguardano chi ha il diabete lungo la vita e come il tuo allenamento li neutralizza:
+                </p>
+              </div>
+
+              {/* 1. GLICAZIONE DEL COLLAGENE (AGEs) */}
+              <div className="p-3.5 rounded-2xl bg-black/55 border border-rose-500/30 space-y-2 text-xs text-gray-200 leading-relaxed">
+                <strong className="text-rose-300 block uppercase tracking-wider text-[11px]">
+                  1. Glicazione del Collagene (AGEs): Tendini, Fascia e Cartilagine
+                </strong>
+                <p>
+                  Quando la glicemia resta alta per molte ore o anni (iperglicemia cronica), le molecole di zucchero in eccesso nel sangue si &quot;incollano&quot; spontaneamente alle fibre di <strong className="text-white">collagene</strong> che formano tendini, legamenti, capsule articolari e pelle. Questo processo chimico si chiama <strong className="text-rose-200">glicazione</strong> e crea composti chiamati <strong>AGEs (Advanced Glycation End-products)</strong>.
+                </p>
+                <ul className="space-y-1 list-disc pl-5">
+                  <li>
+                    <strong className="text-white">Effetto fisico:</strong> gli AGEs creano dei &quot;ponti rigidi&quot; tra le fibre del collagene, rendendo i tendini meno elastici e le articolazioni (spalle, mani, caviglie, schiena) più propense a irrigidirsi con gli anni.
+                  </li>
+                  <li>
+                    <strong className="text-emerald-300">Il tuo scudo scientifico:</strong> tenere la variabilità glicemica bassa + fare <strong className="text-white">mobilità articolare attiva e pesi controllati</strong> stimola il ricambio continuo del collagene e mantiene fluido il liquido sinoviale, impedendo alle fibre di &quot;caramellarsi&quot;.
+                  </li>
+                </ul>
+              </div>
+
+              {/* 2. MICROCIRCOLAZIONE & TEMPI DI GUARIGIONE */}
+              <div className="p-3.5 rounded-2xl bg-black/55 border border-amber-500/30 space-y-2 text-xs text-gray-200 leading-relaxed">
+                <strong className="text-amber-300 block uppercase tracking-wider text-[11px]">
+                  2. Microcircolazione, Infiammazione &amp; Tempi di Recupero / Cicatrizzazione
+                </strong>
+                <p>
+                  I capillari più sottili (microcircolo di pelle, gengive, tendini e muscoli) sono molto sensibili agli sbalzi glicemici. Con il diabete, i tempi fisiologici di <strong className="text-white">riparazione dei tessuti</strong> (un graffio, la pelle dopo il rasoio, una micro-lacerazione muscolare o un tendine infiammato) sono leggermente più lenti rispetto a un non-diabetico.
+                </p>
+                <ul className="space-y-1 list-disc pl-5">
+                  <li>
+                    <strong className="text-white">Cosa cambia in pratica:</strong> accumulare micro-traumi continui (rasatura aggressiva ogni 2 giorni, o palestra a cedimento distruttivo quando sei già distrutto dal lavoro) sovraccarica la risposta immunitaria e allunga i tempi di infiammazione.
+                  </li>
+                  <li>
+                    <strong className="text-emerald-300">Il tuo scudo scientifico:</strong> i <strong className="text-white">10.000 passi giornalieri</strong> pompano sangue ricco di ossigeno e ossido nitrico nei capillari mantenendoli aperti e giovani; rispettare i tempi di recupero (sonno, proteine, serie pulite senza distruggerti) azzera la differenza biologica.
+                  </li>
+                </ul>
+              </div>
+
+              {/* 3. MUSCOLO = SPUGNA GLUT4 INDIPENDENTE DALL'INSULINA */}
+              <div className="p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-500/35 space-y-2 text-xs text-gray-200 leading-relaxed">
+                <strong className="text-emerald-300 block uppercase tracking-wider text-[11px]">
+                  3. Il Muscolo come &quot;Spugna Metabolica&quot; (Trasportatori GLUT4)
+                </strong>
+                <p>
+                  Questo è il superpotere più sottovalutato per chi ha il diabete: normalmente per far entrare lo zucchero dal sangue dentro le cellule serve l&apos;insulina (che tu gestisci col microinfusore). Ma quando un muscolo si contrae (pesi, flessioni, trazioni, camminata), attiva sulla membrana delle cellule muscolari i trasportatori <strong className="text-white">GLUT4 in modo INDIPENDENTE dall&apos;insulina</strong>.
+                </p>
+                <ul className="space-y-1 list-disc pl-5">
+                  <li>
+                    <strong className="text-emerald-200">Più massa magra hai, più grande è il tuo serbatoio di glicogeno:</strong> la stessa pasta o pasto causa picchi glicemici molto più piccoli perché i muscoli &quot;aspirano&quot; glucosio per ricaricarsi (effetto spugna fino a 24–48 ore), tenendoti lontano dall&apos;insulino-resistenza anche da adulto e da anziano.
+                  </li>
+                  <li>
+                    <strong className="text-white">Attenzione al contrario (Cortisolo &amp; Chetoni):</strong> se ti alleni senza energia o con insulina mancante, cortisolo e adrenalina fanno alzare la glicemia invece di abbassarla. Ecco perché tecnica pulita + gestione dei boli intorno all&apos;allenamento fanno tutta la differenza.
+                  </li>
+                </ul>
+              </div>
+
+              {/* 4. DENSITÀ OSSEA & SISTEMA VASCOLARE NEGLI ANNI */}
+              <div className="p-3.5 rounded-2xl bg-cyan-950/30 border border-cyan-500/30 space-y-2 text-xs text-gray-200 leading-relaxed">
+                <strong className="text-cyan-300 block uppercase tracking-wider text-[11px]">
+                  4. Ossa (Osteopatia Diabetica) &amp; Arterie nel Lungo Periodo
+                </strong>
+                <p>
+                  La ricerca scientifica mostra che nel diabete di lunga durata (soprattutto se sedentari) gli osteoblasti — le cellule che costruiscono nuovo osso — lavorano un po&apos; più lentamente, e i vasi sanguigni tendono a perdere elasticità prima della media.
+                </p>
+                <p>
+                  <strong className="text-cyan-200">Perché il tuo stile di vita annulla questo rischio:</strong> il carico meccanico dei pesi obbliga per legge fisica le ossa a depositare calcio (legge di Wolff), mentre la camminata quotidiana e il poco grasso viscerale mantengono pulite le arterie. Avere il diabete <em>ben gestito</em> ed essere un atleta costante ti rende biologicamente molto più sano di un coetaneo non-diabetico sedentario.
+                </p>
+              </div>
+
+              {/* RIEPILOGO OPERATIVO */}
+              <div className="p-3.5 rounded-2xl bg-black/65 border border-lime-500/35 space-y-2 text-xs">
+                <span className="text-[11px] font-black text-lime-300 uppercase tracking-wider flex items-center gap-1.5">
+                  <Dumbbell className="w-4 h-4 text-lime-400 shrink-0" />
+                  Riassunto Operativo: Le 4 Regole d&apos;Oro con il Diabete
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-200">
+                  <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
+                    <strong className="text-rose-300 block">1. Glicemia in range = Tendini giovani</strong>
+                    Meno ore sopra 180 mg/dL = meno AGEs sul collagene e articolazioni sempre sciolte.
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
+                    <strong className="text-emerald-300 block">2. Difendi i muscoli a ogni età</strong>
+                    Sono il tuo organo salva-glicemia (GLUT4) oltre che la tua forza fisica.
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
+                    <strong className="text-amber-300 block">3. Rispetta il recupero</strong>
+                    Con il diabete la pelle e i tessuti chiedono zero traumi inutili e buon sonno/proteine.
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
+                    <strong className="text-cyan-300 block">4. 10.000 passi + Mobilità</strong>
+                    Garantiscono microcircolazione perfetta alle estremità e dischi idratati per decenni.
+                  </div>
                 </div>
               </div>
             </div>

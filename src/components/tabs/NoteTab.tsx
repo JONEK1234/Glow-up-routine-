@@ -2089,7 +2089,7 @@ export const NoteTab: React.FC = () => {
                   <Scissors className="w-3 h-3 text-emerald-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">6 Parti: 5 Guide + 📸 Foto Prima & Dopo</span>
+                <span className="text-[10px] text-gray-400 font-semibold">7 Parti: 6 Guide + 📸 Foto Prima & Dopo</span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-emerald-300 transition-colors uppercase tracking-tight">
@@ -2097,7 +2097,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Massaggio mattutino, metodo diviso per zone, Guida Definitiva, razor burn vs peli incarniti, strategia pelle e <strong className="text-cyan-300">nuovo menu Foto Prima & Dopo</strong> (Laterale Sinistro, Frontale, Laterale Destro) con data/ora automatiche e backup tra telefoni.
+                Massaggio mattutino, metodo diviso per zone, razor burn, <strong className="text-lime-300">protocollo 7–10 gg (Nikai, baffetti, diabete &amp; mantenimento)</strong> e <strong className="text-cyan-300">Foto Prima &amp; Dopo</strong> con data/ora e backup tra telefoni.
               </p>
             </div>
 
@@ -2108,10 +2108,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-emerald-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire guida & diario foto rasatura</span>
+              <span>Tocca per aprire guide, protocollo 10 gg &amp; foto</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">6 Parti • Foto Prima/Dopo & Backup</span>
+            <span className="text-[10px] text-gray-400 font-semibold">7 Parti • 6 Guide + Foto Prima/Dopo</span>
           </div>
         </div>
       </div>
@@ -2395,11 +2395,11 @@ export const NoteTab: React.FC = () => {
       </div>
 
       {/* ------------------------------------------------------------- */}
-      {/* CARD: "PREVENZIONE ETÀ E ARTICOLAZIONI" (2 NOTE)               */}
+      {/* CARD: "PREVENZIONE ETÀ E ARTICOLAZIONI" (3 NOTE)               */}
       {/* ------------------------------------------------------------- */}
       <div className="space-y-2">
         <span className="text-[11px] font-bold text-lime-400 uppercase tracking-wider block pl-1">
-          Nuova Nota Personale • Longevità, Articolazioni &amp; Lavoro
+          Nuova Nota Personale • Longevità, Articolazioni, Lavoro &amp; Diabete
         </span>
 
         <div
@@ -2416,19 +2416,22 @@ export const NoteTab: React.FC = () => {
                   ★ Note Scritte Da Me
                 </span>
                 <span className="text-[10px] text-emerald-300 font-extrabold bg-emerald-500/15 px-2 py-0.5 rounded-md border border-emerald-500/30">
-                  🦴 1. Età, Super-Aging &amp; Mionuclei
+                  🦴 1. Età &amp; Mionuclei
                 </span>
                 <span className="text-[10px] text-amber-300 font-extrabold bg-amber-500/15 px-2 py-0.5 rounded-md border border-amber-500/30">
-                  💼 2. Massa &amp; Lavoro Manuale
+                  💼 2. Lavoro &amp; 3 Età
+                </span>
+                <span className="text-[10px] text-rose-300 font-extrabold bg-rose-500/15 px-2 py-0.5 rounded-md border border-rose-500/30">
+                  🩸 3. Scienza Diabete
                 </span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-lime-300 transition-colors uppercase tracking-tight">
-                Prevenzione età e articolazioni
+                Prevenzione età, articolazioni &amp; diabete
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Nota 1: &quot;Banca dei muscoli e delle ossa&quot;, mobilità articolare attiva, Super-Aging, mionuclei permanenti e armatura contro il mal di schiena. Nota 2: organizzazione tra lavoro manuale pesante, cortisolo e strategia del Richiamo Minimo.
+                Nota 1: Banca muscoli/ossa, mobilità, Super-Aging e mionuclei. Nota 2: Lavoro manuale e gestione nelle 3 età (Giovane, Adulto, Anziano con diabete). Nota 3: Cosa succede scientificamente col diabete (AGEs, collagene, GLUT4, microcircolazione e recupero).
               </p>
             </div>
 
@@ -2439,10 +2442,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-lime-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire le 2 note complete</span>
+              <span>Tocca per aprire le 3 note complete</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">1. Età &amp; Articolazioni • 2. Massa &amp; Lavoro</span>
+            <span className="text-[10px] text-gray-400 font-semibold">1. Età • 2. Lavoro &amp; 3 Età • 3. Diabete</span>
           </div>
         </div>
       </div>
