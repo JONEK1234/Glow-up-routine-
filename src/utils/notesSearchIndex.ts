@@ -6,6 +6,7 @@ export type NoteSectionViewId =
   | 'peli_incarniti'
   | 'shampoo_texture'
   | 'capelli_texture'
+  | 'capelli_mullet'
   | 'palestra_grasso'
   | 'regali_natale'
   | 'diabete_glicemia'
@@ -279,6 +280,82 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     subTabId: 'spruzzino_mullet',
     subTitle: '8. Fisica dello Spruzzino, Diluizione Balsamo & Parte Dietro Mullet',
     text: 'Spruzzino nebulizza superficie radice rompere legami a idrogeno piega notturna ciocche storte rigide mezzo asciutti pesante satura a zone solleva capelli strati interni fredda fradicia distribuisci mani pettine denti larghi micro-goccia balsamo dentro acqua spruzzino agita bene condizionata capelli dietro parte bassa mullet non bagnare ciuffo frontale corona sfumare passaggio beccuccio dita colpo aria volume lucentezza.'
+  },
+
+  // =========================================================================
+  // 6B. CAPELLI MOSSI TEXTURED MESSY MULLET
+  // =========================================================================
+  {
+    id: 'mullet_fisica_spessore',
+    viewId: 'capelli_mullet',
+    sectionTitle: 'Capelli mossi Textured Messy Mullet',
+    sectionBadgeColor: 'teal',
+    subTabId: 'fisica_spessore',
+    subTitle: '1. Fisica Mosso 2B, Capelli Fini Più Spessi & Piano Alimentare Pratico',
+    text: 'Capelli mossi tipo 2B sezione ovale ponti disolfuro legami a idrogeno memoria training 3 4 settimane bubble hair capelli fini spessi pantenolo vitamina B5 proteine idrolizzate cheratina colazione pranzo spuntino cena uova cotte yogurt greco limone vitamina C ferro ferritina semi di zucca zinco noci brasiliane selenio salmone sgombro omega 3 acqua sonno cortisolo.'
+  },
+  {
+    id: 'mullet_crescita_buchi',
+    viewId: 'capelli_mullet',
+    sectionTitle: 'Capelli mossi Textured Messy Mullet',
+    sectionBadgeColor: 'teal',
+    subTabId: 'crescita_buchi',
+    subTitle: '2. Crescita, "Buchi" Davanti, Copertura Fronte & Obiettivo Massimo',
+    text: 'Buchi davanti spazi vuoti sfoltitura forbici sfoltitrici effetto a ciabatta dietro promosso crescita 1 1.2 cm mese 2 3 settimane transizione 1.5 2 cm peso gravitazionale tenda tegola coprire fronte volume spaziale obiettivo massimo non toccare ciuffo.'
+  },
+  {
+    id: 'mullet_taglio_barbiere',
+    viewId: 'capelli_mullet',
+    sectionTitle: 'Capelli mossi Textured Messy Mullet',
+    sectionBadgeColor: 'teal',
+    subTabId: 'taglio_barbiere',
+    subTitle: '3. Taglio Textured Messy Mullet (Wash-and-Wear) & Copione Barbiere',
+    text: 'Textured Messy Mullet Textured Wavy Crop Surf-Style Messy Cut Wash-and-Wear Bedhead Texture barbiere scalatura strategica point cutting evitare forbici sfoltitrici davanti sudore palestra casco.'
+  },
+  {
+    id: 'mullet_prodotti_scienza',
+    viewId: 'capelli_mullet',
+    sectionTitle: 'Capelli mossi Textured Messy Mullet',
+    sectionBadgeColor: 'teal',
+    subTabId: 'prodotti_scienza',
+    subTitle: '4. Prodotti, Dosi Esatte, Opaco vs Bagnato & Tecnica Ibrida',
+    text: 'Balsamo Pantene con o senza risciacquo crema ricci spray sale marino solfato magnesio cloruro sodio crema finale pasta modellante lucida pomade base acqua cera opaca caolino bentonite polvere volumizzante silice sililata ottica luce clumping tecnica ibrida compromesso perfetto dosi pisello chicco di riso.'
+  },
+  {
+    id: 'mullet_lavaggio_asciugatura',
+    viewId: 'capelli_mullet',
+    sectionTitle: 'Capelli mossi Textured Messy Mullet',
+    sectionBadgeColor: 'teal',
+    subTabId: 'lavaggio_asciugatura',
+    subTitle: '5. Guida Minuto per Minuto: Doccia, Pettine Denti Larghi, Calore/Velocità & Diffusore',
+    text: 'Shampoo acqua tiepida balsamo tamponare maglietta cotone scrunching pettine a denti larghi solo bagnati umidi mai asciutti hover diffusing testa in giù velocità 1 minima calore medio dorso mano 3 5 cm colpo aria fredda 5 secondi trucco pantene chicco di riso 2 3 gocce acqua cremina trasparente pettine a pinza 3D.'
+  },
+  {
+    id: 'mullet_mattina_secco',
+    viewId: 'capelli_mullet',
+    sectionTitle: 'Capelli mossi Textured Messy Mullet',
+    sectionBadgeColor: 'teal',
+    subTabId: 'mattina_secco',
+    subTitle: '6. Mattina a Secco (Senza Lavarli): Balsamo+Acqua, Polvere & Durata 16h',
+    text: 'Mattina a secco senza lavare balsamo con acqua effetto bagnato chicco riso 3 5 gocce emulsione mani umide spruzzino polvere volumizzante a secco radici corona combo mattutina durata tutto il giorno post casco vento palestra mani via.'
+  },
+  {
+    id: 'mullet_cute_forfora',
+    viewId: 'capelli_mullet',
+    sectionTitle: 'Capelli mossi Textured Messy Mullet',
+    sectionBadgeColor: 'teal',
+    subTabId: 'cute_forfora',
+    subTitle: '7. Salute Cute, Calendario Settimanale Lavaggi, Forfora vs Buildup',
+    text: 'Forfora cute sebo Malassezia più aria meno calore irritante finta forfora buildup cera polvere spray sale marino secchezza Head and Shoulders massaggio polpastrelli calendario settimanale 2 3 shampoo settimana solo acqua post palestra.'
+  },
+  {
+    id: 'mullet_video_ispirazione',
+    viewId: 'capelli_mullet',
+    sectionTitle: 'Capelli mossi Textured Messy Mullet',
+    sectionBadgeColor: 'teal',
+    subTabId: 'video_ispirazione',
+    subTitle: '8. Tutti i 6 Video TikTok di Riferimento',
+    text: '6 link video TikTok taglio stile diffusore ordine prodotti cera spray pettine phon senza beccuccio.'
   },
 
   // =========================================================================

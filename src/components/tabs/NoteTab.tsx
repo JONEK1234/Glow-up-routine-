@@ -48,6 +48,7 @@ import { MasticazioneMasseteriView } from './MasticazioneMasseteriView';
 import { CapelliTextureFormaPiegaLisciaView } from './CapelliTextureFormaPiegaLisciaView';
 import { DiabeteGlicemiaPalestraView } from './DiabeteGlicemiaPalestraView';
 import { PrevenzioneEtaArticolazioniView } from './PrevenzioneEtaArticolazioniView';
+import { CapelliMossiTexturedMessyMulletView } from './CapelliMossiTexturedMessyMulletView';
 import { scrollToTop } from '../../utils/scrollHelper';
 import { NoteSectionViewId, searchNotesIndex } from '../../utils/notesSearchIndex';
 
@@ -98,7 +99,7 @@ const SCHEMA_IMAGES = [
 ];
 
 export const NoteTab: React.FC = () => {
-  const [activeView, setActiveView] = useState<'list' | 'asimmetria' | 'ortodonzia' | 'postura_occhi' | 'sonno_posizioni' | 'peli_incarniti' | 'shampoo_texture' | 'palestra_grasso' | 'regali_natale' | 'asimmetria_masticazione' | 'capelli_texture' | 'diabete_glicemia' | 'prevenzione_eta'>('list');
+  const [activeView, setActiveView] = useState<'list' | 'asimmetria' | 'ortodonzia' | 'postura_occhi' | 'sonno_posizioni' | 'peli_incarniti' | 'shampoo_texture' | 'palestra_grasso' | 'regali_natale' | 'asimmetria_masticazione' | 'capelli_texture' | 'capelli_mullet' | 'diabete_glicemia' | 'prevenzione_eta'>('list');
   const [userNotes, setUserNotes] = useState<UserNote[]>(() => storageHelper.getUserNotes());
   const [fullscreenImg, setFullscreenImg] = useState<{ url: string; title: string } | null>(null);
   const [faceComparisonMode, setFaceComparisonMode] = useState<'overlay' | 'sideBySide' | 'swipe'>('overlay');
@@ -423,6 +424,13 @@ export const NoteTab: React.FC = () => {
   // -------------------------------------------------------------
   if (activeView === 'capelli_texture') {
     return <CapelliTextureFormaPiegaLisciaView onBack={() => handleOpenView('list')} initialTab={initialSubTab} />;
+  }
+
+  // -------------------------------------------------------------
+  // VIEW: CAPELLI MOSSI TEXTURED MESSY MULLET
+  // -------------------------------------------------------------
+  if (activeView === 'capelli_mullet') {
+    return <CapelliMossiTexturedMessyMulletView onBack={() => handleOpenView('list')} initialTab={initialSubTab} />;
   }
 
   // -------------------------------------------------------------
@@ -1830,7 +1838,7 @@ export const NoteTab: React.FC = () => {
             <Zap className="w-3 h-3 text-cyan-400" />
             Accesso Rapido • Apri Subito
           </span>
-          <span className="text-[10px] font-bold text-gray-500">10 Guide</span>
+          <span className="text-[10px] font-bold text-gray-500">11 Guide</span>
         </div>
 
         <div className="flex flex-wrap gap-1.5">
@@ -1886,6 +1894,15 @@ export const NoteTab: React.FC = () => {
           >
             <Wind className="w-3 h-3 text-sky-400 shrink-0" />
             <span>Capelli & Piega</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleOpenView('capelli_mullet')}
+            className="px-2.5 py-1.5 rounded-xl bg-teal-500/15 hover:bg-teal-500/25 text-teal-200 border border-teal-500/30 text-[11px] font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+          >
+            <Wind className="w-3 h-3 text-teal-400 shrink-0" />
+            <span>Textured Messy Mullet</span>
           </button>
 
           <button
@@ -2231,6 +2248,65 @@ export const NoteTab: React.FC = () => {
               <Sparkles className="w-3.5 h-3.5" />
             </span>
             <span className="text-[10px] text-cyan-300 font-bold">1. Progressi → 6. Spray Sale → 7. Shampoo vs Balsamo → 8. Spruzzino</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ------------------------------------------------------------- */}
+      {/* CARD: "CAPELLI MOSSI TEXTURED MESSY MULLET" (VICINO AI CAPELLI)*/}
+      {/* ------------------------------------------------------------- */}
+      <div className="space-y-2">
+        <span className="text-[11px] font-bold text-teal-300 uppercase tracking-wider block pl-1">
+          Nuova Nota Personale • Mosso Naturale 2B, Barbiere &amp; 6 Video
+        </span>
+
+        <div
+          onClick={() => handleOpenView('capelli_mullet')}
+          className="p-5 rounded-3xl glass-card border-2 border-teal-400/70 hover:border-teal-400 bg-gradient-to-br from-teal-500/20 via-black/85 to-emerald-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
+        >
+          <div className="absolute -top-12 -right-12 w-32 h-32 bg-teal-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
+
+          <div className="flex items-start justify-between relative z-10">
+            <div className="space-y-2 flex-1 pr-3">
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full bg-teal-400/20 text-teal-300 text-[10px] font-black uppercase tracking-wider border border-teal-400/40 shadow-sm flex items-center gap-1">
+                  <Wind className="w-3 h-3 text-teal-400" />
+                  ★ Note Scritte Da Me
+                </span>
+                <span className="text-[10px] text-cyan-300 font-extrabold bg-cyan-500/15 px-2 py-0.5 rounded-md border border-cyan-500/30">
+                  🌊 Sale, Polvere &amp; Cera Opaca
+                </span>
+                <span className="text-[10px] text-emerald-300 font-extrabold bg-emerald-500/15 px-2 py-0.5 rounded-md border border-emerald-500/30">
+                  ✂️ Taglio Barbiere
+                </span>
+                <span className="text-[10px] text-amber-300 font-extrabold bg-amber-500/15 px-2 py-0.5 rounded-md border border-amber-500/30">
+                  🌀 Diffusore &amp; Pinza 3D
+                </span>
+                <span className="text-[10px] text-purple-300 font-extrabold bg-purple-500/15 px-2 py-0.5 rounded-md border border-purple-500/30">
+                  🎬 6 Video TikTok
+                </span>
+              </div>
+
+              <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-teal-300 transition-colors uppercase tracking-tight">
+                Capelli mossi Textured Messy Mullet
+              </h2>
+
+              <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
+                8 punti unificati senza duplicati: fisica 2B, spessore capelli fini &amp; alimentazione, crescita &amp; chiusura &quot;buchi&quot; davanti, barbiere, prodotti &amp; tecnica ibrida, Hover Diffusing + pettine + Pantene 2-step, mattina a secco (balsamo+acqua e polvere), cute/forfora e 6 video TikTok.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-teal-500/20 group-hover:bg-teal-500 text-teal-300 group-hover:text-black border border-teal-400/50 shadow-neon transition-all shrink-0 mt-1">
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
+            <span className="text-teal-300 font-bold flex items-center gap-1.5">
+              <span>Tocca per aprire la guida Textured Messy Mullet</span>
+              <Sparkles className="w-3.5 h-3.5" />
+            </span>
+            <span className="text-[10px] text-gray-400 font-semibold">8 Punti · Spessore, Buchi, Secco &amp; Diffusore</span>
           </div>
         </div>
       </div>
