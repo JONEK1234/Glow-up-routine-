@@ -34,7 +34,8 @@ export type PeliIncarnitiTabId =
   | 'metodo_diviso'
   | 'razor_burn_strategia'
   | 'strategia_10_giorni'
-  | 'foto_rasatura';
+  | 'foto_rasatura'
+  | 'acne_punti_neri_bha';
 
 interface PeliIncarnitiVisoViewProps {
   onBack: () => void;
@@ -103,7 +104,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
         </h1>
 
         <p className="text-xs text-gray-300 leading-relaxed font-medium">
-          Guida pratica e diario fotografico in 7 parti: massaggio mattutino, routine completa di rasatura, tempi reali di guarigione, metodo diviso per zone, riconoscimento del razor burn immediato, <strong className="text-lime-300">protocollo ogni 7–10 giorni (Nikai, baffetti, diabete &amp; mantenimento)</strong> e <strong className="text-cyan-300">menu Foto Prima &amp; Dopo ogni rasatura</strong>.
+          Guida pratica e diario fotografico in 8 parti: massaggio mattutino, routine rasatura, tempi di guarigione, metodo diviso per zone, razor burn, <strong className="text-lime-300">protocollo 7–10 gg (Nikai, baffetti, diabete)</strong>, <strong className="text-cyan-300">Foto Prima &amp; Dopo</strong> e <strong className="text-amber-300">8. Punti Neri, BHA (Sempre o No?), Latte/Whey IGF-1 &amp; Sudore</strong>.
         </p>
 
         {/* Tab Filters */}
@@ -117,7 +118,7 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
                 : 'bg-white/5 text-gray-400 hover:text-white border border-white/5'
             }`}
           >
-            Tutte le 6 Guide
+            Tutte le Guide
           </button>
           <button
             type="button"
@@ -202,6 +203,18 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
           >
             <ShieldCheck className="w-3.5 h-3.5 text-lime-400" />
             6. Cadenza 7–10 gg, Nikai &amp; Diabete
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSelectTab('acne_punti_neri_bha')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'acne_punti_neri_bha'
+                ? 'bg-amber-400 text-black shadow-md shadow-amber-400/30 font-black'
+                : 'bg-amber-500/15 text-amber-300 hover:text-white border border-amber-500/35'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            8. Punti Neri, BHA, Latte &amp; Sudore
           </button>
         </div>
       </div>
@@ -1440,6 +1453,137 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
           <span className="px-3 py-2 rounded-xl bg-cyan-400 text-black font-black text-xs shrink-0">
             Apri Foto
           </span>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 8: PUNTI NERI, USO BHA (SEMPRE O NO?), LATTE & SUDORE */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'acne_punti_neri_bha') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                <Sparkles className="w-4 h-4 text-amber-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
+                  Parte 8 • Dermatologia Pratica &amp; Metabolismo (19 Nov)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Punti Neri vs Filamenti Sebacei, Acido Salicilico (Si Passa Sempre o No?), Latte/Whey &amp; Sudore
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30">
+              BHA &amp; IGF-1
+            </span>
+          </div>
+
+          <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-amber-950/35 via-black/90 to-emerald-950/25 border-2 border-amber-400/50 space-y-5 text-xs text-gray-200 leading-relaxed shadow-[0_0_25px_rgba(245,158,11,0.14)]">
+            {/* 1. Punti neri vs filamenti sebacei & risposta diretta BHA */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-amber-500/35 space-y-3">
+              <strong className="text-amber-300 uppercase tracking-wider text-[11px] block">
+                1. Cos&apos;è Davvero un Punto Nero (Comedone Aperto) vs Filamento Sebaceo (NON è Sporco!)
+              </strong>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                <div className="p-3 rounded-xl bg-amber-950/25 border border-amber-500/30 space-y-1.5">
+                  <strong className="text-amber-200 block">Punto Nero (Comedone Aperto)</strong>
+                  <p className="text-gray-300">
+                    È un tappo solido di <strong>sebo + cheratina (cellule morte)</strong> incastrato nell&apos;imbocco del poro. Non è polvere o sporcizia: la punta aperta si oscura per <strong>ossidazione a contatto con l&apos;ossigeno dell&apos;aria</strong> (lipidi ossidati e melanina), a differenza del punto bianco che resta chiuso sotto pelle.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-cyan-950/25 border border-cyan-500/30 space-y-1.5">
+                  <strong className="text-cyan-200 block">Filamenti Sebacei (Naso, Mento, Zona T)</strong>
+                  <p className="text-gray-300">
+                    I minuscoli puntini grigiastri/giallastri sul naso sono quasi sempre <strong>filamenti sebacei</strong>: canali anatomici del tutto normali lungo cui scorre il sebo per lubrificare la pelle. Se li svuoti con strisce o dita, si riempiono di nuovo in 2–4 settimane per natura fisiologica.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-rose-950/30 border-2 border-rose-400/50 space-y-2 text-[11px]">
+                <strong className="text-rose-300 uppercase block">
+                  2. Risposta Netta: &quot;Sui Punti Neri Si Passa Sempre l&apos;Acido Salicilico Oppure No?&quot;
+                </strong>
+                <p className="text-gray-100">
+                  <strong>NO — non va passato &quot;sempre&quot; tutti i giorni mattina e sera all&apos;infinito!</strong> Ecco esattamente perché e qual è la frequenza scientifica esatta:
+                </p>
+                <ul className="list-disc pl-5 space-y-1 text-gray-200">
+                  <li>
+                    <strong>Come agisce il BHA (Acido Salicilico ~2%):</strong> essendo <em>liposolubile</em>, penetra dentro il sebo del poro e scioglie i ponti tra i corneociti morti svuotando gradualmente il tappo in 3–6 settimane di ricambio cellulare.
+                  </li>
+                  <li>
+                    <strong>Perché passarlo SEMPRE fa danno (Over-Exfoliation):</strong> applicarlo ogni giorno o due volte al giorno disintegra il cemento lipidico della barriera cutanea → pelle che brucia e tira, rossore, produzione di sebo di rimbalzo e tempi di guarigione ancora più lenti (specie col diabete!).
+                  </li>
+                  <li>
+                    <strong>Frequenza &amp; Modo d&apos;Uso Perfetto in Pratica:</strong>
+                    <ol className="list-decimal pl-5 mt-1 space-y-1 text-amber-100">
+                      <li><strong>Quando:</strong> <strong>2–3 sere a settimana</strong> (es. Lun / Mer / Ven oppure Mar / Gio / Dom). Se i punti neri sono solo su naso, mento o fronte, applicalo <strong>solo su quelle zone grasse</strong> (applicazione mirata, non su tutto il viso se le guance sono secche o sensibili!).</li>
+                      <li><strong>Pelle asciutta e Leave-On:</strong> dopo il detergente delicato, aspetta <strong>5–10 minuti</strong> che il viso sia asciutto al 100% (sulla pelle bagnata penetra troppo rapido e pizzica), stendi un velo sottile e <strong>NON risciacquare</strong>. Se senti secchezza, dopo 3–5 minuti sigilla con crema idratante leggera.</li>
+                      <li><strong>Quando SOSPENDERE Subito:</strong> <strong>ZERO acido salicilico il giorno della rasatura col rasoio</strong>, zero sopra brufoletti rotti/irritati, zero abbinato a scrub granulari o strisce strappa-punti neri, zero schiacciamento con le unghie (rischio rottura follicolo e macchie scure post-infiammatorie).</li>
+                      <li><strong>Mattina Obbligatoria:</strong> metti sempre la <strong>protezione solare SPF</strong> al mattino per proteggere l&apos;epidermide esfoliata dai segni scuri.</li>
+                    </ol>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* 3. Latte, whey, IGF-1 col diabete & Zero Fissa Sodio */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-emerald-500/35 space-y-3">
+              <strong className="text-emerald-300 uppercase tracking-wider text-[11px] block">
+                3. Latte, Whey (250 ml + 25 g × 3 gg), Parmigiano, IGF-1 &amp; Acne (Col Diabete)
+              </strong>
+              <ul className="list-disc pl-5 space-y-1.5 text-[11px] text-gray-200">
+                <li>
+                  <strong className="text-white">Il Meccanismo Latte/Whey (Paradosso Insulinogenico):</strong> latte (specie scremato/parzialmente scremato) e siero del latte (<em>whey</em>, ricco di leucina) alzano <strong>Insulina e IGF-1</strong> più dei soli grammi di zuccheri. Questo segnale attiva il complesso <strong>mTORC1</strong>, spegne <em>FoxO1</em> nei sebociti e spinge l&apos;enzima <em>SREBP-1</em> a produrre più sebo. Formaggi stagionati come il Parmigiano hanno pochissimo lattosio/siero libero; carne, pesce, uova e legumi non stimolano questa via acneica.
+                </li>
+                <li>
+                  <strong className="text-emerald-300">Verdetto su 250 ml di Latte + 25 g di Whey Solo Mer/Gio/Ven:</strong> puoi stare sereno al 100%. È una dose moderata e presa solo 3 giorni a settimana: la letteratura associa l&apos;acne a consumi abbondanti e quotidiani. L&apos;acne giovanile dipende insieme da ormoni, genetica, detersione, sudore e gestione metabolica.
+                </li>
+                <li>
+                  <strong className="text-cyan-300">Niente Ossessioni sul Sale o Test Snervanti:</strong> contare i milligrammi di sodio o fare test a singhiozzo per mesi ti ruba serenità alzando il cortisolo. Bevi <strong>2,5–3 litri d&apos;acqua</strong>, mangia vario e osserva serenamente per 2–3 settimane solo se notassi un peggioramento netto proprio il giorno dopo gli shake (parlando col diabetologo prima di cambiare terapia o fonti).
+                </li>
+              </ul>
+            </div>
+
+            {/* 4. Sudore, ormoni adolescenziali & tabella pratica */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-sky-500/35 space-y-3">
+              <strong className="text-sky-300 uppercase tracking-wider text-[11px] block">
+                4. Sudore in Palestra, Ormoni a 16 Anni &amp; Tabella Semplice Senza Paranoie
+              </strong>
+              <p className="text-[11px] text-gray-300">
+                Il <strong>sudore da solo non fa venire l&apos;acne</strong> (è acqua e sali minerali). Crea irritazione solo se ristagna per ore insieme al sebo naturale, ai batteri (<em>Cutibacterium acnes</em>) e all&apos;attrito (<em>acne mechanica</em>) o alle mani sporche sul viso. Gli ormoni adolescenziali invece non si spengono a comando ma calano naturalmente col tempo: tu controlli i 4 pilastri puliti!
+              </p>
+              <div className="overflow-x-auto rounded-xl border border-white/10">
+                <table className="w-full text-left text-[11px] border-collapse">
+                  <thead className="bg-white/[0.05] text-[10px] font-black uppercase text-gray-300 border-b border-white/10">
+                    <tr>
+                      <th className="p-2.5">Fattore / Momento</th>
+                      <th className="p-2.5">Cosa Succede</th>
+                      <th className="p-2.5">Azione Pratica Immediata</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 text-gray-200">
+                    <tr>
+                      <td className="p-2.5 font-bold text-sky-300">Fine Allenamento / Sudore</td>
+                      <td className="p-2.5">Il sudore fermo con sebo, batteri e sfregamento occlude i pori.</td>
+                      <td className="p-2.5">Appena finisci di allenarti sciacqua o lava col detergente delicato, senza strofinare; asciuga tamponando.</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2.5 font-bold text-amber-300">Punti Neri / BHA</td>
+                      <td className="p-2.5">Tappo sebo + cheratina ossidato all&apos;aria (non sporco!).</td>
+                      <td className="p-2.5">Acido salicilico solo 2–3 sere/sett (o solo zona T/naso) su pelle asciutta, mai post-rasoio, mai spremere, SPF al mattino.</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2.5 font-bold text-emerald-300">Ormoni &amp; Latte/Whey</td>
+                      <td className="p-2.5">Fase biologica normale a 16 anni + 3 shake/sett moderati.</td>
+                      <td className="p-2.5">Costanza sui 4 gesti base (detergente, BHA dosato, SPF, rasatura 7–10 gg), acqua alta e zero paranoie sui micro-dettagli.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 

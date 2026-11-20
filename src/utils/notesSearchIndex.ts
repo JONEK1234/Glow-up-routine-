@@ -56,8 +56,8 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     viewId: 'studia_oggi',
     sectionTitle: 'Da Studiare Oggi (19 Nov)',
     sectionBadgeColor: 'amber',
-    subTitle: 'Riepilogo Unico Modifiche e Aggiunte di Oggi (19 Novembre · 14 Schede)',
-    text: 'Da studiare oggi modifiche aggiunte ripasso 19 novembre bussola tranquillità asimmetria taglio corto 1600 kcal diabete stacking 6U 3U 9U 4U 3.5U flessioni pump 2 fasi ossa piezoelettricità sole vitamina D Henneman pochi kg leve lunghe momento torcente curl manubri cavi spalla alzata micromovimenti schiena AMPK mTOR camminata stesso giorno repeated bout effect crampi giorno 1 rate coding sussulti al limite cedimento terza serie lavoro manuale.'
+    subTitle: 'Riepilogo Unico Modifiche e Aggiunte di Oggi (19 Novembre · 20 Schede)',
+    text: 'Da studiare oggi modifiche aggiunte ripasso 19 novembre bussola tranquillità asimmetria taglio corto 1600 kcal diabete stacking 6U 3U 9U 4U 3.5U ipoglicemia vs iperglicemia spugna muscolare fegato regola del 15 sonno 21:30 6 cicli 90 minuti inerzia del sonno sleep inertia lato sinistro fino destra cuscino punti neri filamenti sebacei acido salicilico sempre o no 2 3 sere latte whey 250 ml 25 g sudore acne mechanica pranzo tappabuchi fiocchi di latte barretta proteica 300 kcal flessioni pump 2 fasi ossa piezoelettricità sole vitamina D Henneman pochi kg leve lunghe momento torcente curl manubri cavi spalla alzata micromovimenti schiena AMPK mTOR camminata stesso giorno repeated bout effect crampi giorno 1 rate coding sussulti al limite cedimento terza serie lavoro manuale.'
   },
 
   // =========================================================================
@@ -76,8 +76,8 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     viewId: 'asimmetria_grasso_viso',
     sectionTitle: 'La mia asimmetria • Grasso & Taglio',
     sectionBadgeColor: 'cyan',
-    subTitle: 'Pinch Test (1,75 m / 73 kg), Taglio Corto, Alfa-2/Beta-2 & Strategia "Faccia Fine" (Giugno)',
-    text: 'Test del pizzico pinch test grasso sottocutaneo acqua extracellulare glicogeno 3 grammi guancia bassa sottomento addome basso recettori adrenergici alfa 2 beta 2 cAMP HSL lipasi 1.75 m 73 kg taglio corto low fade illusione ottica visual framing Delboeuf cornice faccia fine 1600 kcal 115 120 g proteine mTORC1 TEF 10000 passi NEAT beta ossidazione zero cortisolo sleeper build giugno 16 anni elastina collagene GH IGF-1.'
+    subTitle: 'Pinch Test (1,75 m / 73 kg), Taglio Corto, Alfa-2/Beta-2 & Lato Sinistro Fino vs Destro',
+    text: 'Test del pizzico pinch test grasso sottocutaneo acqua extracellulare glicogeno 3 grammi guancia bassa sottomento addome basso recettori adrenergici alfa 2 beta 2 cAMP HSL lipasi 1.75 m 73 kg taglio corto low fade illusione ottica visual framing Delboeuf cornice faccia fine 1600 kcal 115 120 g proteine mTORC1 TEF 10000 passi NEAT beta ossidazione zero cortisolo sleeper build giugno 16 anni elastina collagene GH IGF-1 lato sinistro fino più definito vs lato destro cuscino adiposo meno definito svuotare grasso.'
   },
   {
     id: 'asimmetria_ortodonzia',
@@ -156,6 +156,15 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     subTitle: 'Assetto Corretto Di Lato (Fianco)',
     text: 'Dormire di lato fianco linea naso ombelico spalla libera cuscino alto tra le ginocchia federa seta evitare compressione mascella asimmetria.'
   },
+  {
+    id: 'sonno_cicli_inerzia',
+    viewId: 'sonno_posizioni',
+    sectionTitle: 'Sonno e posizioni',
+    sectionBadgeColor: 'indigo',
+    subTabId: 'scienza_cicli',
+    subTitle: '3. Dormire Alle 21:30 (6 Cicli da 90 Min = 9 Ore), Inerzia del Sonno & GH/MPS',
+    text: 'Dormire alle 21:30 sveglia 06:30 9 ore 6 cicli 90 minuti 540 minuti inerzia del sonno sleep inertia ingoglionito rincoglionito risveglio corteccia prefrontale 15 30 minuti adenosina onde lente N3 SWS REM ormone della crescita GH sintesi proteica MPS sistema nervoso centrale SNC sensibilità insulinica regola 21:30 vs 22:00 zero snooze luce solare acqua 300 400 ml.'
+  },
 
   // =========================================================================
   // 4. PELI INCARNITI VISO
@@ -222,6 +231,15 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     subTabId: 'foto_rasatura',
     subTitle: '7. Foto Prima & Dopo Rasatura (Sinistro, Frontale, Destro + Backup)',
     text: 'Diario fotografico rasatura foto prima e dopo ogni rasatura laterale sinistro frontale laterale destro differenze giorno ora automatici salvataggio memoria telefono IndexedDB salva progresso peli incarniti carica progresso backup trasferimento altro telefono.'
+  },
+  {
+    id: 'peli_punti_neri_bha',
+    viewId: 'peli_incarniti',
+    sectionTitle: 'Peli incarniti viso',
+    sectionBadgeColor: 'emerald',
+    subTabId: 'acne_punti_neri_bha',
+    subTitle: '8. Punti Neri, Acido Salicilico (Si Passa Sempre o No?), Latte/Whey (IGF-1) & Sudore',
+    text: 'Punti neri comedoni aperti ossidazione sebo cheratina filamenti sebacei strisce adesive schiacciamento over-exfoliation acido salicilico BHA liposolubile si passa sempre oppure no 2 3 sere settimana leave-on pelle asciutta rasatura SPF latte latticini whey 250 ml 25 g mercoledì giovedì venerdì parmigiano IGF-1 mTORC1 FoxO1 SREBP-1 diabete zero ossessione sodio acqua 2.5 3 litri sudore acne mechanica post allenamento ormoni adolescenza.'
   },
 
   // =========================================================================
@@ -464,6 +482,15 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     subTitle: '15# Info: Crampi Giorno 1 (RBE), Tecnica Filtro, Sussulti Rate Coding & Cedimento 3ª Serie',
     text: 'Primo giorno esplosivo crampi contratture riflesse repeated bout effect RBE adattamento strutturale tecnica filtro tendini gomiti colonna sussulti di sforzo al limite rate coding frequenza motoneuroni ioni idrogeno H fosfato inorganico Pi calcio Ca2+ fatica centrale periferica cedimento solo terza serie prima seconda buffer 1 2 ripetizioni.'
   },
+  {
+    id: 'palestra_pasto_tappabuchi',
+    viewId: 'palestra_grasso',
+    sectionTitle: 'Palestra e organizzazione per perdere grasso',
+    sectionBadgeColor: 'orange',
+    subTabId: 'pasto_tappabuchi',
+    subTitle: '16# Info: Pranzo "Tappabuchi" (Fiocchi di Latte + Barretta Proteica ~300 kcal) vs Pasto Completo',
+    text: 'Pranzo tappabuchi fiocchi di latte barretta proteica 300 kcal 33g carboidrati risparmiati una tantum emergenza vs tutti i giorni 16 anni 75 kg 1.75 m glicogeno palestra scuola fibre micronutrienti polioli gonfiore fame serale accumulata diabete scorta pre-workout.'
+  },
 
   // =========================================================================
   // 8. COSE DA COMPRARE (I MIEI REGALI DI NATALE)
@@ -588,6 +615,15 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     subTabId: 'dati_reali_19nov',
     subTitle: 'Nota 11: Dati Reali 19/11 — Frullato (6U+3U) & Mensa (9U+4U+3,5U · 36 min Stacking)',
     text: 'Dati reali 19 novembre boli manuali Control-IQ 7.17 4.75 07:51 6U frullato glucosio fruttosio lattosio 20-30 min 09:25 281 +3U 12:50 152 rapporto 1:6.5 1:7 1:11 1:12 07:00 12:00 pre-bolo 10-15 min mensa pasta pesce 2 bruschette piatto impanato CCK colecistochinina 9U 14:03 252 +4U 14:39 321 36 minuti +3.5U 16.5U insulin stacking IOB onda lunga AMPK GLUT4 picco 355 crollo 80 90 palestra dottoressa.'
+  },
+  {
+    id: 'diabete_ipo_freni_spugna',
+    viewId: 'diabete_glicemia',
+    sectionTitle: 'Diabete, glicemia e palestra',
+    sectionBadgeColor: 'rose',
+    subTabId: 'ipo_freni_spugna',
+    subTitle: 'Nota 12: Ipoglicemia vs Iperglicemia, "Spugna" Muscolare vs Fegato, Freni & Regola del 15',
+    text: 'Ipoglicemia vs iperglicemia emergenza acuta lungo termine glicazione AGEs stress ossidativo risposta contro-regolatoria glucagone adrenalina epinefrina cortisolo GH fegato glicogenolisi gluconeogenesi spugna muscolare GLUT4 insulina esogena IOB non si spegne hypoglycemia unawareness over-correzione regola del 15 15g zuccheri semplici bustine destrosio succo cioccolato grassi CCK.'
   },
 
   // =========================================================================

@@ -41,6 +41,7 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
     | 'mattina_digiuno'
     | 'proteine_finestra'
     | 'dati_reali_19nov'
+    | 'ipo_freni_spugna'
     | 'calcolo_insulina'
     | 'calcoli_importanti'
     | 'palestra'
@@ -250,6 +251,20 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           >
             <AlertTriangle className="w-3 h-3" />
             <span>{activeTab === 'dati_reali_19nov' ? 'Chiudi' : 'Nota 11: Dati 19/11 (Stacking)'}</span>
+          </button>
+
+          {/* Tasto Rapido Nota 12 */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('ipo_freni_spugna', true)}
+            className={`flex items-center space-x-1 py-1.5 px-2 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'ipo_freni_spugna'
+                ? 'bg-gradient-to-r from-red-400 to-amber-300 text-black border-red-300 shadow-neon'
+                : 'bg-red-500/20 hover:bg-red-500/30 text-red-200 border-red-400/50'
+            }`}
+          >
+            <ShieldAlert className="w-3 h-3" />
+            <span>{activeTab === 'ipo_freni_spugna' ? 'Chiudi' : 'Nota 12: Ipo, Freni & Spugna'}</span>
           </button>
         </div>
       </div>
@@ -654,6 +669,47 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
               <ChevronRight className="w-4 h-4 text-rose-300 shrink-0" />
             </button>
           </div>
+
+          {/* Card Nota 12: Ipoglicemia vs Iperglicemia, Freni del Corpo, Spugna Muscolare & Regola del 15 */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('ipo_freni_spugna', true)}
+            className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+              activeTab === 'ipo_freni_spugna'
+                ? 'bg-gradient-to-r from-red-950/90 via-rose-950/70 to-black/90 border-red-400 shadow-neon ring-2 ring-red-400/30'
+                : 'bg-gradient-to-r from-red-950/40 via-amber-950/25 to-black/70 border-red-500/45 hover:border-red-400'
+            }`}
+          >
+            <div className="flex items-center space-x-2.5">
+              <div className="p-2 rounded-xl bg-red-500/20 text-red-300 border border-red-500/35 group-hover:scale-105 transition-transform shrink-0">
+                <ShieldAlert className="w-4 h-4 text-red-400" />
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-red-300 block">
+                    {activeTab === 'ipo_freni_spugna' ? '✓ Attiva' : 'Nota 12 · 19 Nov'}
+                  </span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-red-500/20 text-red-200 font-extrabold border border-red-400/40">
+                    Freni, Spugna &amp; Regola del 15
+                  </span>
+                </div>
+                <h4 className="text-xs font-black text-white group-hover:text-red-200 transition-colors">
+                  Ipoglicemia vs Iperglicemia: Perché la &quot;Spugna&quot; NON Frena da Sola l&apos;Insulina Esterna
+                </h4>
+                <p className="text-[10px] text-gray-400">
+                  Risposta contro-regolatoria, fegato vs muscoli, unawareness &amp; protocollo correzione sicura
+                </p>
+              </div>
+            </div>
+            <div className={`flex items-center space-x-1 text-[11px] font-black px-2.5 py-1.5 rounded-xl shrink-0 transition-all ${
+              activeTab === 'ipo_freni_spugna'
+                ? 'bg-red-500/20 text-red-300 border border-red-500/30'
+                : 'bg-red-400 text-black shadow-neon'
+            }`}>
+              <span>{activeTab === 'ipo_freni_spugna' ? 'Chiudi' : 'Apri'}</span>
+              {activeTab === 'ipo_freni_spugna' ? <X className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
+            </div>
+          </button>
         </div>
 
         {/* Tab Filters */}
@@ -835,6 +891,20 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           >
             <AlertTriangle className="w-3.5 h-3.5 text-rose-300" />
             <span>Nota 11: Dati 19/11 &amp; Stacking</span>
+          </button>
+
+          {/* TAB NOTA 12 */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('ipo_freni_spugna', true)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'ipo_freni_spugna'
+                ? 'bg-gradient-to-r from-red-400 to-amber-300 text-black shadow-neon font-black ring-2 ring-red-300'
+                : 'bg-red-500/20 text-red-200 hover:text-white border border-red-400/40'
+            }`}
+          >
+            <ShieldAlert className="w-3.5 h-3.5 text-red-300" />
+            <span>Nota 12: Ipo, Freni &amp; Spugna</span>
           </button>
 
           <button
@@ -2657,6 +2727,129 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
                     <em className="text-cyan-200">Domanda chiave:</em> &quot;Quando in mensa c&apos;è un piatto impanato e parto da 9 U, quanto tempo minimo devo aspettare prima di una eventuale correzione per non fare stacking, e come posso impostare un bolo esteso per la panatura evitando di toccare 321–355 prima della palestra?&quot;
                   </p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* NOTA 12: IPOGLICEMIA VS IPER, FRENI BIOLOGICI & SPUGNA (19 NOV) */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutta' || activeTab === 'ipo_freni_spugna') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-red-500/20 text-red-300 border border-red-500/35">
+                <ShieldAlert className="w-4 h-4 text-red-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-red-400">
+                  Nota 12 • Fisiologia d&apos;Emergenza &amp; Sicurezza (19 Nov)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Ipoglicemia vs Iperglicemia, Risposta Contro-Regolatoria, &quot;Spugna&quot; Muscolare &amp; Regola del 15
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-red-500/15 text-red-300 border border-red-500/30">
+              Fegato vs Muscoli
+            </span>
+          </div>
+
+          <div className="p-5 sm:p-6 rounded-3xl glass-card border-2 border-red-500/45 space-y-5 bg-gradient-to-br from-red-950/35 via-rose-950/20 to-black/90 text-xs text-gray-200 leading-relaxed">
+            {/* 1. Urgenza vs Danno Cronico */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-red-500/35 space-y-3">
+              <strong className="text-red-300 uppercase tracking-wider text-[11px] block">
+                1. Fa Più Male la Glicemia Bassa o Quella Alta? (Urgenza Immediata vs Danno Silenzioso)
+              </strong>
+              <p>
+                La glicemia stabile è sempre la condizione ideale: sia l&apos;ipoglicemia sia l&apos;iperglicemia fanno male, ma con <strong className="text-white">urgenze biologiche completamente diverse</strong>:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                <div className="p-3 rounded-xl bg-red-950/30 border border-red-500/35 space-y-1">
+                  <strong className="text-red-300 block">Breve Termine: Ipoglicemia (&lt; 70 mg/dL) = Pericolo Immediato</strong>
+                  <p className="text-gray-300">
+                    Il <strong>sistema nervoso centrale (neuroni)</strong> e i <strong>globuli rossi (privi di mitocondri)</strong> dipendono quasi costantemente dal glucosio. Quando cala troppo scatta subito l&apos;allarme energetico: cali di lucidità, tremori, sudorazione fredda, debolezza, fino a rischi seri nei casi gravi.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-amber-950/25 border border-amber-500/35 space-y-1">
+                  <strong className="text-amber-300 block">Lungo Termine: Iperglicemia Cronica &amp; Oscillazioni</strong>
+                  <p className="text-gray-300">
+                    L&apos;eccesso cronico di glucosio nel sangue danneggia gradualmente vasi sanguigni, nervi periferici e microcircolo tramite <strong>glicazione proteica (AGEs)</strong> e <strong>stress ossidativo</strong>. Anche le montagne russe continue (su e giù rapido) svuotano energia, umore e resa fisica.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Chiarimento diretto sulla domanda della Spugna */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-cyan-950/35 via-blue-950/25 to-black/80 border-2 border-cyan-400/50 space-y-3">
+              <strong className="text-cyan-300 uppercase tracking-wider text-[11px] block">
+                2. Chiarimento Diretto: &quot;Essendo Che C&apos;è Una Spugna, Gli Zuccheri Non Scendono Tantissimo Fino a Un Certo Punto, Giusto?&quot;
+              </strong>
+              <p className="text-[11px] text-gray-100 leading-relaxed">
+                <strong>Attenzione a NON confondere i due ruoli opposti:</strong> in fisiologia la <strong className="text-cyan-300">&quot;spugna&quot;</strong> sono i <strong>muscoli</strong> (che <em>assorbono/aspirano</em> glucosio dal sangue, facendolo SCENDERE), mentre chi rilascia zucchero di emergenza per <em>frenare</em> la discesa è il <strong className="text-emerald-300">fegato</strong>! Ecco perché con il diabete di tipo 1 e l&apos;insulina esterna la spugna <strong>NON ti protegge da sola dall&apos;ipoglicemia</strong>, anzi la può accelerare:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                <div className="p-3 rounded-xl bg-emerald-950/25 border border-emerald-500/30 space-y-1.5">
+                  <strong className="text-emerald-300 block">A. Come &quot;Frena&quot; Un Corpo Senza Diabete</strong>
+                  <ul className="list-disc pl-4 space-y-1 text-gray-300">
+                    <li>Appena il glucosio scende, il pancreas <strong>azzera istantaneamente l&apos;insulina endogena</strong> (l&apos;ormone che apre le porte delle cellule).</li>
+                    <li>Scatta la <strong>risposta contro-regolatoria</strong>: <strong>Glucagone + Adrenalina</strong> ordinano al fegato di rompere le scorte (<em>glicogenolisi</em>) e fabbricare nuovo glucosio (<em>gluconeogenesi</em>); <strong>Cortisolo + GH</strong> frenano l&apos;ingresso di zucchero nei muscoli lasciandolo al cervello.</li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded-xl bg-rose-950/30 border border-rose-500/40 space-y-1.5">
+                  <strong className="text-rose-300 block">B. Perché Nel Diabete Questo Freno Può Fallire</strong>
+                  <ul className="list-disc pl-4 space-y-1 text-gray-200">
+                    <li><strong>L&apos;insulina esterna NON si spegne:</strong> una volta iniettata o erogata in bolo (<em>IOB</em> attiva per 3,5–4 ore), continua a spingere glucosio dentro muscoli e grasso anche se sei già sceso sotto 70 mg/dL!</li>
+                    <li><strong>La spugna muscolare resta spalancata in allenamento:</strong> i pesi e i 10.000 passi attivano <strong>AMPK → GLUT4</strong> in modo <em>indipendente dall&apos;insulina</em>: i muscoli continuano a succhiare glucosio mentre il fegato può avere scorte limitate o risposta attenuata del glucagone.</li>
+                    <li><strong>Hypoglycemia Unawareness:</strong> episodi frequenti di ipoglicemia attenuano nel tempo i segnali adrenergici di allarme (tremori/tachicardia), rendendo il calo più silenzioso e rischioso.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Cinetica Carboidrati & Regola Pratica del 15 */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-emerald-500/35 space-y-3">
+              <strong className="text-emerald-300 uppercase tracking-wider text-[11px] block">
+                3. Come Correggere Senza Rimbalzi: Velocità dei Carboidrati &amp; Protocollo Pratico &quot;Regola del 15&quot;
+              </strong>
+              <p className="text-[11px] text-gray-200">
+                Dare subito carboidrati funziona perché porta glucosio esogeno nel sangue — ma sbagliare tipo di cibo o quantità crea due errori classici (correzione lentissima oppure rimbalzo a 250 mg/dL per <em>over-correzione</em> guidata dalla fame chimica).
+              </p>
+
+              <div className="overflow-x-auto rounded-xl border border-white/10">
+                <table className="w-full text-left text-[11px] border-collapse">
+                  <thead className="bg-white/[0.05] text-[10px] font-black uppercase text-gray-300 border-b border-white/10">
+                    <tr>
+                      <th className="p-2.5">Step / Scelta</th>
+                      <th className="p-2.5">Cosa Fare in Pratica</th>
+                      <th className="p-2.5">Perché Funziona / Cosa Evitare</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 text-gray-200">
+                    <tr>
+                      <td className="p-2.5 font-bold text-red-300">1. Sotto 70 mg/dL (Subito)</td>
+                      <td className="p-2.5"><strong>15 g di zuccheri rapidi puri:</strong> 3 bustine di zucchero in poca acqua, 3–4 tavolette di destrosio oppure ~125–150 ml di succo di frutta classico.</td>
+                      <td className="p-2.5">Assorbimento mucosale/gastrico rapido senza grassi né fibre che lo intrappolino nello stomaco.</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2.5 font-bold text-amber-300">2. Attesa 15 Minuti</td>
+                      <td className="p-2.5"><strong>Siediti e aspetta 15 minuti</strong> reali prima di mangiare altro, poi controlla con sensore/glucometro (se sensore in ritardo e sintomi forti, fai puntura al dito!).</td>
+                      <td className="p-2.5">L&apos;intestino impiega ~10–15 min a trasferire il carico nel sangue: mangiare di fila per la fame chimica fa schizzare a 260 dopo 40 min.</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2.5 font-bold text-rose-300">3. Cibi VIETATI per Ipo Acuta</td>
+                      <td className="p-2.5"><strong>NO cioccolato, biscotti, merendine, latte intero o barrette proteiche</strong> durante una ipoglicemia acuta.</td>
+                      <td className="p-2.5">I grassi e le proteine attivano la colecistochinina (CCK), rallentano lo svuotamento gastrico per 30–60 min e ritardano l&apos;uscita dall&apos;ipoglicemia.</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2.5 font-bold text-cyan-300">4. Prima di Palestra &amp; Notte</td>
+                      <td className="p-2.5">Controlla sempre l&apos;<strong>IOB (insulina attiva)</strong> prima di camminare/sollevare pesi. Dopo un pranzo leggero/tappabuchi hai meno scorta CHO pomeridiana.</td>
+                      <td className="p-2.5">La spugna muscolare + 9h di sonno moltiplicano la sensibilità insulinica: tieni sempre zuccheri pronti sul comodino e nello zaino (taratura con il diabetologo).</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

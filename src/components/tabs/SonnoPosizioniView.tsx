@@ -27,7 +27,7 @@ interface SonnoPosizioniViewProps {
 }
 
 export const SonnoPosizioniView: React.FC<SonnoPosizioniViewProps> = ({ onBack, initialTab }) => {
-  type SonnoTab = 'tutte' | 'schiena' | 'lato';
+  type SonnoTab = 'tutte' | 'schiena' | 'lato' | 'scienza_cicli';
   const [activeTab, setActiveTab] = useState<SonnoTab>((initialTab as SonnoTab) || 'tutte');
   const [fullscreenImage, setFullscreenImage] = useState<{ url: string; title: string } | null>(null);
   const noteContentRef = useRef<HTMLDivElement>(null);
@@ -204,6 +204,18 @@ export const SonnoPosizioniView: React.FC<SonnoPosizioniViewProps> = ({ onBack, 
           >
             <Compass className="w-4 h-4" />
             <span>Di Lato</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => handleSelectTab('scienza_cicli')}
+            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'scienza_cicli'
+                ? 'bg-cyan-400 text-black shadow-md shadow-cyan-500/30 font-extrabold'
+                : 'bg-cyan-500/10 text-cyan-300 hover:text-white border border-cyan-500/30'
+            }`}
+          >
+            <Zap className="w-4 h-4" />
+            <span>3. 21:30 (9h / 6 Cicli) &amp; Inerzia</span>
           </button>
         </div>
       </div>
@@ -649,6 +661,108 @@ export const SonnoPosizioniView: React.FC<SonnoPosizioniViewProps> = ({ onBack, 
               <div className="flex items-center gap-2 p-2 rounded-xl bg-white/[0.03]">
                 <span className="w-5 h-5 rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center font-bold text-[11px]">3</span>
                 <span>Se il cuscino sotto la testa riempie lo spazio senza piegarti il collo verso l'alto o verso il basso, <strong className="text-purple-300">sei perfetto!</strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 3: 21:30 → 06:30 (9 ORE = 6 CICLI), INERZIA & GH      */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'scienza_cicli') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                <Zap className="w-4 h-4 text-cyan-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-cyan-400">
+                  Cronobiologia &amp; Recupero • Sezione 3 (19 Nov)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Dormire Alle 21:30 (9 Ore = 6 Cicli da 90 Min), Inerzia del Sonno &amp; Ricostruzione
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
+              6 × 90 = 540 Min
+            </span>
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl bg-black/75 border-2 border-cyan-400/45 space-y-4 shadow-[0_0_25px_rgba(6,182,212,0.14)] text-xs text-gray-200 leading-relaxed">
+            {/* 1. Inerzia del sonno */}
+            <div className="p-4 rounded-2xl bg-cyan-950/25 border border-cyan-500/35 space-y-2.5">
+              <strong className="text-cyan-300 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 shrink-0" />
+                1. Perché Ti Svegli &quot;Ingoglionito&quot; Anche Dormendo di Più: L&apos;Inerzia del Sonno
+              </strong>
+              <p className="text-[11px] text-gray-200">
+                Andare a letto alle <strong className="text-white">21:30</strong> con sveglia alle <strong className="text-white">06:30</strong> significa dare al corpo <strong className="text-cyan-300">9 ore piene (540 minuti = 6 cicli completi da 90 minuti)</strong>. Quel rimbambimento iniziale appena apri gli occhi si chiama <strong className="text-white">Inerzia del Sonno (Sleep Inertia)</strong> e NON indica affatto un recupero andato male:
+              </p>
+              <ul className="list-disc pl-5 space-y-1 text-[11px] text-gray-300">
+                <li>
+                  <strong className="text-white">Riaccensione Graduale della Corteccia Prefrontale:</strong> se la sveglia suona durante una transizione profonda o alla fine di un ciclo con adenosina residua, la corteccia prefrontale (lucidità, memoria di lavoro, reattività) impiega fisiologicamente <strong>15–30 minuti</strong> per passare dallo stato di manutenzione al 100% della veglia.
+                </li>
+                <li>
+                  <strong className="text-emerald-300">Il Segnale Rassicurante:</strong> mentre il cervello dissipa quella nebbia nei primi 15 minuti, muscoli, ossa, tendini e sistema ormonale hanno già incassato un&apos;ora/un ciclo intero in più di riparazione biologica!
+                </li>
+              </ul>
+            </div>
+
+            {/* 2. Architettura cicli + GH + Sintesi proteica */}
+            <div className="p-4 rounded-2xl bg-indigo-950/25 border border-indigo-500/35 space-y-2.5">
+              <strong className="text-indigo-300 uppercase tracking-wider text-[11px] block">
+                2. Più Ore di Sonno = Ricostruzione Migliore? (N3 SWS, REM, GH, MPS &amp; Sensibilità Insulinica)
+              </strong>
+              <p className="text-[11px] text-gray-200">
+                Sì: a <strong className="text-white">16 anni</strong>, tra crescita, scuola, pesi e 10.000 passi, il sonno è la vera &quot;officina anabolica&quot; in cui i tessuti si adattano allo stimolo del giorno:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-[11px]">
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-indigo-300 block">Riparazione &amp; Sintesi Proteica (MPS)</strong>
+                  <p className="text-gray-300">
+                    Durante le fasi di <strong>Sonno Profondo (N3 / SWS)</strong> aumenta il flusso sanguigno verso i muscoli e il sistema immunitario ripara micro-lesioni di fibre e tendini con le proteine mangiate di giorno.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-cyan-300 block">Picco di GH &amp; Pulizia SNC</strong>
+                  <p className="text-gray-300">
+                    La maggior parte del <strong>GH (ormone della crescita)</strong> viene rilasciata a impulsi proprio nel sonno profondo notturno, insieme al lavaggio glinfatico dei sottoprodotti neurali che ti ridà forza e tecnica pulita ai pesi.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-emerald-300 block">Fame, Cortisolo &amp; Glicemia Stabile</strong>
+                  <p className="text-gray-300">
+                    9 ore abbassano la grelina (fame nervosa da dolci), alzano la leptina (sazietà) e prevengono l&apos;insulino-resistenza acuta da cortisolo tipica di chi dorme 6 ore (fondamentale anche per la gestione del diabete!).
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Protocollo pratico 21:30 vs 22:00 + come togliere l'inerzia in 10 min */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-emerald-500/35 space-y-3">
+              <strong className="text-emerald-300 uppercase tracking-wider text-[11px] block">
+                3. Protocollo Pratico: Quando Andare alle 21:30 vs 22:00 &amp; Come Togliere la Nebbia in 10 Minuti
+              </strong>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                <div className="p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/25 space-y-1.5">
+                  <strong className="text-emerald-300 block">Regola 21:30 vs 22:00 (Efficienza Reale)</strong>
+                  <ul className="list-disc pl-4 space-y-1 text-gray-200">
+                    <li><strong>Vai alle 21:30</strong> quando senti sonno vero, dopo allenamenti intensi o settimane piene: incassi 6 cicli puliti fino alle 06:30.</li>
+                    <li><strong>Resta verso le 22:00</strong> se alle 21:30 sei sveglissimo (stare a rigirarsi 45 min abbassa l&apos;efficienza del sonno) oppure se hai cenato tardi: lascia sempre <strong>2–3 ore</strong> tra un pasto pesante/grasso e il letto.</li>
+                    <li><strong>Occhio Diabete:</strong> su 9 ore consecutive dopo palestra serale controlla sempre l&apos;IOB e la stabilità glicemica prima di dormire.</li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded-xl bg-amber-950/20 border border-amber-500/25 space-y-1.5">
+                  <strong className="text-amber-300 block">Come Spegnere l&apos;Inerzia in 10 Minuti alle 06:30</strong>
+                  <ul className="list-disc pl-4 space-y-1 text-gray-200">
+                    <li><strong>1. ZERO Snooze (Posticipa):</strong> rimandare la sveglia di 9 minuti ti ributta nell&apos;inizio di un nuovo ciclo profondo, raddoppiando l&apos;intontimento!</li>
+                    <li><strong>2. Luce Solare Diretta Subito:</strong> apri la finestra / esci sul balcone 2–3 minuti: la luce naturale negli occhi spegne la melatonina all&apos;istante.</li>
+                    <li><strong>3. 300–400 ml d&apos;Acqua + Movimento:</strong> reidratarti dopo 9 ore e muovere spalle/gambe per 2 minuti accende subito la corteccia prefrontale.</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

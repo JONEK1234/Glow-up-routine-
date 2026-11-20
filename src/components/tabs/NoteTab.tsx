@@ -2267,6 +2267,89 @@ export const NoteTab: React.FC = () => {
         ],
         targetView: 'prevenzione_eta',
         targetSubTab: 'luce_vitamina_d'
+      },
+      {
+        id: 'today_diabete_ipo_spugna',
+        category: 'diabete',
+        sectionBadge: 'Diabete • Nota 12 (Nuovo 19 Nov)',
+        badgeColor: 'rose',
+        title: 'Ipoglicemia vs Iperglicemia, "Spugna" Muscolare vs Fegato, Freni & Regola del 15',
+        summary: 'Chiarisce il dubbio sulla "spugna": non sono i muscoli a tenere su la glicemia (i muscoli sono una spugna che la tira GIÙ tramite GLUT4 e insulina!), ma è il fegato (glicogenolisi + gluconeogenesi) spinto da glucagone, adrenalina, cortisolo e GH. Spiega perché nel T1D la spugna + insulina esogena attiva (IOB) può aggirare il freno naturale fino al crollo (con rischio di hypoglycemia unawareness) e come applicare la Regola del 15.',
+        keyPoints: [
+          'Breve termine vs Lungo termine: ipoglicemia = emergenza cerebrale immediata; iperglicemia cronica = danno lento a vasi/nervi/collagene (AGEs e stress ossidativo).',
+          'Freno nel T1D: l’insulina già iniettata non si "spegne" sotto i 70 mg/dL, i pesi tengono accesi i canali GLUT4 (AMPK) e la risposta del glucagone può essere ridotta -> servono zuccheri semplici puri (Regola del 15: 15g glucosio/saccarosio, attesa 15 min, mai cioccolato/grassi in emergenza).'
+        ],
+        targetView: 'diabete_glicemia',
+        targetSubTab: 'ipo_freni_spugna'
+      },
+      {
+        id: 'today_sonno_2130_inerzia',
+        category: 'mente_viso',
+        sectionBadge: 'Sonno & Posizioni • Sezione 3 (Nuovo 19 Nov)',
+        badgeColor: 'indigo',
+        title: 'Dormire Alle 21:30 (9 Ore = 6 Cicli × 90 Min = 540 Min), Inerzia del Sonno & Ricostruzione',
+        summary: 'Spiega perché andare a dormire alle 21:30 con sveglia alle 06:30 centra 6 cicli esatti da 90 minuti (540 min), massimizzando N3 (onde lente), GH pulsatile, sintesi proteica muscolare (MPS), recupero del sistema nervoso centrale e sensibilità insulinica — e perché svegliarsi "rincoglioniti" anche dormendo 9 ore è normale Inerzia del Sonno.',
+        keyPoints: [
+          'Inerzia del Sonno (15–30 min): la corteccia prefrontale impiega qualche minuto a riavviarsi e a smaltire l’adenosina residua; NON significa aver dormito male.',
+          'Protocollo risveglio 10 minuti + Regola 21:30: zero snooze (frammenta il 6° ciclo), luce naturale negli occhi subito, 300–400 ml acqua e 2 minuti di movimento; anticipa alle 21:30 solo se hai sonno vero e cena finita da 2–3 ore.'
+        ],
+        targetView: 'sonno_posizioni',
+        targetSubTab: 'scienza_cicli'
+      },
+      {
+        id: 'today_viso_sinistra_fino_destra',
+        category: 'mente_viso',
+        sectionBadge: 'La mia asimmetria • Sezione 5 (Nuovo 19 Nov)',
+        badgeColor: 'cyan',
+        title: 'Lato Sinistro "Fino" (Più Visibile) vs Lato Destro "Meno Definito": Perché Basta Svuotare il Grasso',
+        summary: 'Spiega perché a sinistra ("dove è fino") si vedono già muscoli e linea mentre a destra appare più morbido: sopra il massetere destro c’è uno strato ("cuscino") di grasso sottocutaneo e acqua extracellulare più spesso che sfuma il contorno. La chiave n° 1 è il dimagrimento sistemico (~1.600 kcal + 10.000 passi + 2,5–3 L acqua), NON masticare all’infinito.',
+        keyPoints: [
+          'Il muscolo sotto c’è già su entrambi i lati: se c’è spessore adiposo sopra, ipertrofizzare all’estremo non pulisce la linea e rischia solo di infiammare l’ATM.',
+          'Equilibrio pratico: tieni il lavoro sui molari moderato e bilanciato senza forzare e non giudicarti allo specchio giorno per giorno (acqua e luce cambiano ogni mattina; valuta ogni 3–4 settimane).'
+        ],
+        targetView: 'asimmetria_grasso_viso',
+        targetSubTab: 'sinistra_fino_destra'
+      },
+      {
+        id: 'today_peli_bha_punti_neri',
+        category: 'mente_viso',
+        sectionBadge: 'Peli & Pelle • Parte 8 / BHA (Nuovo 19 Nov)',
+        badgeColor: 'emerald',
+        title: 'Punti Neri vs Filamenti Sebacei & Acido Salicilico (BHA): "Si Passa Sempre Oppure No?"',
+        summary: 'Risposta netta alla tua domanda: NO, l’acido salicilico NON si passa sempre tutti i giorni né su tutto il viso! Usarlo ogni sera o post-rasatura distrugge la barriera cutanea (over-exfoliation), aumenta l’infiammazione e nel diabete rallenta la riparazione delle microlesioni. Spiega anche cosa sono i punti neri (tappo ossidato sebo+cheratina, non sporcizia) vs filamenti sebacei normali.',
+        keyPoints: [
+          'Protocollo esatto BHA 2%: SOLO 2–3 sere a settimana (mai consecutive all’inizio), pelle perfettamente asciutta (aspetta 10 min dopo il lavaggio), mirato su zona T/naso/mento/guance non irritate (lascia agire leave-on, ZERO su giorno di rasatura!).',
+          'MAI schiacciare con le unghie o usare cerotti/strisce strappo o scrub granulosi: spingono l’infiammazione in profondità lasciando macchie (PIH); al mattino SPF obbligatorio.'
+        ],
+        targetView: 'peli_incarniti',
+        targetSubTab: 'acne_punti_neri_bha'
+      },
+      {
+        id: 'today_peli_latte_whey_sudore',
+        category: 'mente_viso',
+        sectionBadge: 'Peli & Pelle • Parte 8 / Diabete & Sudore (Nuovo 19 Nov)',
+        badgeColor: 'emerald',
+        title: 'Latte & Whey (250 ml + 25 g × 3 gg), IGF-1/mTORC1, Zero Fissa Sodio & Sudore vs Acne',
+        summary: 'Spiega il meccanismo ormonale reale (latte/whey alzano insulina e IGF-1 attivando mTORC1 -> FoxO1 -> SREBP-1 e sebo) ma rassicura sulla tua quota reale: 250 ml di latte + 25 g di whey per 3 giorni (Mer/Gio/Ven) NON causano un disastro da soli. Chiarisce anche perché il sudore non chiude i pori (serve solo lavare dopo palestra) e perché bere 2,5–3 L di acqua batte qualsiasi ossessione sui mg di sodio.',
+        keyPoints: [
+          'Multifattorialità + Adolescenza: gli ormoni dei 16 anni spingono le ghiandole sebacee (si stabilizzeranno nel tempo); le leve reali restano poche e sostenibili: detersione delicata post-sudore, BHA 2–3 sere/sett, SPF e rasatura diradata.',
+          'Zero "ingegnere chimico" davanti al piatto: varia le fonti (uova, carne, pesce, Parmigiano moderato) e tieni l’acqua alta invece di contare ogni granello di sale.'
+        ],
+        targetView: 'peli_incarniti',
+        targetSubTab: 'acne_punti_neri_bha'
+      },
+      {
+        id: 'today_palestra_pasto_tappabuchi',
+        category: 'palestra_ossa',
+        sectionBadge: 'Palestra & Grasso • 16# Info (Nuovo 19 Nov)',
+        badgeColor: 'orange',
+        title: 'Pranzo "Tappabuchi" (Fiocchi di Latte + Barretta Proteica ~300 kcal) vs Pasto Completo',
+        summary: 'Risparmia ~300 kcal e ~33 g di carboidrati rispetto a un pranzo completo: fatto UNA TANTUM come soluzione d’emergenza è assolutamente neutro; trasformato in abitudine quotidiana a 16 anni (75 kg × 1,75 m) peggiora glicogeno e forza in palestra, toglie fibre/micronutrienti, porta polioli gonfianti, scatena fame accumulata la sera e riduce il margine di carboidrati pre-allenamento.',
+        keyPoints: [
+          'Regola pratica: usa fiocchi + barretta come jolly occasionale o spuntino, NON come sostituto fisso del pranzo vero con cereali/pasta, proteine e verdure.'
+        ],
+        targetView: 'palestra_grasso',
+        targetSubTab: 'pasto_tappabuchi'
       }
     ];
 
@@ -2316,7 +2399,7 @@ export const NoteTab: React.FC = () => {
           </h1>
 
           <p className="text-xs text-gray-200 leading-relaxed font-medium">
-            Qui trovi riunite in un&apos;unica pagina tutte le spiegazioni e gli aggiornamenti fatti oggi attraverso le varie sezioni (incluse biomeccanica dei pesi, leve lunghe, camminata + pesi, crampi/RBE, regola 3ª serie, lavoro manuale e ossa), così puoi leggerli, ripassarli e studiarli con calma senza saltare da una cartella all&apos;altra (ogni scheda ha anche il tasto diretto per aprire la nota completa).
+            Qui trovi riunite in un&apos;unica pagina tutte le spiegazioni e gli aggiornamenti fatti oggi attraverso le varie sezioni (incluse ipoglicemia/spugna muscolare &amp; Regola del 15, sonno 21:30 &amp; inerzia del sonno, lato sinistro fino vs cuscino destro, punti neri &amp; acido salicilico 2–3 volte/settimana, latte/whey &amp; sudore, pranzo tappabuchi, biomeccanica pesi, leve lunghe, lavoro manuale e ossa), così puoi leggerli, ripassarli e studiarli con calma senza saltare da una cartella all&apos;altra.
           </p>
 
           {/* Filter Pills */}
@@ -2415,7 +2498,7 @@ export const NoteTab: React.FC = () => {
             className="flex items-center space-x-1.5 py-2 px-3 rounded-2xl bg-amber-500/20 hover:bg-amber-400 hover:text-black text-amber-200 border border-amber-400/50 font-extrabold text-xs transition-all active:scale-95 cursor-pointer"
           >
             <BookOpen className="w-3.5 h-3.5 shrink-0" />
-            <span>Da Studiare Oggi (19 Nov · 14)</span>
+            <span>Da Studiare Oggi (19 Nov · 20)</span>
           </button>
 
           <button
@@ -2947,7 +3030,7 @@ export const NoteTab: React.FC = () => {
                   <Moon className="w-3 h-3 text-indigo-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">Schiena & Fianco</span>
+                <span className="text-[10px] text-gray-400 font-semibold">Schiena, Fianco &amp; Cicli 21:30</span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-indigo-300 transition-colors uppercase tracking-tight">
@@ -2955,7 +3038,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Tecniche posturali notturne: test pratici a pancia in su (respiro profondo, rilascio muscolare totale, deglutizione, cuscino) e assetto corretto di lato (linea naso-ombelico, spalla libera e cuscino tra le ginocchia).
+                Tecniche posturali notturne (supina &amp; fianco), federa seta e nuova 3ª sezione scientifica: dormire alle 21:30 (9 ore = 6 cicli da 90 min), Inerzia del Sonno, GH/MPS e protocollo risveglio in 10 minuti.
               </p>
             </div>
 
@@ -2966,10 +3049,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-indigo-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire le tecniche posturali del sonno</span>
+              <span>Tocca per aprire posizioni, cicli 21:30 &amp; inerzia</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">A Pancia in Su + Di Lato</span>
+            <span className="text-[10px] text-gray-400 font-semibold">3 Sezioni: Supina + Fianco + 6 Cicli/Inerzia</span>
           </div>
         </div>
       </div>
@@ -2995,7 +3078,7 @@ export const NoteTab: React.FC = () => {
                   <Scissors className="w-3 h-3 text-emerald-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">7 Parti: 6 Guide + 📸 Foto Prima & Dopo</span>
+                <span className="text-[10px] text-gray-400 font-semibold">8 Parti: 7 Guide + 📸 Foto Prima &amp; Dopo</span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-emerald-300 transition-colors uppercase tracking-tight">
@@ -3003,7 +3086,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Massaggio mattutino, metodo diviso per zone, razor burn, <strong className="text-lime-300">protocollo 7–10 gg (Nikai, baffetti, diabete &amp; mantenimento)</strong> e <strong className="text-cyan-300">Foto Prima &amp; Dopo</strong> con data/ora e backup tra telefoni.
+                Massaggio mattutino, metodo diviso per zone, razor burn, <strong className="text-lime-300">protocollo 7–10 gg</strong>, <strong className="text-amber-300">Parte 8 (Punti Neri, Acido Salicilico 2–3x/sett, Latte/Whey &amp; Sudore)</strong> e 📸 Foto Prima &amp; Dopo.
               </p>
             </div>
 
@@ -3014,10 +3097,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-emerald-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire guide, protocollo 10 gg &amp; foto</span>
+              <span>Tocca per aprire guide, BHA, punti neri &amp; foto</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">7 Parti • 6 Guide + Foto Prima/Dopo</span>
+            <span className="text-[10px] text-gray-400 font-semibold">8 Parti • Include BHA &amp; Latte/Sudore</span>
           </div>
         </div>
       </div>
@@ -3221,7 +3304,7 @@ export const NoteTab: React.FC = () => {
                   <Dumbbell className="w-3 h-3 text-orange-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">19 Pilastri • 5# & 6# Affiancate + 7# + 8# + 9# + 10# + 11# PAP + 12# Flessioni Pump &amp; 2 Fasi</span>
+                <span className="text-[10px] text-gray-400 font-semibold">23 Pilastri • Include 13#–16# Info (Henneman, RBE, Pranzo Tappabuchi)</span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-orange-300 transition-colors uppercase tracking-tight">
@@ -3229,7 +3312,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Tecnica, deficit 700-900 kcal, proteine/grassi (5# &amp; 6#), bustine 120-130, 9# Strategia Personale (75 kg), 10# Gestione Serie, 11# PAP 2ª serie &amp; 3 serie e 12# Flessioni giorni off (pump vs ipertrofia, SNC e 2 fasi).
+                Deficit 700–900 kcal, proteine/grassi, bustine, PAP, 12# Flessioni, 13# Henneman &amp; Leve, 14# Pesi+Camminata, 15# Crampi/RBE &amp; 3ª Serie, e 16# Pranzo &quot;Tappabuchi&quot; (Fiocchi + Barretta 300 kcal).
               </p>
             </div>
 
@@ -3243,7 +3326,7 @@ export const NoteTab: React.FC = () => {
               <span>Tocca per aprire la guida su palestra e dimagrimento</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">19 Pilastri • Include 12# Pump, SNC &amp; 2 Fasi</span>
+            <span className="text-[10px] text-gray-400 font-semibold">23 Pilastri • Include 16# Pranzo Tappabuchi</span>
           </div>
         </div>
       </div>
@@ -3345,6 +3428,9 @@ export const NoteTab: React.FC = () => {
                 <span className="text-[10px] text-rose-200 font-extrabold bg-rose-500/20 px-2 py-0.5 rounded-md border border-rose-400/40">
                   📌 11: Dati 19/11 &amp; Stacking
                 </span>
+                <span className="text-[10px] text-amber-200 font-extrabold bg-amber-500/20 px-2 py-0.5 rounded-md border border-amber-400/40">
+                  🧽 12: Ipo, Freni &amp; Spugna
+                </span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-rose-300 transition-colors uppercase tracking-tight">
@@ -3352,7 +3438,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                ★ Calcolo Insulina + Onda Lunga 3h, Frullato 40–41g CHO, Digiuno ~120, Proteine &amp; Finestra 24–48h + Nota 11: Dati Reali 19/11 (6U+3U mattina &amp; Mensa 16,5U / Insulin Stacking).
+                ★ Calcolo Insulina + Onda Lunga 3h, Frullato 40–41g CHO, Digiuno ~120, Nota 11 (Dati 19/11 &amp; Stacking) + Nota 12: Ipoglicemia vs Iperglicemia, &quot;Spugna&quot; Muscolare, Freno Epatico &amp; Regola del 15.
               </p>
             </div>
 
@@ -3363,10 +3449,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-rose-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire guida e calcoli insulina</span>
+              <span>Tocca per aprire guida, calcoli e Nota 12</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">★ Calcolo Insulina + 11 Note + 5 Sezioni</span>
+            <span className="text-[10px] text-gray-400 font-semibold">★ Calcolo Insulina + 12 Note + 5 Sezioni</span>
           </div>
         </div>
       </div>

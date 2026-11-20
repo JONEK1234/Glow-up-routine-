@@ -32,7 +32,7 @@ interface PalestraPerditaGrassoViewProps {
 }
 
 export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps> = ({ onBack, initialTab }) => {
-  type PalestraTab = 'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra' | 'piegamenti_lavoro' | 'strategia_personale' | 'volume_calisthenics' | 'pap_seconda_serie' | 'flessioni_riposo' | 'henneman_leve_compensi' | 'pesi_camminata_giorno' | 'rbe_limite_terza_serie';
+  type PalestraTab = 'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra' | 'piegamenti_lavoro' | 'strategia_personale' | 'volume_calisthenics' | 'pap_seconda_serie' | 'flessioni_riposo' | 'henneman_leve_compensi' | 'pesi_camminata_giorno' | 'rbe_limite_terza_serie' | 'pasto_tappabuchi';
   const [activeTab, setActiveTab] = useState<PalestraTab>((initialTab as PalestraTab) || 'tutte');
   const noteContentRef = useRef<HTMLDivElement>(null);
 
@@ -548,6 +548,32 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
               Apri ➔
             </span>
           </div>
+
+          {/* 16# Informazioni: Pranzo "Tappabuchi" (Fiocchi di Latte + Barretta Proteica ~300 kcal) */}
+          <div
+            onClick={() => handleSelectTab('pasto_tappabuchi')}
+            className="p-3.5 rounded-2xl bg-gradient-to-r from-teal-950/60 via-emerald-950/40 to-black/80 border-2 border-teal-400/50 hover:border-teal-300 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-teal-500/25 col-span-1 sm:col-span-2 lg:col-span-3"
+          >
+            <div className="flex items-center space-x-3">
+              <span className="p-2.5 rounded-xl bg-teal-500/20 text-teal-300 border border-teal-500/30 group-hover:bg-teal-500 group-hover:text-black transition-all shrink-0">
+                <Apple className="w-4 h-4 text-teal-400 group-hover:text-black" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-teal-300 flex items-center gap-1.5">
+                  <Sparkles className="w-3 h-3 text-teal-300" /> 16# Info (19 Nov): Pranzo &quot;Tappabuchi&quot; vs Pasto Completo
+                </span>
+                <h3 className="text-xs sm:text-sm font-black text-white group-hover:text-teal-200 transition-colors">
+                  Fiocchi di Latte + Barretta (~300 kcal / -33g CHO): Emergenza Una Tantum vs Abitudine Quotidiana
+                </h3>
+                <p className="text-[11px] text-gray-300 line-clamp-1 mt-0.5">
+                  Glicogeno per palestra/scuola, fibre e micronutrienti vs polioli, rischio fame serale e gestione glicemia pre-workout.
+                </p>
+              </div>
+            </div>
+            <span className="text-xs font-black px-3 py-1.5 rounded-xl bg-teal-500/20 text-teal-300 border border-teal-500/30 group-hover:bg-teal-500 group-hover:text-black transition-all shrink-0 ml-2">
+              Apri ➔
+            </span>
+          </div>
         </div>
 
         {/* Tab Filters */}
@@ -854,6 +880,20 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           >
             <Zap className="w-3.5 h-3.5 text-amber-400" />
             22. 15# Info: RBE, Sussulti &amp; 3ª Serie
+          </button>
+
+          {/* 23. 16# Info: Pranzo Tappabuchi vs Pasto Completo */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('pasto_tappabuchi')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'pasto_tappabuchi'
+                ? 'bg-teal-400 text-black shadow-md shadow-teal-500/30 font-extrabold'
+                : 'bg-teal-500/10 text-teal-300 hover:text-white border border-teal-500/30'
+            }`}
+          >
+            <Apple className="w-3.5 h-3.5 text-teal-400" />
+            23. 16# Info: Pranzo Tappabuchi vs Completo
           </button>
         </div>
       </div>
@@ -4361,6 +4401,94 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
                   </ul>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 16: PRANZO TAPPABUCHI VS PASTO COMPLETO (19 NOV)      */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'pasto_tappabuchi') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-teal-500/20 text-teal-300 border border-teal-500/30">
+                <Apple className="w-4 h-4 text-teal-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-teal-400">
+                  16# Info • Nutrizione Pratica &amp; Sostenibilità (19 Nov)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Pranzo &quot;Tappabuchi&quot; (Fiocchi di Latte + Barretta Proteica ~300 kcal) vs Pasto Completo
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-teal-500/15 text-teal-300 border border-teal-500/30">
+              Emergenza ≠ Abitudine
+            </span>
+          </div>
+
+          <div className="p-5 sm:p-6 rounded-3xl glass-card border-2 border-teal-400/45 space-y-5 bg-gradient-to-br from-teal-950/35 via-emerald-950/20 to-black/90 text-xs text-gray-200 leading-relaxed">
+            <div className="p-4 rounded-2xl bg-black/65 border border-teal-500/35 space-y-2.5">
+              <strong className="text-teal-300 uppercase tracking-wider text-[11px] block">
+                1. Una Tantum (Ok) vs Ogni Giorno (Errore): I 4 Effetti Nascosti Sul Tuo Corpo
+              </strong>
+              <p className="text-[11px] text-gray-200">
+                Usare <strong className="text-white">fiocchi di latte + barretta proteica (~300 kcal e ~33 g di carboidrati in meno)</strong> come soluzione d&apos;emergenza ogni tanto va benissimo: incastra i conti, ti dà proteine e non rovina nulla. A <strong>16 anni (75 kg × 1,75 m)</strong> con scuola, 10.000 passi e palestra, però, farlo <em>tutti i giorni</em> al posto della pasta o di un piatto completo crea 4 svantaggi precisi:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                <div className="p-3 rounded-xl bg-rose-950/25 border border-rose-500/30 space-y-1">
+                  <strong className="text-rose-300 block">1. Calo Energia, Glicogeno &amp; Spinta in Palestra</strong>
+                  <p className="text-gray-300">
+                    I carboidrati veri (pasta, riso, pane, patate) sono il carburante rapido per il cervello a scuola e per spremere le serie al massimo in palestra. Tagliarli sistematicamente a pranzo ti svuota forza e concentrazione.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-amber-950/25 border border-amber-500/30 space-y-1">
+                  <strong className="text-amber-300 block">2. Zero Fibre, Meno Micronutrienti &amp; Più Polioli</strong>
+                  <p className="text-gray-300">
+                    Fiocchi di latte e barrette portano proteine (più spesso dolcificanti/polioli e un po&apos; di sodio), ma mancano quasi totalmente di fibre, vitamine e minerali di cereali/verdure/legumi → sazietà breve e gonfiore intestinale se ripetuti.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-orange-950/25 border border-orange-500/30 space-y-1">
+                  <strong className="text-orange-300 block">3. Effetto &quot;Fame Accumulata&quot; la Sera</strong>
+                  <p className="text-gray-300">
+                    Un pranzo da sole 300 kcal non regge fino alle 20:00 se ti muovi tutto il giorno: arrivi a cena affamato e rischi di compensare senza accorgertene, bruciando il vantaggio cercato alle 13:00.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-cyan-950/25 border border-cyan-500/30 space-y-1">
+                  <strong className="text-cyan-300 block">4. Margine Glicemico Pre-Palestra (Diabete)</strong>
+                  <p className="text-gray-300">
+                    Con 33 g di carboidrati in meno a pranzo arrivi al pomeriggio con meno riserva di glucosio: quando inizi pesi/camminata la &quot;spugna&quot; GLUT4 può tirarti giù la curva più in fretta (controlla sempre IOB e valori pre-workout!).
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Tabella pratica */}
+            <div className="overflow-x-auto rounded-xl border border-white/10">
+              <table className="w-full text-left text-[11px] border-collapse">
+                <thead className="bg-white/[0.05] text-[10px] font-black uppercase text-gray-300 border-b border-white/10">
+                  <tr>
+                    <th className="p-2.5">Scenario</th>
+                    <th className="p-2.5">Impatto Biologico Reale</th>
+                    <th className="p-2.5">Come Regolarti in Pratica</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5 text-gray-200">
+                  <tr>
+                    <td className="p-2.5 font-bold text-emerald-300">Una volta ogni tanto (Emergenza)</td>
+                    <td className="p-2.5">Neutro o comodo per incastrare orari, macro e ~1.600 kcal.</td>
+                    <td className="p-2.5">Va benissimo: fai la tua cena completa normale e, se ti alleni nel pomeriggio, controlla la glicemia prima di iniziare.</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2.5 font-bold text-rose-300">Tutti i giorni al posto del pranzo</td>
+                    <td className="p-2.5">Meno fibre/vitamine, stanchezza in palestra, fame serale, risparmio calorico illusorio.</td>
+                    <td className="p-2.5">Evita: tieni i pranzi veri (carboidrati + proteine + verdura) e usa fiocchi/barretta come spuntino o jolly di emergenza.</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

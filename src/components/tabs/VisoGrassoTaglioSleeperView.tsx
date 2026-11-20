@@ -22,7 +22,8 @@ export type VisoGrassoTabId =
   | 'grasso_taglio'
   | 'biologia_73kg'
   | 'faccia_fine'
-  | 'piano_giugno';
+  | 'piano_giugno'
+  | 'sinistra_fino_destra';
 
 interface VisoGrassoTaglioSleeperViewProps {
   onBack: () => void;
@@ -100,7 +101,8 @@ export const VisoGrassoTaglioSleeperView: React.FC<VisoGrassoTaglioSleeperViewPr
             { id: 'grasso_taglio', label: '1. Verità Grasso & Taglio Corto' },
             { id: 'biologia_73kg', label: '2. Perché Succede (1,75m / 73kg)' },
             { id: 'faccia_fine', label: '3. Strategia "Faccia Fine" (3 Fronti)' },
-            { id: 'piano_giugno', label: '4. 16 Anni & Risultato Giugno' }
+            { id: 'piano_giugno', label: '4. 16 Anni & Risultato Giugno' },
+            { id: 'sinistra_fino_destra', label: '5. Lato Sinistro "Fino" vs Destro' }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -414,6 +416,64 @@ export const VisoGrassoTaglioSleeperView: React.FC<VisoGrassoTaglioSleeperViewPr
                 <li><strong>10.000 Passi + Cardio Leggero:</strong> brucia grasso ostinato ogni giorno senza stress sul sistema nervoso.</li>
                 <li><strong>Palestra 3x + Postura:</strong> costruisci lo <em>sleeper build</em> e tieni collo/testa dritti (<em>Chin Tucks</em>).</li>
                 <li><strong>Masticazione &amp; Capelli:</strong> focus a sinistra sui molari (60–65%) + lascia ricrescere il ciuffo sopra per la cornice.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===================================================================== */}
+      {/* SEZIONE 5: LATO SINISTRO "FINO" VS LATO DESTRO MENO DEFINITO (19 NOV) */}
+      {/* ===================================================================== */}
+      {(activeTab === 'tutte' || activeTab === 'sinistra_fino_destra') && (
+        <div className="space-y-3.5 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                <Scale className="w-4 h-4 text-sky-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-sky-400">
+                  Cuscino Adiposo vs Muscolo • Sezione 5 (19 Nov)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  5. Lato Sinistro &quot;Fino&quot; (Più Visibile) vs Lato Destro &quot;Meno Definito&quot;: Perché Basta Svuotare il Grasso
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-sky-500/15 text-sky-300 border border-sky-500/30">
+              Copertura &amp; Contorni
+            </span>
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-sky-400/45 bg-gradient-to-br from-sky-950/30 via-black/90 to-cyan-950/20 space-y-3.5 text-xs text-gray-200 leading-relaxed">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+              <div className="p-3.5 rounded-2xl bg-black/65 border border-sky-500/30 space-y-1.5">
+                <strong className="text-sky-300 block uppercase">
+                  1. Il &quot;Cuscino&quot; Sopra il Muscolo (Spiegazione Diretta)
+                </strong>
+                <p className="text-gray-300">
+                  I muscoli masticatori possono essere presenti e contrarsi bene su entrambi i lati: però dove lo strato superficiale è più <strong className="text-white">sottile/fino (sinistra)</strong>, il profilo e le contrazioni del muscolo si leggono subito attraverso la pelle. Dove invece c&apos;è un leggero <strong>cuscino di grasso sottocutaneo e ritenzione idrica (destra)</strong>, quel velo fa da filtro ottico e &quot;sfuma&quot; la linea, facendolo sembrare meno definito.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-black/65 border border-emerald-500/30 space-y-1.5">
+                <strong className="text-emerald-300 block uppercase">
+                  2. Perché Perdere Grasso È La Chiave N° 1 Per Il Lato Destro
+                </strong>
+                <p className="text-gray-300">
+                  Puoi anche allenare i masseteri sui molari all&apos;infinito, ma se sopra resta uno spessore adiposo più morbido, la linea continua a sembrare arrotondata. Con il <strong className="text-white">deficit calorico costante (~1.600 kcal) + 10.000 passi + 2,5–3 L acqua</strong> lo strato di grasso tra pelle e muscolo si assottiglia, facendo emergere i contorni reali anche sul lato meno definito.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-cyan-950/25 border border-cyan-500/35 space-y-1.5 text-[11px]">
+              <strong className="text-cyan-300 uppercase block">
+                3. Regole Pratiche Per Non Sbilanciarti Mentre Dimagrisci:
+              </strong>
+              <ul className="list-disc pl-5 space-y-1 text-gray-200">
+                <li><strong>Non ipertrofizzare all&apos;infinito il lato già netto:</strong> se un lato appare già stretto/definito, non caricarlo con sessioni estreme; tieni i <strong>molari equilibrati</strong> senza forzare l&apos;articolazione (ATM) e lascia che il calo del grasso pulisca la visuale su tutto il viso.</li>
+                <li><strong>Zero paranoie giorno per giorno:</strong> luce del bagno, angolo della camera, sale/carboidrati della sera prima e sonno cambiano l&apos;acqua sul viso ogni mattina. Confronta foto con la stessa luce di mese in mese fino a Giugno.</li>
               </ul>
             </div>
           </div>
