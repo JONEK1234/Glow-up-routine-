@@ -1471,12 +1471,12 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
                   Parte 8 • Dermatologia Pratica &amp; Metabolismo (19 Nov)
                 </span>
                 <h2 className="text-base sm:text-lg font-black text-white">
-                  Punti Neri vs Filamenti Sebacei, Acido Salicilico (Si Passa Sempre o No?), Latte/Whey &amp; Sudore
+                  Punti Neri, &quot;Buchi Neri&quot;/Pori Dilatati, Diagnosi Foto Zigomi, BHA (Sempre o No?), Latte &amp; Sudore
                 </h2>
               </div>
             </div>
             <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30">
-              BHA &amp; IGF-1
+              Foto, BHA &amp; IGF-1
             </span>
           </div>
 
@@ -1581,6 +1581,62 @@ export const PeliIncarnitiVisoView: React.FC<PeliIncarnitiVisoViewProps> = ({ on
                     </tr>
                   </tbody>
                 </table>
+              </div>
+            </div>
+
+            {/* 5. Diagnosi Foto Zigomi / Zona Transizione Barba */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-rose-500/35 space-y-3">
+              <strong className="text-rose-300 uppercase tracking-wider text-[11px] block">
+                5. Diagnosi Dalle Tue Foto (Guance / Zigomi): Non è Acne Cistica Grave, Ecco Cosa C&apos;è e Come Agire
+              </strong>
+              <p className="text-[11px] text-gray-200">
+                Il quadro è assolutamente recuperabile: la pelle intorno è sana e <strong className="text-emerald-300">la barba sta ricrescendo pulita senza follicolite diffusa su collo o mascella inferiore</strong>. Tutto si concentra nella <strong>zona di transizione tra pelle liscia dello zigomo e inizio barba/basette</strong>, dove i peli crescono più spessi e la pelle subisce il doppio stress di ormoni (sebo) e rasatura:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-[11px]">
+                <div className="p-3 rounded-xl bg-amber-950/25 border border-amber-500/30 space-y-1">
+                  <strong className="text-amber-200 block">Comedoni Aperti &amp; Pori Dilatati</strong>
+                  <p className="text-gray-300">
+                    Visibili soprattutto sugli zigomi / guance alte per accumulo di sebo e cheratina. L&apos;acido salicilico la sera (con qualche settimana di costanza) è perfetto per svuotarli e restringerli.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-rose-950/25 border border-rose-500/30 space-y-1">
+                  <strong className="text-rose-200 block">Papule &amp; Eritema Post-Infiammatorio</strong>
+                  <p className="text-gray-300">
+                    I puntini rossi piatti o appena in rilievo lasciati da brufoletti già sgonfiati o in guarigione. <strong>Protezione solare rigorosa al mattino</strong>: senza SPF i segni rossi diventano macchie scure; con SPF spariscono molto più in fretta.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-orange-950/25 border border-orange-500/30 space-y-1">
+                  <strong className="text-orange-200 block">Crosticine / Escoriazioni Superficiali</strong>
+                  <p className="text-gray-300">
+                    Segno di qualche brufoletto rotto o sfregato. <strong>Non toccarle e non staccarle MAI</strong> e <strong>non passarci la lametta sopra</strong> finché non cadono da sole: usa il regolabarba Nikai senza premere sugli zigomi dove ci sono rilievi rossi.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 6. Meccanica dei "Buchi Neri" / Pori Dilatati & Cosa Fa (e NON Fa) il BHA */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-purple-500/35 space-y-3">
+              <strong className="text-purple-300 uppercase tracking-wider text-[11px] block">
+                6. La Meccanica Dentro il Poro (&quot;Buchi Neri&quot;, Pori Dilatati &amp; Segni): Cosa Fa e Cosa NON Può Fare il BHA
+              </strong>
+              <p className="text-[11px] text-gray-200">
+                Quando si notano &quot;buchi neri&quot; sulla guancia, può trattarsi sia di <strong>punti neri</strong> (tappo aperto ossidato) sia di <strong>pori dilatati o piccole depressioni</strong> lasciate dopo un brufolo più profondo o schiacciato:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 space-y-1.5">
+                  <strong className="text-cyan-300 block">Come Si Forma il &quot;Buco&quot; &amp; Cosa Fa la Crema al BHA</strong>
+                  <ol className="list-decimal pl-4 space-y-1 text-gray-300">
+                    <li><strong>Ingorgo:</strong> sebo in eccesso + cellule morte formano un tappo che spinge ed allarga le pareti del canale follicolare.</li>
+                    <li><strong>Penetrazione nei grassi:</strong> l&apos;acido salicilico (liposolubile) entra dentro il sebo del canale, agisce come solvente mirato sciogliendo il tappo dall&apos;interno.</li>
+                    <li><strong>Sgonfiamento:</strong> liberando il dotto e riducendo la micro-infiammazione, il poro non viene più spinto da dentro e appare subito più pulito e compatto.</li>
+                  </ol>
+                </div>
+                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 space-y-1.5">
+                  <strong className="text-amber-300 block">Cosa NON Può Fare il BHA da Solo (Verità Scientifica)</strong>
+                  <p className="text-gray-300">
+                    Se un brufolo profondo (o lo schiacciamento con le unghie) ha danneggiato un po&apos; di collagene attorno al poro lasciando una piccola fossetta/segno scavato, il BHA <strong>non &quot;cuce&quot; né riempie istantaneamente quella depressione</strong>. Sui tappi di sebo e pori ostruiti fa un lavoro netto in poche settimane; per eventuali fossette profonde il miglioramento è più lento e legato al rinnovo cellulare naturale e alla protezione solare quotidiana.
+                  </p>
+                </div>
               </div>
             </div>
           </div>

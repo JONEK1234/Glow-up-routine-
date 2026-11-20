@@ -29,6 +29,7 @@ interface CapelliMossiTexturedMessyMulletViewProps {
 
 type MulletTabId =
   | 'tutte'
+  | 'piano_azione_finale'
   | 'fisica_spessore'
   | 'crescita_buchi'
   | 'taglio_barbiere'
@@ -39,7 +40,8 @@ type MulletTabId =
   | 'video_ispirazione';
 
 const TAB_CONFIG: { id: MulletTabId; label: string }[] = [
-  { id: 'tutte', label: 'Tutte (8)' },
+  { id: 'tutte', label: 'Tutte (9)' },
+  { id: 'piano_azione_finale', label: '★ Piano d\'Azione Finale' },
   { id: 'fisica_spessore', label: '1. Spessore & Dieta' },
   { id: 'crescita_buchi', label: '2. Crescita & Buchi' },
   { id: 'taglio_barbiere', label: '3. Barbiere & Taglio' },
@@ -172,7 +174,20 @@ export const CapelliMossiTexturedMessyMulletView: React.FC<
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
-            <span>Tutte (8)</span>
+            <span>Tutte (9)</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleSelectTab('piano_azione_finale')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+              activeTab === 'piano_azione_finale'
+                ? 'bg-gradient-to-r from-amber-300 to-emerald-300 text-black shadow-md shadow-amber-400/30'
+                : 'bg-amber-500/20 text-amber-200 hover:bg-amber-500/30 border border-amber-400/50'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>★ Piano d&apos;Azione Finale</span>
           </button>
 
           <button
@@ -282,6 +297,216 @@ export const CapelliMossiTexturedMessyMulletView: React.FC<
       </div>
 
       <div ref={contentRef} className="space-y-6 scroll-mt-16">
+        {/* ================================================================= */}
+        {/* ★ PIANO D'AZIONE FINALE + TUTTE LE VARIE COSE (DIAGNOSI & ERRORI) */}
+        {/* ================================================================= */}
+        {(activeTab === 'tutte' || activeTab === 'piano_azione_finale') && (
+          <section className="space-y-4">
+            <div className="flex items-center space-x-2.5 pl-1 border-b border-amber-400/30 pb-2">
+              <span className="p-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-400/40">
+                <Sparkles className="w-4 h-4 text-amber-300" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block">
+                  ★ Protocollo Definitivo Costruito Sui Tuoi Capelli
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Il Piano d&apos;Azione Finale (Asciugatura Anti-Spaghetti) &amp; Tutte le Varie Cose
+                </h2>
+              </div>
+            </div>
+
+            {/* BLOCCO 1: IL PIANO D'AZIONE FINALE */}
+            <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-amber-400/55 space-y-4 bg-gradient-to-br from-amber-950/35 via-black/90 to-emerald-950/25 text-xs text-gray-200 leading-relaxed shadow-[0_0_25px_rgba(245,158,11,0.16)]">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2.5">
+                <strong className="text-amber-300 uppercase tracking-wider text-xs flex items-center gap-1.5">
+                  <Target className="w-4 h-4 text-amber-400" />
+                  1. Il Piano d&apos;Azione Finale — Gesti Esatti (Zero Effetto &quot;Fili Sparati&quot;)
+                </strong>
+                <span className="text-[10px] font-black px-2 py-0.5 rounded-lg bg-amber-400 text-black">
+                  Da Seguire Alla Lettera
+                </span>
+              </div>
+
+              <p>
+                Questo è il protocollo definitivo tarato esattamente sui tuoi gesti e sul tuo taglio (<strong className="text-white">frangia corta/sfoltita davanti, più massa dietro sul mullet, sfumatura bassa ai lati, mosso 2B–2C</strong>) per avere <strong className="text-emerald-300">volume sopra/dietro e frangia compatta che copre la fronte senza effetto spaghetti</strong>:
+              </p>
+
+              {/* Step 1: Preparazione */}
+              <div className="p-3.5 rounded-2xl bg-black/60 border border-emerald-500/35 space-y-2">
+                <strong className="text-emerald-300 block uppercase tracking-wider text-[11px]">
+                  Step 1 · Dopo Lo Shampoo (Capelli Umidi Tamponati — Cosa Metti e Cosa NO)
+                </strong>
+                <ul className="space-y-1.5 list-disc pl-5">
+                  <li>
+                    <strong className="text-white">Tampona delicato:</strong> usa microfibra o una t-shirt di cotone (<strong>mai sfregare forte</strong> altrimenti apri le cuticole e parte subito il crespo). Devono restare umidi, non gocciolanti.
+                  </li>
+                  <li>
+                    <strong className="text-rose-300">REGOLA D&apos;ORO FRANGIA DAVANTI — ZERO PRODOTTI DAVANTI:</strong> non mettere balsamo, crema ricci o spray al sale marino sulla frangia/ciuffo davanti! Il balsamo la rende scivolosa e la apre a &quot;4 fili appiattiti&quot;; lo spray al sale (soprattutto finché non hai la cera opaca) toglie acqua alle ciocche corte davanti rendendole secche ed elettriche.
+                  </li>
+                  <li>
+                    <strong className="text-cyan-300">Dietro e Sopra (solo dove c&apos;è massa più lunga):</strong> dai al massimo <strong>2 spruzzi di Spray al Sale Marino</strong> solo dietro e sopra (oppure 1 lenticchia di balsamo solo sulle punte dietro se annodate, mai sulla cute).
+                  </li>
+                </ul>
+              </div>
+
+              {/* Step 2: Pettine + Stacco radici */}
+              <div className="p-3.5 rounded-2xl bg-black/60 border border-cyan-500/35 space-y-2">
+                <strong className="text-cyan-300 block uppercase tracking-wider text-[11px]">
+                  Step 2 · Pettine a Denti Larghi + Stacco Alle Radici (Subito Dopo Averli Tamponati)
+                </strong>
+                <ol className="space-y-1.5 list-decimal pl-5">
+                  <li>
+                    <strong className="text-white">Pettine a denti larghi da umidi:</strong> passa il pettine dalla corona (centro testa) <strong>in avanti verso la fronte</strong>. Questo mette tutti i capelli in fila nella stessa direzione così non si incrociano a casaccio.
+                  </li>
+                  <li>
+                    <strong className="text-emerald-300">Stacca la radice con le dita:</strong> subito dopo aver posato il pettine, infila le dita alla radice e fai una <strong>leggera scossa</strong> per non lasciare i capelli incollati alla pelle della fronte (<strong>senza tirare le punte</strong>!).
+                  </li>
+                  <li>
+                    <strong className="text-rose-300">Posa il pettine e non toccarli più:</strong> mai pettinare da asciutti o mentre usi il phon.
+                  </li>
+                </ol>
+              </div>
+
+              {/* Step 3: Asciugatura finale col diffusore */}
+              <div className="p-3.5 rounded-2xl bg-black/65 border-2 border-amber-400/45 space-y-2.5">
+                <strong className="text-amber-300 block uppercase tracking-wider text-[11px]">
+                  Step 3 · Asciugatura Col Diffusore — Calore Medio &amp; Velocità 1 (Minima)
+                </strong>
+                <div className="space-y-2">
+                  <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                    <strong className="text-white block">A. Zona Dietro (dalla rosa/corona in giù):</strong>
+                    <p>
+                      Asciuga <strong>dal basso verso l&apos;alto</strong> come fai già appoggiando delicatamente il diffusore (senza stare a testa in giù per ore e senza fare cerchi continui).
+                    </p>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-amber-950/30 border border-amber-400/40 space-y-1.5">
+                    <strong className="text-amber-200 block">B. Zona Sopra &amp; Frangia Davanti (Testa DRITTA nello specchio — MAI a testa in giù!):</strong>
+                    <ul className="list-disc pl-4 space-y-1">
+                      <li>
+                        <strong>Niente aria dal basso verso l&apos;alto davanti</strong> e <strong>non raccogliere</strong> i capelli con la mano: l&apos;aria dal basso su punte corte le fa arricciare in su ad uncino (&quot;spaghetti sparati&quot;).
+                      </li>
+                      <li>
+                        <strong>Appoggia leggero da SOPRA senza schiacciare:</strong> tieni la testa dritta, avvicina il diffusore da sopra <strong>sfiorando appena i capelli o tenendolo a 1–2 cm di distanza</strong> puntando l&apos;aria tiepida verso il basso (senza mai premere col peso del braccio!).
+                      </li>
+                      <li>
+                        <strong>Posizione 1 (Cima testa dietro la frangia):</strong> tieni lì per ~10–15 secondi (spostandolo leggermente ogni <strong>5–10 secondi</strong> per non cuocere una sola ciocca).
+                      </li>
+                      <li>
+                        <strong>Posizione 2 (Sopra la frangia):</strong> sposta appena più avanti sopra la frangia per altri ~10–15 secondi. L&apos;aria scende dall&apos;alto e fissa le punte verso la fronte, mentre lo spazio che hai creato alle radici nello Step 2 mantiene il volume sopra senza spiaccicarli!
+                      </li>
+                    </ul>
+                  </div>
+                  <p className="text-sky-200 text-[11px]">
+                    <strong>Fermati all&apos;80–85% di asciugatura</strong> (mai seccarli al 100% col phon caldo altrimenti si caricano di elettricità statica). Aspetta 5–10 minuti che finiscano all&apos;aria e si raffreddino.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 4: Tocco Finale + Giorno Dopo */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="p-3.5 rounded-2xl bg-black/60 border border-teal-500/35 space-y-2">
+                  <strong className="text-teal-300 block uppercase tracking-wider text-[11px]">
+                    Step 4 · Tocco Finale (Capelli 100% Asciutti)
+                  </strong>
+                  <ul className="space-y-1.5 list-disc pl-4 text-[11px]">
+                    <li>
+                      <strong>ORA (senza cera):</strong> se qualche punta si alza, appoggia il <strong>palmo della mano piatto e asciutto</strong> sopra la frangia e premi piano verso la fronte per <strong>3–4 secondi</strong> (il calore della mano calma e abbassa le punte). Se sopra sembrano troppo fermi, dai una micro-scossa leggera alle radici senza toccare le punte.
+                    </li>
+                    <li>
+                      <strong>QUANDO HAI LA CERA OPACA (Matte Clay/Paste, MAI gel o pomata lucida):</strong> prendi <strong>meno di 1 chicco di riso</strong>, sfregala fortissimo tra pollice/indice/palmi per 10 sec finché sparisce, poi pizzica leggermente <strong>solo le punte davanti</strong> tirandole verso le sopracciglia per unire 2–3 ciocche vicine e chiudere gli spazi.
+                    </li>
+                    <li>
+                      <strong>Zero polvere volumizzante sulla frangia:</strong> secca e carica di statico le punte corte davanti. Usala al massimo solo in 1–2 micro-soffi sulle radici sopra/dietro se sono piatti.
+                    </li>
+                    <li>
+                      <strong>NON toccarli in giornata:</strong> più tocchi i capelli mossi con le dita durante il giorno, più si ungono e tornano a dividersi a fili.
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="p-3.5 rounded-2xl bg-black/60 border border-lime-500/35 space-y-2">
+                  <strong className="text-lime-300 block uppercase tracking-wider text-[11px]">
+                    Step 5 · Routine Del Giorno Dopo (Mattina Senza Lavarli)
+                  </strong>
+                  <ul className="space-y-1.5 list-disc pl-4 text-[11px]">
+                    <li>
+                      <strong>NON lavarli tutti i giorni</strong> (li secca) e <strong>NON mettere balsamo sui capelli asciutti/sporchi</strong> della notte (il sebo del cuscino + balsamo li appesantisce e li divide subito in fili piatti davanti!).
+                    </li>
+                    <li>
+                      <strong>Bagna solo con acqua dove serve:</strong> inumidisci le punte delle dita con un goccio d&apos;acqua e passa solo sui ciuffi davanti che hanno preso la piega storta del cuscino.
+                    </li>
+                    <li>
+                      <strong>Phon rapido dall&apos;alto:</strong> asciuga 20–30 secondi a testa dritta puntando l&apos;aria <strong>dall&apos;alto verso il basso</strong> mentre con la mano guidi le ciocche verso la fronte.
+                    </li>
+                    <li>
+                      <strong>Chiusura:</strong> 3 secondi di palmo piatto (oppure micro-punta di cera opaca solo sulle punte davanti).
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* BLOCCO 2: TUTTE LE VARIE COSE (DIAGNOSI FOTO, CHIMICA & ERRORI) */}
+            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-cyan-500/35 space-y-4 bg-gradient-to-br from-cyan-950/25 via-black/85 to-slate-950/30 text-xs text-gray-200 leading-relaxed">
+              <strong className="text-cyan-300 uppercase tracking-wider text-xs block border-b border-white/10 pb-2">
+                2. Tutte le Varie Cose: Diagnosi Reale Dalle Foto, Chimica dei Prodotti &amp; Perché Accadevano i Problemi
+              </strong>
+
+              <div className="space-y-3 text-[11px]">
+                {/* A. Diagnosi reale dalle foto */}
+                <div className="p-3.5 rounded-2xl bg-black/60 border border-white/10 space-y-1.5">
+                  <strong className="text-white block">
+                    A. Diagnosi Sincera Dalle Foto: Perché Dietro È Pieno 10/10 e Davanti Sembrava &quot;Vuoto&quot;
+                  </strong>
+                  <p>
+                    La sfumatura bassa (<em>low fade</em>) sui lati e dietro è pulitissima e il volume naturale sopra/dietro c&apos;è eccome. Davanti NON hai nessun diradamento né problema di crescita: venendo dal ciuffo tirato indietro/di lato, il barbiere ha dovuto <strong>accorciare e sfoltire molto</strong> davanti per farli cadere. Tra <strong>3–4 settimane (appena guadagni +1 / 1,5 cm davanti)</strong>, le ciocche superiori avranno peso sufficiente per sovrapporsi sopra quelle davanti e coprire la fronte piena esattamente come dietro.
+                  </p>
+                </div>
+
+                {/* B. Errore Co-wash vs Spaghetti */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="p-3.5 rounded-2xl bg-rose-950/25 border border-rose-500/30 space-y-1.5">
+                    <strong className="text-rose-300 block">
+                      B. Errore Mattina 1: Acqua + Balsamo Senza Shampoo = &quot;4 Fili Appiattiti&quot;
+                    </strong>
+                    <p>
+                      Sul cuoio capelluto c&apos;era già il sebo prodotto nella notte. Aggiungendo solo acqua + balsamo (fatto di oli, siliconi ed emollienti che tolgono attrito), hai creato uno strato scivoloso su capelli non sgrassati: dietro la massa lunga reggeva il peso, davanti le ciocche corte e sfoltite si sono incollate piatte sulla fronte.
+                    </p>
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-amber-950/25 border border-amber-500/30 space-y-1.5">
+                    <strong className="text-amber-300 block">
+                      C. Errore Mattina 2: Testa in Giù + Polvere Davanti = &quot;Spaghetti Sparati&quot;
+                    </strong>
+                    <p>
+                      Con testa in giù + spray al sale + polvere volumizzante sulla frangia ancora corta, la polvere ha reso i capelli secchissimi e carichi di elettricità statica, mentre l&apos;aria dal basso ha piegato le punte leggere verso l&apos;alto a &quot;uncini/virgole&quot;. <strong>Rimedio immediato in 1 min</strong> se succede: appoggia il palmo piatto sulle punte per 3 sec verso la fronte, accosta 2–3 ciocche insieme e poi non toccarle più.
+                    </p>
+                  </div>
+                </div>
+
+                {/* C. Sale marino bagnato vs asciutto + Prodotti */}
+                <div className="p-3.5 rounded-2xl bg-black/60 border border-teal-500/30 space-y-2">
+                  <strong className="text-teal-300 block">
+                    D. Scienza dei Prodotti: Sale Marino da Bagnato, Balsamo vs Crema Ricci &amp; Cera Opaca TikTok
+                  </strong>
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li>
+                      <strong>Il mistero del Sale Marino da bagnato:</strong> quando lo spruzzi e fai scrunch da bagnati, vedi le ciocche dividersi in piccoli fili definiti; se poi NON li tocchi con le mani né ci metti polvere sopra, asciugandosi si compattano in onde ruvide/corpose. Però <strong>sulla frangia corta davanti (senza cera)</strong> è più sicuro non spruzzarlo proprio per non seccarla ed elettrizzarla.
+                    </li>
+                    <li>
+                      <strong>Balsamo vs Crema Ricci:</strong> il balsamo ha solo emollienti (appena evapora l&apos;acqua al phon perde tenuta e separa i fili); una <strong>Crema Ricci</strong> economica (es. <em>Garnier Fructis Hydra Ricci ~4 €</em>) contiene polimeri/resine flessibili che sigillano la ciocca — ma per l&apos;effetto opaco voluminoso da TikTok non serve neanche se usi la Cera Opaca alla fine.
+                    </li>
+                    <li>
+                      <strong>La Cera Opaca giusta da comprare (~4 €):</strong> cerca <em>Matte Clay / Texture Paste</em> con argille naturali (caolino/bentonite) come <strong>L&apos;Oréal Studio Line Mineral &amp; Control Cera Opaca</strong>, <strong>Syoss Matt Fiber</strong> o <strong>Gatsby Moving Rubber</strong> — <strong>MAI gel e MAI pomate lucide</strong> se vuoi il look opaco, compatto e non lucido/unto!
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* ================================================================= */}
         {/* PUNTO 1. FISICA 2B, CAPELLI FINI PIÙ SPESSI & PIANO ALIMENTARE    */}
         {/* ================================================================= */}
@@ -1096,7 +1321,7 @@ export const CapelliMossiTexturedMessyMulletView: React.FC<
               onClick={() => handleSelectTab('tutte')}
               className="py-2 px-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-300 hover:text-white transition-colors cursor-pointer whitespace-nowrap"
             >
-              Vedi Tutti gli 8 Punti
+              Vedi Tutti i 9 Punti
             </button>
             {nextTab && (
               <button

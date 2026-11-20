@@ -2852,6 +2852,45 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
                 </table>
               </div>
             </div>
+
+            {/* 4. Perché i non diabetici non mangiano "per tenere su", cioccolatini & calorie nel deficit */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-amber-500/35 space-y-3">
+              <strong className="text-amber-300 uppercase tracking-wider text-[11px] block">
+                4. Perché Senza Diabete Non Serve Mangiare &quot;Per Tenere Su&quot;, Cioccolatini &amp; Peso sulle Calorie del Deficit
+              </strong>
+              <ul className="list-disc pl-5 space-y-1.5 text-[11px] text-gray-200">
+                <li>
+                  <strong className="text-white">Fame di Sopravvivenza nel T1D:</strong> chi non ha il diabete ha il freno automatico del pancreas (spegne insulina + attiva glucagone minuto per minuto) e non deve mangiare &quot;per sicurezza&quot;. Con insulina esterna (basale + boli) invece, se hai troppa IOB o sensibilità da palestra, scatta la <strong>fame di sopravvivenza</strong> del cervello che chiede zuccheri rapidi subito.
+                </li>
+                <li>
+                  <strong className="text-rose-300">Cioccolatini &amp; Cibi Grassi (Doppia Fregatura):</strong> burro di cacao, latte e frutta secca contengono grassi (~9 kcal/g contro ~4 kcal/g dei carboidrati) che <strong>rallentano lo svuotamento gastrico</strong>. Lo zucchero entra tardi: mentre aspetti la risalita la fame chimica ti porta a mangiarne altri, sommando tante calorie extra e generando una coda glicemica che fa rimbalzare la curva dopo.
+                </li>
+                <li>
+                  <strong className="text-emerald-300">Quanto Pesano Davvero Nel Deficit Calorico:</strong> dal punto di vista termodinamico le calorie delle correzioni contano — una correzione pulita da <strong>15–20 g di carboidrati semplici vale solo ~60–80 kcal</strong>. Ma <strong>NON è uno &quot;sgarro&quot; né un fallimento</strong>: è una necessità fisiologica prioritaria! Se capita spesso, la soluzione NON è tagliare altro cibo dal deficit, ma rivedere con la diabetologa i boli/IOB a monte per ridurre sia i cali sia la fame d&apos;emergenza.
+                </li>
+              </ul>
+            </div>
+
+            {/* 5. Perché il calo sembra più "controllabile" della salita */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-purple-500/35 space-y-3">
+              <strong className="text-purple-300 uppercase tracking-wider text-[11px] block">
+                5. Perché il Calo Sembra Più &quot;Lineare e Controllabile&quot; della Salita (e Perché Ridurre Entrambi gli Estremi)
+              </strong>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                <div className="p-3 rounded-xl bg-rose-950/25 border border-rose-500/30 space-y-1">
+                  <strong className="text-rose-200 block">L&apos;Illusione del Calo &quot;Semplice&quot;</strong>
+                  <p className="text-gray-300">
+                    Sembra concreto e misurabile (&quot;prendo zucchero e vedo risalire&quot;). Ma col T1D, se c&apos;è molta IOB o sensibilità post-palestra, il calo spinge forte su cervello e sintomi e la fame di sopravvivenza induce quasi sempre all&apos;<em>over-correzione</em> con rimbalzo alto.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-purple-950/25 border border-purple-500/30 space-y-1">
+                  <strong className="text-purple-200 block">Perché 3 U in Salita Sembrano Sfuggenti</strong>
+                  <p className="text-gray-300">
+                    L&apos;insulina non è un interruttore on/off: ha una sua latenza/curva, la sensibilità cambia tra mattina (cortisolo) e post-palestra, e Control-IQ + code lente di impanati/legumi fanno sì che correggere troppo presto crei <em>stacking</em>. L&apos;obiettivo reale non è scegliere il male minore, ma evitare gli estremi calibrando le curve con la diabetologa.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}

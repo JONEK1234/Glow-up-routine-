@@ -3264,7 +3264,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                8 punti unificati senza duplicati: fisica 2B, spessore capelli fini &amp; alimentazione, crescita &amp; chiusura &quot;buchi&quot; davanti, barbiere, prodotti &amp; tecnica ibrida, Hover Diffusing + pettine + Pantene 2-step, mattina a secco (balsamo+acqua e polvere), cute/forfora e 6 video TikTok.
+                ★ Piano d&apos;Azione Finale (zero prodotti sulla frangia, pettine denti larghi + diffusore leggero dall&apos;alto senza schiacciare, cera opaca/palmo, giorno dopo) + diagnosi foto/spaghetti e 8 punti completi (2B, dieta, buchi, barbiere, doccia, secco e 6 video TikTok).
               </p>
             </div>
 
@@ -3275,10 +3275,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-teal-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire la guida Textured Messy Mullet</span>
+              <span>Tocca per aprire Piano Finale &amp; Textured Messy Mullet</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">8 Punti · Spessore, Buchi, Secco &amp; Diffusore</span>
+            <span className="text-[10px] text-gray-400 font-semibold">9 Punti · ★ Piano d&apos;Azione Finale + 8 Guide</span>
           </div>
         </div>
       </div>

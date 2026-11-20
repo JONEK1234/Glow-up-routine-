@@ -238,8 +238,8 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     sectionTitle: 'Peli incarniti viso',
     sectionBadgeColor: 'emerald',
     subTabId: 'acne_punti_neri_bha',
-    subTitle: '8. Punti Neri, Acido Salicilico (Si Passa Sempre o No?), Latte/Whey (IGF-1) & Sudore',
-    text: 'Punti neri comedoni aperti ossidazione sebo cheratina filamenti sebacei strisce adesive schiacciamento over-exfoliation acido salicilico BHA liposolubile si passa sempre oppure no 2 3 sere settimana leave-on pelle asciutta rasatura SPF latte latticini whey 250 ml 25 g mercoledì giovedì venerdì parmigiano IGF-1 mTORC1 FoxO1 SREBP-1 diabete zero ossessione sodio acqua 2.5 3 litri sudore acne mechanica post allenamento ormoni adolescenza.'
+    subTitle: '8. Punti Neri, "Buchi Neri"/Pori Dilatati, Diagnosi Foto Zigomi, BHA (Sempre o No?), Latte & Sudore',
+    text: 'Punti neri buchi neri pori dilatati fossette segni collagene comedoni aperti papule infiammatorie eritema post infiammatorio crosticine escoriazioni foto zigomi basette barba ossidazione sebo cheratina filamenti sebacei strisce adesive schiacciamento over-exfoliation acido salicilico BHA liposolubile si passa sempre oppure no 2 3 sere settimana leave-on pelle asciutta rasatura Nikai SPF latte latticini whey 250 ml 25 g mercoledì giovedì venerdì parmigiano IGF-1 mTORC1 FoxO1 SREBP-1 diabete zero ossessione sodio acqua 2.5 3 litri sudore acne mechanica post allenamento ormoni adolescenza.'
   },
 
   // =========================================================================
@@ -334,6 +334,15 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
   // =========================================================================
   // 6B. CAPELLI MOSSI TEXTURED MESSY MULLET
   // =========================================================================
+  {
+    id: 'mullet_piano_azione_finale',
+    viewId: 'capelli_mullet',
+    sectionTitle: 'Capelli mossi Textured Messy Mullet',
+    sectionBadgeColor: 'teal',
+    subTabId: 'piano_azione_finale',
+    subTitle: '★ Il Piano d\'Azione Finale (Asciugatura Anti-Spaghetti) & Diagnosi Foto/Prodotti',
+    text: 'Piano d azione finale asciugatura capelli testa dritta diffusore dall alto senza schiacciare 1 2 cm pettine denti larghi stacco radici zero prodotti frangia zero balsamo davanti quattro fili appiattiti co-wash sebo spaghetti sparati in aria low fade 3 4 settimane 1 1.5 cm spray sale marino solo dietro sopra 2 spruzzi polvere volumizzante zero frangia cera opaca matte clay Syoss Loreal Gatsby palmo mano piatto 3 secondi routine giorno dopo.'
+  },
   {
     id: 'mullet_fisica_spessore',
     viewId: 'capelli_mullet',
@@ -622,8 +631,8 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     sectionTitle: 'Diabete, glicemia e palestra',
     sectionBadgeColor: 'rose',
     subTabId: 'ipo_freni_spugna',
-    subTitle: 'Nota 12: Ipoglicemia vs Iperglicemia, "Spugna" Muscolare vs Fegato, Freni & Regola del 15',
-    text: 'Ipoglicemia vs iperglicemia emergenza acuta lungo termine glicazione AGEs stress ossidativo risposta contro-regolatoria glucagone adrenalina epinefrina cortisolo GH fegato glicogenolisi gluconeogenesi spugna muscolare GLUT4 insulina esogena IOB non si spegne hypoglycemia unawareness over-correzione regola del 15 15g zuccheri semplici bustine destrosio succo cioccolato grassi CCK.'
+    subTitle: 'Nota 12: Ipoglicemia vs Iperglicemia, "Spugna" Muscolare, Cioccolatini/Deficit & Regola del 15',
+    text: 'Ipoglicemia vs iperglicemia emergenza acuta lungo termine glicazione AGEs stress ossidativo risposta contro-regolatoria glucagone adrenalina epinefrina cortisolo GH fegato glicogenolisi gluconeogenesi spugna muscolare GLUT4 insulina esogena IOB non si spegne hypoglycemia unawareness over-correzione regola del 15 15g zuccheri semplici bustine destrosio succo cioccolatini burro di cacao grassi CCK svuotamento gastrico fame di sopravvivenza calorie deficit 60 80 kcal illusione calo controllabile salita 3 unità.'
   },
 
   // =========================================================================
