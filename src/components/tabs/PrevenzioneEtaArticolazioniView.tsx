@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   ArrowLeft,
   ShieldCheck,
@@ -12,7 +12,13 @@ import {
   AlertTriangle,
   CheckCircle2,
   Zap,
-  Layers
+  Layers,
+  Wind,
+  Bike,
+  Utensils,
+  FlaskConical,
+  ChevronRight,
+  Sun
 } from 'lucide-react';
 import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 
@@ -21,29 +27,64 @@ interface PrevenzioneEtaArticolazioniViewProps {
   initialTab?: string;
 }
 
+type TabId =
+  | 'tutte'
+  | 'eta_articolazioni'
+  | 'massa_lavoro'
+  | 'diabete_prevenzione'
+  | 'ossigeno_bici'
+  | 'capelli_prevenzione'
+  | 'collagene_dieta'
+  | 'luce_vitamina_d';
+
+const TAB_CONFIG: { id: TabId; label: string }[] = [
+  { id: 'tutte', label: 'Tutte (7)' },
+  { id: 'eta_articolazioni', label: '1. Ossa & Età' },
+  { id: 'massa_lavoro', label: '2. Massa & Lavoro' },
+  { id: 'diabete_prevenzione', label: '3. Diabete & Corpo' },
+  { id: 'ossigeno_bici', label: '4. Ossigeno & Bici' },
+  { id: 'capelli_prevenzione', label: '5. Capelli & Età' },
+  { id: 'collagene_dieta', label: '6. Collagene & Dieta' },
+  { id: 'luce_vitamina_d', label: '7. Sole & Vitamina D' }
+];
+
+function normalizeTabId(raw?: string): TabId {
+  if (!raw) return 'tutte';
+  const valid = TAB_CONFIG.some((t) => t.id === raw);
+  return valid ? (raw as TabId) : 'tutte';
+}
+
 export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazioniViewProps> = ({
   onBack,
   initialTab
 }) => {
-  type TabId = 'tutte' | 'eta_articolazioni' | 'massa_lavoro' | 'diabete_prevenzione';
-  const [activeTab, setActiveTab] = useState<TabId>((initialTab as TabId) || 'tutte');
+  const [activeTab, setActiveTab] = useState<TabId>(() => normalizeTabId(initialTab));
   const contentRef = useRef<HTMLDivElement>(null);
 
   const handleSelectTab = (tab: TabId) => {
     setActiveTab(tab);
     if (tab !== 'tutte') {
       scrollToElement(contentRef.current, 68);
+    } else {
+      scrollToTop();
     }
   };
 
-  React.useEffect(() => {
-    if (initialTab && initialTab !== 'tutte') {
-      setActiveTab(initialTab as TabId);
+  useEffect(() => {
+    const normalized = normalizeTabId(initialTab);
+    if (initialTab && normalized !== 'tutte') {
+      setActiveTab(normalized);
       setTimeout(() => scrollToElement(contentRef.current, 68), 80);
     } else {
       scrollToTop();
     }
   }, [initialTab]);
+
+  const currentTabIndex = TAB_CONFIG.findIndex((t) => t.id === activeTab);
+  const nextTab =
+    activeTab !== 'tutte' && currentTabIndex > 0 && currentTabIndex < TAB_CONFIG.length - 1
+      ? TAB_CONFIG[currentTabIndex + 1]
+      : null;
 
   return (
     <div className="space-y-5 pb-24 pt-1 animate-in fade-in duration-200">
@@ -52,388 +93,332 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
         <button
           type="button"
           onClick={onBack}
-          className="flex items-center space-x-1.5 py-2 px-3 rounded-2xl bg-white/5 hover:bg-white/10 text-lime-300 border border-white/10 text-xs font-bold uppercase tracking-wider transition-all active:scale-95 cursor-pointer"
+          className="flex items-center space-x-1.5 py-2 px-3 rounded-2xl bg-white/5 hover:bg-white/10 text-lime-300 border border-white/10 text-xs font-bold uppercase tracking-wider transition-all active:scale-95 cursor-pointer whitespace-nowrap shrink-0"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Tutte le Note</span>
         </button>
-        <span className="text-[11px] font-bold text-lime-300 bg-lime-500/10 px-3 py-1 rounded-xl border border-lime-500/20 flex items-center gap-1.5">
+        <span className="text-[11px] font-bold text-lime-300 flex items-center gap-1.5 whitespace-nowrap shrink-0">
           <ShieldCheck className="w-3.5 h-3.5 text-lime-400" />
-          Prevenzione &amp; Diabete
+          Longevità &amp; Diabete · 7 Sezioni
         </span>
       </div>
 
       {/* Hero Card */}
       <div className="p-5 sm:p-6 rounded-3xl glass-card border border-lime-500/30 relative overflow-hidden space-y-3 bg-gradient-to-br from-lime-950/35 via-black/85 to-emerald-950/30 shadow-[0_0_30px_rgba(132,204,22,0.12)]">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="px-2.5 py-0.5 rounded-full bg-lime-500/20 text-lime-300 text-[10px] font-black uppercase tracking-widest border border-lime-500/30 flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-lime-400" />
-            ★ Note Scritte Da Me
-          </span>
-          <span className="text-[10px] text-gray-400 font-semibold">
-            Assicurazione Biologica &amp; Diabete Tipo 1 • 3 Note Complete
-          </span>
+        <div className="text-[11px] font-semibold text-lime-300 flex flex-wrap items-center gap-2">
+          <span>★ Manuale Scientifico di Longevità</span>
+          <span aria-hidden="true" className="text-white/30">·</span>
+          <span className="text-rose-300">Calibrato sul Diabete</span>
+          <span aria-hidden="true" className="text-white/30">·</span>
+          <span className="text-cyan-300">7 Sezioni Complete</span>
         </div>
 
         <h1 className="text-xl sm:text-2xl font-black text-white leading-tight uppercase tracking-tight">
-          Prevenzione Età, Articolazioni &amp; Diabete
+          Prevenzione Età, Ossa, Ossigeno, Collagene, Sole &amp; Diabete
         </h1>
 
         <p className="text-xs text-gray-300 leading-relaxed font-medium">
-          Come quello che costruisci oggi a 16 anni con il <strong className="text-rose-300">diabete</strong> (pesi, 10.000 passi, calisthenics, mobilità e controllo glicemico) crea una corazza permanente per ossa, muscoli, tendini e vasi sanguigni — e come gestire lavoro manuale, massa e fisiologia del diabete nelle varie fasi della vita.
+          Tutta la biologia reale di cosa succede negli anni a <strong className="text-white">ossa, muscoli, tendini, ossigenazione, cuore, capelli, collagene, luce solare e Vitamina D</strong>, spiegata in modo scientifico ma concreto per sapere esattamente <strong className="text-lime-300">cosa fare ogni giorno</strong> (allenamento, respirazione, cucina, esposizione al sole sicura e alimentazione anti-età), integrando sempre il fattore <strong className="text-rose-300">diabete ben gestito</strong>.
         </p>
 
-        {/* Tasti Rapidi per le 3 Note */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+        {/* Selector Tabs */}
+        <div className="pt-2.5 flex flex-wrap gap-1.5 border-t border-white/10">
+          <button
+            type="button"
+            onClick={() => handleSelectTab('tutte')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+              activeTab === 'tutte'
+                ? 'bg-lime-400 text-black shadow-sm'
+                : 'bg-white/5 text-gray-300 hover:text-white border border-white/10'
+            }`}
+          >
+            <Layers className="w-3.5 h-3.5" />
+            <span>Tutte (7)</span>
+          </button>
+
           <button
             type="button"
             onClick={() => handleSelectTab('eta_articolazioni')}
-            className="p-3 rounded-2xl bg-gradient-to-r from-lime-950/60 via-emerald-950/40 to-black/70 border border-lime-500/40 hover:border-lime-400 transition-all cursor-pointer group flex items-center justify-between text-left"
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+              activeTab === 'eta_articolazioni'
+                ? 'bg-emerald-400 text-black font-black'
+                : 'bg-white/5 text-gray-300 hover:text-white border border-white/10'
+            }`}
           >
-            <div className="flex items-center space-x-2.5 min-w-0">
-              <span className="p-2 rounded-xl bg-lime-500/20 text-lime-300 border border-lime-500/30 group-hover:bg-lime-400 group-hover:text-black transition-all shrink-0">
-                <Bone className="w-4 h-4" />
-              </span>
-              <div className="min-w-0">
-                <span className="text-[10px] font-black uppercase tracking-wider text-lime-400 block">
-                  Nota 1 • Longevità
-                </span>
-                <span className="text-xs font-extrabold text-white block truncate">
-                  Età, Ossa &amp; Articolazioni
-                </span>
-              </div>
-            </div>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-lime-500/20 text-lime-300 shrink-0 ml-2">
-              Apri →
-            </span>
+            <Bone className="w-3.5 h-3.5" />
+            <span>1. Ossa &amp; Età</span>
           </button>
 
           <button
             type="button"
             onClick={() => handleSelectTab('massa_lavoro')}
-            className="p-3 rounded-2xl bg-gradient-to-r from-amber-950/60 via-orange-950/40 to-black/70 border border-amber-500/40 hover:border-amber-400 transition-all cursor-pointer group flex items-center justify-between text-left"
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+              activeTab === 'massa_lavoro'
+                ? 'bg-amber-400 text-black font-black'
+                : 'bg-white/5 text-gray-300 hover:text-white border border-white/10'
+            }`}
           >
-            <div className="flex items-center space-x-2.5 min-w-0">
-              <span className="p-2 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30 group-hover:bg-amber-400 group-hover:text-black transition-all shrink-0">
-                <Briefcase className="w-4 h-4" />
-              </span>
-              <div className="min-w-0">
-                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block">
-                  Nota 2 • Lavoro &amp; Età
-                </span>
-                <span className="text-xs font-extrabold text-white block truncate">
-                  Massa, Lavoro &amp; Diabete
-                </span>
-              </div>
-            </div>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-amber-500/20 text-amber-300 shrink-0 ml-2">
-              Apri →
-            </span>
+            <Briefcase className="w-3.5 h-3.5" />
+            <span>2. Massa &amp; Lavoro</span>
           </button>
 
           <button
             type="button"
             onClick={() => handleSelectTab('diabete_prevenzione')}
-            className="p-3 rounded-2xl bg-gradient-to-r from-rose-950/60 via-pink-950/40 to-black/70 border border-rose-500/45 hover:border-rose-400 transition-all cursor-pointer group flex items-center justify-between text-left"
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+              activeTab === 'diabete_prevenzione'
+                ? 'bg-rose-400 text-black font-black'
+                : 'bg-white/5 text-rose-200 hover:text-white border border-white/10'
+            }`}
           >
-            <div className="flex items-center space-x-2.5 min-w-0">
-              <span className="p-2 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30 group-hover:bg-rose-400 group-hover:text-black transition-all shrink-0">
-                <HeartPulse className="w-4 h-4" />
-              </span>
-              <div className="min-w-0">
-                <span className="text-[10px] font-black uppercase tracking-wider text-rose-400 block">
-                  Nota 3 • Scienza Diabete
-                </span>
-                <span className="text-xs font-extrabold text-white block truncate">
-                  Cosa Succede Col Diabete
-                </span>
-              </div>
-            </div>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-rose-500/20 text-rose-300 shrink-0 ml-2">
-              Apri →
-            </span>
+            <HeartPulse className="w-3.5 h-3.5" />
+            <span>3. Diabete &amp; Corpo</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleSelectTab('ossigeno_bici')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+              activeTab === 'ossigeno_bici'
+                ? 'bg-sky-400 text-black font-black'
+                : 'bg-white/5 text-gray-300 hover:text-white border border-white/10'
+            }`}
+          >
+            <Wind className="w-3.5 h-3.5" />
+            <span>4. Ossigeno &amp; Bici</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleSelectTab('capelli_prevenzione')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+              activeTab === 'capelli_prevenzione'
+                ? 'bg-teal-400 text-black font-black'
+                : 'bg-white/5 text-gray-300 hover:text-white border border-white/10'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>5. Capelli &amp; Età</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleSelectTab('collagene_dieta')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+              activeTab === 'collagene_dieta'
+                ? 'bg-purple-400 text-black font-black'
+                : 'bg-white/5 text-gray-300 hover:text-white border border-white/10'
+            }`}
+          >
+            <Utensils className="w-3.5 h-3.5" />
+            <span>6. Collagene &amp; Dieta</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleSelectTab('luce_vitamina_d')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+              activeTab === 'luce_vitamina_d'
+                ? 'bg-yellow-400 text-black font-black'
+                : 'bg-white/5 text-yellow-200 hover:text-white border border-white/10'
+            }`}
+          >
+            <Sun className="w-3.5 h-3.5" />
+            <span>7. Sole &amp; Vitamina D</span>
           </button>
         </div>
       </div>
 
-      {/* Selector Tabs */}
-      <div className="flex flex-wrap gap-1.5 bg-black/60 p-1.5 rounded-2xl border border-white/10">
-        <button
-          type="button"
-          onClick={() => handleSelectTab('tutte')}
-          className={`flex-1 min-w-[85px] py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-            activeTab === 'tutte'
-              ? 'bg-lime-400 text-black shadow-sm'
-              : 'text-gray-300 hover:text-white'
-          }`}
-        >
-          <Layers className="w-3.5 h-3.5" />
-          <span>Tutte (3)</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => handleSelectTab('eta_articolazioni')}
-          className={`flex-1 min-w-[115px] py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-            activeTab === 'eta_articolazioni'
-              ? 'bg-emerald-400 text-black shadow-sm'
-              : 'text-gray-300 hover:text-white'
-          }`}
-        >
-          <ShieldCheck className="w-3.5 h-3.5" />
-          <span>1. Età &amp; Articolazioni</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => handleSelectTab('massa_lavoro')}
-          className={`flex-1 min-w-[115px] py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-            activeTab === 'massa_lavoro'
-              ? 'bg-amber-400 text-black shadow-sm'
-              : 'text-gray-300 hover:text-white'
-          }`}
-        >
-          <Briefcase className="w-3.5 h-3.5" />
-          <span>2. Massa &amp; Lavoro</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => handleSelectTab('diabete_prevenzione')}
-          className={`flex-1 min-w-[115px] py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-            activeTab === 'diabete_prevenzione'
-              ? 'bg-rose-400 text-black shadow-sm'
-              : 'text-rose-200 hover:text-white'
-          }`}
-        >
-          <HeartPulse className="w-3.5 h-3.5" />
-          <span>3. Diabete &amp; Corpo</span>
-        </button>
-      </div>
-
-      <div ref={contentRef} className="space-y-6">
+      <div ref={contentRef} className="space-y-6 scroll-mt-16">
         {/* ================================================================= */}
-        {/* NOTA 1: PREVENZIONE ETÀ, OSSA, SUPER-AGING, MIONUCLEI & SCHIENA   */}
+        {/* 1. OSSA FORTIFICATE NEGLI ANNI, ETÀ, MIONUCLEI & MAL DI SCHIENA   */}
         {/* ================================================================= */}
         {(activeTab === 'tutte' || activeTab === 'eta_articolazioni') && (
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2 pl-1 border-b border-white/10 pb-2">
+          <section className="space-y-4">
+            <div className="flex items-center space-x-2.5 pl-1 border-b border-white/10 pb-2">
               <span className="p-1.5 rounded-xl bg-lime-500/20 text-lime-300 border border-lime-500/30">
-                <ShieldCheck className="w-4 h-4" />
+                <Bone className="w-4 h-4" />
               </span>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-lime-400 block">
-                  Nota 1 • Assicurazione Biologica a Lungo Termine
+                  Sezione 1 · Architettura Ossea, Muscoli &amp; Colonna
                 </span>
                 <h2 className="text-base sm:text-lg font-black text-white">
-                  Prevenzione Età, Articolazioni, Super-Aging, Memoria Muscolare &amp; Schiena
+                  Cosa Succede Alle Ossa Negli Anni (Perché Da Vecchio Restano Fortificate), Mionuclei &amp; Schiena
                 </h2>
               </div>
             </div>
 
-            {/* BLOCCO 1: LA DISCESA BIOLOGICA + BANCA MUSCOLI/OSSA + MOBILITÀ */}
-            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-lime-500/30 space-y-4 bg-gradient-to-br from-lime-950/20 via-black/80 to-emerald-950/20">
+            {/* BLOCCO 1A: SCIENZA PROFONDA DELLE OSSA NEGLI ANNI */}
+            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-lime-500/30 space-y-4 bg-gradient-to-br from-lime-950/20 via-black/80 to-emerald-950/20 text-xs text-gray-200 leading-relaxed">
               <div className="space-y-1">
                 <span className="text-[10px] font-black uppercase tracking-widest text-lime-400">
-                  Parte 1 • Costruire l&apos;Assicurazione Biologica dai 16 Anni
+                  Parte 1 · Meccanica Biologica dello Scheletro (16 → 80 anni)
                 </span>
                 <h3 className="text-sm sm:text-base font-black text-white">
-                  La &quot;Banca dei Muscoli e delle Ossa&quot; e il Ruolo della Mobilità
+                  Come Funziona Davvero l&apos;Osso &amp; Perché Quello Che Costruisci Ora Dura Tutta la Vita
                 </h3>
-                <p className="text-xs text-gray-300 leading-relaxed">
-                  Analisi scientifica di cosa succede al corpo invecchiando e perché il lavoro che fai oggi a 16 anni ti proteggerà per tutta la vita.
-                </p>
               </div>
 
-              {/* 1. Discesa biologica */}
               <div className="p-3.5 rounded-2xl bg-black/55 border border-white/10 space-y-2.5">
-                <h4 className="text-xs font-black text-rose-300 uppercase tracking-wider flex items-center gap-1.5">
-                  <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
-                  1. Cosa succede scientificamente dai 30–35 anni (La discesa biologica)
-                </h4>
-                <div className="space-y-2 text-xs text-gray-200 leading-relaxed">
-                  <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
-                    <strong className="text-white block mb-0.5">• Sarcopenia (Perdita di muscolo):</strong>
-                    Anno dopo anno, se non stimolate, le fibre muscolari tendono a ridursi di numero e di volume. Il corpo diventa meno efficiente nel sintetizzare le proteine.
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
-                    <strong className="text-white block mb-0.5">• Osteopenia e Osteoporosi (Perdita di densità ossea):</strong>
-                    Le ossa sono come un palazzo in continua ristrutturazione. Con l&apos;età (e il calo ormonale), la demolizione ossea supera la costruzione, rendendo le ossa più fragili.
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
-                    <strong className="text-white block mb-0.5">• Perdita di elasticità dei tessuti:</strong>
-                    Tendini, legamenti e cartilagine perdono acqua e collagene, diventando più rigidi. È per questo che gli anziani tendono a muoversi in modo più &quot;legnoso&quot; e perdono fluidità.
-                  </div>
-                </div>
-              </div>
-
-              {/* 2. Banca muscoli e ossa */}
-              <div className="p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-500/35 space-y-2">
-                <h4 className="text-xs font-black text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
-                  <Bone className="w-4 h-4 text-emerald-400 shrink-0" />
-                  2. La tua &quot;Banca dei Muscoli e delle Ossa&quot; (Picco tra 16 e 25–30 anni)
-                </h4>
-                <p className="text-xs text-gray-200 leading-relaxed">
-                  Più muscoli, forza e densità ossea accumuli adesso (tra i 16 e i 25–30 anni), più alto sarà il tuo <strong>&quot;punto di partenza&quot;</strong> quando inizierà la discesa naturale.
-                </p>
-                <p className="text-xs text-gray-200 leading-relaxed">
-                  È come mettere soldi in un conto in banca: se arrivi a 30 anni con un capitale enorme di muscoli e ossa forti, quando a 70 anni inizierai a perderne una percentuale, avrai comunque una riserva talmente alta da muoverti, sollevare la spesa, correre e vivere con la forza, l&apos;agilità e l&apos;autonomia di un cinquantenne. Chi non ha mai fatto nulla, a 70 anni si ritrova &quot;a zero&quot; sul conto e fa fatica a fare le scale. <strong className="text-emerald-300">I pesi che sollevi oggi e le proteine che mangi sono il cemento armato del tuo scheletro futuro.</strong>
-                </p>
-              </div>
-
-              {/* 3. Stretching e Mobilità */}
-              <div className="p-3.5 rounded-2xl bg-cyan-950/25 border border-cyan-500/30 space-y-2">
-                <h4 className="text-xs font-black text-cyan-300 uppercase tracking-wider flex items-center gap-1.5">
-                  <Activity className="w-4 h-4 text-cyan-400 shrink-0" />
-                  3. Stretching e Mobilità Articolare Attiva (Servono davvero?)
-                </h4>
-                <p className="text-xs text-gray-200 leading-relaxed">
-                  Lo stretching classico (mantenere un allungamento per un minuto) serve ad allungare temporaneamente il muscolo, ma la vera chiave per non diventare rigidi da anziani è la <strong className="text-cyan-300">mobilità articolare attiva</strong>:
-                </p>
-                <ul className="text-xs text-gray-200 space-y-1.5 list-disc pl-5">
-                  <li>
-                    <strong className="text-white">Cosa succede ai tessuti:</strong> Con l&apos;età, la <em>fascia</em> (il tessuto connettivo che avvolge i muscoli) tende a &quot;incollarsi&quot; se non viene mossa attraverso tutto il suo arco di movimento.
-                  </li>
-                  <li>
-                    <strong className="text-white">Come agire:</strong> Movimenti controllati delle articolazioni, rotazioni e piegamenti fluidi mantengono attivo il <strong className="text-cyan-300">liquido sinoviale</strong> dentro le articolazioni e impediscono al corpo di &quot;arrugginirsi&quot;. Non devi diventare un contorsionista, ma insegnare alle articolazioni a muoversi libere ora.
-                  </li>
-                </ul>
-              </div>
-
-              {/* 4 Pilastri */}
-              <div className="p-3.5 rounded-2xl bg-black/60 border border-lime-500/30 space-y-2">
-                <span className="text-[11px] font-black uppercase tracking-wider text-lime-300 block">
-                  I 4 Pilastri per diventare un 50–60enne &quot;Inossidabile&quot;
-                </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                  <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
-                    <strong className="text-lime-300 block">1. Sollevare i pesi (Ipertrofia &amp; Forza)</strong>
-                    <span className="text-gray-300">Stimola ossa dense e muscoli strutturati: unico vero scudo contro osteoporosi e sarcopenia.</span>
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
-                    <strong className="text-emerald-300 block">2. Corpo magro ed efficiente</strong>
-                    <span className="text-gray-300">Evitare l&apos;accumulo cronico di grasso viscerale protegge cuore e metabolismo.</span>
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
-                    <strong className="text-cyan-300 block">3. Mobilità e stretching regolari</strong>
-                    <span className="text-gray-300">Mantiene elastici tendini e articolazioni, prevenendo la rigidità cronica.</span>
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
-                    <strong className="text-amber-300 block">4. Proteine, nutrizione &amp; controllo glicemia</strong>
-                    <span className="text-gray-300">Mattoni per la manutenzione e glicemia stabile per proteggere tendini, vasi e ossa dal diabete.</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-rose-950/30 border border-rose-500/35 space-y-1.5 text-xs text-gray-200 leading-relaxed">
-                <strong className="text-rose-300 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
-                  <HeartPulse className="w-4 h-4 text-rose-400 shrink-0" />
-                  Perché con il Diabete Questa Banca Vale Doppio
+                <strong className="text-emerald-300 block uppercase tracking-wider text-[11px]">
+                  1. L&apos;Osso È Tessuto Vivo (Non Pietra Morta): Collagene + Idrossiapatite
                 </strong>
                 <p>
-                  Avendo il <strong className="text-white">diabete</strong> (con microinfusore), mantenere muscoli attivi e poca massa grassa viscerale non è solo estetica: il muscolo è il più grande consumatore di glucosio del corpo. Più muscoli + mobilità costruisci oggi, più proteggi tendini (evitando che gli zuccheri li irrigidiscano), ossa e microcircolazione per i prossimi 50 anni. <em className="text-rose-200">(Vedi Nota 3 per la spiegazione scientifica completa).</em>
+                  Molti pensano che le ossa siano pezzi di gesso fermi. In realtà ogni tuo osso è un cantiere attivo al <strong className="text-white">100% vivo</strong> composto da due materiali precisi:
                 </p>
-              </div>
-            </div>
-
-            {/* BLOCCO 2: SUPER-AGING E REGOLA SOSTENIBILITÀ */}
-            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-emerald-500/30 space-y-3.5 bg-gradient-to-br from-emerald-950/25 via-black/80 to-cyan-950/20">
-              <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400">
-                  Parte 2 • Il Piano a Lungo Termine
-                </span>
-                <h3 className="text-sm sm:text-base font-black text-white">
-                  &quot;Super-Aging&quot;: Il Divario Abissale tra Te e la Media
-                </h3>
-                <p className="text-xs text-gray-300 leading-relaxed">
-                  Mantenendo pesi intelligenti, <strong className="text-white">10.000 passi quotidiani (anche con pendenza)</strong>, calisthenics, nutrizione e stretching crei una protezione biologica permanente rispetto a chi a 40–50 anni perde il fiato dopo due rampe di scale.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 gap-2 text-xs text-gray-200">
-                <div className="p-3 rounded-2xl bg-black/50 border border-white/10">
-                  <strong className="text-emerald-300 block mb-0.5">• Densità ossea fortissima:</strong>
-                  Grazie ai pesi e agli impatti della camminata, ossa spesse e resistenti (rischio osteoporosi ridotto al minimo).
-                </div>
-                <div className="p-3 rounded-2xl bg-black/50 border border-white/10">
-                  <strong className="text-cyan-300 block mb-0.5">• Sistema cardiovascolare di ferro:</strong>
-                  Grazie ai 10.000 passi e cardio costante: cuore efficiente, pressione sotto controllo e metabolismo attivo.
-                </div>
-                <div className="p-3 rounded-2xl bg-black/50 border border-white/10">
-                  <strong className="text-lime-300 block mb-0.5">• Postura e agilità da ventenne (Successful Aging):</strong>
-                  Con calisthenics e mobilità mantieni forza relativa ed elasticità alte; anche dopo i 60–70 anni parti da un livello così alto da sembrare quasi di non invecchiare.
-                </div>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-400/35 space-y-1.5">
-                <div className="flex items-center gap-1.5 text-xs font-black text-amber-300">
-                  <Zap className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span>Unica Regola d&apos;Oro: La Sostenibilità (La Maratona, non lo Scatto)</span>
-                </div>
-                <p className="text-xs text-gray-200 leading-relaxed">
-                  Evita gli infortuni stupidi: spaccarsi schiena o articolazioni nelle giornate storte non serve. Il segreto dei <em>long-runner</em> è l&apos;intelligenza costante: spingere forte quando il corpo è pronto, ma saper ascoltare tendini, serie di avvicinamento e recupero quando serve.
-                </p>
-              </div>
-            </div>
-
-            {/* BLOCCO 3: MEMORIA MUSCOLARE (MIONUCLEI) & CAMBIO OBIETTIVO CON L'ETÀ */}
-            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-cyan-500/30 space-y-3.5 bg-gradient-to-br from-cyan-950/25 via-black/80 to-indigo-950/25">
-              <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase tracking-widest text-cyan-400">
-                  Parte 3 • Biologia Cellulare &amp; Anni Futuri
-                </span>
-                <h3 className="text-sm sm:text-base font-black text-white">
-                  La &quot;Memoria Muscolare&quot; (Mionuclei Permanenti) &amp; Cosa Succede Rallentando da Anziani
-                </h3>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-cyan-950/35 border border-cyan-400/35 space-y-2 text-xs text-gray-200 leading-relaxed">
-                <strong className="text-cyan-300 block uppercase tracking-wider text-[11px]">
-                  1. I Nuclei Cellulari che Non Se Ne Vanno Mai (Mionuclei)
-                </strong>
-                <p>
-                  Quando oggi costruisci muscolo con pesi pesanti e proteine, le fibre non si limitano a gonfiarsi: creano nuovi nuclei cellulari chiamati <strong className="text-white">mionuclei</strong> grazie alle cellule staminali del muscolo.
-                </p>
-                <p>
-                  Questi nuclei <strong className="text-cyan-200">non muoiono mai</strong>, nemmeno se smetti per anni o rallenti da anziano: appena riprendi un minimo di movimento leggero, il corpo ricostruisce tonicità in un attimo perché &quot;struttura e permessi di costruzione&quot; sono già lì per sempre. Non riparti mai da zero.
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-black/55 border border-white/10 space-y-2 text-xs text-gray-200 leading-relaxed">
-                <strong className="text-white block">
-                  2. Se a 60–70 anni non puoi più sollevare i pesoni di adesso:
-                </strong>
                 <ul className="space-y-1.5 list-disc pl-5">
                   <li>
-                    Perdi un po&apos; di volume estremo e pienezza massima (calo del testosterone naturale e assenza di carichi massimali), <strong className="text-emerald-300">MA NON torni mai come un sedentario</strong>: il tuo &quot;pavimento&quot; di partenza resta altissimo.
+                    <strong className="text-cyan-300">~30–35% Matrice Organica (Collagene di Tipo I):</strong> funge da &quot;ferro elastico&quot; dentro il cemento armato. È ciò che permette all&apos;osso di assorbire un salto o un peso senza spezzarsi di colpo.
                   </li>
                   <li>
-                    <strong className="text-amber-300">Regola &quot;Usa o perdi&quot; con intelligenza (50–60+ anni):</strong> L&apos;obiettivo passa da &quot;crescere a tutti i costi / cedimento distruttivo&quot; a <strong>preservare e difendere il capitale accumulato</strong>. Basteranno carichi moderati, elastici, esercizi controllati di spinta/trazione a corpo libero e camminate in pendenza per tenere intatto il <strong>70–80% del lavoro di una vita</strong> con molta meno fatica.
+                    <strong className="text-amber-300">~65–70% Matrice Minerale (Cristalli di Idrossiapatite = Calcio + Fosfato):</strong> è il &quot;cemento&quot; che dà durezza e resistenza alla compressione verticale.
+                  </li>
+                  <li>
+                    <strong className="text-white">Le 2 Squadre di Operai (Rimodellamento Osseo):</strong> gli <em>Osteoclasti</em> sciolgono e portano via l&apos;osso vecchio o danneggiato; gli <em>Osteoblasti</em> costruiscono nuovo collagene e ci depositano sopra nuovo calcio. Ogni ~10 anni gran parte del tuo scheletro viene completamente rinnovato!
+                  </li>
+                </ul>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-500/35 space-y-2.5">
+                <strong className="text-emerald-300 block uppercase tracking-wider text-[11px]">
+                  2. Legge di Wolff &amp; Meccanotrasduzione: Perché i Pesi &quot;Fortificano&quot; l&apos;Osso per la Vecchiaia
+                </strong>
+                <p>
+                  Quando sollevi un bilanciere, fai uno squat, spingi in palestra o fai 10.000 passi (soprattutto in salita o portando peso), l&apos;osso non resta rigido ma <strong>subisce una micro-deformazione elastica</strong> di pochi micron. Questa micro-flessione genera simultaneamente due segnali fisici precisi: (1) un minuscolo <strong>potenziale elettrico piezoelettrico</strong> dentro i cristalli di idrossiapatite e le fibre di collagene, e (2) lo scorrimento ad alta pressione del fluido dentro i microscopici tunnel chiamati <strong>canalicoli</strong>. Insieme risvegliano le cellule sensore dell&apos;osso (gli <strong className="text-white">Osteociti</strong>):
+                </p>
+                <ol className="space-y-1.5 list-decimal pl-5">
+                  <li>
+                    Gli osteociti abbassano una proteina-freno chiamata <strong>Sclerostina</strong> e inviano un segnale biochimico agli <strong>Osteoblasti</strong>: <em>&quot;Qui c&apos;è carico meccanico reale, rinforzate e mineralizzate esattamente lungo questa linea di forza!&quot;</em>.
+                  </li>
+                  <li>
+                    <strong className="text-cyan-300">Ispessimento Corticale (Diametro Esterno):</strong> la corteccia esterna dell&apos;osso si allarga verso l&apos;esterno. In fisica strutturale, un tubo con diametro esterno leggermente più largo ha una resistenza alla rottura enormemente maggiore.
+                  </li>
+                  <li>
+                    <strong className="text-lime-300">Architettura Trabecolare Interna:</strong> dentro le vertebre, il femore e le articolazioni c&apos;è una rete spugnosa di travi (<em>trabecole</em>). Sotto carico meccanico, queste travi si orientano e si ispessiscono esattamente lungo le linee di forza dove serve reggere il peso.
+                  </li>
+                </ol>
+                <p className="text-emerald-200 bg-black/50 border border-emerald-400/25 rounded-xl p-2.5">
+                  <strong>Perché da vecchio restano fortificate (Il Segreto del Picco di Massa Ossea 16–30 anni):</strong> circa il <strong className="tabular-nums">90%</strong> del tuo capitale osseo massimo si costruisce entro i 25–30 anni. Dopo i 35–40 anni gli osteoclasti iniziano a demolire leggermente più in fretta (~0,5–1% l&apos;anno). Chi non ha fatto nulla parte da una &quot;casa di cartongeso&quot; e a 70 anni finisce in osteoporosi. Chi invece tra i 16 e i 30 anni ha costruito ossa larghe e trabecole spesse parte da un &quot;bunker&quot;: anche perdendo una piccola percentuale da anziano, <strong>la geometria esterna allargata e la densità di base restano altissime</strong>, tenendo lo scheletro fortificato e resistente alle fratture fino a 80+ anni!
+                </p>
+              </div>
+
+              {/* Fattore Diabete sulle ossa + protocollo pratico */}
+              <div className="p-3.5 rounded-2xl bg-rose-950/30 border border-rose-500/35 space-y-2">
+                <strong className="text-rose-300 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                  <HeartPulse className="w-4 h-4 text-rose-400 shrink-0" />
+                  3. Cosa Succede Alle Tue Ossa Con il Diabete (e Come Ribaltarlo al 100%)
+                </strong>
+                <p>
+                  Nel diabete (specialmente Tipo 1 di lunga durata) c&apos;è un dettaglio scientifico che quasi nessuno spiega: gli esami della densità minerale (MOC) a volte sembrano normali, ma se la glicemia resta alta per anni gli zuccheri in eccesso si attaccano proprio al <strong>35% di collagene elastico dentro l&apos;osso</strong> (formando AGEs). Inoltre l&apos;insulina funziona anche da segnale anabolico per gli osteoblasti. Se un diabetico è sedentario e scompensato, l&apos;osso diventa mineralizzato ma &quot;secco/rigido&quot; (<em>osteopatia diabetica</em>).
+                </p>
+                <p className="text-emerald-200 font-semibold">
+                  La tua contromossa vincente: mantenendo una buona glicemia + sollevando pesi e camminando ogni giorno, obblighi l&apos;osso a fare ricambio continuo (gli osteoclasti eliminano il collagene vecchio/glicato e gli osteoblasti ne fabbricano di nuovo elastico e giovane!).
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-black/60 border border-lime-500/35 space-y-2.5">
+                <strong className="text-lime-300 block uppercase tracking-wider text-[11px]">
+                  4. Cosa Cambia Tra Pesi, Camminate e Lavoro Manuale (e Cosa Mettere in Pratica Adesso)
+                </strong>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+                  <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                    <strong className="text-orange-300 block mb-0.5">Pesi (Spinte &amp; Trazioni)</strong>
+                    Generano trazioni muscolari forti e rapide sull&apos;inserzione del tendine sull&apos;osso: è lo stimolo più potente per alzare la densità minerale ossea (BMD) nei distretti caricati.
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                    <strong className="text-emerald-300 block mb-0.5">Camminate &amp; Impatto al Suolo</strong>
+                    Creano un carico ciclico e ripetuto su piedi, caviglie, femori, anche e colonna: mantengono attivo il rimodellamento senza stress articolare eccessivo.
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                    <strong className="text-amber-300 block mb-0.5">Lavoro Manuale Quotidiano</strong>
+                    Se attivo mantiene carico costante, ma se ripetitivo/asimmetrico rinforza solo gli angoli abituali senza lo stimolo globale e variato dei pesi.
+                  </div>
+                </div>
+                <ul className="space-y-1 list-disc pl-5">
+                  <li>
+                    <strong className="text-white">Carichi assiali &amp; multiarticolari:</strong> squat, affondi, pressa, stacchi tecnici, spinte sopra la testa, rematori e trazioni trasmettono forza diretta attraverso colonna, bacino, femore e polsi (la bici e il nuoto da soli NON caricano abbastanza le ossa perché manca la gravità!).
+                  </li>
+                  <li>
+                    <strong className="text-white">Impatti quotidiani controllati:</strong> i 10.000 passi (meglio con salite/discese) danno migliaia di micro-impatti al giorno che mantengono svegli gli osteociti di gambe e colonna.
+                  </li>
+                  <li>
+                    <strong className="text-white">I 5 Mattoni Chimici dell&apos;Osso:</strong> <strong>Proteine</strong> (per il collagene osseo), <strong>Calcio</strong> (yogurt greco, formaggi, acque ricche di calcio, mandorle, verdure), <strong>Vitamina D3</strong> (sole su braccia/viso + verifica negli esami del sangue), <strong>Vitamina K2</strong> (dirige il calcio dentro le ossa anziché nei vasi: tuorli d&apos;uovo, formaggi stagionati, verdure verdi) e <strong>Magnesio</strong> (necessario per attivare la Vitamina D: semi di zucca, frutta secca, cacao).
+                  </li>
+                  <li>
+                    <strong className="text-cyan-300">Regola di Recupero &amp; Sonno:</strong> l&apos;osso NON si fortifica nell&apos;istante in cui posi il bilanciere, ma nei giorni successivi mentre riposi e dormi. Caricare troppo senza sonno e nutrienti crea solo infiammazioni tendinee o micro-sovraccarichi.
                   </li>
                 </ul>
               </div>
             </div>
 
-            {/* BLOCCO 4: PREVENZIONE MAL DI SCHIENA & ARTICOLAZIONI AL LAVORO */}
-            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-purple-500/30 space-y-3.5 bg-gradient-to-br from-purple-950/25 via-black/80 to-slate-950/30">
+            {/* BLOCCO 1B: DISCESA BIOLOGICA + MOBILITÀ + SUPER-AGING */}
+            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-emerald-500/30 space-y-4 bg-gradient-to-br from-emerald-950/25 via-black/80 to-cyan-950/20 text-xs text-gray-200 leading-relaxed">
               <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase tracking-widest text-purple-400">
-                  Parte 4 • Colonna Vertebrale &amp; Articolazioni
+                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400">
+                  Parte 2 · Sarcopenia, Mobilità &amp; Super-Aging
                 </span>
                 <h3 className="text-sm sm:text-base font-black text-white">
-                  Perché Viene il Mal di Schiena agli Adulti (e Come Blindarti per Sempre)
+                  La Discesa Dai 30–35 Anni, Mobilità Articolare Attiva &amp; Il Divario del &quot;Super-Aging&quot;
                 </h3>
-                <p className="text-xs text-gray-300 leading-relaxed">
-                  La maggior parte delle persone soffre di mal di schiena cronico non per troppi sforzi, ma per l&apos;opposto: pochi sforzi intelligenti e troppe ore fisse nella stessa posizione.
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <div className="p-3 rounded-2xl bg-black/55 border border-white/10 space-y-1">
+                  <strong className="text-rose-300 block">Sarcopenia (Muscoli)</strong>
+                  Dai 30–35 anni senza stimolo perdi fibre muscolari (soprattutto le rapide Tipo II) e il corpo sintetizza proteine con meno efficienza.
+                </div>
+                <div className="p-3 rounded-2xl bg-black/55 border border-white/10 space-y-1">
+                  <strong className="text-amber-300 block">Osteopenia (Ossa)</strong>
+                  Senza carichi meccanici, la demolizione supera la costruzione rendendo trabecole e corteccia più sottili.
+                </div>
+                <div className="p-3 rounded-2xl bg-black/55 border border-white/10 space-y-1">
+                  <strong className="text-cyan-300 block">Rigidità Fasciale</strong>
+                  Tendini, cartilagini e fascia perdono acqua e si incollano, togliendo fluidità ai movimenti e riducendo il liquido sinoviale.
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-cyan-950/25 border border-cyan-500/30 space-y-2">
+                <strong className="text-cyan-300 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                  <Activity className="w-4 h-4 text-cyan-400 shrink-0" />
+                  Mobilità Articolare Attiva vs Stretching Statico
+                </strong>
+                <p>
+                  Lo stretching passivo rilassa il muscolo sul momento, ma è la <strong className="text-white">mobilità articolare attiva</strong> (ruotare spalle, bacino, caviglie, colonna e scendere in squat profondi controllati) che spreme e rinnova il <strong className="text-cyan-300">liquido sinoviale</strong> dentro le capsule articolari e impedisce alla fascia connettivale di incollarsi. Mantenere pesi intelligenti + 10.000 passi + calisthenics + mobilità crea il cosiddetto <em>Successful / Super-Aging</em>: a 60–70 anni hai forza, postura e fiato molto superiori alla media dei 40enni sedentari.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-400/35 space-y-1">
+                <div className="flex items-center gap-1.5 font-black text-amber-300">
+                  <Zap className="w-4 h-4 text-amber-400 shrink-0" />
+                  <span>Unica Regola d&apos;Oro: Sostenibilità (La Maratona, non lo Scatto)</span>
+                </div>
+                <p>
+                  Evita infortuni stupidi caricando a freddo nelle giornate storte: i <em>long-runner</em> vincono proteggendo tendini, facendo serie di avvicinamento e ascoltando i segnali di recupero.
+                </p>
+              </div>
+            </div>
+
+            {/* BLOCCO 1C: MIONUCLEI & MAL DI SCHIENA */}
+            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-cyan-500/30 space-y-4 bg-gradient-to-br from-cyan-950/25 via-black/80 to-indigo-950/25 text-xs text-gray-200 leading-relaxed">
+              <div className="p-3.5 rounded-2xl bg-cyan-950/35 border border-cyan-400/35 space-y-2">
+                <strong className="text-cyan-300 block uppercase tracking-wider text-[11px]">
+                  Parte 3 · Memoria Muscolare Permanente (Mionuclei) &amp; Anni Futuri
+                </strong>
+                <p>
+                  Quando oggi alleni i muscoli con pesi e proteine, le cellule staminali satellite aggiungono nuovi nuclei cellulari (<strong className="text-white">Mionuclei</strong>) dentro le fibre. Questi nuclei <strong className="text-cyan-200">restano per sempre</strong>, anche se per periodi della vita rallenti o ti fermi: quando riprendi anche con carichi moderati o elastici a 60–70 anni, ricostruisci tonicità in un lampo e conservi il <strong className="tabular-nums">70–80%</strong> della tua struttura senza mai ripartire da zero.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="p-3.5 rounded-2xl bg-rose-950/25 border border-rose-500/30 space-y-1.5">
                   <span className="text-[11px] font-black text-rose-300 uppercase block">
-                    Perché viene alla gente comune
+                    Perché viene il Mal di Schiena agli adulti
                   </span>
-                  <ul className="space-y-1.5 text-gray-200 list-disc pl-4">
-                    <li><strong>Stabilizzatori spenti:</strong> senza allenare il <em>core</em> (addome profondo, lombari, glutei), il corsetto naturale della colonna si atrofizza.</li>
-                    <li><strong>Dischi schiacciati:</strong> stare seduti ore o alzare pesi male scarica tutto sulle vertebre logorando i dischi.</li>
-                    <li><strong>La schiena compensa:</strong> glutei addormentati + flessori dell&apos;anca corti fanno lavorare e infiammare la zona lombare a ogni movimento.</li>
+                  <ul className="space-y-1 list-disc pl-4">
+                    <li><strong>Core e glutei spenti:</strong> senza corsetto muscolare, ogni sforzo scarica sui dischi vertebrali.</li>
+                    <li><strong>Ore seduti:</strong> comprimono i dischi togliendo idratazione e accorciando i flessori dell&apos;anca.</li>
                   </ul>
                 </div>
 
@@ -441,337 +426,650 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
                   <span className="text-[11px] font-black text-emerald-300 uppercase block">
                     La tua armatura protettiva
                   </span>
-                  <ul className="space-y-1.5 text-gray-200 list-disc pl-4">
-                    <li><strong>Corsetto d&apos;acciaio:</strong> muscoli forti assorbono l&apos;urto degli sforzi lavorativi al posto delle vertebre.</li>
-                    <li><strong>Nutrimento per osmosi (10.000 passi):</strong> i dischi intervertebrali si nutrono alternando compressione e decompressione camminando ogni giorno, restando idratati ed elastici.</li>
-                    <li><strong>Consapevolezza posturale:</strong> impari a sollevare usando gambe e tecnica invece di piegare la schiena.</li>
+                  <ul className="space-y-1 list-disc pl-4">
+                    <li><strong>Nutrimento per osmosi:</strong> i 10.000 passi alternano compressione e decompressione idratando i dischi intervertebrali.</li>
+                    <li><strong>Tecnica + Core forte:</strong> addome profondo, lombari e glutei assorbono i carichi al posto delle vertebre.</li>
                   </ul>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         )}
 
         {/* ================================================================= */}
-        {/* NOTA 2: ORGANIZZAZIONE MANTENERE MASSA & LAVORO MANUALE/PESANTE    */}
+        {/* 2. ORGANIZZAZIONE MANTENERE MASSA & LAVORO MANUALE/PESANTE        */}
         {/* ================================================================= */}
         {(activeTab === 'tutte' || activeTab === 'massa_lavoro') && (
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2 pl-1 border-b border-white/10 pb-2">
+          <section className="space-y-4">
+            <div className="flex items-center space-x-2.5 pl-1 border-b border-white/10 pb-2">
               <span className="p-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
                 <Briefcase className="w-4 h-4" />
               </span>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 block">
-                  Nota 2 • Organizzazione Pratica
+                  Sezione 2 · Organizzazione Pratica
                 </span>
                 <h2 className="text-base sm:text-lg font-black text-white">
-                  Organizzazione: Mantenere Massa Muscolare &amp; Lavoro Manuale / Pesante
+                  Mantenere Massa, Lavoro Manuale &amp; Strategia nelle 3 Età (con Diabete)
                 </h2>
               </div>
             </div>
 
-            {/* BLOCCO 1: LAVORO MANUALE VS PALESTRA */}
-            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-amber-500/35 space-y-4 bg-gradient-to-br from-amber-950/25 via-black/80 to-orange-950/20">
+            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-amber-500/35 space-y-4 bg-gradient-to-br from-amber-950/25 via-black/80 to-orange-950/20 text-xs text-gray-200 leading-relaxed">
               <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase tracking-widest text-amber-400">
-                  Attività Lavorativa vs Allenamento Strutturato
-                </span>
                 <h3 className="text-sm sm:text-base font-black text-white">
                   Se Smetti la Palestra e Fai Solo un Lavoro Manuale, Perdi Massa?
                 </h3>
-                <p className="text-xs text-gray-200 leading-relaxed">
-                  <strong className="text-amber-300">Risposta breve:</strong> Se smetti completamente i pesi e fai solo un lavoro manuale (anche faticoso), tenderai a perdere una parte della massa muscolare &quot;piena&quot; e della forza massimale, pur restando asciutto, funzionale e resistente.
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-black/55 border border-white/10 space-y-2 text-xs text-gray-200 leading-relaxed">
-                <strong className="text-cyan-300 block uppercase tracking-wider text-[11px]">
-                  1. Il Principio dell&apos;Adattamento (Perché il Lavoro Non È Palestra)
-                </strong>
                 <p>
-                  Il muscolo cresce e resta voluminoso solo con <strong>tensione meccanica elevata e progressiva</strong> (vicino al cedimento con i pesi). Un lavoro manuale (scatole, muratura, campi, spingere) è invece uno sforzo di <strong>resistenza e fatica cronica a bassa intensità</strong>.
+                  <strong className="text-amber-300">Risposta scientifica (Principio SAID — Adattamento Specifico allo Stimolo):</strong> sì, perdi il picco massimo di volume estetico costruito in sala pesi perché il lavoro fisico quotidiano è uno sforzo di <strong>resistenza continua a bassa-media intensità ed economia energetica</strong>, mentre l&apos;ipertrofia massimale richiede <strong>tensione meccanica elevata sulle fibre rapide (Tipo IIa / IIx)</strong> vicine al cedimento. Ecco cosa succede esattamente al corpo se passi solo al lavoro fisico:
                 </p>
-                <p>
-                  Il corpo è pigro ed efficiente: se non deve più sollevare carichi massimali, riduce leggermente il volume estetico inutile mantenendo invece la densità ossea, i tendini forti e i mionuclei costruiti in gioventù (fisico più asciutto, &quot;nervoso&quot; e resistente, meno gonfio da bodybuilding).
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-rose-950/25 border border-rose-500/35 space-y-2 text-xs text-gray-200">
-                <strong className="text-rose-300 block uppercase tracking-wider text-[11px] flex items-center gap-1.5">
-                  <AlertTriangle className="w-3.5 h-3.5 text-rose-400" />
-                  2. I 2 Veri Pericoli del Lavoro Manuale Senza Allenamento Mirato
-                </strong>
-                <ul className="space-y-1.5 list-disc pl-5 leading-relaxed">
+                <ul className="space-y-1.5 list-disc pl-5 pt-1 text-[11px] text-gray-200">
                   <li>
-                    <strong className="text-white">Stress e Cortisolo alto:</strong> Lavoro stancante e ripetitivo alza il cortisolo; se mangi male o non recuperi, rischi di accumulare grasso e infiammare le articolazioni invece di dimagrire pulito.
+                    <strong className="text-cyan-300">Più Capillari &amp; Mitocondri (Economia Energetica):</strong> per farti reggere 8 ore senza crollare, il corpo potenzia le fibre lente ossidative (Tipo I), moltiplica i capillari (<em>angiogenesi</em>) e i mitocondri. Diventi molto più resistente alla fatica e al consumo glucidico.
                   </li>
                   <li>
-                    <strong className="text-white">Usura Asimmetrica:</strong> Sul lavoro usi spesso sempre lo stesso braccio, spalla o lato. Senza palestra/esercizi compensativi per bilanciare la postura, si creano squilibri e dolori cronici (soprattutto alla schiena).
+                    <strong className="text-amber-300">Ridimensionamento Fibre Tipo IIx &amp; Stato Asciutto:</strong> senza carichi pesanti progressivi, il corpo &quot;snellisce&quot; leggermente le fibre esplosive troppo costose da mantenere, ma resti <strong>molto asciutto, definito, con ossa dense e tendini d&apos;acciaio</strong>.
+                  </li>
+                  <li>
+                    <strong className="text-emerald-300">Scudo Permanente dei Mionuclei (Memoria Muscolare):</strong> tutto il lavoro fatto in palestra da giovane ha inserito nuovi nuclei cellulari (<em>mionuclei</em>) dentro le tue fibre muscolari. Questi mionuclei <strong>non spariscono mai</strong>: se torni a fare un richiamo coi pesi anche dopo anni di solo lavoro manuale, riprendi la massa piena in poche settimane anziché in anni!
                   </li>
                 </ul>
               </div>
-            </div>
 
-            {/* BLOCCO 2: STRATEGIA DEL RICHIAMO MINIMO QUANDO SEI DISTRUTTO DAL LAVORO */}
-            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-orange-500/35 space-y-4 bg-gradient-to-br from-orange-950/25 via-black/80 to-emerald-950/20">
-              <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase tracking-widest text-orange-400">
-                  Strategia Pratica Quando Arrivi a Casa &quot;Stangato&quot;
-                </span>
-                <h3 className="text-sm sm:text-base font-black text-white">
-                  Lavoro Pesante &amp; Corpo Libero: La Strategia del &quot;Richiamo Minimo&quot;
-                </h3>
-                <p className="text-xs text-gray-300 leading-relaxed">
-                  Quando arrivi a sera distrutto con braccia pesanti e schiena affaticata, mettersi a fare 100 flessioni o trazioni a cedimento è l&apos;errore peggiore.
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30 space-y-1.5 text-xs text-gray-200">
-                <strong className="text-rose-300 flex items-center gap-1.5">
-                  <Flame className="w-4 h-4 text-rose-400 shrink-0" />
-                  1. Regola d&apos;Oro: Nei giorni di lavoro pesante, il cedimento è VIETATO
+              <div className="p-3.5 rounded-2xl bg-rose-950/25 border border-rose-500/35 space-y-2">
+                <strong className="text-rose-300 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                  <AlertTriangle className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                  I 2 Pericoli del Lavoro Manuale Senza Richiami Mirati
                 </strong>
-                <p className="leading-relaxed">
-                  Il lavoro manuale consuma già il sistema nervoso e riempie i muscoli di acido lattico e fatica sistemica. Aggiungere cedimento estremo fa schizzare il cortisolo alle stelle e rovina il recupero per il giorno dopo.
-                </p>
+                <ul className="space-y-1.5 list-disc pl-5">
+                  <li>
+                    <strong className="text-white">Cortisolo cronico &amp; fatica nervosa:</strong> nei giorni in cui rientri stanco morto dal lavoro, fare 100 flessioni o serie a cedimento è <strong>vietato</strong> (alza cortisolo, peggiora la glicemia e blocca il recupero).
+                  </li>
+                  <li>
+                    <strong className="text-white">Usura Asimmetrica:</strong> sul lavoro usi sempre più un lato. Servono esercizi compensativi puliti per bilanciare spalle e schiena.
+                  </li>
+                </ul>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-500/35 space-y-2.5 text-xs text-gray-200 leading-relaxed">
+              <div className="p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-500/35 space-y-2">
                 <strong className="text-emerald-300 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  2. Minimum Effective Dose (Dose Minima Efficace / Richiamo Minimo)
+                  La Strategia del &quot;Richiamo Minimo&quot; (Minimum Effective Dose)
                 </strong>
                 <p>
-                  Dato che durante il lavoro i muscoli subiscono già tensione continua, per non perdere neanche un grammo di massa costruita non servono 2 ore di palestra né sessioni distruttive:
-                </p>
-                <div className="space-y-2">
-                  <div className="p-2.5 rounded-xl bg-black/50 border border-white/10">
-                    <strong className="text-white block">• Sfrutta il lavoro come Cardio &amp; 10.000 Passi:</strong>
-                    Il lavoro attivo copre già il dispendio calorico e la resistenza cardiovascolare quotidiana.
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-black/50 border border-white/10">
-                    <strong className="text-white block">• 2–3 Richiami Brevi e Puliti a Settimana:</strong>
-                    Anche a casa (due manubri o calisthenics controllato con ampio margine dalle 2–3 serie fatte bene, senza sfinirti) per dare al muscolo il segnale di <em>tensione pesante</em> e riequilibrare le asimmetrie del lavoro.
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-3 rounded-2xl bg-black/60 border border-white/10 flex items-start gap-2 text-xs text-lime-200">
-                <HeartPulse className="w-4 h-4 text-lime-400 shrink-0 mt-0.5" />
-                <span>
-                  <strong>In sintesi:</strong> il lavoro manuale ti rende forte e resistente; pochi richiami intelligenti settimanali + proteine adeguate proteggono tutta la tua massa estetica, le asimmetrie e le articolazioni senza bruciarti.
-                </span>
-              </div>
-            </div>
-
-            {/* BLOCCO 3: DIFFERENZA TRA TE ORA GIOVANE, ADULTO E ANZIANO NEL LAVORO */}
-            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-cyan-500/35 space-y-4 bg-gradient-to-br from-cyan-950/25 via-black/80 to-lime-950/20">
-              <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase tracking-widest text-cyan-400">
-                  Confronto nelle 3 Fasi della Vita
-                </span>
-                <h3 className="text-sm sm:text-base font-black text-white">
-                  Come Gestire Lavoro &amp; Massa: Giovane vs Adulto vs Anziano
-                </h3>
-                <p className="text-xs text-gray-300 leading-relaxed">
-                  Lo stesso lavoro faticoso ha un impatto completamente diverso sul corpo e sull&apos;organizzazione dell&apos;allenamento a seconda dell&apos;età in cui ti trovi:
+                  Il lavoro attivo copre già i 10.000 passi e il cardio. Ti bastano <strong>2–3 richiami brevi a settimana (25–35 min)</strong> con carichi controllati (manubri o corpo libero a 2–3 ripetizioni di margine dal cedimento) per dare il segnale di tensione pesante e salvare massa, forza e simmetria senza bruciarti.
                 </p>
               </div>
 
-              <div className="space-y-3">
-                {/* 1. ORA DA GIOVANE */}
-                <div className="p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-400/40 space-y-2">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-black text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
-                      <Zap className="w-4 h-4 text-emerald-400 shrink-0" />
-                      1. Tu Ora da Giovane (16–25 anni • con Diabete)
-                    </span>
-                    <span className="text-[10px] font-black px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 shrink-0">
-                      Costruzione + Lavoro
-                    </span>
-                  </div>
-                  <ul className="text-xs text-gray-200 space-y-1.5 list-disc pl-5 leading-relaxed">
-                    <li>
-                      <strong className="text-white">Recupero fulmineo &amp; picco ormonale:</strong> il tuo corpo recupera molto più in fretta rispetto a un adulto. Anche se fai un lavoro manuale, puoi ancora <strong>costruire nuova massa, ossa dense e mionuclei permanenti</strong> (&quot;mettere soldi in banca&quot;), potenziando al massimo la tua sensibilità all&apos;insulina.
-                    </li>
-                    <li>
-                      <strong className="text-white">Gestione lavoro + diabete:</strong> il lavoro fisico consuma glucosio per ore (rischio ipoglicemie ritardate se la basale del microinfusore è invariata): tieni sempre zuccheri rapidi in tasca e nelle sere in cui rientri stanco marcio <em>niente cedimento distruttivo</em>, così eviti picchi di cortisolo che alzano la glicemia.
-                    </li>
-                  </ul>
+              {/* 3 Età */}
+              <div className="space-y-2.5 pt-1">
+                <strong className="text-cyan-300 block uppercase tracking-wider text-[11px]">
+                  Come Cambia la Gestione nelle 3 Fasi della Vita (con Diabete)
+                </strong>
+
+                <div className="p-3 rounded-2xl bg-emerald-950/30 border border-emerald-400/40 space-y-1">
+                  <strong className="text-emerald-300 block">1. Giovane (16–25 anni · Costruzione + Picco Osseo)</strong>
+                  Recupero fulmineo e picco ormonale: costruisci mionuclei e capitale osseo permanente. Col lavoro fisico tieni zuccheri rapidi a portata di mano per prevenire ipoglicemie ritardate ed evita il cedimento distruttivo quando sei già sfinito.
                 </div>
 
-                {/* 2. DA ADULTO */}
-                <div className="p-3.5 rounded-2xl bg-amber-950/30 border border-amber-400/40 space-y-2">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-black text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
-                      <Briefcase className="w-4 h-4 text-amber-400 shrink-0" />
-                      2. Tu da Adulto (30–50 anni • con Diabete)
-                    </span>
-                    <span className="text-[10px] font-black px-2 py-0.5 rounded-lg bg-amber-500/20 text-amber-200 border border-amber-400/30 shrink-0">
-                      Difesa Massa &amp; Tendini
-                    </span>
-                  </div>
-                  <ul className="text-xs text-gray-200 space-y-1.5 list-disc pl-5 leading-relaxed">
-                    <li>
-                      <strong className="text-white">Cortisolo più alto &amp; recupero microvascolare:</strong> tra lavoro, orari stretti e diabete, la riparazione cellulare di pelle, tendini e zone lombari richiede più attenzione, e lo stress lavorativo tende ad alzare la glicemia.
-                    </li>
-                    <li>
-                      <strong className="text-white">Come organizzarti:</strong> usi il lavoro come movimento quotidiano per bruciare glucosio (abbassando il fabbisogno di insulina), e tieni <strong>2–3 Richiami Minimi a settimana (25–35 min)</strong> + mobilità articolare attiva + rinforzo di <em>core, glutei e dorso</em> per evitare rigidità tendinea e mal di schiena cronico.
-                    </li>
-                  </ul>
+                <div className="p-3 rounded-2xl bg-amber-950/30 border border-amber-400/40 space-y-1">
+                  <strong className="text-amber-300 block">2. Adulto (30–50 anni · Difesa Massa, Tendini &amp; Cortisolo)</strong>
+                  Lo stress lavorativo alza cortisolo e glicemia; usa il lavoro come consumo glucidico quotidiano + 2–3 richiami brevi settimanali + mobilità attiva e core/glutei per blindare schiena e tendini.
                 </div>
 
-                {/* 3. DA ANZIANO */}
-                <div className="p-3.5 rounded-2xl bg-cyan-950/30 border border-cyan-400/40 space-y-2">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-black text-cyan-300 uppercase tracking-wider flex items-center gap-1.5">
-                      <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0" />
-                      3. Tu da Anziano (60–70+ anni • con Diabete)
-                    </span>
-                    <span className="text-[10px] font-black px-2 py-0.5 rounded-lg bg-cyan-500/20 text-cyan-200 border border-cyan-400/30 shrink-0">
-                      Rendita &amp; Zero Usura
-                    </span>
-                  </div>
-                  <ul className="text-xs text-gray-200 space-y-1.5 list-disc pl-5 leading-relaxed">
-                    <li>
-                      <strong className="text-white">Vivi di rendita biologica (muscolo = scudo glicemico):</strong> non devi più rincorrere pesoni o sfinirti. Qui scatta l&apos;effetto dei mionuclei e della densità ossea costruiti da giovane: conservi un grande serbatoio muscolare che assorbe gli zuccheri e protegge da osteoporosi e fragilità tipiche del diabete avanzato.
-                    </li>
-                    <li>
-                      <strong className="text-white">Come organizzarti:</strong> zero massimali e zero cedimento (per non rallentare i tempi di recupero). Bastano stimoli leggeri ma regolari (pesi moderati, elastici, mobilità articolare e camminate) per tenere elastico il collagene, attiva la microcircolazione e conservare il <strong>70–80% della struttura</strong>.
-                    </li>
-                  </ul>
+                <div className="p-3 rounded-2xl bg-cyan-950/30 border border-cyan-400/40 space-y-1">
+                  <strong className="text-cyan-300 block">3. Anziano (60–70+ anni · Rendita Biologica &amp; Zero Usura)</strong>
+                  Niente massimali né cedimenti: bastano pesi moderati, elastici, mobilità e camminate/bici per tenere elastico il collagene, aperta la microcircolazione e sfruttare i muscoli costruiti da giovane come scudo salva-glicemia (70–80% della struttura intatta).
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         )}
 
         {/* ================================================================= */}
-        {/* NOTA 3: IO CHE HO IL DIABETE — SPIEGAZIONE SCIENTIFICA COMPLETA   */}
+        {/* 3. DIABETE SUL LUNGO PERIODO: COSA SUCCEDE SCIENTIFICAMENTE        */}
         {/* ================================================================= */}
         {(activeTab === 'tutte' || activeTab === 'diabete_prevenzione') && (
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2 pl-1 border-b border-white/10 pb-2">
+          <section className="space-y-4">
+            <div className="flex items-center space-x-2.5 pl-1 border-b border-white/10 pb-2">
               <span className="p-1.5 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30">
                 <HeartPulse className="w-4 h-4" />
               </span>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-rose-400 block">
-                  Nota 3 • Biologia &amp; Scienza Specifica per Te
+                  Sezione 3 · Scienza Specifica per Chi Ha il Diabete
                 </span>
                 <h2 className="text-base sm:text-lg font-black text-white">
-                  Io Che Ho il Diabete: Cosa Mi Succede Scientificamente (Articolazioni, Muscoli, Ossa &amp; Età)
+                  Cosa Succede Col Diabete Nel Lungo Periodo (Controllo Buono vs Sbalzi) &amp; Scudi Biologici
                 </h2>
               </div>
             </div>
 
-            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-rose-500/35 space-y-4 bg-gradient-to-br from-rose-950/25 via-black/80 to-amber-950/20">
-              <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase tracking-widest text-rose-400">
-                  Fisiologia Reale Senza Terrorismo
-                </span>
-                <h3 className="text-sm sm:text-base font-black text-white">
-                  Cosa Cambia Davvero nel Tuo Corpo Col Diabete — e Perché Ciò Che Fai Oggi Ti Protegge al 100%
-                </h3>
-                <p className="text-xs text-gray-300 leading-relaxed">
-                  Avere il diabete non significa essere fragili: significa che la gestione dell&apos;energia cellulare (glucosio e insulina) è nelle tue mani invece che automatica. Scientificamente, ecco i <strong className="text-white">4 meccanismi biologici reali</strong> che riguardano chi ha il diabete lungo la vita e come il tuo allenamento li neutralizza:
-                </p>
-              </div>
+            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-rose-500/35 space-y-4 bg-gradient-to-br from-rose-950/25 via-black/80 to-amber-950/20 text-xs text-gray-200 leading-relaxed">
+              <p>
+                Con il diabete, la differenza tra invecchiare fragili e invecchiare al top dipende da due parole chiave: <strong className="text-white">Time in Range (ore passate in glicemia buona)</strong> e <strong className="text-emerald-300">variabilità glicemica bassa</strong> (pochi picchi violenti su e giù). Se mantieni la glicemia ben gestita, la stragrande maggioranza dei rischi cronici si riduce quasi al livello di una persona senza diabete — e con lo sport superi nettamente qualsiasi sedentario! Ecco i 4 meccanismi reali da conoscere:
+              </p>
 
-              {/* 1. GLICAZIONE DEL COLLAGENE (AGEs) */}
-              <div className="p-3.5 rounded-2xl bg-black/55 border border-rose-500/30 space-y-2 text-xs text-gray-200 leading-relaxed">
+              <div className="p-3.5 rounded-2xl bg-black/55 border border-rose-500/30 space-y-1.5">
                 <strong className="text-rose-300 block uppercase tracking-wider text-[11px]">
-                  1. Glicazione del Collagene (AGEs): Tendini, Fascia e Cartilagine
+                  1. Glicazione del Collagene (AGEs) — L&apos;Effetto &quot;Caramello&quot; su Tendini, Ossa &amp; Pelle
                 </strong>
                 <p>
-                  Quando la glicemia resta alta per molte ore o anni (iperglicemia cronica), le molecole di zucchero in eccesso nel sangue si &quot;incollano&quot; spontaneamente alle fibre di <strong className="text-white">collagene</strong> che formano tendini, legamenti, capsule articolari e pelle. Questo processo chimico si chiama <strong className="text-rose-200">glicazione</strong> e crea composti chiamati <strong>AGEs (Advanced Glycation End-products)</strong>.
+                  Quando lo zucchero nel sangue resta alto per tante ore, si lega spontaneamente alle proteine del collagene formando <strong>AGEs (Advanced Glycation End-products)</strong>: ponti rigidi che irrigidiscono tendini, spalle, mani, fascia plantare, dischi della schiena e matrice ossea.
+                  <br />
+                  <strong className="text-emerald-300">Come lo blocchi:</strong> evitando picchi prolungati sopra i <span className="tabular-nums">180 mg/dL</span> + facendo movimento e mobilità articolare che accelerano il ricambio del collagene vecchio.
                 </p>
-                <ul className="space-y-1 list-disc pl-5">
-                  <li>
-                    <strong className="text-white">Effetto fisico:</strong> gli AGEs creano dei &quot;ponti rigidi&quot; tra le fibre del collagene, rendendo i tendini meno elastici e le articolazioni (spalle, mani, caviglie, schiena) più propense a irrigidirsi con gli anni.
-                  </li>
-                  <li>
-                    <strong className="text-emerald-300">Il tuo scudo scientifico:</strong> tenere la variabilità glicemica bassa + fare <strong className="text-white">mobilità articolare attiva e pesi controllati</strong> stimola il ricambio continuo del collagene e mantiene fluido il liquido sinoviale, impedendo alle fibre di &quot;caramellarsi&quot;.
-                  </li>
-                </ul>
               </div>
 
-              {/* 2. MICROCIRCOLAZIONE & TEMPI DI GUARIGIONE */}
-              <div className="p-3.5 rounded-2xl bg-black/55 border border-amber-500/30 space-y-2 text-xs text-gray-200 leading-relaxed">
+              <div className="p-3.5 rounded-2xl bg-black/55 border border-amber-500/30 space-y-1.5">
                 <strong className="text-amber-300 block uppercase tracking-wider text-[11px]">
-                  2. Microcircolazione, Infiammazione &amp; Tempi di Recupero / Cicatrizzazione
+                  2. Microcircolazione, Endotelio &amp; Tempi di Recupero
                 </strong>
                 <p>
-                  I capillari più sottili (microcircolo di pelle, gengive, tendini e muscoli) sono molto sensibili agli sbalzi glicemici. Con il diabete, i tempi fisiologici di <strong className="text-white">riparazione dei tessuti</strong> (un graffio, la pelle dopo il rasoio, una micro-lacerazione muscolare o un tendine infiammato) sono leggermente più lenti rispetto a un non-diabetico.
+                  Gli sbalzi glicemici generano stress ossidativo che riduce l&apos;<strong>Ossido Nitrico (NO)</strong>, la molecola che tiene dilatati i capillari microscopici (occhi, reni, nervi periferici, cuoio capelluto, gengive e pelle). Con il diabete la riparazione di micro-ferite o tendini infiammati richiede un filo più di rispetto nei tempi di recupero.
+                  <br />
+                  <strong className="text-emerald-300">Come lo blocchi:</strong> i <strong>10.000 passi quotidiani e l&apos;allenamento aerobico</strong> stimolano proprio la produzione di Ossido Nitrico e mantengono puliti ed elastici tutti i capillari!
                 </p>
-                <ul className="space-y-1 list-disc pl-5">
-                  <li>
-                    <strong className="text-white">Cosa cambia in pratica:</strong> accumulare micro-traumi continui (rasatura aggressiva ogni 2 giorni, o palestra a cedimento distruttivo quando sei già distrutto dal lavoro) sovraccarica la risposta immunitaria e allunga i tempi di infiammazione.
-                  </li>
-                  <li>
-                    <strong className="text-emerald-300">Il tuo scudo scientifico:</strong> i <strong className="text-white">10.000 passi giornalieri</strong> pompano sangue ricco di ossigeno e ossido nitrico nei capillari mantenendoli aperti e giovani; rispettare i tempi di recupero (sonno, proteine, serie pulite senza distruggerti) azzera la differenza biologica.
-                  </li>
-                </ul>
               </div>
 
-              {/* 3. MUSCOLO = SPUGNA GLUT4 INDIPENDENTE DALL'INSULINA */}
-              <div className="p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-500/35 space-y-2 text-xs text-gray-200 leading-relaxed">
+              <div className="p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-500/35 space-y-1.5">
                 <strong className="text-emerald-300 block uppercase tracking-wider text-[11px]">
-                  3. Il Muscolo come &quot;Spugna Metabolica&quot; (Trasportatori GLUT4)
+                  3. Il Superpotere del Muscolo: Trasportatori GLUT4 Indipendenti dall&apos;Insulina
                 </strong>
                 <p>
-                  Questo è il superpotere più sottovalutato per chi ha il diabete: normalmente per far entrare lo zucchero dal sangue dentro le cellule serve l&apos;insulina (che tu gestisci col microinfusore). Ma quando un muscolo si contrae (pesi, flessioni, trazioni, camminata), attiva sulla membrana delle cellule muscolari i trasportatori <strong className="text-white">GLUT4 in modo INDIPENDENTE dall&apos;insulina</strong>.
+                  Quando un muscolo si contrae (pesi, calisthenics, camminata, bici), porta in superficie i trasportatori <strong>GLUT4</strong> che assorbono glucosio dal sangue <strong>senza aver bisogno di insulina</strong>, aumentando la sensibilità insulinica per <strong className="tabular-nums">24–48 ore</strong>. Più muscoli mantieni da adulto e da anziano, più grande è il tuo &quot;serbatoio spugna&quot; anti-picchi.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-cyan-950/30 border border-cyan-500/30 space-y-1.5">
+                <strong className="text-cyan-300 block uppercase tracking-wider text-[11px]">
+                  4. Variabilità Glicemica &amp; Controlli Medici Furbi Nel Tempo
+                </strong>
+                <p>
+                  Non conta solo la media (HbA1c), conta anche avere meno &quot;montagne russe&quot; tra ipo e iperglicemie (perché gli sbalzi rapidi creano più stress ossidativo cellulare). Nel diabete autoimmune (Tipo 1) è inoltre utile controllare negli esami annuali di routine con il diabetologo anche <strong>Vitamina D, Ferritina, Funzione Tiroidea (TSH), B12, Microalbuminuria e Fondo Oculare</strong>: così previeni qualsiasi carenza silenziosa decenni prima che dia fastidio.
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ================================================================= */}
+        {/* 4. OSSIGENO, SATURAZIONE & PERCHÉ I VECCHI DURANO PIÙ IN BICI     */}
+        {/* ================================================================= */}
+        {(activeTab === 'tutte' || activeTab === 'ossigeno_bici') && (
+          <section className="space-y-4">
+            <div className="flex items-center space-x-2.5 pl-1 border-b border-white/10 pb-2">
+              <span className="p-1.5 rounded-xl bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                <Wind className="w-4 h-4" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-sky-400 block">
+                  Sezione 4 · Respirazione, Catena dell&apos;Ossigeno &amp; Fisiologia Bici
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Ossigeno, Saturazione (SpO₂ vs VO₂max), Diabete &amp; Perché gli Anziani Durano in Bici
+                </h2>
+              </div>
+            </div>
+
+            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-sky-500/35 space-y-4 bg-gradient-to-br from-sky-950/25 via-black/80 to-indigo-950/20 text-xs text-gray-200 leading-relaxed">
+              {/* 4.1 Ossigeno e Saturazione */}
+              <div className="p-3.5 rounded-2xl bg-black/55 border border-sky-400/30 space-y-2.5">
+                <strong className="text-sky-300 block uppercase tracking-wider text-[11px]">
+                  4.1 Ossigeno e Saturazione: La Differenza Tra SpO₂ (Saturimetro) e Vero Ossigeno Nei Muscoli
+                </strong>
+                <p>
+                  Molti guardano solo la <strong className="text-white">Saturazione (SpO₂)</strong> sul dito (valore normale sano <strong className="tabular-nums text-emerald-300">95% – 99%</strong>), che misura quanta <em>emoglobina</em> nel sangue ha caricato ossigeno dai polmoni. Ma avere 98% sul dito è solo il &quot;camion carico&quot;: per far arrivare energia alle cellule con l&apos;età serve che funzioni tutta la catena a 4 anelli:
+                </p>
+                <ol className="space-y-1 list-decimal pl-5">
+                  <li><strong>Polmoni (Ventilazione):</strong> scambiano ossigeno negli alveoli ed espellono CO₂.</li>
+                  <li><strong>Cuore (Gittata Cardiaca):</strong> pompa il sangue ossigenato; se è allenato pompa più sangue a ogni battito (frequenza a riposo più bassa e cuore forte).</li>
+                  <li><strong>Capillari &amp; Rilascio Emoglobina (Microcircolo):</strong> i vasi devono dilatarsi grazie all&apos;Ossido Nitrico e l&apos;emoglobina deve cedere facilmente l&apos;ossigeno alle fibre.</li>
+                  <li><strong>Mitocondri (Centrali Energetiche):</strong> usano quell&apos;ossigeno per produrre energia pulita (ATP) senza accumulare acido lattico.</li>
+                </ol>
+                <p className="text-cyan-200 bg-cyan-500/10 border border-cyan-500/25 rounded-xl p-2.5">
+                  <strong>Cosa succede con l&apos;età (e cosa fa l&apos;allenamento):</strong> nei sedentari la capacità massima di usare ossigeno (VO₂max) crolla di circa il <strong className="tabular-nums">10% ogni 10 anni</strong> dopo i 30 anni perché diminuiscono capillari e mitocondri. In chi cammina 10.000 passi e fa cardio costante avviene il processo opposto: <strong>angiogenesi</strong> (nascita di nuovi capillari) e <strong>biogenesi mitocondriale</strong> (molti più mitocondri nelle cellule), mantenendo a 65 anni l&apos;ossigenazione di un giovane!
+                </p>
+              </div>
+
+              {/* 4.2 Diabete + Ossigeno */}
+              <div className="p-3.5 rounded-2xl bg-rose-950/30 border border-rose-500/35 space-y-2">
+                <strong className="text-rose-300 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                  <HeartPulse className="w-4 h-4 text-rose-400 shrink-0" />
+                  4.2 Fattore Diabete su Emoglobina (HbA1c), Capillari &amp; Ossigeno
+                </strong>
+                <p>
+                  L&apos;esame più famoso del diabete, l&apos;<strong>emoglobina glicata (HbA1c)</strong>, misura proprio quanto zucchero si è legato all&apos;emoglobina che trasporta l&apos;ossigeno:
                 </p>
                 <ul className="space-y-1 list-disc pl-5">
                   <li>
-                    <strong className="text-emerald-200">Più massa magra hai, più grande è il tuo serbatoio di glicogeno:</strong> la stessa pasta o pasto causa picchi glicemici molto più piccoli perché i muscoli &quot;aspirano&quot; glucosio per ricaricarsi (effetto spugna fino a 24–48 ore), tenendoti lontano dall&apos;insulino-resistenza anche da adulto e da anziano.
+                    Se un diabetico ha HbA1c molto alta per anni, l&apos;emoglobina glicata trattiene l&apos;ossigeno un po&apos; più stretto cedendolo con più fatica ai muscoli, e l&apos;iperglicemia restringe i micro-capillari abbassando l&apos;Ossido Nitrico.
                   </li>
                   <li>
-                    <strong className="text-white">Attenzione al contrario (Cortisolo &amp; Chetoni):</strong> se ti alleni senza energia o con insulina mancante, cortisolo e adrenalina fanno alzare la glicemia invece di abbassarla. Ecco perché tecnica pulita + gestione dei boli intorno all&apos;allenamento fanno tutta la differenza.
+                    <strong className="text-emerald-300">Perché tu tenendola buona stai protetto:</strong> con una HbA1c ben controllata e cardio regolare, la tua saturazione e il rilascio di ossigeno ai tessuti restano identici a quelli di un atleta non diabetico, tenendo tutti i capillari dilatati, puliti ed efficienti.
                   </li>
                 </ul>
               </div>
 
-              {/* 4. DENSITÀ OSSEA & SISTEMA VASCOLARE NEGLI ANNI */}
-              <div className="p-3.5 rounded-2xl bg-cyan-950/30 border border-cyan-500/30 space-y-2 text-xs text-gray-200 leading-relaxed">
-                <strong className="text-cyan-300 block uppercase tracking-wider text-[11px]">
-                  4. Ossa (Osteopatia Diabetica) &amp; Arterie nel Lungo Periodo
+              {/* 4.3 Perché i vecchi sembrano durare più in bici */}
+              <div className="p-3.5 rounded-2xl bg-black/55 border border-emerald-400/35 space-y-2.5">
+                <strong className="text-emerald-300 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                  <Bike className="w-4 h-4 text-emerald-400 shrink-0" />
+                  4.3 Perché i &quot;Vecchi&quot; Sembrano Durare Più in Bici? (Spiegazione Scientifica Reale)
                 </strong>
                 <p>
-                  La ricerca scientifica mostra che nel diabete di lunga durata (soprattutto se sedentari) gli osteoblasti — le cellule che costruiscono nuovo osso — lavorano un po&apos; più lentamente, e i vasi sanguigni tendono a perdere elasticità prima della media.
+                  Non è una tua impressione: in fisiologia dello sport è un fatto noto! Ecco i <strong>4 motivi scientifici precisi</strong> per cui un 60–70enne allenato in bici spesso stacca o resiste più ore di un ventenne:
                 </p>
-                <p>
-                  <strong className="text-cyan-200">Perché il tuo stile di vita annulla questo rischio:</strong> il carico meccanico dei pesi obbliga per legge fisica le ossa a depositare calcio (legge di Wolff), mentre la camminata quotidiana e il poco grasso viscerale mantengono pulite le arterie. Avere il diabete <em>ben gestito</em> ed essere un atleta costante ti rende biologicamente molto più sano di un coetaneo non-diabetico sedentario.
+                <ol className="space-y-1.5 list-decimal pl-5">
+                  <li>
+                    <strong className="text-white">Fibre Lente (Tipo I) immuni all&apos;età vs Fibre Rapide (Tipo II):</strong> invecchiando il corpo perde soprattutto le fibre muscolari rapide ed esplosive (quelle dello scatto o del salto), mentre le <strong>fibre lente ossidative di Tipo I</strong> — ricchissime di mitocondri e usate nella pedalata costante — resistono incredibilmente anche oltre i 70 anni!
+                  </li>
+                  <li>
+                    <strong className="text-cyan-300">Motore a Grassi &amp; Risparmio di Glicogeno (Adattamento di decenni):</strong> chi pedala da 20–40 anni ha sviluppato una rete enorme di capillari e mitocondri che permette di bruciare prevalentemente <strong>acidi grassi</strong> a ritmo sostenuto invece di bruciare subito gli zuccheri. Il giovane inesperto spinge troppo, accumula acido lattico, finisce le scorte di glicogeno muscolare e &quot;scoppia&quot; dopo un&apos;ora; l&apos;anziano esperto va avanti 4 ore con lo stesso passo fluido.
+                  </li>
+                  <li>
+                    <strong className="text-amber-300">Zero Impatto Articolare + Pacing Mentale:</strong> sulla sella il peso del corpo non grava su ginocchia e caviglie come nella corsa, e gli anziani conoscono esattamente la propria soglia restando appena sotto al limite aerobico senza strappi inutili.
+                  </li>
+                  <li>
+                    <strong className="text-rose-300">⚠️ Attenzione al &quot;Paradosso del Solo Bici&quot; (Perché TU devi fare SIA pesi SIA cardio):</strong> molti ciclisti anziani hanno gambe infinite in sella e cuore d&apos;acciaio, ma se fanno <em>solo</em> bici (zero pesi) hanno parte superiore debole, fibre Tipo II atrofizzate e ossa della colonna/femore meno dense perché in bici manca il carico di gravità! Tu combinando <strong>Pesi (ossa + fibre Tipo II) + Passi/Bici (mitocondri + capillari)</strong> costruisci il corpo completo al 100%.
+                  </li>
+                </ol>
+                <p className="text-[11px] text-rose-200 bg-rose-500/10 border border-rose-500/25 rounded-xl p-2">
+                  <strong>Nota Bici + Diabete:</strong> pedalare per 1–3 ore attiva continuamente i trasportatori GLUT4 senza insulina, abbassando la glicemia sia durante sia nelle ore dopo. Con il microinfusore serve pianificare con attenzione (riduzione basale temporanea se indicata dal tuo schema medico + controllo CGM frequente + carboidrati rapidi pronti in tasca).
                 </p>
               </div>
 
-              {/* RIEPILOGO OPERATIVO */}
-              <div className="p-3.5 rounded-2xl bg-black/65 border border-lime-500/35 space-y-2 text-xs">
-                <span className="text-[11px] font-black text-lime-300 uppercase tracking-wider flex items-center gap-1.5">
-                  <Dumbbell className="w-4 h-4 text-lime-400 shrink-0" />
-                  Riassunto Operativo: Le 4 Regole d&apos;Oro con il Diabete
+              {/* 4.4 Protocollo Pratico Ossigenazione */}
+              <div className="p-3.5 rounded-2xl bg-black/60 border border-sky-400/35 space-y-1.5">
+                <strong className="text-sky-300 block uppercase tracking-wider text-[11px]">
+                  4.4 Cosa Mettere in Pratica Ogni Settimana per Ossigeno e Capillari al Top
+                </strong>
+                <ul className="space-y-1 list-disc pl-5">
+                  <li>
+                    <strong className="text-white">Cardio in &quot;Zona 2&quot; + 10.000 Passi:</strong> almeno 2–3 volte a settimana fai 30–45 minuti di camminata veloce in pendenza, bici o cyclette a ritmo costante in cui riesci ancora a parlare ma con respiro profondo. È la zona esatta che moltiplica i mitocondri e apre nuovi capillari!
+                  </li>
+                  <li>
+                    <strong className="text-white">Respira dal Naso (Produzione Naturale di Ossido Nitrico):</strong> durante la giornata, camminando e finché riesci nell&apos;allenamento aerobico, respira dal naso (non a bocca aperta): i seni paranasali producono naturalmente <strong>Ossido Nitrico (NO)</strong> che viene aspirato nei polmoni dilatando bronchi e vasi e migliorando l&apos;assorbimento di ossigeno fino al 10–15%.
+                  </li>
+                  <li>
+                    <strong className="text-white">Zero Fumo / Zero Svapo &amp; Controllo Ferro:</strong> il monossido di carbonio occupa i posti dell&apos;ossigeno sull&apos;emoglobina (cosa doppiamente dannosa per i capillari di chi ha il diabete), e senza buona ferritina l&apos;emoglobina cala.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ================================================================= */}
+        {/* 5. PREVENZIONE CAPELLI NEGLI ANNI (FOLLICOLI, MICROCIRCOLO & DIABETE) */}
+        {/* ================================================================= */}
+        {(activeTab === 'tutte' || activeTab === 'capelli_prevenzione') && (
+          <section className="space-y-4">
+            <div className="flex items-center space-x-2.5 pl-1 border-b border-white/10 pb-2">
+              <span className="p-1.5 rounded-xl bg-teal-500/20 text-teal-300 border border-teal-500/30">
+                <Sparkles className="w-4 h-4" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-teal-400 block">
+                  Sezione 5 · Salute Follicolare a Lungo Termine
                 </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-200">
-                  <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
-                    <strong className="text-rose-300 block">1. Glicemia in range = Tendini giovani</strong>
-                    Meno ore sopra 180 mg/dL = meno AGEs sul collagene e articolazioni sempre sciolte.
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Prevenzione Capelli Negli Anni: Cosa Succede ai Follicoli, Diabete &amp; Protocollo Pratico
+                </h2>
+              </div>
+            </div>
+
+            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-teal-500/35 space-y-4 bg-gradient-to-br from-teal-950/25 via-black/80 to-cyan-950/20 text-xs text-gray-200 leading-relaxed">
+              <div className="p-3.5 rounded-2xl bg-black/55 border border-white/10 space-y-2">
+                <strong className="text-teal-300 block uppercase tracking-wider text-[11px]">
+                  5.1 Cosa Succede Scientificamente ai Capelli Invecchiando
+                </strong>
+                <p>
+                  Ogni follicolo pilifero è alimentato alla base da un minuscolo gomitolo di capillari chiamato <strong>papilla dermica</strong> e attraversa cicli continui: <em>Anagen</em> (crescita, 2–6 anni), <em>Catagen</em> (transizione) e <em>Telogen</em> (riposo/caduta fisiologica). Con il passare dei decenni avvengono 3 fenomeni fisiologici:
+                </p>
+                <ul className="space-y-1.5 list-disc pl-5">
+                  <li>
+                    <strong className="text-white">Riduzione della fase Anagen &amp; del diametro:</strong> con l&apos;età le cellule della matrice si dividono più lentamente, la fase di crescita si accorcia e il diametro del singolo fusto può assottigliarsi gradualmente (senescenza follicolare).
+                  </li>
+                  <li>
+                    <strong className="text-white">Microcircolo e fibrosi perifollicolare:</strong> se la guaina di collagene attorno al follicolo si irrigidisce o arrivano meno sangue e ossigeno ai capillari del cuoio capelluto, il bulbo riceve meno aminoacidi, ferro e ossigeno.
+                  </li>
+                  <li>
+                    <strong className="text-white">Fattore genetico (DHT) vs Telogen Effluvium:</strong> se in famiglia c&apos;è predisposizione genetica all&apos;alopecia androgenetica, il DHT miniaturizza progressivamente i follicoli di tempie/vertex (che è diverso dalla caduta temporanea da stress/carenze, dove invece il follicolo è vivo e recuperabile).
+                  </li>
+                </ul>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-rose-950/30 border border-rose-500/35 space-y-2">
+                <strong className="text-rose-300 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                  <HeartPulse className="w-4 h-4 text-rose-400 shrink-0" />
+                  5.2 Fattore Diabete sui Capelli (Cosa Cambia per Te)
+                </strong>
+                <ul className="space-y-1.5 list-disc pl-5">
+                  <li>
+                    <strong className="text-white">Capillari della testa &amp; AGEs:</strong> la papilla dermica è fatta di micro-capillari delicatissimi e circondata da collagene. Glicemie alte croniche riducono il flusso di sangue alla radice e irrigidiscono la guaina del follicolo via AGEs, portando nei diabetici scompensati a capelli più fini e crescita più lenta.
+                  </li>
+                  <li>
+                    <strong className="text-white">Collegamento Tiroide / Ferritina / Vitamina D:</strong> nel Diabete Tipo 1 è clinicamente molto importante controllare ogni anno nelle analisi TSH (tiroide), Ferritina e Vitamina D, perché eventuali carenze o sbalzi tiroidei si riflettono subito su densità e spessore dei capelli.
+                  </li>
+                  <li>
+                    <strong className="text-emerald-300">Perché tu parti avvantaggiato:</strong> tenendo la glicemia ben gestita, camminando/allenandoti ogni giorno (ossido nitrico nei capillari) e mangiando proteine adeguate, proteggi la papilla dermica esattamente come quella di un non diabetico!
+                  </li>
+                </ul>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-black/60 border border-teal-400/35 space-y-2">
+                <strong className="text-teal-300 block uppercase tracking-wider text-[11px]">
+                  5.3 Protocollo Pratico di Prevenzione Capelli per Tutta la Vita
+                </strong>
+                <ol className="space-y-1.5 list-decimal pl-5">
+                  <li>
+                    <strong className="text-white">Stimolazione Vascolare Semplice (Zero Costi):</strong> 2–3 volte a settimana (o mentre fai lo shampoo), fai <strong>2–3 minuti di massaggio lento coi polpastrelli</strong> muovendo la pelle del cuoio capelluto (senza sfregare con le unghie!) per aumentare il flusso locale di sangue ed elasticità della guaina.
+                  </li>
+                  <li>
+                    <strong className="text-white">Cute sempre pulita, zero infiammazione:</strong> evita accumuli di cere/polveri per troppi giorni (usando il tuo Head &amp; Shoulders nei giorni di lavaggio) e non puntare mai aria bollente diretta sulla pelle della testa.
+                  </li>
+                  <li>
+                    <strong className="text-white">Nutrizione &amp; No Fumo:</strong> garantisci sempre proteine/cisteina, ferro + Vitamina C, zinco, biotina, Omega-3 e sonno da 8 ore; la nicotina restringe brutalmente i micro-capillari del cuoio capelluto accelerando la miniaturizzazione.
+                  </li>
+                  <li>
+                    <strong className="text-amber-300">Regola d&apos;oro se un domani notassi stempiatura/diradamento reale:</strong> se dopo i 20–25 anni dovessi mai vedere arretramento progressivo delle tempie o della corona rispetto alle foto di oggi, non perdere anni dietro a lozioni inutili da supermercato: vai subito da un <strong>dermatologo tricologo</strong> per una tricoscopia (prima si interviene sui follicoli ancora attivi, più risultati si salvano).
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ================================================================= */}
+        {/* 6. COLLAGENE TOTALE, ALIMENTI DI OGNI TIPO & DIETA ANTI-ETÀ       */}
+        {/* ================================================================= */}
+        {(activeTab === 'tutte' || activeTab === 'collagene_dieta') && (
+          <section className="space-y-4">
+            <div className="flex items-center space-x-2.5 pl-1 border-b border-white/10 pb-2">
+              <span className="p-1.5 rounded-xl bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                <Utensils className="w-4 h-4" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-purple-400 block">
+                  Sezione 6 · Scienza del Collagene, Tutti gli Alimenti &amp; Piano Pratico
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Cos&apos;è Davvero il Collagene, Tutti gli Alimenti Chiave &amp; Come Seguire la Dieta (con Diabete)
+                </h2>
+              </div>
+            </div>
+
+            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-purple-500/35 space-y-4 bg-gradient-to-br from-purple-950/25 via-black/80 to-indigo-950/20 text-xs text-gray-200 leading-relaxed">
+              {/* 6.1 Cos'è scientificamente il collagene */}
+              <div className="p-3.5 rounded-2xl bg-black/55 border border-purple-400/35 space-y-2.5">
+                <strong className="text-purple-300 flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+                  <FlaskConical className="w-4 h-4 text-purple-400 shrink-0" />
+                  6.1 Cos&apos;è Scientificamente il Collagene (e Perché Regge Tutto il Corpo)
+                </strong>
+                <p>
+                  Il <strong className="text-white">Collagene</strong> è la proteina strutturale più abbondante del tuo corpo (rappresenta circa il <strong className="tabular-nums">30%</strong> di tutte le proteine umane!). Immaginalo come le corde d&apos;acciaio flessibili e la &quot;colla biologica&quot; che tengono insieme ogni tessuto:
+                </p>
+                <ul className="space-y-1.5 list-disc pl-5">
+                  <li>
+                    <strong className="text-cyan-300">Struttura a Tripla Elica:</strong> tre filamenti proteici attorcigliati stretti tra loro come una corda da alpinismo, ricchissimi di tre aminoacidi rari nelle normali bistecche di muscolo: <strong>Glicina (~33%)</strong>, <strong>Prolina</strong> e <strong>Idrossiprolina</strong>.
+                  </li>
+                  <li>
+                    <strong className="text-white">I 3 Tipi Principali nel Tuo Corpo:</strong> <strong>Tipo I</strong> (~90% del totale: pelle, tendini, legamenti, 35% dell&apos;osso elastico, guaina dei capelli); <strong>Tipo II</strong> (cartilagine ammortizzante di ginocchia, spalle e dischi vertebrali); <strong>Tipo III</strong> (pareti elastiche di arterie, vasi sanguigni e pelle giovane).
+                  </li>
+                  <li>
+                    <strong className="text-rose-300">Cosa lo distrugge con l&apos;età + Diabete:</strong> dai 25 anni la sintesi cala di circa l&apos;<strong className="tabular-nums">1%</strong> ogni anno; sole UV senza protezione, fumo, cortisolo cronico e soprattutto la <strong>glicazione (AGEs da glicemie alte o cibi bruciacchiati)</strong> incollano tra loro le corde della tripla elica rendendo tendini rigidi, pelle meno elastica e vasi più duri.
+                  </li>
+                </ul>
+              </div>
+
+              {/* 6.2 Come funziona l'assorbimento */}
+              <div className="p-3.5 rounded-2xl bg-indigo-950/30 border border-indigo-400/35 space-y-2">
+                <strong className="text-indigo-300 block uppercase tracking-wider text-[11px]">
+                  6.2 Come Viene Assorbito Davvero (La Verità Scientifica su Cibo, Brodo &amp; Vitamina C)
+                </strong>
+                <p>
+                  Quando mangi collagene (es. brodo d&apos;ossa, pelle di pesce, cartilagini o peptidi), il tuo intestino non lo manda intero nel ginocchio: lo spezza in singoli aminoacidi (Glicina/Prolina) e in piccoli frammenti di 2–3 aminoacidi (<em>dipeptidi/tripeptidi</em> come Prolina-Idrossiprolina). Questi frammenti arrivano nel sangue e danno ai <strong>fibroblasti</strong> (le fabbriche cellulari di tendini, ossa e pelle) sia i mattoni sia l&apos;ordine chimico di produrre nuovo collagene!
+                </p>
+                <p className="text-amber-200 bg-amber-500/10 border border-amber-500/30 rounded-xl p-2.5">
+                  <strong>⚠️ Regola Biochimica Obbligatoria:</strong> per chiudere e stabilizzare la tripla elica del collagene serve l&apos;enzima <em>prolil-idrossilasi</em>, che funziona <strong>SOLO in presenza di Vitamina C</strong> (e di <strong>Rame + Zinco</strong> per l&apos;enzima <em>lisil-ossidasi</em> che cuce le fibre tra loro). Mangiare proteine o collagene senza Vitamina C fresca è come avere i mattoni senza il cemento!
+                </p>
+              </div>
+
+              {/* 6.3 Tutti gli Alimenti di Ogni Tipo */}
+              <div className="space-y-2.5">
+                <strong className="text-purple-300 block uppercase tracking-wider text-[11px] pl-1">
+                  6.3 Enciclopedia di Tutti gli Alimenti Chiave (Collagene, Ossa, Capelli, Ossigeno &amp; Anti-AGEs)
+                </strong>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div className="p-3 rounded-2xl bg-black/55 border border-purple-500/30 space-y-1">
+                    <strong className="text-purple-300 block">1. Fonti Dirette di Collagene &amp; Glicina</strong>
+                    <p>
+                      <strong>Brodo d&apos;ossa lento</strong> (ossa con midollo/articolazioni cotte 6–12h con 1 cucchiaio di aceto per estrarre minerali e gelatina), tagli con tessuto connettivo (ossobuco, spezzatino, fusi/sovracosce di pollo con pelle), <strong>pesce con pelle</strong> o lische morbide (salmone con pelle, sardine), gelatina alimentare pura (senza zucchero).
+                    </p>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
-                    <strong className="text-emerald-300 block">2. Difendi i muscoli a ogni età</strong>
-                    Sono il tuo organo salva-glicemia (GLUT4) oltre che la tua forza fisica.
+
+                  <div className="p-3 rounded-2xl bg-black/55 border border-emerald-500/30 space-y-1">
+                    <strong className="text-emerald-300 block">2. Proteine Nobili (Prolina, Lisina &amp; Zolfo)</strong>
+                    <p>
+                      <strong>Uova intere ben cotte</strong> (ricchissime nella membrana/albume di prolina, lisina, zolfo e nel tuorlo di Vit. K2 e biotina), pollo/tacchino, carne rossa magra (1 volta/sett. per ferro eme + carnosina anti-glicazione!), yogurt greco/ricotta/parmigiano, legumi (lenticchie, ceci).
+                    </p>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
-                    <strong className="text-amber-300 block">3. Rispetta il recupero</strong>
-                    Con il diabete la pelle e i tessuti chiedono zero traumi inutili e buon sonno/proteine.
+
+                  <div className="p-3 rounded-2xl bg-black/55 border border-amber-500/30 space-y-1">
+                    <strong className="text-amber-300 block">3. Attivatori Obbligatori (Vit. C, Rame, Zinco, K2)</strong>
+                    <p>
+                      <strong>Vitamina C:</strong> kiwi, peperoni crudi, agrumi, fragole, broccoli al vapore, succo di limone fresco.
+                      <br />
+                      <strong>Zinco &amp; Rame:</strong> semi di zucca, cacao amaro 85%+, anacardi, molluschi, 1–2 noci brasiliane (selenio).
+                      <br />
+                      <strong>Zolfo vegetale:</strong> aglio, cipolla, cavolfiore, rucola, broccoli (proteggono sia collagene sia cheratina dei capelli).
+                    </p>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
-                    <strong className="text-cyan-300 block">4. 10.000 passi + Mobilità</strong>
-                    Garantiscono microcircolazione perfetta alle estremità e dischi idratati per decenni.
+
+                  <div className="p-3 rounded-2xl bg-black/55 border border-cyan-500/30 space-y-1">
+                    <strong className="text-cyan-300 block">4. Grassi Anti-Infiammatori &amp; Protettori Vascolari</strong>
+                    <p>
+                      <strong>Omega-3 (EPA/DHA):</strong> salmone, sgombro, alici/sardine 2–3 volte a settimana, più noci e semi di chia/lino.
+                      <br />
+                      <strong>Olio EVO a crudo</strong> (polifenoli che difendono le arterie e la pelle dallo stress ossidativo) + avocado.
+                    </p>
                   </div>
                 </div>
               </div>
+
+              {/* 6.4 Cottura e Regole Anti-AGEs per chi ha il Diabete */}
+              <div className="p-3.5 rounded-2xl bg-rose-950/25 border border-rose-400/35 space-y-2">
+                <strong className="text-rose-300 block uppercase tracking-wider text-[11px]">
+                  6.4 Segreto Fondamentale Col Diabete: Come Cucinare &amp; Spezie Anti-Glicazione (Meno AGEs nel Piatto)
+                </strong>
+                <p>
+                  Gli AGEs che rovinano il collagene non vengono solo dalla glicemia alta, ma anche da come cucini! Carne o cibi bruciacchiati alla griglia ad altissime temperature a secco o fritti contengono già miliardi di AGEs pronti a entrare nel sangue.
+                </p>
+                <ul className="space-y-1 list-disc pl-5">
+                  <li>
+                    <strong className="text-white">Preferisci cotture umide o dolci:</strong> bollitura, vapore, forno coperto, padella a fuoco medio-basso o stufato (riducono gli AGEs del cibo fino al <strong className="tabular-nums">70–80%</strong> rispetto al bruciacchiato/fritto!).
+                  </li>
+                  <li>
+                    <strong className="text-emerald-300">Trucco del Limone / Aceto prima di cuocere:</strong> marinare carne o pesce con succo di limone o aceto prima della cottura dimezza la formazione di AGEs sulla superficie.
+                  </li>
+                  <li>
+                    <strong className="text-amber-300">Spezie ed Erbe Anti-AGEs:</strong> rosmarino, origano, timo, curcuma + pizzico di pepe nero e cannella contengono polifenoli naturali che rallentano la glicazione del collagene.
+                  </li>
+                </ul>
+              </div>
+
+              {/* 6.5 Come seguire l'alimentazione nella vita reale */}
+              <div className="p-3.5 rounded-2xl bg-black/60 border border-lime-400/35 space-y-2.5">
+                <strong className="text-lime-300 block uppercase tracking-wider text-[11px]">
+                  6.5 Come Seguire Questa Alimentazione Ogni Giorno (Schema Pratico + Ordine Anti-Picco)
+                </strong>
+                <p>
+                  <strong className="text-white">La regola più potente a ogni pasto (Sequenza nel Piatto):</strong> mangia prima una piccola porzione di <strong>Verdure/Fibre</strong>, poi <strong>Proteine e Grassi sani</strong>, e per ultimi i <strong>Carboidrati</strong> (pasta, riso, pane, patate). Questo semplice ordine rallenta l&apos;assorbimento dello zucchero nell&apos;intestino, appiattisce il picco glicemico dopo mangiato (molti meno AGEs su collagene, ossa ed emoglobina!) e rende più facile gestire il bolo!
+                </p>
+
+                <div className="space-y-1.5">
+                  <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                    <strong className="text-white block">☀️ Colazione:</strong> 2–3 uova intere cotte (proteine, prolina, biotina, K2) oppure yogurt greco + avena/pane integrale + 1 kiwi o agrume (Vitamina C per il collagene e i vasi).
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                    <strong className="text-white block">🍽️ Pranzo:</strong> Verdure di stagione con olio EVO a crudo e limone → carne magra/pollo/legumi → pasta/riso in porzione calcolata per la tua glicemia (evita caffè attaccato al pranzo per non bloccare il ferro).
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                    <strong className="text-white block">⚡ Spuntino:</strong> 15–20g semi di zucca (zinco/magnesio) + 1–2 noci brasiliane (selenio) o noci normali + yogurt greco o fonte proteica leggera; 1 quadratino di cioccolato fondente 85%+ (rame e polifenoli per l&apos;ossido nitrico).
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                    <strong className="text-white block">🌙 Cena:</strong> 2–3 sere/sett. pesce grasso con pelle (salmone, sgombro, sardine per Omega-3 + collagene marino + Vit. D); altre sere tagli lenti/spezzatino/pollo con cartilagine o brodo d&apos;ossa caldo + verdure ricche di Vit. C/zolfo (broccoli, peperoni, cavolfiore).
+                  </div>
+                </div>
+
+                <p className="text-[11px] text-purple-200 bg-purple-500/10 border border-purple-500/25 rounded-xl p-2.5">
+                  <strong>E sugli integratori di Collagene Idrolizzato?</strong> Se già mangi abbastanza proteine totali, carne/pesce con connettivo/pelle e Vitamina C, non sono obbligatori. La ricerca sportiva mostra comunque che <strong className="tabular-nums">10–15g</strong> di peptidi di collagene idrolizzato (senza zuccheri aggiunti) + <strong className="tabular-nums">50mg</strong> di Vitamina C presi 30–60 minuti prima di allenamenti per tendini/mobilità stimolano la sintesi di collagene tendineo; prima di aggiungere qualsiasi integratore fisso, confrontati sempre col tuo diabetologo.
+                </p>
+              </div>
             </div>
+          </section>
+        )}
+
+        {/* ================================================================= */}
+        {/* 7. DIGIUNO MATTUTINO, LUCE SOLARE & VITAMINA D SICURA             */}
+        {/* ================================================================= */}
+        {(activeTab === 'tutte' || activeTab === 'luce_vitamina_d') && (
+          <section className="space-y-4">
+            <div className="flex items-center space-x-2.5 pl-1 border-b border-white/10 pb-2">
+              <span className="p-1.5 rounded-xl bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">
+                <Sun className="w-4 h-4" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-yellow-400 block">
+                  Sezione 7 · Cronobiologia, Ormoni Mattutini &amp; Fotoprotezione
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Digiuno Mattutino, Luce Solare &amp; Vitamina D Sicura (Senza Rovinare la Pelle)
+                </h2>
+              </div>
+            </div>
+
+            <div className="p-4 sm:p-5 rounded-3xl glass-card border border-yellow-500/35 space-y-4 bg-gradient-to-br from-yellow-950/20 via-black/80 to-amber-950/20 text-xs text-gray-200 leading-relaxed">
+              {/* 7.1 Uscire al mattino senza colazione */}
+              <div className="p-3.5 rounded-2xl bg-black/55 border border-amber-400/35 space-y-2">
+                <strong className="text-amber-300 block uppercase tracking-wider text-[11px]">
+                  7.1 Cosa Succede Quando Esci la Mattina Senza Colazione (Fisiologia + Diabete)
+                </strong>
+                <p>
+                  Quando ti svegli dopo 8–10 ore di digiuno notturno ed esci di casa a piedi senza fare colazione, il tuo corpo attiva una cascata ormonale precisa:
+                </p>
+                <ul className="space-y-1.5 list-disc pl-5">
+                  <li>
+                    <strong className="text-white">Cortisolo &amp; GH mattutini (CAR — Cortisol Awakening Response):</strong> tra le 6:00 e le 8:30 il cortisolo e l&apos;ormone della crescita (GH) salgono naturalmente per svegliare il sistema nervoso, aumentare la pressione arteriosa e liberare grassi dal tessuto adiposo (<strong className="text-emerald-300">lipolisi mattutina</strong>) + glucosio dal fegato.
+                  </li>
+                  <li>
+                    <strong className="text-cyan-300">Camminata leggera a digiuno (GLUT4):</strong> andare a scuola/muoversi a passo normale a digiuno usa principalmente acidi grassi come carburante e stimola lievemente i trasportatori muscolari GLUT4, aiutando a smaltire eventuali picchi dell&apos;alba senza alzare lo stress (a patto di avere sonno adeguato).
+                  </li>
+                  <li>
+                    <strong className="text-rose-300">Cosa cambia col Diabete Tipo 1:</strong> in una persona non diabetica il pancreas copre automaticamente il glucosio rilasciato dal fegato al mattino; col Tipo 1, invece, è la tua <strong>insulina basale / Control-IQ</strong> a dover bilanciare la spinta epatica mattutina (altrimenti resti attorno a ~120 o sali lentamente verso metà mattina — vedi guida Diabete per i dettagli completi!). Inoltre, tieni sempre 1–2 bustine di zucchero in tasca durante il tragitto a piedi nel caso il sensore scendesse.
+                  </li>
+                </ul>
+              </div>
+
+              {/* 7.2 Luce solare mattutina & ritmo circadiano */}
+              <div className="p-3.5 rounded-2xl bg-black/55 border border-yellow-400/35 space-y-2">
+                <strong className="text-yellow-300 block uppercase tracking-wider text-[11px]">
+                  7.2 Luce Solare Mattutina, Occhi &amp; Orologio Biologico (Melatonina &amp; GH Notturno)
+                </strong>
+                <p>
+                  Prendere luce naturale esterna entro <strong className="tabular-nums">30–60 minuti</strong> dal risveglio (bastano anche <strong className="tabular-nums">10–15 minuti</strong> all&apos;aperto, anche con cielo nuvoloso!) è uno dei segnali biologici più potenti per longevità, ormoni e glicemia:
+                </p>
+                <ul className="space-y-1.5 list-disc pl-5">
+                  <li>
+                    <strong className="text-white">Fotorecettori Melanopsinici (ipRGCs) &amp; SCN:</strong> all&apos;aperto arrivano <span className="tabular-nums">10.000–30.000+ lux</span> anche col nuvoloso (contro soli ~200–400 lux in casa!). Questa luce colpisce cellule specifiche della retina che avvisano il <strong>Nucleo Soprachiasmatico (SCN)</strong> dell&apos;ipotalamo: <em>&quot;È giorno, sincronizza tutti gli orologi di fegato, muscoli e cellule!&quot;</em>.
+                  </li>
+                  <li>
+                    <strong className="text-emerald-300">Timer del Sonno, Melatonina &amp; GH Notturno:</strong> quel picco di luce mattutina alza subito vigilanza e serotonina e fa partire un conto alla rovescia di ~14–16 ore per rilasciare puntualmente la <strong>Melatonina</strong> la sera. Dormire profondo significa massimo picco notturno di <strong>GH (riparazione tessuti, ossa, collagene)</strong> e sensibilità insulinica molto migliore il giorno dopo!
+                  </li>
+                  <li>
+                    <strong className="text-amber-300">Regola pratica sugli occhi:</strong> NON guardare mai direttamente il sole (danneggia la retina!). Basta camminare normalmente all&apos;aperto senza occhiali da sole scuri (gli occhiali da vista trasparenti vanno bene; attraverso i vetri di casa/auto invece l&apos;effetto è molto ridotto perché il vetro filtra parte dello spettro e dimezza i lux).
+                  </li>
+                </ul>
+              </div>
+
+              {/* 7.3 Chimica reale della Vitamina D: UVB vs UVA */}
+              <div className="p-3.5 rounded-2xl bg-indigo-950/30 border border-indigo-400/35 space-y-2.5">
+                <strong className="text-indigo-300 block uppercase tracking-wider text-[11px]">
+                  7.3 Scienza Pura della Vitamina D: Raggi UVB (280–315 nm) vs Raggi UVA (315–400 nm)
+                </strong>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div className="p-3 rounded-xl bg-black/60 border border-emerald-500/30 space-y-1">
+                    <strong className="text-emerald-300 block">☀️ Raggi UVB (280–315 nm) — Fabbrica Vitamina D</strong>
+                    <p>
+                      Colpiscono il <strong>7-deidrocolesterolo</strong> nella pelle trasformandolo in Pre-Vitamina D₃ → <strong>Colecalciferolo (D₃)</strong>. Poi il fegato lo converte in <strong>25(OH)D</strong> (quello che misuri nel sangue) e i reni (grazie al <strong>Magnesio</strong>) nell&apos;ormone attivo <strong>Calcitriolo (1,25(OH)₂D)</strong> che fissa il calcio nelle ossa e modula il sistema immunitario.
+                    </p>
+                    <p className="text-amber-200 font-semibold pt-0.5">
+                      ⚠️ I vetri di casa e delle finestre bloccano il 100% degli UVB! Inoltre gli UVB passano bene solo quando il sole è abbastanza alto nel cielo.
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-black/60 border border-rose-500/30 space-y-1">
+                    <strong className="text-rose-300 block">🔴 Raggi UVA (315–400 nm) — Zero Vitamina D, Danni al Collagene</strong>
+                    <p>
+                      Presenti dall&apos;alba al tramonto tutto l&apos;anno (passano anche attraverso nuvole e vetri!). Penetrano in profondità nel derma dove attivano gli enzimi <strong>MMP</strong> che tagliano il <strong>collagene</strong> (foto-invecchiamento precoce, macchie scure e danno ossidativo al DNA), ma producono <strong>ZERO Vitamina D</strong>.
+                    </p>
+                    <p className="text-cyan-200 font-semibold pt-0.5">
+                      💡 Ecco perché prendere sole presto alle 7:00 o tardi alle 18:00 ti dà luce circadiana ma NON sintetizza quasi nessuna Vitamina D!
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-400/35 text-amber-100">
+                  <strong>🔬 Perché Bruciarsi NON Fa Produrre Più Vitamina D (Meccanismo di Auto-Limitazione):</strong> dopo appena 10–20 minuti di UVB su braccia/gambe, la pelle satura il meccanismo e devia la Pre-Vitamina D₃ in eccesso verso isomeri inattivi (<em>lumisterolo</em> e <em>tachisterolo</em>). Restare 2 ore sotto il sole cocente non crea più Vitamina D, ma moltiplica esponenzialmente danni al DNA, distruzione del collagene e rischio melanoma!
+                </div>
+              </div>
+
+              {/* 7.4 Protocollo pratico sicuro senza rovinare la pelle */}
+              <div className="p-3.5 rounded-2xl bg-black/60 border border-yellow-400/40 space-y-2">
+                <strong className="text-yellow-300 block uppercase tracking-wider text-[11px]">
+                  7.4 Protocollo Pratico: Vitamina D al Massimo Con Pelle Protetta Tutta la Vita
+                </strong>
+                <ol className="space-y-1.5 list-decimal pl-5">
+                  <li>
+                    <strong className="text-white">Viso Sempre Protetto (Specialmente con Salicilico!):</strong> applica sempre la crema solare <strong>SPF 30–50+</strong> sul viso (e collo), perché il viso ha la pelle più esposta al foto-invecchiamento e all&apos;iperpigmentazione post-brufoli. La Vitamina D prendila esponendo invece <strong>avambracci e polpacci/gambe</strong>!
+                  </li>
+                  <li>
+                    <strong className="text-white">La &quot;Regola dell&apos;Ombra&quot; (Aprile – Settembre):</strong> gli UVB arrivano al suolo solo quando la tua ombra è <strong>più corta o uguale alla tua altezza</strong> (tarda mattinata / fascia centrale). Fai lì <strong>10–15 minuti</strong> (pelle chiara/media) o <strong>15–25 minuti</strong> (pelle olivastra/scura) su braccia e gambe senza crema solare, fermandoti SEMPRE molto prima di qualsiasi rossore (zero eritema!), poi metti SPF 30–50+ o maglietta/ombra.
+                  </li>
+                  <li>
+                    <strong className="text-cyan-300">Il Buco Invernale (Ottobre – Marzo in Italia):</strong> in inverno i raggi del sole arrivano troppo inclinati e l&apos;atmosfera assorbe quasi tutti gli UVB: <strong>anche stando fuori 2 ore al freddo d&apos;inverno non fabbrichi Vitamina D</strong>. In quei mesi contano le scorte estive + pesce grasso (salmone, sgombro, sardine) + tuorlo d&apos;uovo + eventuale integrazione mirata.
+                  </li>
+                  <li>
+                    <strong className="text-emerald-300">Cofattori Obbligatori &amp; Controllo Annuale Col Diabetologo:</strong> per far funzionare la Vitamina D servono <strong>Magnesio</strong> (semi di zucca, mandorle, verdure verdi — senza magnesio la Vitamina D resta bloccata in forma inattiva!) e <strong>Vitamina K2</strong> (tuorli, formaggi stagionati — per mandare il calcio nelle ossa). Inserisci sempre il dosaggio ematico <strong className="text-white">25-OH-Vitamina D</strong> nelle analisi annuali col diabetologo: mantenere livelli ottimali (<strong className="tabular-nums">30–50 ng/mL</strong>) protegge ossa, immunità autoimmune e sensibilità insulinica senza mai rischiare eccessi da fai-da-te.
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Quick Point-to-Point Footer Navigation when viewing a single section */}
+        {activeTab !== 'tutte' && (
+          <div className="pt-2 flex items-center justify-between gap-2 border-t border-white/10">
+            <button
+              type="button"
+              onClick={() => handleSelectTab('tutte')}
+              className="py-2 px-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-300 hover:text-white transition-colors cursor-pointer whitespace-nowrap"
+            >
+              Vedi Tutte le 7 Sezioni
+            </button>
+            {nextTab && (
+              <button
+                type="button"
+                onClick={() => handleSelectTab(nextTab.id)}
+                className="py-2 px-3.5 rounded-xl bg-lime-500/20 hover:bg-lime-500/30 border border-lime-400/40 text-xs font-bold text-lime-200 transition-colors cursor-pointer flex items-center gap-1 whitespace-nowrap"
+              >
+                <span>Prossima: {nextTab.label}</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
         )}
       </div>

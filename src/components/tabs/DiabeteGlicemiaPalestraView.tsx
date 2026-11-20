@@ -37,6 +37,10 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
     | 'guida_iperglicemia'
     | 'variabilita_glicemica'
     | 'onda_lunga'
+    | 'frullato_bolo'
+    | 'mattina_digiuno'
+    | 'proteine_finestra'
+    | 'dati_reali_19nov'
     | 'calcolo_insulina'
     | 'calcoli_importanti'
     | 'palestra'
@@ -190,6 +194,62 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           >
             <Clock className="w-3 h-3" />
             <span>{activeTab === 'onda_lunga' ? 'Chiudi' : 'Nota 7: Onda Lunga 3h'}</span>
+          </button>
+
+          {/* Tasto Rapido Nota 8 */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('frullato_bolo', true)}
+            className={`flex items-center space-x-1 py-1.5 px-2 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'frullato_bolo'
+                ? 'bg-gradient-to-r from-sky-400 to-cyan-400 text-black border-sky-300 shadow-neon'
+                : 'bg-sky-500/15 hover:bg-sky-500/25 text-sky-300 border-sky-500/30'
+            }`}
+          >
+            <Coffee className="w-3 h-3" />
+            <span>{activeTab === 'frullato_bolo' ? 'Chiudi' : 'Nota 8: Frullato & 7,5U'}</span>
+          </button>
+
+          {/* Tasto Rapido Nota 9 */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('mattina_digiuno', true)}
+            className={`flex items-center space-x-1 py-1.5 px-2 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'mattina_digiuno'
+                ? 'bg-gradient-to-r from-lime-400 to-emerald-400 text-black border-lime-300 shadow-neon'
+                : 'bg-lime-500/15 hover:bg-lime-500/25 text-lime-300 border-lime-500/30'
+            }`}
+          >
+            <Sun className="w-3 h-3" />
+            <span>{activeTab === 'mattina_digiuno' ? 'Chiudi' : 'Nota 9: Digiuno ~120'}</span>
+          </button>
+
+          {/* Tasto Rapido Nota 10 */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('proteine_finestra', true)}
+            className={`flex items-center space-x-1 py-1.5 px-2 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'proteine_finestra'
+                ? 'bg-gradient-to-r from-indigo-400 to-purple-400 text-black border-indigo-300 shadow-neon'
+                : 'bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border-indigo-500/30'
+            }`}
+          >
+            <Flame className="w-3 h-3" />
+            <span>{activeTab === 'proteine_finestra' ? 'Chiudi' : 'Nota 10: Proteine & Finestra'}</span>
+          </button>
+
+          {/* Tasto Rapido Nota 11 */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('dati_reali_19nov', true)}
+            className={`flex items-center space-x-1 py-1.5 px-2 rounded-xl text-[11px] font-black uppercase tracking-wider border transition-all active:scale-95 cursor-pointer shrink-0 ${
+              activeTab === 'dati_reali_19nov'
+                ? 'bg-gradient-to-r from-rose-400 to-amber-300 text-black border-rose-300 shadow-neon'
+                : 'bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 border-rose-400/50'
+            }`}
+          >
+            <AlertTriangle className="w-3 h-3" />
+            <span>{activeTab === 'dati_reali_19nov' ? 'Chiudi' : 'Nota 11: Dati 19/11 (Stacking)'}</span>
           </button>
         </div>
       </div>
@@ -515,6 +575,85 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
               {activeTab === 'onda_lunga' ? <X className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
             </div>
           </button>
+
+          {/* Griglia Note 8, 9, 10, 11 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+            <button
+              type="button"
+              onClick={() => handleSelectTab('frullato_bolo', true)}
+              className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+                activeTab === 'frullato_bolo'
+                  ? 'bg-gradient-to-r from-sky-950/90 to-black/90 border-sky-400 shadow-neon'
+                  : 'bg-gradient-to-r from-sky-950/40 to-black/70 border-sky-500/40 hover:border-sky-400'
+              }`}
+            >
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-sky-400 block">
+                  {activeTab === 'frullato_bolo' ? '✓ Attiva' : 'Nota 8 · 40–41g CHO'}
+                </span>
+                <h4 className="text-xs font-black text-white">Frullato &amp; Bolo 7,5 U</h4>
+                <p className="text-[10px] text-gray-400">I:C mattutino &amp; curve</p>
+              </div>
+              <ChevronRight className="w-4 h-4 text-sky-300 shrink-0" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleSelectTab('mattina_digiuno', true)}
+              className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+                activeTab === 'mattina_digiuno'
+                  ? 'bg-gradient-to-r from-lime-950/90 to-black/90 border-lime-400 shadow-neon'
+                  : 'bg-gradient-to-r from-lime-950/40 to-black/70 border-lime-500/40 hover:border-lime-400'
+              }`}
+            >
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-lime-400 block">
+                  {activeTab === 'mattina_digiuno' ? '✓ Attiva' : 'Nota 9 · ~120 mg/dL'}
+                </span>
+                <h4 className="text-xs font-black text-white">Mattina a Digiuno</h4>
+                <p className="text-[10px] text-gray-400">Dawn effect &amp; grassi</p>
+              </div>
+              <ChevronRight className="w-4 h-4 text-lime-300 shrink-0" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleSelectTab('proteine_finestra', true)}
+              className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+                activeTab === 'proteine_finestra'
+                  ? 'bg-gradient-to-r from-indigo-950/90 to-black/90 border-indigo-400 shadow-neon'
+                  : 'bg-gradient-to-r from-indigo-950/40 to-black/70 border-indigo-500/40 hover:border-indigo-400'
+              }`}
+            >
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-indigo-400 block">
+                  {activeTab === 'proteine_finestra' ? '✓ Attiva' : 'Nota 10 · Mer/Gio/Ven'}
+                </span>
+                <h4 className="text-xs font-black text-white">Proteine &amp; Finestra</h4>
+                <p className="text-[10px] text-gray-400">Timing, MPS 48h &amp; mTOR</p>
+              </div>
+              <ChevronRight className="w-4 h-4 text-indigo-300 shrink-0" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleSelectTab('dati_reali_19nov', true)}
+              className={`w-full p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between group shadow-sm active:scale-[0.99] text-left ${
+                activeTab === 'dati_reali_19nov'
+                  ? 'bg-gradient-to-r from-rose-950/90 to-amber-950/70 border-rose-400 shadow-neon'
+                  : 'bg-gradient-to-r from-rose-950/40 to-amber-950/30 border-rose-400/50 hover:border-rose-300'
+              }`}
+            >
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-rose-300 block">
+                  {activeTab === 'dati_reali_19nov' ? '✓ Attiva' : 'Nota 11 · 19 Nov'}
+                </span>
+                <h4 className="text-xs font-black text-white">Dati Reali &amp; Stacking</h4>
+                <p className="text-[10px] text-gray-400">6U+3U &amp; Mensa 16,5U</p>
+              </div>
+              <ChevronRight className="w-4 h-4 text-rose-300 shrink-0" />
+            </button>
+          </div>
         </div>
 
         {/* Tab Filters */}
@@ -640,6 +779,62 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
           >
             <Clock className="w-3.5 h-3.5 text-orange-400" />
             <span>Nota 7: Onda Lunga (3 Ore)</span>
+          </button>
+
+          {/* TAB NOTA 8 */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('frullato_bolo', true)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'frullato_bolo'
+                ? 'bg-gradient-to-r from-sky-400 to-cyan-400 text-black shadow-neon font-black ring-2 ring-sky-300'
+                : 'bg-sky-500/20 text-sky-300 hover:text-white border border-sky-500/40'
+            }`}
+          >
+            <Coffee className="w-3.5 h-3.5 text-sky-400" />
+            <span>Nota 8: Frullato &amp; 7,5 U</span>
+          </button>
+
+          {/* TAB NOTA 9 */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('mattina_digiuno', true)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'mattina_digiuno'
+                ? 'bg-gradient-to-r from-lime-400 to-emerald-400 text-black shadow-neon font-black ring-2 ring-lime-300'
+                : 'bg-lime-500/20 text-lime-300 hover:text-white border border-lime-500/40'
+            }`}
+          >
+            <Sun className="w-3.5 h-3.5 text-lime-400" />
+            <span>Nota 9: Mattina Senza Colazione</span>
+          </button>
+
+          {/* TAB NOTA 10 */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('proteine_finestra', true)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'proteine_finestra'
+                ? 'bg-gradient-to-r from-indigo-400 to-purple-400 text-black shadow-neon font-black ring-2 ring-indigo-300'
+                : 'bg-indigo-500/20 text-indigo-300 hover:text-white border border-indigo-500/40'
+            }`}
+          >
+            <Flame className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Nota 10: Proteine &amp; Finestra</span>
+          </button>
+
+          {/* TAB NOTA 11 */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('dati_reali_19nov', true)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'dati_reali_19nov'
+                ? 'bg-gradient-to-r from-rose-400 to-amber-300 text-black shadow-neon font-black ring-2 ring-rose-300'
+                : 'bg-rose-500/20 text-rose-200 hover:text-white border border-rose-400/40'
+            }`}
+          >
+            <AlertTriangle className="w-3.5 h-3.5 text-rose-300" />
+            <span>Nota 11: Dati 19/11 &amp; Stacking</span>
           </button>
 
           <button
@@ -2053,6 +2248,417 @@ export const DiabeteGlicemiaPalestraView: React.FC<DiabeteGlicemiaPalestraViewPr
                 </button>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* OTTAVA NOTA: FRULLATO MATTUTINO (40-41g CHO) & ANALISI 7,5 U  */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutta' || activeTab === 'frullato_bolo') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                <Coffee className="w-4 h-4 text-sky-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-sky-400">
+                  Nota 8 • Colazione Liquida &amp; Farmacocinetica Bolus
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  🥤 Frullato Mattutino (40–41g CHO), Rapporto I:C &amp; Analisi 7,5 U
+                </h2>
+              </div>
+            </div>
+            {activeTab === 'frullato_bolo' && (
+              <button
+                type="button"
+                onClick={() => setActiveTab('tutta')}
+                className="flex items-center space-x-1 py-1 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all active:scale-95 cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Chiudi</span>
+              </button>
+            )}
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-sky-400/50 space-y-4 bg-gradient-to-br from-sky-950/30 via-black/85 to-cyan-950/20">
+            {/* 1. Conteggio Carboidrati */}
+            <div className="p-4 rounded-2xl bg-black/70 border border-sky-500/30 space-y-2 text-xs">
+              <strong className="text-sky-300 uppercase tracking-wider text-[11px] block">
+                1. Composizione Reale del Frullato (~40–41 g Carboidrati)
+              </strong>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+                <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
+                  <strong className="text-white block">Latte Parz. Scremato (200–250 ml)</strong>
+                  <span className="text-sky-300 font-bold">~10–12 g CHO</span> (lattosio + proteine/grassi moderati)
+                </div>
+                <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
+                  <strong className="text-white block">1 Banana Media Matura</strong>
+                  <span className="text-amber-300 font-bold">~25–28 g CHO</span> (frullata = assorbimento rapido!)
+                </div>
+                <div className="p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
+                  <strong className="text-white block">Proteine Whey (1 misurino)</strong>
+                  <span className="text-emerald-300 font-bold">~1–2 g CHO</span> (ma lieve risposta insulinotropica/coda proteica)
+                </div>
+              </div>
+              <p className="text-[11px] text-gray-300 pt-1">
+                <strong>Nota fisica chiave:</strong> frullare la banana rompe meccanicamente le fibre vegetali e trasforma il pasto in liquido, velocizzando lo svuotamento gastrico rispetto a masticarla intera.
+              </p>
+            </div>
+
+            {/* 2. Rapporto I:C Teorico vs Ipotetico Bolo 7,5 U */}
+            <div className="p-4 rounded-2xl bg-black/70 border border-amber-500/35 space-y-2.5 text-xs">
+              <strong className="text-amber-300 uppercase tracking-wider text-[11px] block">
+                2. Rapporto I:C Teorico (1:11–12) vs Resistenza Mattutina vs Ipotetiche 7,5 U
+              </strong>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[11px]">
+                <div className="p-3 rounded-xl bg-cyan-950/30 border border-cyan-500/30 space-y-1">
+                  <strong className="text-cyan-300 block">Calcolo Teorico (Regola 500 su 40–45 U/die)</strong>
+                  <p className="text-gray-200 leading-relaxed">
+                    Con I:C teorico <strong>~1:11 / 1:12</strong>:<br />
+                    <span className="font-mono text-white font-bold">40 g ÷ 11,5 ≈ 3,5 U</span>.<br />
+                    Tuttavia al mattino (cortisolo + GH dell&apos;alba) molti ragazzi hanno temporanea insulino-resistenza mattutina e richiedono un rapporto più forte (es. <span className="font-mono text-cyan-200">1:7</span> o <span className="font-mono text-cyan-200">1:8</span> → ~5–6 U), sempre da validare col diabetologo.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-rose-950/30 border border-rose-500/35 space-y-1">
+                  <strong className="text-rose-300 block">Analisi di Un&apos;Ipotetica Dose da 7,5 U</strong>
+                  <p className="text-gray-200 leading-relaxed">
+                    <span className="font-mono text-white font-bold">40 g ÷ 7,5 U ≈ 5,3 g/U (rapporto ~1:5,3)</span>.<br />
+                    È oltre il <strong>doppio del teorico</strong>! Salvo altissima insulino-resistenza mattutina documentata dal medico, 7,5 U su 40 g espongono a rischio reale di calo brusco entro 60–120 min (specialmente camminando verso scuola!).
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Farmacocinetica 0-20 / 30-90 / 2-4h */}
+            <div className="p-4 rounded-2xl bg-black/70 border border-purple-500/30 space-y-2.5 text-xs">
+              <strong className="text-purple-300 uppercase tracking-wider text-[11px] block">
+                3. Farmacocinetica Ora per Ora (Liquidi Frullati vs Insulina Rapida + Control-IQ)
+              </strong>
+              <div className="space-y-2 text-[11px] text-gray-200">
+                <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                  <strong className="text-amber-300 block">0–20 minuti (Latenza Insulina vs Zucchero Liquido):</strong>
+                  Lo zucchero liquido del frullato inizia a salire quasi subito se non fai pre-bolo (o se il tempo di attesa è 0 min), mentre l&apos;analogo rapido inizia appena a entrare nel sottocute.
+                </div>
+                <div className="p-2.5 rounded-xl bg-white/[0.03] border border-rose-500/25">
+                  <strong className="text-rose-300 block">30–90 minuti (Scontro di Picco + Movimento GLUT4):</strong>
+                  Qui esplode il picco d&apos;azione dell&apos;insulina rapida mentre cammini verso scuola/fermata (muscoli attivi che tirano glucosio!). Se il bolo era troppo grande (es. 7,5 U ipotetiche), qui può avvenire un crollo rapido verso l&apos;ipoglicemia.
+                </div>
+                <div className="p-2.5 rounded-xl bg-white/[0.03] border border-cyan-500/25">
+                  <strong className="text-cyan-300 block">2–4 ore (Coda IOB &amp; Intervento Control-IQ):</strong>
+                  Il microinfusore registra insulina attiva residua (IOB): se vede discesa rapida sospende la basale (rischiando poi un rimbalzo a metà mattina), mentre se invece resti alto per rapporto insufficiente può erogare micro-boli automatici di correzione.
+                </div>
+              </div>
+            </div>
+
+            {/* 4. Riepilogo per il Diabetologo */}
+            <div className="p-3.5 rounded-2xl bg-sky-950/35 border border-sky-400/40 text-[11px] text-gray-200 space-y-1">
+              <strong className="text-sky-300 uppercase tracking-wider block text-[10px]">
+                📋 Riepilogo Pronto per il Diabetologo (Colazione con Frullato)
+              </strong>
+              <p className="italic">
+                &quot;La mia colazione fissa con frullato (latte parzialmente scremato + banana + whey) ha circa 40–41 g di carboidrati in forma liquida. Con la mia media di 40–45 U/die il teorico sarebbe ~1:11–12 (~3,5 U), ma vista la resistenza mattutina qual è il rapporto I:C mattutino corretto da impostare sul microinfusore (es. 1:7 / 1:8 / 1:9) e quanti minuti prima dovrei fare il bolo?&quot;
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* NONA NOTA: MATTINA SENZA COLAZIONE (~120 mg/dL, DAWN EFFECT)  */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutta' || activeTab === 'mattina_digiuno') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-lime-500/20 text-lime-300 border border-lime-500/30">
+                <Sun className="w-4 h-4 text-lime-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-lime-400">
+                  Nota 9 • Uscire a Digiuno, Dawn Effect &amp; Grasso Corporeo
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  ☀️ Mattina Senza Colazione (~120 mg/dL, Alba &amp; Bilancio Grasso)
+                </h2>
+              </div>
+            </div>
+            {activeTab === 'mattina_digiuno' && (
+              <button
+                type="button"
+                onClick={() => setActiveTab('tutta')}
+                className="flex items-center space-x-1 py-1 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all active:scale-95 cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Chiudi</span>
+              </button>
+            )}
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-lime-400/50 space-y-4 bg-gradient-to-br from-lime-950/25 via-black/85 to-emerald-950/20 text-xs text-gray-200">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+              <div className="p-3.5 rounded-2xl bg-black/65 border border-lime-500/30 space-y-1.5">
+                <strong className="text-lime-300 block">1. Perché al mattino senza mangiare resta stabile (~120 mg/dL)?</strong>
+                <p className="text-gray-300 leading-relaxed">
+                  Al risveglio parte l&apos;<strong>Effetto Alba (Dawn Effect)</strong>: cortisolo, GH e catecolamine ordinano al fegato di rilasciare glucosio (<em>glicogenolisi + gluconeogenesi</em>). Se la tua basale / Control-IQ è ben tarata e fai due passi verso scuola (lieve consumo muscolare GLUT4), l&apos;insulina basale bilancia esattamente l&apos;uscita epatica mantenendo la curva piatta intorno a <strong className="text-white">~120 mg/dL</strong> (diverso dal caso patologico in cui la basale è scarsa e schizza a 180!).
+                </p>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-black/65 border border-emerald-500/30 space-y-1.5">
+                <strong className="text-emerald-300 block">2. Saltare la colazione fa dimagrire di più?</strong>
+                <p className="text-gray-300 leading-relaxed">
+                  A digiuno l&apos;ossidazione dei grassi momentanea è un po&apos; più alta perché l&apos;insulina è solo basale. Tuttavia <strong>la perdita reale di grasso corporeo dipende dal bilancio calorico totale delle 24 ore</strong>: se salti la colazione ma poi recuperi le stesse calorie a merenda/pranzo/cena, perdi esattamente lo stesso grasso; aiuta a dimagrire solo se rende più facile mantenere il deficit calorico senza fame nervosa né sbalzi glicemici.
+                </p>
+              </div>
+            </div>
+            <div className="p-3 rounded-2xl bg-black/60 border border-white/10 text-[11px] text-gray-300">
+              <strong className="text-amber-300">Regola pratica scuola:</strong> se esci senza colazione intorno a ~120 mg/dL, tieni comunque 1–2 bustine di zucchero nello zaino (in caso di camminata veloce o calo imprevisto) e ricorda che il primo spuntino di metà mattina troverà una leggera resistenza residua del cortisolo mattutino (e se non hai avuto ipoglicemie notturne Somogyi!).
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* DECIMA NOTA: TIMING FRULLATO, DESTINO PROTEINE & FINESTRA     */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutta' || activeTab === 'proteine_finestra') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                <Flame className="w-4 h-4 text-indigo-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-indigo-400">
+                  Nota 10 • Biochimica Proteica, Timing Mer/Gio/Ven &amp; Verità Finestra Anabolica
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  🧬 Timing Frullato (Mer/Gio/Ven), Destino delle Proteine &amp; Finestra Anabolica
+                </h2>
+              </div>
+            </div>
+            {activeTab === 'proteine_finestra' && (
+              <button
+                type="button"
+                onClick={() => setActiveTab('tutta')}
+                className="flex items-center space-x-1 py-1 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all active:scale-95 cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Chiudi</span>
+              </button>
+            )}
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-indigo-400/50 space-y-4 bg-gradient-to-br from-indigo-950/30 via-black/85 to-purple-950/20 text-xs text-gray-200">
+            {/* 1. Timing Frullato Mer/Gio/Ven */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-indigo-500/30 space-y-2">
+              <strong className="text-indigo-300 uppercase tracking-wider text-[11px] block">
+                1. Frullato Mattutino Fisso vs Spostato Post-Workout (Mercoledì, Giovedì, Venerdì)
+              </strong>
+              <p className="text-[11px] text-gray-300 leading-relaxed">
+                Spostare lo stesso frullato (latte + banana + whey) dalla mattina a subito dopo l&apos;allenamento <strong>NON cambia di per sé il dimagrimento né la crescita muscolare</strong> a parità di calorie e proteine totali nelle 24h. Ciò che cambia davvero è la <strong className="text-white">gestione glicemica</strong>:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+                <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                  <strong className="text-cyan-300 block">Se lo prendi fisso al Mattino:</strong>
+                  Comodità di routine, spegne eventuale stimolo dell&apos;alba, ma trovi la resistenza mattutina al bolo e serve precisione sull&apos;I:C per i 40 g CHO liquidi.
+                </div>
+                <div className="p-2.5 rounded-xl bg-emerald-950/25 border border-emerald-500/30">
+                  <strong className="text-emerald-300 block">Se lo prendi Post-Palestra (Mer/Gio/Ven):</strong>
+                  I muscoli hanno appena aperto i canali <strong>GLUT4</strong>: i ~40 g di carboidrati vanno diritti a ricaricare glicogeno muscolare con bisogno di insulina ridotto (meno rischi picchi mattutini, attenzione solo a calibrare il bolo ridotto col medico per non fare ipoglicemia).
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Destino delle Proteine (Smentita al prof) */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-purple-500/30 space-y-2">
+              <strong className="text-purple-300 uppercase tracking-wider text-[11px] block">
+                2. Cosa Succede Davvero Alle Proteine Nel Corpo (Mito Smentito!)
+              </strong>
+              <p className="text-[11px] text-gray-300 leading-relaxed">
+                L&apos;idea (a volte ripetuta in palestra o a scuola) che le proteine bevute la mattina &quot;aspettino nel sangue fino alle 18:00&quot; o che vadano &quot;dirette dentro il bicipite come mattoni interi&quot; è <strong>biologicamente falsa</strong>:
+              </p>
+              <ol className="space-y-1.5 list-decimal pl-5 text-[11px] text-gray-200">
+                <li>
+                  <strong>Digestione e Vena Porta:</strong> nello stomaco (HCl + pepsina) e nell&apos;intestino tenue (proteasi) ogni proteina viene smontata in <strong>singoli aminoacidi e di/tri-peptidi</strong> che entrano nella vena porta epatica e poi nel sangue.
+                </li>
+                <li>
+                  <strong>Pool Sistemico &amp; Priorità Vitali:</strong> gli aminoacidi entrano in un &quot;pool circolante&quot; comune. Il corpo dà priorità a intestino, sistema immunitario, enzimi, collagene, neurotrasmettitori e ormoni; il resto alimenta la sintesi muscolare o viene ossidato per energia.
+                </li>
+                <li>
+                  <strong>Sintesi Proteica Muscolare (MPS) Estesa 24–48 Ore:</strong> dopo un allenamento con i pesi, il muscolo mantiene la sintesi proteica elevata per <strong className="text-white">24–48 ore</strong>! Ecco perché contano i grammi totali di proteine distribuiti in tutta la giornata (~1,6–2,0 g/kg = ~115–135 g/die su 75 kg), non solo un singolo shake.
+                </li>
+              </ol>
+            </div>
+
+            {/* 3. Verità sulla Finestra Anabolica */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-indigo-950/35 to-cyan-950/25 border border-indigo-400/40 space-y-2 text-[11px]">
+              <strong className="text-cyan-300 uppercase tracking-wider block">
+                3. La Verità Scientifica Sulla &quot;Finestra Anabolica&quot; (mTOR, MPS &amp; GLUT4)
+              </strong>
+              <p className="text-gray-200 leading-relaxed">
+                La famosa finestra obbligatoria di 30–60 minuti post-palestra nacque da vecchi studi svolti su persone allenate <strong>completamente a digiuno dalla notte prima</strong>. Se invece hai mangiato pranzo o uno spuntino proteico nelle 3–5 ore precedenti, hai già aminoacidi in circolo quando finisci l&apos;allenamento: la reale finestra di massima efficienza di mTOR e MPS copre comodamente <strong>4–6 ore attorno alla seduta</strong> (e si protrae per 24–48 ore)!
+              </p>
+              <div className="p-2.5 rounded-xl bg-black/60 border border-white/10 text-gray-200">
+                <strong className="text-white block mb-1">Gerarchia Reale delle Priorità (Dal Più Importante al Meno):</strong>
+                1) <strong>Proteine totali delle 24h</strong> + 2) <strong>Bilancio calorico</strong> + 3) <strong>Progressione &amp; tecnica in palestra + Sonno</strong> + 4) <strong>Sicurezza CGM/Microinfusore</strong>. Il minuto esatto in cui bevi lo shake vale meno del 5% rispetto a questi 4 pilastri!
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* NOTA 11: ANALISI DATI REALI 19/11 (FRULLATO 6U+3U & MENSA 16,5U) */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutta' || activeTab === 'dati_reali_19nov') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                <AlertTriangle className="w-4 h-4 text-rose-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-rose-400">
+                  Nota 11 • Analisi Cronologica Reale (19/11)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Boli Manuali Reali: Frullato (6U + 3U) &amp; Mensa (9U + 4U + 3,5U / Insulin Stacking)
+                </h2>
+              </div>
+            </div>
+            {activeTab === 'dati_reali_19nov' && (
+              <button
+                type="button"
+                onClick={() => setActiveTab('tutta')}
+                className="flex items-center space-x-1 py-1.5 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-[11px] font-bold cursor-pointer"
+              >
+                <X className="w-3.5 h-3.5" />
+                <span>Chiudi</span>
+              </button>
+            )}
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-3xl glass-card border-2 border-rose-400/50 space-y-4 bg-gradient-to-br from-rose-950/35 via-black/85 to-amber-950/20 text-xs text-gray-200">
+            {/* 0. Chiarimento Numeri Display vs Boli Manuali */}
+            <div className="p-3.5 rounded-2xl bg-cyan-950/30 border border-cyan-500/35 space-y-1.5 text-[11px]">
+              <strong className="text-cyan-300 uppercase tracking-wider block">
+                Chiarimento Fondamentale: Boli Manuali vs Somme Control-IQ (7,17 U / 4,75 U)
+              </strong>
+              <p className="text-gray-200 leading-relaxed">
+                I numeri frazionari come <strong>7,17 U</strong> o <strong>4,75 U</strong> visibili nel report del microinfusore sommano i micro-boli basali e le correzioni automatiche erogati dall&apos;algoritmo <strong>Control-IQ</strong>. Analizzando invece <strong className="text-white">esclusivamente le tue unità manuali reali</strong> comunicate ora per ora, emergono con precisione chirurgica il &quot;quando&quot; e il &quot;quanto&quot; sia sul frullato sia sulla mensa.
+              </p>
+            </div>
+
+            {/* 1. ANALISI MATTINA: 6U + 3U */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-amber-500/35 space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <strong className="text-amber-300 uppercase tracking-wider text-[11px]">
+                  1. Il Frullato (Mattina): 6 U alle 07:51 e Correzione 3 U alle 09:25 → 152 mg/dL
+                </strong>
+                <span className="text-[10px] font-black px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  9 U Totali (07:51 → 12:50)
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+                <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                  <strong className="text-white block">07:51 · Bolo Iniziale 6 U</strong>
+                  Hai fatto <strong className="text-amber-300">6 U</strong> manuali per il frullato (latte, banana, proteine: ~<strong>40–41 g</strong> di carboidrati).
+                </div>
+                <div className="p-2.5 rounded-xl bg-rose-950/25 border border-rose-500/30">
+                  <strong className="text-rose-300 block">09:25 · Picco 281 mg/dL (+3 U)</strong>
+                  La curva era salita a <strong>281 mg/dL</strong> e hai erogato <strong className="text-rose-200">3 U</strong> di correzione manuale.
+                </div>
+                <div className="p-2.5 rounded-xl bg-emerald-950/25 border border-emerald-500/30">
+                  <strong className="text-emerald-300 block">12:50 · Arrivo a 152 mg/dL</strong>
+                  Con <strong>9 U totali</strong> in tutta la mattina sei arrivato a pranzo a <strong className="text-white">152 mg/dL</strong> puliti.
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-amber-950/20 border border-amber-500/25 space-y-2 text-[11px]">
+                <strong className="text-amber-300 block uppercase">Analisi Scientifica del &quot;Quando&quot; e del &quot;Quanto&quot;:</strong>
+                <ul className="space-y-1.5 list-disc pl-5 text-gray-200">
+                  <li>
+                    <strong>Il Momento del Bolo (Gara di Velocità — il &quot;Quando&quot;):</strong> frullando banana e latte rompi meccanicamente le fibre vegetali: gli zuccheri semplici (<em>glucosio, fruttosio e lattosio</em>) in forma liquida superano il piloro ed entrano nel sangue in <strong>20–30 minuti</strong>. L&apos;insulina rapida sottocutanea invece impiega <strong>15–20 minuti</strong> solo per iniziare ad assorbirsi dai capillari e <strong>oltre 1 ora</strong> per toccare il picco massimo. Se fai le 6 U esattamente mentre bevi (07:51), lo zucchero vince la gara e schizzi a 281 alle 09:25. Chiedi alla dottoressa se puoi anticipare con un <strong>pre-bolo di 10–15 minuti</strong> prima di bere (sempre verificando la glicemia di partenza).
+                  </li>
+                  <li>
+                    <strong>Le Unità (Resistenza Mattutina — il &quot;Quanto&quot;):</strong> hai usato <strong>6 U</strong> per ~40 g CHO (rapporto reale iniziale di <strong>~1:6,5 / 1:7</strong>, già molto più spinto del tuo 1:11–1:12 teorico da 3,5 U!), più altre <strong>3 U</strong> alle 09:25 = <strong>9 U complessive</strong> per chiudere a 152 alle 12:50. Fisiologicamente accade per il picco circadiano di <strong>cortisolo e GH</strong> nella fascia <strong>07:00–12:00</strong> che riduce temporaneamente la sensibilità insulinica muscolare: è un dato d&apos;oro per farti calibrare dal medico l&apos;I:C dedicato alla mattina.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* 2. ANALISI MENSA & POMERIGGIO: 9U + 4U + 3,5U = 16,5 U (STACKING!) */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-rose-500/40 space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <strong className="text-rose-300 uppercase tracking-wider text-[11px]">
+                  2. La Mensa (Pranzo): 9 U (12:50) + 4 U (14:03) + 3,5 U (14:39) = 16,5 U (Stacking!)
+                </strong>
+                <span className="text-[10px] font-black px-2 py-0.5 rounded bg-rose-500/25 text-rose-200 border border-rose-400/40">
+                  36 Minuti tra Correzioni
+                </span>
+              </div>
+
+              <p className="text-[11px] text-gray-300 leading-relaxed">
+                Partenza alle 12:50 a <strong>152 mg/dL</strong> con un pranzo composto da carboidrati rapidi/medi + grassi lenti (<strong>pasta al pesce, due bruschette piccole e piatto impanato</strong>):
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+                <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                  <strong className="text-cyan-300 block">12:50 · 152 mg/dL (+9 U)</strong>
+                  Erogate <strong className="text-white">9 U</strong> per pasta al pesce, 2 bruschette piccole e piatto impanato.
+                </div>
+                <div className="p-2.5 rounded-xl bg-orange-950/25 border border-orange-500/35">
+                  <strong className="text-orange-300 block">14:03 · 252 mg/dL (+4 U)</strong>
+                  Dopo 1h13 aggiunte <strong className="text-white">4 U</strong> mentre le 9 U delle 12:50 erano ancora in pieno effetto.
+                </div>
+                <div className="p-2.5 rounded-xl bg-rose-950/35 border border-rose-500/45">
+                  <strong className="text-rose-300 block">14:39 · 321 mg/dL (+3,5 U)</strong>
+                  Appena <strong>36 minuti dopo</strong> hai fatto altre <strong className="text-white">3,5 U</strong> (totale <strong className="text-rose-200">16,5 U in &lt;2 ore</strong>)!
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-rose-950/25 border border-rose-500/35 space-y-2 text-[11px]">
+                <strong className="text-rose-300 block uppercase">Fisica dell&apos;Insulin Stacking (36 Minuti) &amp; Crollo in Palestra (355 → 80–90):</strong>
+                <ul className="space-y-1.5 list-disc pl-5 text-gray-200">
+                  <li>
+                    <strong>Il Nodo Critico dei 36 Minuti (14:03 → 14:39):</strong> l&apos;insulina rapida sottocutanea rimane biologicamente attiva nel corpo per <strong>3,5–4 ore reali</strong> (<em>IOB — Insulin On Board</em>). A distanza di soli <strong>36 minuti</strong> dalle 14:03, le 4 U avevano appena iniziato ad entrare in circolo (~10–15% dell&apos;assorbimento) e non avevano ancora potuto frenare la salita da pasta, pane e panatura.
+                  </li>
+                  <li>
+                    <strong>Digestione Doppia (Onda Lunga della Panatura):</strong> la pasta e il pane delle bruschette spingono subito in alto la glicemia; contemporaneamente i grassi dell&apos;impanato stimolano la <em>colecistochinina (CCK)</em> rallentando lo svuotamento gastrico e prolungando il rilascio di glucosio fino alle 15:00–16:00 (picco a <strong>355 mg/dL</strong>).
+                  </li>
+                  <li>
+                    <strong>L&apos;Effetto Valanga in Palestra (16,5 U Sovrapposte + GLUT4):</strong> mettendo in corpo <strong>9 + 4 + 3,5 = 16,5 U</strong> in meno di due ore, le tre curve d&apos;azione a campana si sono sommate raggiungendo tutte insieme la massima potenza proprio mentre andavi ad allenarti! In palestra la contrazione muscolare attiva l&apos;enzima <strong>AMPK</strong> aprendo i canali <strong>GLUT4 insulino-indipendenti</strong>: la spugna muscolare + l&apos;accumulo delle 16,5 U hanno buttato giù la curva da 355 fino a <strong>80–90 mg/dL</strong> in serata.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* 3. RIASSUNTO PRATICO PER LA DOTTORESSA */}
+            <div className="p-4 rounded-2xl bg-emerald-950/30 border border-emerald-500/40 space-y-2.5 text-[11px]">
+              <strong className="text-emerald-300 uppercase tracking-wider flex items-center gap-1.5">
+                <Stethoscope className="w-4 h-4 text-emerald-400 shrink-0" />
+                Riassunto Pratico dei Tuoi Numeri Da Portare Alla Dottoressa
+              </strong>
+              <div className="space-y-2 text-gray-200">
+                <div className="p-3 rounded-xl bg-black/60 border border-amber-500/30">
+                  <strong className="text-amber-300 block">1. Colazione (07:51) — Frullato (~40–41 g CHO):</strong>
+                  <p className="mt-0.5">
+                    <strong>6 U iniziali + 3 U alle 09:25 (su 281) = 9 U totali</strong> per arrivare a <strong>152</strong> alle 12:50. <br />
+                    <em className="text-cyan-200">Domanda chiave:</em> &quot;Devo anticipare i tempi del bolo di 10–15 minuti rispetto al frullato liquido o alzare il rapporto I:C del mattino (fascia 07:00–12:00) rispetto all&apos;1:11–1:12?&quot;
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-black/60 border border-rose-500/30">
+                  <strong className="text-rose-300 block">2. Pranzo Mensa (12:50) — Pasta al pesce + 2 bruschette + piatto impanato:</strong>
+                  <p className="mt-0.5">
+                    <strong>9 U iniziali (da 152) + 4 U alle 14:03 (a 252) + 3,5 U alle 14:39 (a 321) = 16,5 U in meno di 2 ore</strong> → picco 355 e crollo 80–90 verso la palestra. <br />
+                    <em className="text-cyan-200">Domanda chiave:</em> &quot;Quando in mensa c&apos;è un piatto impanato e parto da 9 U, quanto tempo minimo devo aspettare prima di una eventuale correzione per non fare stacking, e come posso impostare un bolo esteso per la panatura evitando di toccare 321–355 prima della palestra?&quot;
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}

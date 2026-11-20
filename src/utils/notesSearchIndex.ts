@@ -1,6 +1,9 @@
 export type NoteSectionViewId =
+  | 'bussola_mente'
+  | 'studia_oggi'
   | 'asimmetria'
   | 'asimmetria_masticazione'
+  | 'asimmetria_grasso_viso'
   | 'postura_occhi'
   | 'sonno_posizioni'
   | 'peli_incarniti'
@@ -38,6 +41,26 @@ export interface GroupedNoteSearchResult {
 
 export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
   // =========================================================================
+  // 0. LA MIA BUSSOLA & DA STUDIARE OGGI
+  // =========================================================================
+  {
+    id: 'bussola_mente_master',
+    viewId: 'bussola_mente',
+    sectionTitle: 'La Mia Bussola: Tranquillità & Versione Migliore',
+    sectionBadgeColor: 'emerald',
+    subTitle: 'Obiettivo Pace, Anti-Paranoie, Cortisolo & 6 Pilastri (Zero Fissa Sodio)',
+    text: 'Tranquillità pace interiore smarrito paranoie ansia versione migliore organizzazione asse HPA cortisolo aldosterone ritenzione idrica acne salicilico SPF acqua 2.5 3 litri senza fissazione sodio 10000 passi messy wavy dimagrire asimmetria.'
+  },
+  {
+    id: 'studia_oggi_19nov',
+    viewId: 'studia_oggi',
+    sectionTitle: 'Da Studiare Oggi (19 Nov)',
+    sectionBadgeColor: 'amber',
+    subTitle: 'Riepilogo Unico Modifiche e Aggiunte di Oggi (19 Novembre · 14 Schede)',
+    text: 'Da studiare oggi modifiche aggiunte ripasso 19 novembre bussola tranquillità asimmetria taglio corto 1600 kcal diabete stacking 6U 3U 9U 4U 3.5U flessioni pump 2 fasi ossa piezoelettricità sole vitamina D Henneman pochi kg leve lunghe momento torcente curl manubri cavi spalla alzata micromovimenti schiena AMPK mTOR camminata stesso giorno repeated bout effect crampi giorno 1 rate coding sussulti al limite cedimento terza serie lavoro manuale.'
+  },
+
+  // =========================================================================
   // 1. LA MIA ASIMMETRIA & ORTODONZIA
   // =========================================================================
   {
@@ -45,8 +68,16 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     viewId: 'asimmetria',
     sectionTitle: 'La mia asimmetria',
     sectionBadgeColor: 'cyan',
-    subTitle: 'Analisi Facciale, Test Masseteri & Strategia Invertita',
-    text: 'Analisi e piano integrato per la simmetria facciale strategia invertita test al tatto masseteri denti stretti lato destro forte lato sinistro fino debole masticazione 60% 65% a sinistra riposo a destra jawline simmetrica entro giugno percorso naturale 8-12 mesi foto viso attuale definito nota le differenze schema asse facciale deviazione mediana arcata destra espansa arcata sinistra compressa dimagrimento drenaggio sodio acqua.'
+    subTitle: 'Analisi Facciale, Test Masseteri, Grasso, Postura & 13 Foto Aggiornate',
+    text: 'Analisi e piano integrato per la simmetria facciale strategia invertita test al tatto masseteri denti stretti lato destro forte lato sinistro fino debole quale lato sviluppare vs definire molari leva corta ipertrofia tetto genetico ATM lipolisi compartimenti adiposi facciali guance pre-auricolare sottomentoniera postura cranio-cervicale chin tucks neck curls ritenzione idrica sodio potassio 3 fasi 13 foto aggiornamento.'
+  },
+  {
+    id: 'asimmetria_grasso_taglio',
+    viewId: 'asimmetria_grasso_viso',
+    sectionTitle: 'La mia asimmetria • Grasso & Taglio',
+    sectionBadgeColor: 'cyan',
+    subTitle: 'Pinch Test (1,75 m / 73 kg), Taglio Corto, Alfa-2/Beta-2 & Strategia "Faccia Fine" (Giugno)',
+    text: 'Test del pizzico pinch test grasso sottocutaneo acqua extracellulare glicogeno 3 grammi guancia bassa sottomento addome basso recettori adrenergici alfa 2 beta 2 cAMP HSL lipasi 1.75 m 73 kg taglio corto low fade illusione ottica visual framing Delboeuf cornice faccia fine 1600 kcal 115 120 g proteine mTORC1 TEF 10000 passi NEAT beta ossidazione zero cortisolo sleeper build giugno 16 anni elastina collagene GH IGF-1.'
   },
   {
     id: 'asimmetria_ortodonzia',
@@ -397,6 +428,42 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     subTitle: 'Perché la 2ª Serie è Più Leggera (PAP, Pump & Regola 3 Serie)',
     text: 'Seconda serie più leggera potenziamento post-attivazione PAP reclutamento neurale fibre rapide viscosità liquida pump vasodilatazione regola delle 3 serie efficienza.'
   },
+  {
+    id: 'palestra_flessioni_pump',
+    viewId: 'palestra_grasso',
+    sectionTitle: 'Palestra e organizzazione per perdere grasso',
+    sectionBadgeColor: 'orange',
+    subTabId: 'flessioni_riposo',
+    subTitle: '12# Info: Flessioni Giorni Off — Pump vs Ipertrofia, SNC & Protocollo 2 Fasi',
+    text: 'Flessioni piegamenti giorni off riposo richiamo sanguigno pump iperemia ossido nitrico vs ipertrofia miofibrillare mTORC1 MPS 48h sistema nervoso centrale SNC gomiti spalle tendini protocollo 2 fasi casa 3 5 ripetizioni 4 5 RIR scapole spinta palestra.'
+  },
+  {
+    id: 'palestra_henneman_leve',
+    viewId: 'palestra_grasso',
+    sectionTitle: 'Palestra e organizzazione per perdere grasso',
+    sectionBadgeColor: 'orange',
+    subTabId: 'henneman_leve_compensi',
+    subTitle: '13# Info: Principio di Henneman ("Pochi kg"), Curl Manubri vs Cavi & Leve Lunghe/Compensi',
+    text: 'Principio di Henneman size principle pochi kg peso massimo autoregolazione unità motorie alta soglia curl manubri curl cavi carrucola curva resistenza gravità eccentrica momento torcente forza braccio di leva arti braccia lunghe spalla di alzata elevazione scapolare trapezio micromovimenti schiena estensione lombare slancio inerziale volante tecnica.'
+  },
+  {
+    id: 'palestra_stesso_giorno',
+    viewId: 'palestra_grasso',
+    sectionTitle: 'Palestra e organizzazione per perdere grasso',
+    sectionBadgeColor: 'orange',
+    subTabId: 'pesi_camminata_giorno',
+    subTitle: '14# Info: Stesso Giorno Pesi + Camminata — AMPK vs mTOR, Timing & Limite Recupero',
+    text: 'Stesso giorno pesi e camminata concurrent training effetto interferenza AMPK mTORC1 zero blocco crescita fibre tipo I acidi grassi GLUT4 ritorno venoso pulizia articolare dopo i pesi prima riscaldamento 10 minuti mattina sera separati ricomposizione.'
+  },
+  {
+    id: 'palestra_rbe_terza_serie',
+    viewId: 'palestra_grasso',
+    sectionTitle: 'Palestra e organizzazione per perdere grasso',
+    sectionBadgeColor: 'orange',
+    subTabId: 'rbe_limite_terza_serie',
+    subTitle: '15# Info: Crampi Giorno 1 (RBE), Tecnica Filtro, Sussulti Rate Coding & Cedimento 3ª Serie',
+    text: 'Primo giorno esplosivo crampi contratture riflesse repeated bout effect RBE adattamento strutturale tecnica filtro tendini gomiti colonna sussulti di sforzo al limite rate coding frequenza motoneuroni ioni idrogeno H fosfato inorganico Pi calcio Ca2+ fatica centrale periferica cedimento solo terza serie prima seconda buffer 1 2 ripetizioni.'
+  },
 
   // =========================================================================
   // 8. COSE DA COMPRARE (I MIEI REGALI DI NATALE)
@@ -486,36 +553,108 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     subTitle: 'Allenamento Serale, Effetto Spugna & Notte / Colazione',
     text: 'Palestra glicogeno effetto spugna sensibilità insulinica 12-24 ore ipoglicemia notturna colazione succo protocollo.'
   },
+  {
+    id: 'diabete_frullato_bolo',
+    viewId: 'diabete_glicemia',
+    sectionTitle: 'Diabete, glicemia e palestra',
+    sectionBadgeColor: 'rose',
+    subTabId: 'frullato_bolo',
+    subTitle: 'Nota 8: Frullato Mattutino (40-41g CHO), I:C & Analisi Bolo 7,5 U',
+    text: 'Frullato mattutino latte parzialmente scremato banana whey 40 41 grammi carboidrati I:C teorico 1:11 1:12 3.5 U resistenza mattutina cortisolo 7.5 U 5.3 farmacocinetica latenza 0-20 min picco 30-90 min Control-IQ IOB diabetologo.'
+  },
+  {
+    id: 'diabete_mattina_digiuno',
+    viewId: 'diabete_glicemia',
+    sectionTitle: 'Diabete, glicemia e palestra',
+    sectionBadgeColor: 'rose',
+    subTabId: 'mattina_digiuno',
+    subTitle: 'Nota 9: Mattina Senza Colazione (~120 mg/dL, Dawn Effect) & Grasso',
+    text: 'Mattina senza colazione digiuno 120 mg/dL effetto alba dawn effect cortisolo GH glicogenolisi gluconeogenesi basale GLUT4 perdita grasso bilancio calorico 24h scuola bustine.'
+  },
+  {
+    id: 'diabete_proteine_finestra',
+    viewId: 'diabete_glicemia',
+    sectionTitle: 'Diabete, glicemia e palestra',
+    sectionBadgeColor: 'rose',
+    subTabId: 'proteine_finestra',
+    subTitle: 'Nota 10: Timing Frullato (Mer/Gio/Ven), Destino Proteine & Finestra Anabolica',
+    text: 'Timing frullato mercoledì giovedì venerdì post workout GLUT4 destino delle proteine smentita prof vena porta aminoacidi pool sistemico MPS sintesi proteica muscolare 24 48 ore finestra anabolica mTOR.'
+  },
+  {
+    id: 'diabete_dati_reali_19nov',
+    viewId: 'diabete_glicemia',
+    sectionTitle: 'Diabete, glicemia e palestra',
+    sectionBadgeColor: 'rose',
+    subTabId: 'dati_reali_19nov',
+    subTitle: 'Nota 11: Dati Reali 19/11 — Frullato (6U+3U) & Mensa (9U+4U+3,5U · 36 min Stacking)',
+    text: 'Dati reali 19 novembre boli manuali Control-IQ 7.17 4.75 07:51 6U frullato glucosio fruttosio lattosio 20-30 min 09:25 281 +3U 12:50 152 rapporto 1:6.5 1:7 1:11 1:12 07:00 12:00 pre-bolo 10-15 min mensa pasta pesce 2 bruschette piatto impanato CCK colecistochinina 9U 14:03 252 +4U 14:39 321 36 minuti +3.5U 16.5U insulin stacking IOB onda lunga AMPK GLUT4 picco 355 crollo 80 90 palestra dottoressa.'
+  },
 
   // =========================================================================
-  // 10. PREVENZIONE ETÀ, ARTICOLAZIONI & DIABETE
+  // 10. PREVENZIONE ETÀ, OSSA, OSSIGENO, CAPELLI, COLLAGENE & DIABETE
   // =========================================================================
   {
     id: 'prevenzione_eta_articolazioni',
     viewId: 'prevenzione_eta',
-    sectionTitle: 'Prevenzione età, articolazioni & diabete',
+    sectionTitle: 'Prevenzione età, ossa, collagene & diabete',
     sectionBadgeColor: 'lime',
     subTabId: 'eta_articolazioni',
-    subTitle: '1. Età, Ossa, Mobilità, Super-Aging, Mionuclei & Mal di Schiena',
-    text: 'Prevenzione età articolazioni assicurazione biologica 16 anni diabete microinfusore discesa biologica 30-35 anni sarcopenia perdita muscolo osteopenia osteoporosi densità ossea elasticità tessuti tendini legamenti cartilagine banca muscoli ossa picco massa ossea 70 anni 50 anni cemento armato stretching mobilità articolare attiva fascia liquido sinoviale arrugginirsi inossidabile super-aging successful aging 10000 passi pendenza calisthenics densità ossea sistema cardiovascolare sostenibilità maratona scatto long-runner infortuni tendini memoria muscolare mionuclei nuclei cellulari staminali usa o perdi 50-60 anni carichi moderati elastici corpo libero leggero 70-80% mal di schiena core addominali profondi lombari glutei dischi intervertebrali osmosi armatura protettiva.'
+    subTitle: '1. Ossa Fortificate Negli Anni (Wolff & Piezoelettricità), Mionuclei & Schiena',
+    text: 'Prevenzione età articolazioni ossa fortificate vecchio collagene tipo I idrossiapatite calcio fosfato osteoblasti osteoclasti meccanotrasduzione legge di Wolff micro-deformazione potenziale elettrico piezoelettrico canalicoli osteociti sclerostina osso corticale trabecolare picco massa ossea 16 30 anni osteopatia diabetica AGEs vitamina D3 K2 magnesio sarcopenia osteopenia super-aging mionuclei schiena osmosi 10000 passi.'
   },
   {
     id: 'prevenzione_massa_lavoro',
     viewId: 'prevenzione_eta',
-    sectionTitle: 'Prevenzione età, articolazioni & diabete',
+    sectionTitle: 'Prevenzione età, ossa, collagene & diabete',
     sectionBadgeColor: 'lime',
     subTabId: 'massa_lavoro',
-    subTitle: '2. Organizzazione: Mantenere Massa, Lavoro & Giovane vs Adulto vs Anziano (con Diabete)',
-    text: 'Organizzazione mantenere massa lavoro manuale pesante palestra diabete ipoglicemia ritardata microinfusore basale zuccheri rapidi principio adattamento tensione meccanica progressiva resistenza fatica cronica bassa intensità fisico asciutto strutturato stress cortisolo glicemia usura asimmetrica squilibri posturali mal di schiena stanco marcio stangato acido lattico cedimento vietato richiamo minimo minimum effective dose dose minima efficace 2-3 sedute brevi manubri calisthenics controllato lavoro come cardio attivo differenza giovane 16-25 anni adulto 30-50 anni anziano 60-70 anni recupero fulmineo difesa massa rendita biologica zero usura.'
+    subTitle: '2. Organizzazione: Mantenere Massa, Lavoro Manuale (Fibre IIx) & 3 Età',
+    text: 'Organizzazione mantenere massa lavoro manuale pesante palestra principio SAID economia energetica capillari angiogenesi mitocondri fibre tipo I fibre rapide IIa IIx mionuclei memoria muscolare diabete ipoglicemia ritardata microinfusore basale zuccheri rapidi cortisolo usura asimmetrica cedimento vietato richiamo minimo minimum effective dose 2-3 sedute brevi giovane adulto anziano.'
   },
   {
     id: 'prevenzione_diabete_scienza',
     viewId: 'prevenzione_eta',
-    sectionTitle: 'Prevenzione età, articolazioni & diabete',
+    sectionTitle: 'Prevenzione età, ossa, collagene & diabete',
     sectionBadgeColor: 'lime',
     subTabId: 'diabete_prevenzione',
-    subTitle: '3. Io Che Ho il Diabete: Cosa Mi Succede Scientificamente',
-    text: 'Diabete tipo 1 cosa mi succede scientificamente glicazione collagene AGEs Advanced Glycation End-products tendini legamenti capsule articolari fascia rigidità effetto caramello liquido sinoviale microcircolazione capillari tempi guarigione riparazione tessuti cicatrizzazione infiammazione ossido nitrico 10000 passi muscolo spugna metabolica trasportatori GLUT4 indipendente insulina serbatoio glicogeno effetto spugna 24-48 ore insulino-resistenza cortisolo adrenalina chetoni osteopatia diabetica osteoblasti densità ossea legge di Wolff arterie elasticità.'
+    subTitle: '3. Diabete Sul Lungo Periodo: AGEs, Microcircolo, GLUT4 & Controlli',
+    text: 'Diabete tipo 1 lungo periodo Time in Range variabilità glicemica glicazione collagene AGEs microcircolazione capillari ossido nitrico NO guarigione muscolo spugna metabolica GLUT4 indipendente insulina sensibilità 24-48 ore controlli annuali TSH ferritina vitamina D microalbuminuria.'
+  },
+  {
+    id: 'prevenzione_ossigeno_bici',
+    viewId: 'prevenzione_eta',
+    sectionTitle: 'Prevenzione età, ossa, collagene & diabete',
+    sectionBadgeColor: 'lime',
+    subTabId: 'ossigeno_bici',
+    subTitle: '4. Ossigeno, Saturazione (SpO2 vs VO2max), Diabete & Perché i Vecchi Durano in Bici',
+    text: 'Ossigeno saturazione SpO2 saturimetro 95 99 VO2max catena ossigeno polmoni cuore capillari mitocondri angiogenesi biogenesi mitocondriale HbA1c emoglobina glicata rilascio ossigeno ossido nitrico respirazione nasale diaframmatica zona 2 perché i vecchi durano più in bici fibre tipo I lente ossidative fibre tipo II rapide economia grassi glicogeno paradosso solo bici GLUT4.'
+  },
+  {
+    id: 'prevenzione_capelli_eta',
+    viewId: 'prevenzione_eta',
+    sectionTitle: 'Prevenzione età, ossa, collagene & diabete',
+    sectionBadgeColor: 'lime',
+    subTabId: 'capelli_prevenzione',
+    subTitle: '5. Prevenzione Capelli Negli Anni: Follicoli, Microcircolo & Diabete',
+    text: 'Capelli prevenzione età follicolo papilla dermica ciclo anagen catagen telogen fibrosi perifollicolare DHT miniaturizzazione microcircolazione capillari diabete AGEs tiroide TSH ferritina vitamina D massaggio polpastrelli calore no fumo dermatologo tricologo.'
+  },
+  {
+    id: 'prevenzione_collagene_dieta',
+    viewId: 'prevenzione_eta',
+    sectionTitle: 'Prevenzione età, ossa, collagene & diabete',
+    sectionBadgeColor: 'lime',
+    subTabId: 'collagene_dieta',
+    subTitle: '6. Collagene Scientifico, Tutti gli Alimenti & Dieta Pratica Anti-AGEs',
+    text: 'Collagene cos è scientificamente tripla elica glicina prolina idrossiprolina tipo I II III assorbimento fibroblasti vitamina C rame zinco zolfo brodo d ossa ossobuco pesce pelle salmone sardine uova cotte kiwi peperoni semi di zucca noci brasiliane omega 3 olio evo cotture umide limone aceto spezie curcuma rosmarino ordine piatto fibre proteine carboidrati peptidi idrolizzati.'
+  },
+  {
+    id: 'prevenzione_luce_vitamina_d',
+    viewId: 'prevenzione_eta',
+    sectionTitle: 'Prevenzione età, ossa, collagene & diabete',
+    sectionBadgeColor: 'lime',
+    subTabId: 'luce_vitamina_d',
+    subTitle: '7. Digiuno Mattutino, Luce Solare & Vitamina D Sicura (UVB vs UVA)',
+    text: 'Digiuno mattutino uscire senza colazione cortisolo GH lipolisi camminata GLUT4 diabete luce solare mattina occhi ipRGCs SCN ritmo circadiano melatonina sonno vitamina D UVB 280 315 nm UVA 315 400 nm 7-deidrocolesterolo colecalciferolo 25 OH D calcitriolo magnesio K2 auto-limitazione lumisterolo tachisterolo regola ombra protezione SPF 30 50 inverno ottobre marzo.'
   }
 ];
 

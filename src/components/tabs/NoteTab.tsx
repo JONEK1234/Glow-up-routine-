@@ -34,7 +34,10 @@ import {
   Gift,
   Wind,
   Search,
-  ShieldCheck
+  ShieldCheck,
+  BookOpen,
+  Compass,
+  Heart
 } from 'lucide-react';
 import { UserNote } from '../../types';
 import { storageHelper } from '../../utils/storage';
@@ -45,10 +48,11 @@ import { GiorniShampooTextureView } from './GiorniShampooTextureView';
 import { PalestraPerditaGrassoView } from './PalestraPerditaGrassoView';
 import { CoseDaComprareRegaliView } from './CoseDaComprareRegaliView';
 import { MasticazioneMasseteriView } from './MasticazioneMasseteriView';
+import { VisoGrassoTaglioSleeperView } from './VisoGrassoTaglioSleeperView';
 import { CapelliTextureFormaPiegaLisciaView } from './CapelliTextureFormaPiegaLisciaView';
+import { CapelliMossiTexturedMessyMulletView } from './CapelliMossiTexturedMessyMulletView';
 import { DiabeteGlicemiaPalestraView } from './DiabeteGlicemiaPalestraView';
 import { PrevenzioneEtaArticolazioniView } from './PrevenzioneEtaArticolazioniView';
-import { CapelliMossiTexturedMessyMulletView } from './CapelliMossiTexturedMessyMulletView';
 import { scrollToTop } from '../../utils/scrollHelper';
 import { NoteSectionViewId, searchNotesIndex } from '../../utils/notesSearchIndex';
 
@@ -98,8 +102,89 @@ const SCHEMA_IMAGES = [
   }
 ];
 
+const UPDATED_FACE_PHOTOS = [
+  {
+    id: 'upd_1475',
+    title: '1. Frontale Neutro (Occhiali)',
+    tag: 'Frontale',
+    url: '/assets/aistudio/IMG_1475_24ce9047.jpeg'
+  },
+  {
+    id: 'upd_1476',
+    title: '2. 3/4 Sinistro (Occhiali)',
+    tag: '3/4 Sx',
+    url: '/assets/aistudio/IMG_1476_04e0ed3b.jpeg'
+  },
+  {
+    id: 'upd_1477',
+    title: '3. 3/4 Destro (Occhiali)',
+    tag: '3/4 Dx',
+    url: '/assets/aistudio/IMG_1477_95f1e0ec.jpeg'
+  },
+  {
+    id: 'upd_1478',
+    title: '4. Frontale Ravvicinato',
+    tag: 'Close-Up',
+    url: '/assets/aistudio/IMG_1478_77e46c09.jpeg'
+  },
+  {
+    id: 'upd_1480',
+    title: '5. Frontale Basso',
+    tag: 'Mandibola',
+    url: '/assets/aistudio/IMG_1480_c0d8f909.jpeg'
+  },
+  {
+    id: 'upd_1482',
+    title: '6. Profilo / 3/4 Sinistro',
+    tag: 'Lato Sx',
+    url: '/assets/aistudio/IMG_1482_2f5c9f09.jpeg'
+  },
+  {
+    id: 'upd_1483',
+    title: '7. Profilo / 3/4 Destro',
+    tag: 'Lato Dx',
+    url: '/assets/aistudio/IMG_1483_0dfdd5d9.jpeg'
+  },
+  {
+    id: 'upd_1484',
+    title: '8. Frontale Senza Occhiali',
+    tag: 'No Occhiali',
+    url: '/assets/aistudio/IMG_1484_898ba3db.jpeg'
+  },
+  {
+    id: 'upd_1485',
+    title: '9. 3/4 Sinistro Senza Occhiali',
+    tag: 'Sx Pulito',
+    url: '/assets/aistudio/IMG_1485_c016382d.jpeg'
+  },
+  {
+    id: 'upd_1486',
+    title: '10. 3/4 Destro Senza Occhiali',
+    tag: 'Dx Pulito',
+    url: '/assets/aistudio/IMG_1486_c7b47c7f.jpeg'
+  },
+  {
+    id: 'upd_1487',
+    title: '11. Allineamento Collo & Postura',
+    tag: 'Postura',
+    url: '/assets/aistudio/IMG_1487_61a7a36d.jpeg'
+  },
+  {
+    id: 'upd_1488',
+    title: '12. Contorni Laterali Mandibola',
+    tag: 'Contorni',
+    url: '/assets/aistudio/IMG_1488_c93f38bd.jpeg'
+  },
+  {
+    id: 'upd_1489',
+    title: '13. Frontale Luce Naturale',
+    tag: 'Finale',
+    url: '/assets/aistudio/IMG_1489_1ce6a31f.jpeg'
+  }
+];
+
 export const NoteTab: React.FC = () => {
-  const [activeView, setActiveView] = useState<'list' | 'asimmetria' | 'ortodonzia' | 'postura_occhi' | 'sonno_posizioni' | 'peli_incarniti' | 'shampoo_texture' | 'palestra_grasso' | 'regali_natale' | 'asimmetria_masticazione' | 'capelli_texture' | 'capelli_mullet' | 'diabete_glicemia' | 'prevenzione_eta'>('list');
+  const [activeView, setActiveView] = useState<'list' | 'bussola_mente' | 'studia_oggi' | 'asimmetria' | 'ortodonzia' | 'postura_occhi' | 'sonno_posizioni' | 'peli_incarniti' | 'shampoo_texture' | 'palestra_grasso' | 'regali_natale' | 'asimmetria_masticazione' | 'asimmetria_grasso_viso' | 'capelli_texture' | 'capelli_mullet' | 'diabete_glicemia' | 'prevenzione_eta'>('list');
   const [userNotes, setUserNotes] = useState<UserNote[]>(() => storageHelper.getUserNotes());
   const [fullscreenImg, setFullscreenImg] = useState<{ url: string; title: string } | null>(null);
   const [faceComparisonMode, setFaceComparisonMode] = useState<'overlay' | 'sideBySide' | 'swipe'>('overlay');
@@ -112,6 +197,7 @@ export const NoteTab: React.FC = () => {
   const [initialSubTab, setInitialSubTab] = useState<string | undefined>(undefined);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSearchSection, setSelectedSearchSection] = useState<NoteSectionViewId | 'all'>('all');
+  const [studyTodayFilter, setStudyTodayFilter] = useState<'tutte' | 'mente_viso' | 'diabete' | 'palestra_ossa'>('tutte');
 
   // Helper unificato per cambiare vista resettando istantaneamente lo scroll in cima
   const handleOpenView = (view: typeof activeView, subTab?: string) => {
@@ -256,6 +342,8 @@ export const NoteTab: React.FC = () => {
 
     const currentFaceIndex = FACE_PHOTOS.findIndex(p => p.url === fullscreenImg.url);
     const isFaceComparisonPhoto = currentFaceIndex !== -1;
+    const currentUpdatedIndex = UPDATED_FACE_PHOTOS.findIndex(p => p.url === fullscreenImg.url);
+    const isUpdatedPhoto = currentUpdatedIndex !== -1;
 
     return (
       <div 
@@ -270,16 +358,27 @@ export const NoteTab: React.FC = () => {
           <X className="w-6 h-6" />
         </button>
 
-        {/* Previous & Next arrows for face comparison photos */}
-        {isFaceComparisonPhoto && (
+        {/* Previous & Next arrows for face comparison photos OR updated gallery photos */}
+        {(isFaceComparisonPhoto || isUpdatedPhoto) && (
           <>
             <button
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                const newIdx = currentFaceIndex === 0 ? 1 : 0;
-                setFullscreenImg({ url: FACE_PHOTOS[newIdx].url, title: FACE_PHOTOS[newIdx].title });
-                setActiveFaceIndex(newIdx);
+                if (isFaceComparisonPhoto) {
+                  const newIdx = currentFaceIndex === 0 ? 1 : 0;
+                  setFullscreenImg({ url: FACE_PHOTOS[newIdx].url, title: FACE_PHOTOS[newIdx].title });
+                  setActiveFaceIndex(newIdx);
+                } else {
+                  const newIdx =
+                    currentUpdatedIndex === 0
+                      ? UPDATED_FACE_PHOTOS.length - 1
+                      : currentUpdatedIndex - 1;
+                  setFullscreenImg({
+                    url: UPDATED_FACE_PHOTOS[newIdx].url,
+                    title: `${UPDATED_FACE_PHOTOS[newIdx].title} (${newIdx + 1}/${UPDATED_FACE_PHOTOS.length})`
+                  });
+                }
               }}
               className="absolute left-3 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/70 hover:bg-black text-white border border-white/20 backdrop-blur-md cursor-pointer z-30 active:scale-90 transition-all"
               title="Foto Precedente"
@@ -290,9 +389,20 @@ export const NoteTab: React.FC = () => {
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                const newIdx = currentFaceIndex === 1 ? 0 : 1;
-                setFullscreenImg({ url: FACE_PHOTOS[newIdx].url, title: FACE_PHOTOS[newIdx].title });
-                setActiveFaceIndex(newIdx);
+                if (isFaceComparisonPhoto) {
+                  const newIdx = currentFaceIndex === 1 ? 0 : 1;
+                  setFullscreenImg({ url: FACE_PHOTOS[newIdx].url, title: FACE_PHOTOS[newIdx].title });
+                  setActiveFaceIndex(newIdx);
+                } else {
+                  const newIdx =
+                    currentUpdatedIndex === UPDATED_FACE_PHOTOS.length - 1
+                      ? 0
+                      : currentUpdatedIndex + 1;
+                  setFullscreenImg({
+                    url: UPDATED_FACE_PHOTOS[newIdx].url,
+                    title: `${UPDATED_FACE_PHOTOS[newIdx].title} (${newIdx + 1}/${UPDATED_FACE_PHOTOS.length})`
+                  });
+                }
               }}
               className="absolute right-3 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/70 hover:bg-black text-white border border-white/20 backdrop-blur-md cursor-pointer z-30 active:scale-90 transition-all"
               title="Foto Successiva"
@@ -455,6 +565,13 @@ export const NoteTab: React.FC = () => {
   }
 
   // -------------------------------------------------------------
+  // VIEW: GRASSO FACCIALE, TAGLIO CORTO & FACCIA FINE (NUOVA SEZIONE)
+  // -------------------------------------------------------------
+  if (activeView === 'asimmetria_grasso_viso') {
+    return <VisoGrassoTaglioSleeperView onBack={() => handleOpenView('asimmetria')} initialTab={initialSubTab} />;
+  }
+
+  // -------------------------------------------------------------
   // VIEW: LA MIA ASIMMETRIA (MENU DETTAGLIATO)
   // -------------------------------------------------------------
   if (activeView === 'asimmetria') {
@@ -473,19 +590,24 @@ export const NoteTab: React.FC = () => {
             <span>Tutte le Note</span>
           </button>
           
-          <div className="flex items-center space-x-2">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <button
+              type="button"
+              onClick={() => handleOpenView('asimmetria_grasso_viso')}
+              className="flex items-center space-x-1 py-1.5 px-2.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-200 border border-cyan-400/50 text-[11px] font-extrabold shadow-[0_0_12px_rgba(6,182,212,0.2)] transition-all cursor-pointer active:scale-95"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Grasso Viso &amp; Taglio Corto</span>
+            </button>
+
             <button
               type="button"
               onClick={() => handleOpenView('asimmetria_masticazione')}
-              className="flex items-center space-x-1.5 py-1.5 px-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/40 text-xs font-extrabold shadow-[0_0_15px_rgba(245,158,11,0.25)] transition-all cursor-pointer active:scale-95"
+              className="flex items-center space-x-1 py-1.5 px-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/40 text-[11px] font-extrabold shadow-[0_0_12px_rgba(245,158,11,0.2)] transition-all cursor-pointer active:scale-95"
             >
-              <Info className="w-4 h-4 text-amber-400" />
-              <span>Info Masticazione & Gomme</span>
+              <Info className="w-3.5 h-3.5 text-amber-400" />
+              <span>Info Masticazione</span>
             </button>
-
-            <span className="hidden sm:inline-block text-[11px] font-bold text-gray-400 bg-black/40 px-3 py-1 rounded-xl border border-white/5">
-              Nota Guida • 8 Mesi
-            </span>
           </div>
         </div>
 
@@ -507,7 +629,34 @@ export const NoteTab: React.FC = () => {
           </p>
         </div>
 
-        {/* Banner Link a Nuova Sezione Masticazione */}
+        {/* Banner Link 1: NUOVA SEZIONE GRASSO VISO, TAGLIO CORTO & FACCIA FINE (IN ALTO, ZERO SCROLL) */}
+        <div
+          onClick={() => handleOpenView('asimmetria_grasso_viso')}
+          className="p-4 rounded-3xl bg-gradient-to-r from-cyan-500/20 via-black/85 to-emerald-500/15 border-2 border-cyan-400/60 hover:border-cyan-300 cursor-pointer transition-all flex items-center justify-between group shadow-[0_0_20px_rgba(6,182,212,0.18)]"
+        >
+          <div className="flex items-center space-x-3">
+            <div className="p-2.5 rounded-2xl bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 group-hover:scale-105 transition-transform shrink-0">
+              <Sparkles className="w-5 h-5 text-cyan-400" />
+            </div>
+            <div className="space-y-0.5">
+              <span className="text-[10px] font-black uppercase tracking-wider text-cyan-300 flex items-center gap-1">
+                <Sparkles className="w-3 h-3" /> Nuova Nota nella Sezione (17–19 Nov)
+              </span>
+              <h4 className="text-xs sm:text-sm font-black text-white group-hover:text-cyan-200 transition-colors">
+                Grasso Facciale (Pinch Test 1,75m / 73kg), Taglio Corto &amp; Strategia &quot;Faccia Fine&quot;
+              </h4>
+              <p className="text-[11px] text-gray-400 line-clamp-1">
+                Alfa-2 vs Beta-2, illusione low-fade, ~1.600 kcal + 10.000 passi NEAT &amp; Sleeper Build Giugno.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center space-x-1.5 text-xs font-black px-3 py-2 rounded-xl bg-cyan-400 text-black group-hover:bg-cyan-300 transition-all shrink-0 ml-2">
+            <span>Apri Nota</span>
+            <ChevronRight className="w-4 h-4" />
+          </div>
+        </div>
+
+        {/* Banner Link 2 a Sezione Masticazione */}
         <div
           onClick={() => handleOpenView('asimmetria_masticazione')}
           className="p-4 rounded-3xl bg-gradient-to-r from-amber-500/15 via-black/80 to-purple-500/15 border-2 border-amber-500/40 hover:border-amber-400 cursor-pointer transition-all flex items-center justify-between group shadow-sm hover:shadow-[0_0_20px_rgba(245,158,11,0.2)]"
@@ -518,10 +667,10 @@ export const NoteTab: React.FC = () => {
             </div>
             <div className="space-y-0.5">
               <span className="text-[10px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1">
-                <Sparkles className="w-3 h-3" /> Nuova Sezione Dedicata
+                <Sparkles className="w-3 h-3" /> Sezione Dedicata Masticazione
               </span>
               <h4 className="text-xs sm:text-sm font-black text-white group-hover:text-amber-200 transition-colors">
-                Dieta Moderna, Gomme Dure per Definizione & Allenamento Massetere Sinistro
+                Dieta Moderna, Gomme Dure per Definizione &amp; Allenamento Massetere Sinistro
               </h4>
               <p className="text-[11px] text-gray-400 line-clamp-1">
                 Fisica delle gomme, protocollo da 10 min (65% sx), spiegazione al tatto e verdetto visivo.
@@ -1355,6 +1504,163 @@ export const NoteTab: React.FC = () => {
           </div>
         </div>
 
+        {/* ============================================================= */}
+        {/* GUIDA SCIENTIFICA E PRATICA: STRUTTURA, GRASSO, MASTICAZIONE  */}
+        {/* (Focus puro su struttura del viso, grasso facciale, volumi, postura) */}
+        {/* ============================================================= */}
+        <div className="p-4 sm:p-5 rounded-3xl glass-card border border-cyan-400/40 bg-gradient-to-br from-cyan-950/25 via-black/85 to-emerald-950/20 space-y-4">
+          <div className="space-y-1 border-b border-white/10 pb-3">
+            <span className="text-[10px] font-black uppercase tracking-widest text-cyan-400 block">
+              Analisi Scientifica &amp; Guida Operativa (Focus Esclusivo: Struttura, Grasso, Volumi &amp; Postura)
+            </span>
+            <h2 className="text-sm sm:text-base font-black text-white leading-snug">
+              Chiarezza Totale: Quale Lato Sviluppare vs Quale Lato Definire, Lipolisi Facciale &amp; Le 3 Fasi
+            </h2>
+          </div>
+
+          {/* 1. Punto chiaro sulla masticazione & biomeccanica */}
+          <div className="p-3.5 rounded-2xl bg-black/55 border border-white/10 space-y-2.5 text-xs text-gray-200 leading-relaxed">
+            <strong className="text-cyan-300 block uppercase tracking-wider text-[11px]">
+              1. Il Punto Chiaro sulla Masticazione: Quale Lato Sviluppare di Più &amp; Meccanica Scientifica
+            </strong>
+            <p>
+              Quando guardi i due lati allo specchio e ti chiedi: <em>&quot;Se un lato crea già quella linea netta e definita e l&apos;altro è più rotondo/morbido, devo masticare di più quello definito per definirlo ancora di più, oppure l&apos;altro?&quot;</em> — ecco la logica biologica e visiva netta:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5">
+              <li>
+                <strong className="text-white">Regola Visiva Universale (Armonia vs Squilibrio):</strong> il lato che già crea una linea più netta e lineare ha già buona tensione e spinta strutturale; ingrandirlo ulteriormente rischia di allargare la differenza tra i due lati finché non hai pareggiato. Il carico extra di lavoro va sul lato che vuoi <strong>riequilibrare</strong> (quello più rotondo/meno definito o — come nel tuo test al tatto — il lato sinistro più fino/cedevole che deve addensarsi per non svuotarsi col dimagrimento), usando <strong>sempre i molari</strong> e mai i denti anteriori.
+              </li>
+              <li>
+                <strong className="text-emerald-300">Perché i Molari (Leva Corta) &amp; Perché NON Basta Gonfiare il Muscolo:</strong> masticando sui denti posteriori (molari) il braccio di leva rispetto all&apos;articolazione temporo-mandibolare (ATM) è corto, quindi generi alta forza senza torcere il condilo. Tuttavia, la vera <strong>&quot;definizione&quot;</strong> (vedere la linea affilata dell&apos;osso e dell&apos;angolo mandibolare) NON viene dal gonfiare il massetere all&apos;infinito: un muscolo enorme coperto da grasso e ritenzione idrica appare comunque gonfio o tondo; un muscolo equilibrato con <strong>meno grasso sottocutaneo e meno liquidi sopra</strong> lascia emergere subito lo spigolo osseo!
+              </li>
+              <li>
+                <strong className="text-amber-300">Ipertrofia Mirata, Tetto Genetico &amp; Recupero ATM:</strong> il massetere è un muscolo scheletrico volontario. Il lavoro mirato crea subito flusso sanguigno locale (<em>iperemia</em>) e in 8–16 settimane stimola l&apos;adattamento delle fibre fino al suo <strong>tetto genetico</strong>: riempie e compatta la sporgenza laterale dell&apos;angolo mandibolare (non trasforma l&apos;osso adulto fuso, ma modula visivamente il profilo frontale e di 3/4). Esattamente come in palestra, vale la legge <strong>stimolo + recupero</strong>: esagerare ogni giorno con cibi o gomme durissime infiamma il disco articolare dell&apos;ATM causando contratture e click.
+              </li>
+            </ul>
+          </div>
+
+          {/* 2. Grasso facciale, compartimenti adiposi & postura */}
+          <div className="p-3.5 rounded-2xl bg-black/55 border border-emerald-500/30 space-y-2.5 text-xs text-gray-200 leading-relaxed">
+            <strong className="text-emerald-300 block uppercase tracking-wider text-[11px]">
+              2. Cosa Succede al Viso Quando Perdi Grasso &amp; Correggi la Postura (Il Vero Motore)
+            </strong>
+            <ul className="space-y-1.5 list-disc pl-5">
+              <li>
+                <strong className="text-white">Postura Cranio-Cervicale &amp; Tessuti Sottomentali:</strong> quando tieni la testa leggermente in avanti o abbassata verso telefono/banco, i muscoli sovraioidei e la pelle sotto il mento si accorciano e si &quot;impacchettano&quot;, cancellando l&apos;angolo tra collo e mandibola e creando finta pienezza anche da magri. Appena raddrizzi il busto e allinei orecchie sopra le spalle (testa neutra, lingua appoggiata leggera al palato), i tessuti molli del collo si distendono come una tela tesa e l&apos;angolo mandibolare si apre all&apos;istante.
+              </li>
+              <li>
+                <strong className="text-cyan-300">Lipolisi dei Compartimenti Adiposi del Viso:</strong> il grasso del viso è diviso in compartimenti superficiali (guance malari/inferiori, regione pre-auricolare davanti all&apos;orecchio, area sottomentoniera sotto la mascella) più la bolla di Bichat profonda. In deficit calorico costante l&apos;organismo mobilita i trigliceridi da tutti questi compartimenti superficiali: riducendo lo spessore dello strato adiposo che li ricopre, la luce non rimbalza più su una curva rotonda ma disegna ombre nette sotto zigomi e linea mandibolare.
+              </li>
+              <li>
+                <strong className="text-amber-300">Ritenzione Idrica, Sodio/Potassio &amp; Cortisolo:</strong> molto spesso la differenza tra un giorno in cui sembri già definito e la mattina in cui sembri gonfio è <strong>acqua extracellulare</strong> (aldosterone/cortisolo alti da cena salata, poco sonno o poca acqua bevuta), non nuovo grasso!
+              </li>
+            </ul>
+          </div>
+
+          {/* 3. Regole essenziali ogni giorno */}
+          <div className="p-3.5 rounded-2xl bg-black/55 border border-amber-500/30 space-y-2 text-xs text-gray-200 leading-relaxed">
+            <strong className="text-amber-300 block uppercase tracking-wider text-[11px]">
+              3. Le 5 Regole Essenziali da Seguire Ogni Giorno (Zero Dubbi)
+            </strong>
+            <ol className="space-y-1.5 list-decimal pl-5">
+              <li>
+                <strong className="text-white">Masticazione Bilanciata sui Molari:</strong> lavora maggiormente sul lato da riequilibrare (~60–65% sinistra / 35–40% destra secondo il tuo test al tatto) usando cibi consistenti o al max 10–15 min di gomma controllata. Controlla ogni 2–3 settimane stringendo i denti: appena i due lati si equivalgono al tatto, passa al 50/50 naturale. Mai stringere i denti a vuoto durante la giornata (regola: <em>&quot;labbra chiuse, denti leggermente staccati, lingua sul palato&quot;</em>).
+              </li>
+              <li>
+                <strong className="text-white">Deficit Calorico Costante + Pesi + 10.000 Passi:</strong> abbassa gradualmente la percentuale di grasso corporeo totale senza diete estreme da fame (i tagli calorici troppo aggressivi alzano il cortisolo e gonfiano il viso di liquidi).
+              </li>
+              <li>
+                <strong className="text-white">Allineamento Collo &amp; Smartphone all&apos;Altezza degli Occhi:</strong> mantieni ogni giorno 2 serie × 25 <em>Chin Tucks</em> + 2 serie × 15 <em>Neck Curls</em>, e porta il telefono davanti al viso invece di piegare il collo in giù.
+              </li>
+              <li>
+                <strong className="text-white">Sonno Simmetrico (Pancia in Su):</strong> dormi supino su cuscino basso/ergonomico così nessuno dei due lati della guancia e della mandibola resta schiacciato per 7–8 ore contro il materasso.
+              </li>
+              <li>
+                <strong className="text-white">Idratazione &amp; Equilibrio Sodio/Potassio:</strong> bevi <strong className="tabular-nums">2,5–3 litri</strong> d&apos;acqua al giorno, limita cibi ultra-salati la sera e consuma fonti naturali di potassio (verdure, kiwi/banana se nel tuo piano glicemico) per drenare l&apos;accumulo idrico dalle guance.
+              </li>
+            </ol>
+          </div>
+
+          {/* 4. Le 3 fasi di evoluzione */}
+          <div className="space-y-2 text-xs">
+            <strong className="text-purple-300 block uppercase tracking-wider text-[11px] pl-1">
+              4. Progressione Reale in 3 Fasi (Cosa Aspettarti Nel Tempo)
+            </strong>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <div className="p-3 rounded-2xl bg-cyan-950/30 border border-cyan-500/30 space-y-1 text-gray-200">
+                <strong className="text-cyan-300 block">Fase 1 (Settimane 1–4)</strong>
+                Si sgonfia la ritenzione idrica (viso subito meno gonfio la mattina), il collo si allunga con i chin tucks e impari la masticazione pulita sui molari senza stressare l&apos;ATM.
+              </div>
+              <div className="p-3 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 space-y-1 text-gray-200">
+                <strong className="text-emerald-300 block">Fase 2 (Mesi 2–4)</strong>
+                La lipolisi facciale asciuga i compartimenti sottomentali e pre-auricolari; il massetere più indietro si compatta fino al pareggio al tatto, consentendo di passare al 50/50.
+              </div>
+              <div className="p-3 rounded-2xl bg-purple-950/30 border border-purple-500/30 space-y-1 text-gray-200">
+                <strong className="text-purple-300 block">Fase 3 (Mesi 5–8+)</strong>
+                Massima definizione dell&apos;angolo goniaco e della jawline pulita con pelle adesa ai volumi muscolari bilanciati. Da qui deciderai con calma se ti soddisfa al 100% o se valutare uno gnatologo.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* ============================================================= */}
+        {/* AGGIORNAMENTO FOTO (13 NUOVI SCATTI PROGRESSO & ANGOLAZIONI)  */}
+        {/* ============================================================= */}
+        <div className="p-4 sm:p-5 rounded-3xl glass-card border border-emerald-400/40 bg-gradient-to-br from-emerald-950/20 via-black/85 to-cyan-950/20 space-y-3">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center space-x-2">
+              <div className="p-1.5 rounded-xl bg-emerald-500/20 text-emerald-300">
+                <Eye className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-xs sm:text-sm font-extrabold text-white">
+                  Aggiornamento Foto — Archivio Completo (13 Scatti)
+                </h3>
+                <p className="text-[10px] text-gray-400">
+                  Frontali, 3/4 destro e sinistro, con e senza occhiali, allineamento collo e mandibola • Tocca per ingrandire e scorrere
+                </p>
+              </div>
+            </div>
+            <span className="text-[10px] font-black px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 whitespace-nowrap shrink-0 tabular-nums">
+              13 Foto
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
+            {UPDATED_FACE_PHOTOS.map((photo, idx) => (
+              <div
+                key={photo.id}
+                onClick={() =>
+                  setFullscreenImg({
+                    url: photo.url,
+                    title: `${photo.title} (${idx + 1}/${UPDATED_FACE_PHOTOS.length})`
+                  })
+                }
+                className="group relative rounded-2xl overflow-hidden border border-white/15 hover:border-emerald-400/60 bg-black cursor-pointer aspect-[3/4] transition-all"
+              >
+                <img
+                  src={photo.url}
+                  alt={photo.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent flex flex-col justify-end p-2">
+                  <span className="text-[9px] font-bold text-emerald-300 bg-black/70 px-1.5 py-0.5 rounded border border-emerald-500/30 w-fit">
+                    {photo.tag}
+                  </span>
+                  <span className="text-[10px] font-bold text-white line-clamp-1 mt-0.5">
+                    {photo.title}
+                  </span>
+                </div>
+                <div className="absolute top-2 right-2 p-1.5 rounded-lg bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Maximize2 className="w-3 h-3" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* ------------------------------------------------------------- */}
         {/* RIQUADRO: POSSIBILE PERCORSO ORTODONTICO (INTERATTIVO / ESPANDIBILE) */}
         {/* ------------------------------------------------------------- */}
@@ -1580,14 +1886,520 @@ export const NoteTab: React.FC = () => {
   }
 
   // -------------------------------------------------------------
+  // VIEW: LA MIA BUSSOLA (TRANQUILLITÀ, ANTI-PARANOIE & VERSIONE MIGLIORE)
+  // -------------------------------------------------------------
+  if (activeView === 'bussola_mente') {
+    return (
+      <div className="space-y-4 pb-24 pt-1 animate-in fade-in duration-200">
+        {/* Top Sticky Nav */}
+        <div className="flex items-center justify-between sticky top-0 z-30 bg-[#0B0F17]/95 backdrop-blur-md py-2 -mx-4 px-4 border-b border-white/10">
+          <button
+            type="button"
+            onClick={() => handleOpenView('list')}
+            className="flex items-center space-x-1.5 py-2 px-3 rounded-2xl bg-white/5 hover:bg-white/10 text-emerald-300 border border-white/10 text-xs font-bold uppercase tracking-wider transition-all active:scale-95 cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Tutte le Note</span>
+          </button>
+          <span className="text-[11px] font-bold text-emerald-300 flex items-center gap-1.5">
+            <Compass className="w-3.5 h-3.5 text-emerald-400" />
+            La Mia Bussola • Priorità N° 1
+          </span>
+        </div>
+
+        {/* Hero Tranquillità */}
+        <div className="p-5 sm:p-6 rounded-3xl glass-card border-2 border-emerald-400/60 bg-gradient-to-br from-emerald-950/45 via-black/90 to-cyan-950/30 space-y-3 shadow-[0_0_35px_rgba(16,185,129,0.2)]">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full bg-emerald-400 text-black text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
+              <Heart className="w-3 h-3" />
+              Da Leggere Quando Sei Smarrito o Hai Mille Paranoie
+            </span>
+          </div>
+
+          <h1 className="text-xl sm:text-2xl font-black text-white leading-tight uppercase tracking-tight">
+            Tranquillità, Organizzazione &amp; La Versione Migliore di Me
+          </h1>
+
+          <p className="text-xs sm:text-sm text-gray-200 leading-relaxed font-medium">
+            Se in questo momento ti senti confuso, non sai se stai facendo giusto o ti stai facendo mille paranoie: <strong className="text-emerald-300">fermati un secondo e respira. Se sei già su questa strada e ti stai organizzando, sei già a posto e stai già diventando la versione migliore di te.</strong>
+          </p>
+        </div>
+
+        {/* 1. LA REGOLA #1: PACE INTERIORE & BIOCHIMICA DELLA CALMA */}
+        <div className="p-4 sm:p-5 rounded-3xl glass-card border border-emerald-500/35 bg-black/75 space-y-3 text-xs text-gray-200 leading-relaxed">
+          <div className="flex items-center space-x-2 border-b border-white/10 pb-2">
+            <Heart className="w-4 h-4 text-emerald-400 shrink-0" />
+            <h2 className="text-sm sm:text-base font-black text-white">
+              1. L&apos;Obiettivo Più Importante di Tutti: Essere Tranquillo e In Pace
+            </h2>
+          </div>
+
+          <p>
+            Il tuo vero obiettivo nella vita non è inseguire la perfezione con l&apos;ansia: è <strong className="text-emerald-300">stare tranquillo con te stesso e con le persone che ami</strong>. Migliorare il fisico, il viso, la pelle, i capelli e la salute serve a farti stare bene, mai a farti vivere sotto esame o in guerra con lo specchio.
+          </p>
+
+          <div className="p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-500/35 space-y-2 text-[11px]">
+            <strong className="text-emerald-300 uppercase tracking-wider block">
+              Perché Essere Calmi Ti Fa Migliorare Anche Fisicamente (Scienza Reale):
+            </strong>
+            <ul className="space-y-1.5 list-disc pl-5 text-gray-200">
+              <li>
+                <strong>Viso &amp; Ritenzione Idrica:</strong> le paranoie continue attivano l&apos;asse dello stress (<em>asse HPA</em>), alzando <strong>cortisolo e aldosterone</strong>. Il risultato biologico immediato dello stress è trattenere acqua sulle guance e sulla pancia. La calma letteralmente ti sgonfia il viso!
+              </li>
+              <li>
+                <strong>Diabete &amp; Glicemia:</strong> adrenalina e cortisolo alzano la glicemia anche a digiuno rendendoti insulino-resistente. Una mente serena stabilizza molto di più i valori del sensore.
+              </li>
+              <li>
+                <strong>Pelle, Acne &amp; Capelli:</strong> il cortisolo stimola le ghiandole sebacee a produrre più sebo infiammatorio e blocca la microcircolazione cutanea. Essere sereni aiuta anche pelle e capelli a guarire più in fretta.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* 2. VERITÀ ANTI-PARANOIE */}
+        <div className="p-4 sm:p-5 rounded-3xl glass-card border border-cyan-500/35 bg-gradient-to-br from-cyan-950/25 via-black/80 to-black space-y-2.5 text-xs text-gray-200 leading-relaxed">
+          <div className="flex items-center space-x-2">
+            <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0" />
+            <h2 className="text-sm sm:text-base font-black text-white">
+              2. Regola Anti-Paranoie: Conosci le Cose → Organizzati → Vivi Sereno
+            </h2>
+          </div>
+          <p>
+            Hai già raccolto tutta la scienza in queste note apposta per un motivo preciso: <strong className="text-white">sapere cosa devi fare senza dover andare a tentoni o dubitare ogni giorno</strong>. Quando la conoscenza è scritta qui dentro:
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+            <div className="p-3 rounded-2xl bg-black/60 border border-white/10">
+              <strong className="text-cyan-300 block mb-0.5">1. Sai Già Cosa Fare</strong>
+              Non devi reinventare nulla ogni mattina: ogni dubbio ha già una risposta scientifica chiara qui dentro.
+            </div>
+            <div className="p-3 rounded-2xl bg-black/60 border border-white/10">
+              <strong className="text-emerald-300 block mb-0.5">2. Il Corpo Richiede Mesi, Non Ore</strong>
+              Guardarsi allo specchio ogni ora non accelera i risultati. Fai le tue cose giornaliere e lascia lavorare il tempo.
+            </div>
+            <div className="p-3 rounded-2xl bg-black/60 border border-white/10">
+              <strong className="text-amber-300 block mb-0.5">3. 80% Costanza &gt; 100% Maniacale</strong>
+              Non serve essere robot perfetti sul milligrammo di sodio o sul singolo sgarro: vince chi dura sereno per mesi.
+            </div>
+          </div>
+        </div>
+
+        {/* 3. I 6 PILASTRI DELLA VERSIONE MIGLIORE DI TE */}
+        <div className="p-4 sm:p-5 rounded-3xl glass-card border border-white/15 bg-black/80 space-y-3 text-xs text-gray-200">
+          <div className="flex items-center justify-between border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
+              <h2 className="text-sm sm:text-base font-black text-white">
+                3. Cosa Stai Costruendo (La Versione Migliore di Te in 6 Punti Semplici)
+              </h2>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[11px] leading-relaxed">
+            <div className="p-3.5 rounded-2xl bg-orange-950/25 border border-orange-500/35 space-y-1.5">
+              <strong className="text-orange-300 block">A. Perdere Grasso (Viso Asciutto &amp; Fisico Definito)</strong>
+              <p className="text-gray-300">
+                Deficit pulito Lun–Sab (~1.400–1.600 kcal, 115–120g proteine), palestra 3x/settimana + domenica di ricarica serena. Il grasso su pancia e viso scende automaticamente nei prossimi mesi fino a Giugno.
+              </p>
+              <button type="button" onClick={() => handleOpenView('palestra_grasso')} className="text-orange-300 font-bold underline cursor-pointer">
+                Apri Palestra &amp; Grasso →
+              </button>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-cyan-950/25 border border-cyan-500/35 space-y-1.5">
+              <strong className="text-cyan-300 block">B. Lavorare Sull&apos;Asimmetria (Senza Ossessioni)</strong>
+              <p className="text-gray-300">
+                Masticazione 60–65% sul lato sinistro fino/meno definito (usando i molari), lingua leggera sul palato, <em>chin tucks</em> + dormire supino. Niente sforzi forzati sulla mandibola; a Giugno/Settembre rivaluti tutto con calma.
+              </p>
+              <button type="button" onClick={() => handleOpenView('asimmetria')} className="text-cyan-300 font-bold underline cursor-pointer">
+                Apri La mia asimmetria →
+              </button>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-teal-950/25 border border-teal-500/35 space-y-1.5">
+              <strong className="text-teal-300 block">C. Capelli (Messy Wavy Voluminoso Semplice)</strong>
+              <p className="text-gray-300">
+                Lascia crescere la parte davanti per avere volume che copre la fronte, taglio scalato giusto e routine rapida la mattina (acqua/balsamo o polvere senza perderci la testa).
+              </p>
+              <button type="button" onClick={() => handleOpenView('capelli_mullet')} className="text-teal-300 font-bold underline cursor-pointer">
+                Apri Textured Messy Mullet →
+              </button>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-emerald-950/25 border border-emerald-500/35 space-y-1.5">
+              <strong className="text-emerald-300 block">D. Acne, Peli Incarniti &amp; Zero Fissa sul Sodio</strong>
+              <p className="text-gray-300">
+                Detergente delicato, crema idratante, acido salicilico (2–3 sere), protezione solare SPF, rasatura delicata ogni 7–10 giorni. Alimentazione pulita + <strong>bevi tanta acqua (2,5–3L) senza mai stressarti a contare i mg di sodio</strong>!
+              </p>
+              <button type="button" onClick={() => handleOpenView('peli_incarniti')} className="text-emerald-300 font-bold underline cursor-pointer">
+                Apri Peli Incarniti &amp; Skincare →
+              </button>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-lime-950/25 border border-lime-500/35 space-y-1.5">
+              <strong className="text-lime-300 block">E. 10.000 Passi/Giorno &amp; Prevenzione Lunga Vita</strong>
+              <p className="text-gray-300">
+                Camminare 10.000 passi ti fa bruciare grassi senza fame nervosa, apre i canali GLUT4 per stabilizzare il diabete e fortifica ossa, schiena e cuore fino a 80 anni.
+              </p>
+              <button type="button" onClick={() => handleOpenView('prevenzione_eta')} className="text-lime-300 font-bold underline cursor-pointer">
+                Apri Prevenzione &amp; Longevità →
+              </button>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-rose-950/25 border border-rose-500/35 space-y-1.5">
+              <strong className="text-rose-300 block">F. Dare il Massimo Con il Sorriso</strong>
+              <p className="text-gray-300">
+                Studia i tuoi dati del diabete con serenità insieme al medico, vivi le tue giornate con le persone a cui vuoi bene e ricordati sempre: <strong>sei già sulla strada giusta</strong>.
+              </p>
+              <button type="button" onClick={() => handleOpenView('diabete_glicemia')} className="text-rose-300 font-bold underline cursor-pointer">
+                Apri Diabete &amp; Dati →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // -------------------------------------------------------------
+  // VIEW: DA STUDIARE OGGI (TUTTE LE MODIFICHE & AGGIUNTE DI OGGI)
+  // -------------------------------------------------------------
+  if (activeView === 'studia_oggi') {
+    const todayUpdates: {
+      id: string;
+      category: 'mente_viso' | 'diabete' | 'palestra_ossa';
+      sectionBadge: string;
+      badgeColor: string;
+      title: string;
+      summary: string;
+      keyPoints: string[];
+      targetView: typeof activeView;
+      targetSubTab?: string;
+    }[] = [
+      {
+        id: 'today_bussola',
+        category: 'mente_viso',
+        sectionBadge: 'Priorità N° 1 • Bussola Mentale',
+        badgeColor: 'emerald',
+        title: 'La Mia Bussola: Tranquillità, Anti-Paranoie & Versione Migliore di Me',
+        summary: 'Nota madre da aprire quando sei smarrito o pieno di dubbi: l’obiettivo vero è la pace con te stesso e con chi ami. Lo stress cronico alza cortisolo/aldosterone peggiorando ritenzione al viso, glicemia e acne; essere organizzato e già sul percorso significa che stai già diventando la tua versione migliore.',
+        keyPoints: [
+          '6 pilastri chiari: dimagrire (1.600 kcal + 10k passi), asimmetria, messy wavy, acne/SPF + molta acqua senza fissazione sul sodio, longevità ossa.',
+          'Se già fai le cose scritte nelle note, sei già a posto: lascia lavorare i mesi senza guardarti con ansia ogni ora.'
+        ],
+        targetView: 'bussola_mente'
+      },
+      {
+        id: 'today_asimmetria_grasso_taglio',
+        category: 'mente_viso',
+        sectionBadge: 'La mia asimmetria • Nuova Sezione Dedicata',
+        badgeColor: 'cyan',
+        title: 'Grasso Facciale (Pinch Test 1,75m / 73kg), Taglio Corto & Strategia "Faccia Fine" (Giugno)',
+        summary: 'Spostata in cima a La mia asimmetria come sezione dedicata separata (zero scorrimento!): spiega grasso sottocutaneo + acqua extracellulare, l’effetto ottico di cornice (low-fade vs chioma lunga), perché il grasso del viso resiste con recettori adrenergici Alfa-2 vs Beta-2, i 3 fronti uniti (~1.600 kcal / 115–120g proteine, 10.000 passi NEAT senza cortisolo, masseteri + Sleeper Build) e il vantaggio elastina/GH dei 16 anni fino a Giugno.',
+        keyPoints: [
+          'Pinch test: tirando la guancia senti grasso sottocutaneo + acqua (che lega 3g per g di glicogeno), non osso largo; i recettori Alfa-2 su guance/sottomento/basso ventre si svuotano per ultimi.',
+          'Taglio corto low-fade = scompare la cornice (visual framing), ma il viso è identico; intanto ricresce e 1.600 kcal + 10.000 passi (70% dieta + consumo invisibile) asciugano tutto per Giugno.'
+        ],
+        targetView: 'asimmetria_grasso_viso'
+      },
+      {
+        id: 'today_asimmetria_struttura_13foto',
+        category: 'mente_viso',
+        sectionBadge: 'La mia asimmetria • Struttura + 13 Foto',
+        badgeColor: 'cyan',
+        title: 'Quale Lato Sviluppare vs Definire, Lipolisi Facciale, Postura & 13 Nuove Foto',
+        summary: 'Risolve il dubbio su quale lato masticare: il lato già lineare ha già tensione; il carico extra (60–65% sui molari, leva corta) va sul lato più rotondo/fino per pareggiarlo senza forzare l’ATM. Include l’archivio di 13 nuove foto con scorrimento fullscreen.',
+        keyPoints: [
+          'Definizione = meno grasso/acqua sopra + masseteri equilibrati + postura collo dritta (chin tucks).',
+          'Controllo ogni 2–3 settimane al tatto finché i due lati si pareggiano, poi 50/50.'
+        ],
+        targetView: 'asimmetria'
+      },
+      {
+        id: 'today_diabete_19nov',
+        category: 'diabete',
+        sectionBadge: 'Diabete • Nota 11 (Aggiornata 19/11)',
+        badgeColor: 'rose',
+        title: 'Dati Reali 19/11: Frullato (6U + 3U = 9U) & Mensa (9U + 4U + 3,5U = 16,5U / Stacking 36 Min)',
+        summary: 'Analisi completa esclusivamente sui tuoi boli manuali reali (distinguendoli da 7,17 / 4,75 sommati con Control-IQ): al mattino frullato liquido (20–30 min) vs insulina rapida (picco >1h) fa toccare 281 alle 09:25 con 6U, scendendo a 152 alle 12:50 solo con +3U (rapporto mattutino ~1:6,5–1:7 vs 1:11–12 teorico). A pranzo 9U + 4U (14:03 a 252) + 3,5U dopo appena 36 minuti (14:39 a 321) = 16,5U in <2h (Stacking + Onda Lunga CCK dell’impanato + AMPK/GLUT4 in palestra -> picco 355 e crollo 80–90).',
+        keyPoints: [
+          'Pre-bolo frullato (chiedere 10–15 min di anticipo + I:C fascia 07:00–12:00 per cortisolo/GH mattutino).',
+          'Mai correggere dopo 36 minuti su pasta + impanato (IOB dura 3,5–4h reali): portato il riassunto esatto con le domande per la dottoressa.'
+        ],
+        targetView: 'diabete_glicemia',
+        targetSubTab: 'dati_reali_19nov'
+      },
+      {
+        id: 'today_diabete_nota8',
+        category: 'diabete',
+        sectionBadge: 'Diabete • Nota 8',
+        badgeColor: 'rose',
+        title: 'Frullato Mattutino (40–41g CHO), I:C Teorico vs Cortisolo & Bolo 7,5 U',
+        summary: 'Spiega latte scremato + banana + whey (~40–41g carboidrati): con I:C teorico 1:11–12 sarebbero ~3,5 U, ma tra picco di cortisolo/GH mattutino e assorbimento liquido veloce servono dosi e tempi calibrati con il medico (latenza sottocutanea 0–20 min vs picco 30–90 min).',
+        keyPoints: [
+          'Distinzione tra bolo cibo, correzione e micro-erogazioni automatiche Control-IQ.'
+        ],
+        targetView: 'diabete_glicemia',
+        targetSubTab: 'frullato_bolo'
+      },
+      {
+        id: 'today_diabete_nota9',
+        category: 'diabete',
+        sectionBadge: 'Diabete • Nota 9',
+        badgeColor: 'rose',
+        title: 'Mattina a Digiuno (~120 mg/dL), Dawn Effect & Effetto Sul Grasso',
+        summary: 'Analizza perché uscendo senza colazione resti sui ~120 mg/dL (effetto Alba epatico + basale che contiene la curva) e perché saltare o fare colazione NON blocca il dimagrimento se rispetti il deficit calorico delle 24 ore.',
+        keyPoints: [
+          'Attenzione ai cali in classe e gestione intelligente delle bustine senza montagne russe.'
+        ],
+        targetView: 'diabete_glicemia',
+        targetSubTab: 'mattina_digiuno'
+      },
+      {
+        id: 'today_diabete_nota10',
+        category: 'diabete',
+        sectionBadge: 'Diabete • Nota 10',
+        badgeColor: 'rose',
+        title: 'Timing Frullato (Mer/Gio/Ven), Destino delle Proteine & Finestra Anabolica 24–48h',
+        summary: 'Smentisce il mito delle proteine "in attesa nel sangue fino alle 18": le proteine diventano amminoacidi nel pool sistemico attraverso la vena porta e la sintesi proteica muscolare (MPS) resta accesa per 24–48 ore dopo i pesi. Spostare lo shake post-palestra sfrutta i canali GLUT4 riducendo il fabbisogno di insulina.',
+        keyPoints: [
+          'Contano prima le proteine totali del giorno (115–120g) e le calorie totali; l’orario dello shake conta solo per comodità e curva glicemica.'
+        ],
+        targetView: 'diabete_glicemia',
+        targetSubTab: 'proteine_finestra'
+      },
+      {
+        id: 'today_palestra_henneman_leve',
+        category: 'palestra_ossa',
+        sectionBadge: 'Palestra & Grasso • 13# Info (Nuovo 19 Nov)',
+        badgeColor: 'violet',
+        title: 'Principio di Henneman ("Pochi kg"), Autoregolazione, Curl Manubri vs Cavi & Leve Lunghe/Compensi',
+        summary: 'Il muscolo è cieco al numero sul manubrio: legge tensione meccanica e prossimità al cedimento tecnico. Spiega perché "pochi kg" con traiettoria inchiodata battono un peso "da macho" strappato di schiena, il paradosso dell’autoregolazione, la fisica M = Forza × Braccio di leva sulle braccia lunghe e perché compaiono "spalla di alzata" e micromovimenti lombari.',
+        keyPoints: [
+          'Principio di Henneman (Size Principle): il cervello recluta prima fibre lente (Tipo I) e accende quelle grandi ad alta soglia (Tipo IIa/IIx) man mano che le piccole si stancano vicino al cedimento. "Spaccare le fibre" = avvicinarsi al limite tecnico con forma integra.',
+          'Paradosso del peso (Autoregolazione): il carico giusto oggi è il massimo peso che tieni con controllo perfetto (cambia in base a sonno, glicogeno e glicemia/cortisolo).',
+          'Curl Manubri vs Cavi: nei manubri la gravità tira solo in verticale (picco massimo a metà con avambraccio orizzontale, scarico ai lati); ai cavi la carrucola tiene tensione continua. Su entrambi: gomito stabile lungo il fianco, discesa lenta 2–3 sec (eccentrica) e zero colpi di reni.',
+          'Fisica delle Leve Lunghe & Compensi: Momento Torcente = Forza × Braccio di leva → con braccia lunghe lo stesso manubrio "pesa" molto di più. Quando il target brucia, il cervello in automatico alza la spalla (trapezio) o inarca 5 mm la schiena per creare micro-slancio: fissa le scapole in basso, blocca addome/glutei e trasformi la grinta in muscolo vero.'
+        ],
+        targetView: 'palestra_grasso',
+        targetSubTab: 'henneman_leve_compensi'
+      },
+      {
+        id: 'today_palestra_stesso_giorno',
+        category: 'palestra_ossa',
+        sectionBadge: 'Palestra & Grasso • 14# Info (Nuovo 19 Nov)',
+        badgeColor: 'emerald',
+        title: 'Pesi e Camminata Nello Stesso Giorno: Concurrent Training (AMPK vs mTOR), Timing & Limite Recupero',
+        summary: 'Pesi e camminata nello stesso giorno NON si annullano, anzi si completano: i pesi danno il segnale anabolico di tensione meccanica; la camminata brucia acidi grassi in modo pulito, attiva i GLUT4 per la glicemia e migliora il ritorno venoso articolare senza scatenare fame nervosa.',
+        keyPoints: [
+          'Zero interferenza (AMPK vs mTORC1): il blocco anabolico avviene solo con cardio lungo/intenso o HIIT vicino ai pesi. La camminata lavora su fibre ossidative Tipo I con zero fatica neuromuscolare.',
+          'Ordine perfetto nello stesso giorno: 1ª scelta = Pesi prima (SNC fresco e tecnica massima) e camminata subito dopo o più tardi in giornata; Prima dei pesi = SOLO 5–10 min leggeri di riscaldamento (mai camminate lunghe prima dei carichi); Momenti separati = ottimo purché non tolga sonno.',
+          'Unico limite: se sei sfatto o hai dormito male, tieni un passo deciso ma naturale senza trasformare i passi in una tortura in pendenza.'
+        ],
+        targetView: 'palestra_grasso',
+        targetSubTab: 'pesi_camminata_giorno'
+      },
+      {
+        id: 'today_palestra_rbe_terza_serie',
+        category: 'palestra_ossa',
+        sectionBadge: 'Palestra & Grasso • 15# Info (Nuovo 19 Nov)',
+        badgeColor: 'amber',
+        title: 'Crampi del Giorno 1 (Repeated Bout Effect), Tecnica Filtro, Sussulti al Limite & Regola 3ª Serie',
+        summary: 'Spiega perché i primi giorni "scoppiavano" i muscoli coi crampi mentre dopo no, perché "senza tecnica non farò niente", cosa accade nei "sussulti di sforzo" (Rate Coding, ioni H+, fosfato Pi e Calcio) e la regola d’oro scientifica: buffer 1–2 reps su 1ª e 2ª serie e cedimento tecnico SOLO sulla 3ª.',
+        keyPoints: [
+          'Repeated Bout Effect (RBE): all’inizio il corpo non ha ancora lo scudo adattativo (reclutamento disordinato, edema, fusi neuromuscolari affaticati -> crampi/bruciore estremo). Quando spariscono i crampi non hai smesso di crescere: sei passato dall’emergenza all’ipertrofia strutturale.',
+          'Tecnica Filtro & Sussulti (Rate Coding): la tecnica decide quale tessuto paga il conto. I tremori/sussulti indicano che i motoneuroni stanno sparando alla frequenza massima tra H+ e Pi: se tieni scapole e schiena bloccate è il limite reale; se strappi, hai superato il limite tecnico.',
+          'Regola 3ª Serie vs Tutte: fermarsi a 1–2 ripetizioni pulite di margine su 1ª e 2ª serie preserva forza, tecnica e SNC per tutte e 3 le serie; sulla 3ª dai il cedimento tecnico pulito (massimo stimolo ipertrofico con metà usura su gomiti/spalle).'
+        ],
+        targetView: 'palestra_grasso',
+        targetSubTab: 'rbe_limite_terza_serie'
+      },
+      {
+        id: 'today_palestra_flessioni',
+        category: 'palestra_ossa',
+        sectionBadge: 'Palestra & Grasso • 12# Info',
+        badgeColor: 'orange',
+        title: 'Flessioni nei Giorni Off: Richiamo Sanguigno (Pump) vs Ipertrofia, SNC & 2 Fasi',
+        summary: 'Chiarisce la differenza tra pump temporaneo da ossido nitrico/iperemia (1–2h) e vera crescita muscolare da tensione meccanica (fibre Tipo II + mTOR + MPS 48h). Spiega perché gomiti, spalle e SNC si affaticano se spingi nei giorni off, introducendo il Protocollo a 2 Fasi.',
+        keyPoints: [
+          'Fase 1 (casa giorni OFF): 1–2 mini-set × 3–5 reps con 4–5 RIR di margine (tecnica pura scapole/gomiti 45°, zero fatica).',
+          'Fase 2 (palestra): integri i piegamenti dentro il giorno spinta e lasci i giorni off solo a recupero e passi.'
+        ],
+        targetView: 'palestra_grasso',
+        targetSubTab: 'flessioni_riposo'
+      },
+      {
+        id: 'today_prevenzione_lavoro_manuale',
+        category: 'palestra_ossa',
+        sectionBadge: 'Prevenzione • Sezione 2 (Aggiornata 19 Nov)',
+        badgeColor: 'lime',
+        title: 'Lavoro Fisico Quotidiano vs Palestra: Capillari, Economia del Gesto, Fibre IIx, Mionuclei & Fatica',
+        summary: 'Analisi completa del compromesso scientifico di un lavoro manuale quotidiano senza pesi: alleni la resistenza (più capillari, mitocondri ed economia energetica su fibre lente Tipo I), diventi più asciutto ma perdi un po’ di riempimento/forza massima sulle fibre rapide Tipo IIx per assenza di picchi di alta tensione meccanica.',
+        keyPoints: [
+          'Cosa resta intatto: i Mionuclei permanenti costruiti in palestra da giovane ti salvano per tutta la vita; bastano 2–3 richiami brevi settimanali (25–35 min) per mantenere tutta la massa senza bruciarti.',
+          'Fatica ≠ Stimolo: lavori ripetitivi/asimmetrici generano stanchezza sistemica e usura su schiena/spalle se mancano mobilità, sonno, proteine e richiami bilaterali (con diabete attenzione a ipoglicemie ritardate).'
+        ],
+        targetView: 'prevenzione_eta',
+        targetSubTab: 'massa_lavoro'
+      },
+      {
+        id: 'today_prevenzione_ossa',
+        category: 'palestra_ossa',
+        sectionBadge: 'Prevenzione • Sezione 1 (Aggiornata 19 Nov)',
+        badgeColor: 'lime',
+        title: 'Ossa Negli Anni: Collagene + Idrossiapatite, Corticale vs Trabecolare, Wolff/Piezoelettricità & Pesi vs Camminate',
+        summary: 'Spiega l’osso come tessuto vivo: ~30–35% collagene elastico (anti-frattura) + ~65–70% idrossiapatite (durezza), strato Corticale esterno + rete Trabecolare interna. Sotto carico la micro-deformazione genera segnali piezoelettrici e flusso canalicolare agli Osteociti, che abbassano la Sclerostina attivando gli Osteoblasti lungo le linee di forza (Legge di Wolff).',
+        keyPoints: [
+          'Pesi vs Camminate vs Lavoro Manuale: i pesi danno trazione tendinea forte e rapida (picco BMD); le camminate danno impatto ciclico su femore/colonna; il lavoro manuale rinforza solo gli angoli abituali.',
+          'Il rimodellamento avviene mentre dormi e recuperi (servono Calcio, Vitamina D3, K2, Magnesio e Proteine). Nel diabete glicemia buona + pesi rinnovano il collagene osseo evitando gli AGEs.'
+        ],
+        targetView: 'prevenzione_eta',
+        targetSubTab: 'eta_articolazioni'
+      },
+      {
+        id: 'today_prevenzione_sole',
+        category: 'palestra_ossa',
+        sectionBadge: 'Prevenzione • Sezione 7',
+        badgeColor: 'lime',
+        title: 'Digiuno Mattutino, Luce Solare Circadiana & Vitamina D Sicura (UVB vs UVA)',
+        summary: 'Spiega il meccanismo del movimento mattutino a digiuno (lipolisi + GLUT4), l’impatto della luce naturale mattutina sugli occhi (ipRGCs -> nucleo SCN per cortisolo sveglio la mattina e melatonina profonda la sera) e la fisica dei raggi UVB (280–315 nm) vs UVA (315–400 nm) con regola dell’ombra e cofattori Magnesio + K2.',
+        keyPoints: [
+          'Auto-limitazione naturale della Vitamina D cutanea (lumisterolo/tachisterolo) e protezione SPF su viso/collo.'
+        ],
+        targetView: 'prevenzione_eta',
+        targetSubTab: 'luce_vitamina_d'
+      }
+    ];
+
+    const countByCat = {
+      mente_viso: todayUpdates.filter((u) => u.category === 'mente_viso').length,
+      diabete: todayUpdates.filter((u) => u.category === 'diabete').length,
+      palestra_ossa: todayUpdates.filter((u) => u.category === 'palestra_ossa').length
+    };
+
+    const filteredUpdates =
+      studyTodayFilter === 'tutte'
+        ? todayUpdates
+        : todayUpdates.filter((u) => u.category === studyTodayFilter);
+
+    return (
+      <div className="space-y-4 pb-24 pt-1 animate-in fade-in duration-200">
+        {/* Top Sticky Nav */}
+        <div className="flex items-center justify-between sticky top-0 z-30 bg-[#0B0F17]/95 backdrop-blur-md py-2 -mx-4 px-4 border-b border-white/10">
+          <button
+            type="button"
+            onClick={() => handleOpenView('list')}
+            className="flex items-center space-x-1.5 py-2 px-3 rounded-2xl bg-white/5 hover:bg-white/10 text-amber-300 border border-white/10 text-xs font-bold uppercase tracking-wider transition-all active:scale-95 cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Tutte le Note</span>
+          </button>
+          <span className="text-[11px] font-bold text-amber-300 flex items-center gap-1.5">
+            <BookOpen className="w-3.5 h-3.5 text-amber-400" />
+            Da Studiare Oggi · 19 Nov
+          </span>
+        </div>
+
+        {/* Hero Study Card */}
+        <div className="p-5 sm:p-6 rounded-3xl glass-card border-2 border-amber-400/55 bg-gradient-to-br from-amber-950/40 via-black/90 to-cyan-950/30 space-y-3 shadow-[0_0_30px_rgba(245,158,11,0.18)]">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-400 text-black text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
+              <BookOpen className="w-3 h-3" />
+              Sessione di Studio • 19 Novembre 2026
+            </span>
+            <span className="text-[11px] font-black text-amber-300 tabular-nums">
+              {todayUpdates.length} Aggiornamenti di Oggi
+            </span>
+          </div>
+
+          <h1 className="text-xl sm:text-2xl font-black text-white leading-tight uppercase tracking-tight">
+            Tutte le Note Aggiunte &amp; Modificate Oggi
+          </h1>
+
+          <p className="text-xs text-gray-200 leading-relaxed font-medium">
+            Qui trovi riunite in un&apos;unica pagina tutte le spiegazioni e gli aggiornamenti fatti oggi attraverso le varie sezioni (incluse biomeccanica dei pesi, leve lunghe, camminata + pesi, crampi/RBE, regola 3ª serie, lavoro manuale e ossa), così puoi leggerli, ripassarli e studiarli con calma senza saltare da una cartella all&apos;altra (ogni scheda ha anche il tasto diretto per aprire la nota completa).
+          </p>
+
+          {/* Filter Pills */}
+          <div className="pt-2 border-t border-white/10 flex flex-wrap gap-1.5">
+            {[
+              { id: 'tutte', label: `Tutte (${todayUpdates.length})` },
+              { id: 'mente_viso', label: `Mente & Viso (${countByCat.mente_viso})` },
+              { id: 'diabete', label: `Diabete (${countByCat.diabete})` },
+              { id: 'palestra_ossa', label: `Palestra, Lavoro & Ossa (${countByCat.palestra_ossa})` }
+            ].map((pill) => (
+              <button
+                key={pill.id}
+                type="button"
+                onClick={() => setStudyTodayFilter(pill.id as typeof studyTodayFilter)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
+                  studyTodayFilter === pill.id
+                    ? 'bg-amber-400 text-black shadow-sm'
+                    : 'bg-white/5 text-gray-300 hover:text-white border border-white/10'
+                }`}
+              >
+                {pill.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Lista Unificata degli Aggiornamenti di Oggi */}
+        <div className="space-y-3">
+          {filteredUpdates.map((item, idx) => (
+            <div
+              key={item.id}
+              className="p-4 sm:p-5 rounded-3xl glass-card border border-white/15 hover:border-amber-400/50 bg-black/75 space-y-3 transition-all"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
+                <div className="flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-lg bg-amber-400/20 text-amber-300 border border-amber-400/40 flex items-center justify-center text-xs font-black tabular-nums shrink-0">
+                    {idx + 1}
+                  </span>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-cyan-300">
+                    {item.sectionBadge}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleOpenView(item.targetView, item.targetSubTab)}
+                  className="px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-black font-black text-[11px] flex items-center gap-1 cursor-pointer transition-all active:scale-95 shrink-0"
+                >
+                  <span>Apri nella Sezione</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              <h2 className="text-sm sm:text-base font-black text-white leading-snug">
+                {item.title}
+              </h2>
+
+              <p className="text-xs text-gray-200 leading-relaxed">
+                {item.summary}
+              </p>
+
+              <ul className="space-y-1.5 list-disc pl-5 text-[11px] text-gray-300">
+                {item.keyPoints.map((pt, pIdx) => (
+                  <li key={pIdx} className="leading-relaxed">
+                    {pt}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // -------------------------------------------------------------
   // VIEW: LISTA NOTE (HOME DELLE NOTE CON QUADRATINO ASIMMETRIA)
   // -------------------------------------------------------------
   return (
     <div className="space-y-4 pb-24 pt-1 animate-in fade-in duration-200">
       {renderFullscreenModal()}
 
-      {/* Header & Add Button */}
-      <div className="flex items-center justify-between">
+      {/* Header & Add Button + Da Studiare Oggi */}
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
           <h1 className="text-lg font-black text-white flex items-center gap-2">
             <FileText className="w-5 h-5 text-cyan-300" />
@@ -1596,14 +2408,25 @@ export const NoteTab: React.FC = () => {
           <p className="text-xs text-gray-400">Diario, analisi e appunti per il tuo cammino</p>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setIsCreatingNote(true)}
-          className="flex items-center space-x-1.5 py-2 px-3.5 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold text-xs shadow-neon transition-all active:scale-95 cursor-pointer"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Nuova Nota</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => handleOpenView('studia_oggi')}
+            className="flex items-center space-x-1.5 py-2 px-3 rounded-2xl bg-amber-500/20 hover:bg-amber-400 hover:text-black text-amber-200 border border-amber-400/50 font-extrabold text-xs transition-all active:scale-95 cursor-pointer"
+          >
+            <BookOpen className="w-3.5 h-3.5 shrink-0" />
+            <span>Da Studiare Oggi (19 Nov · 14)</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsCreatingNote(true)}
+            className="flex items-center space-x-1.5 py-2 px-3.5 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold text-xs shadow-neon transition-all active:scale-95 cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Nuova Nota</span>
+          </button>
+        </div>
       </div>
 
       {/* ------------------------------------------------------------- */}
@@ -1838,10 +2661,28 @@ export const NoteTab: React.FC = () => {
             <Zap className="w-3 h-3 text-cyan-400" />
             Accesso Rapido • Apri Subito
           </span>
-          <span className="text-[10px] font-bold text-gray-500">11 Guide</span>
+          <span className="text-[10px] font-bold text-gray-500">13 Guide</span>
         </div>
 
         <div className="flex flex-wrap gap-1.5">
+          <button
+            type="button"
+            onClick={() => handleOpenView('bussola_mente')}
+            className="px-2.5 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 border border-emerald-400/50 text-[11px] font-extrabold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+          >
+            <Compass className="w-3 h-3 text-emerald-300 shrink-0" />
+            <span>La Mia Bussola</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleOpenView('studia_oggi')}
+            className="px-2.5 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/50 text-[11px] font-extrabold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+          >
+            <BookOpen className="w-3 h-3 text-amber-300 shrink-0" />
+            <span>Da Studiare Oggi (19 Nov)</span>
+          </button>
+
           <button
             type="button"
             onClick={() => handleOpenView('asimmetria')}
@@ -1944,6 +2785,54 @@ export const NoteTab: React.FC = () => {
       </div>
 
       {/* ------------------------------------------------------------- */}
+      {/* CARD #1 IN ALTO: "LA MIA BUSSOLA: TRANQUILLITÀ & VERSIONE MIGLIORE" */}
+      {/* ------------------------------------------------------------- */}
+      <div className="space-y-2">
+        <span className="text-[11px] font-bold text-emerald-300 uppercase tracking-wider block pl-1">
+          Priorità Assoluta • Da Aprire Quando Hai Dubbi o Paranoie
+        </span>
+
+        <div
+          onClick={() => handleOpenView('bussola_mente')}
+          className="p-5 rounded-3xl glass-card border-2 border-emerald-400/80 hover:border-emerald-300 bg-gradient-to-br from-emerald-500/20 via-black/85 to-cyan-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
+        >
+          <div className="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
+
+          <div className="flex items-start justify-between relative z-10">
+            <div className="space-y-2 flex-1 pr-3">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-400 text-black text-[10px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1">
+                  <Heart className="w-3 h-3" />
+                  ★ La Nota Più Importante
+                </span>
+                <span className="text-[10px] text-emerald-200 font-bold">Pace • Anti-Paranoie • 6 Pilastri</span>
+              </div>
+
+              <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-emerald-300 transition-colors uppercase tracking-tight">
+                La Mia Bussola: Tranquillità &amp; Versione Migliore
+              </h2>
+
+              <p className="text-xs text-gray-200 leading-relaxed font-medium line-clamp-3">
+                Obiettivo n° 1: stare sereno e in pace con te stesso e chi ami. Se già sei su questa strada e organizzato (grasso viso, asimmetria, messy wavy, acne/acqua senza fissazione sodio, 10.000 passi), sei già a posto e stai già diventando la tua versione migliore.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-emerald-500/20 group-hover:bg-emerald-500 text-emerald-300 group-hover:text-black border border-emerald-400/50 shadow-neon transition-all shrink-0 mt-1">
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
+            <span className="text-emerald-300 font-bold flex items-center gap-1.5">
+              <span>Tocca per ritrovare calma &amp; direzione chiara</span>
+              <Compass className="w-3.5 h-3.5" />
+            </span>
+            <span className="text-[10px] text-gray-400 font-semibold">Scienza Cortisolo + I 6 Pilastri Semplici</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ------------------------------------------------------------- */}
       {/* IL QUADRATINO CHIAVE: "LA MIA ASIMMETRIA" (RICHIESTA SPECIFICA) */}
       {/* ------------------------------------------------------------- */}
       <div className="space-y-2">
@@ -1971,7 +2860,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Test al tatto dei masseteri (denti stretti), strategia invertita (60-65% a sinistra per tonificare il lato fino, riposo a destra) e dimagrimento per la jawline simmetrica entro giugno.
+                Test masseteri, 2 sezioni dedicate subito in cima (Grasso Viso/Taglio Corto &amp; Info Masticazione), lipolisi viso + 13 foto e percorso ortodontico.
               </p>
             </div>
 
@@ -1982,10 +2871,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-cyan-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire il piano completo</span>
+              <span>Tocca per aprire piano, 2 sotto-sezioni &amp; 13 foto</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">4 Parti + Foto & Clinica</span>
+            <span className="text-[10px] text-gray-400 font-semibold">Scienza Viso + Nuova Sezione Grasso/Taglio + 13 Foto</span>
           </div>
         </div>
       </div>
@@ -2332,7 +3221,7 @@ export const NoteTab: React.FC = () => {
                   <Dumbbell className="w-3 h-3 text-orange-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">18 Pilastri • 5# & 6# Affiancate + 7# + 8# + 9# + 10# + 11# PAP 2ª Serie & Efficienza</span>
+                <span className="text-[10px] text-gray-400 font-semibold">19 Pilastri • 5# & 6# Affiancate + 7# + 8# + 9# + 10# + 11# PAP + 12# Flessioni Pump &amp; 2 Fasi</span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-orange-300 transition-colors uppercase tracking-tight">
@@ -2340,7 +3229,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Tecnica, deficit 700-900 kcal, proteine/grassi (5# & 6#), bustine 120-130, flessioni, 9# Strategia Personale (75 kg), 10# Gestione Serie (9 kg x 12, blocco 6 vs 14, warm-up bicipiti, calisthenics off) e 11# Perché la 2ª serie è più leggera (PAP, viscosità, pump) + regola 3 serie.
+                Tecnica, deficit 700-900 kcal, proteine/grassi (5# &amp; 6#), bustine 120-130, 9# Strategia Personale (75 kg), 10# Gestione Serie, 11# PAP 2ª serie &amp; 3 serie e 12# Flessioni giorni off (pump vs ipertrofia, SNC e 2 fasi).
               </p>
             </div>
 
@@ -2354,7 +3243,7 @@ export const NoteTab: React.FC = () => {
               <span>Tocca per aprire la guida su palestra e dimagrimento</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">5# & 6# (Sx/Dx) + 7# + 8# + 9# + 10# + 11# PAP & 3 Serie</span>
+            <span className="text-[10px] text-gray-400 font-semibold">19 Pilastri • Include 12# Pump, SNC &amp; 2 Fasi</span>
           </div>
         </div>
       </div>
@@ -2444,6 +3333,18 @@ export const NoteTab: React.FC = () => {
                 <span className="text-[10px] text-orange-300 font-extrabold bg-orange-500/15 px-2 py-0.5 rounded-md border border-orange-500/30">
                   🌊 7: Onda Lunga (3h • Cordon Bleu)
                 </span>
+                <span className="text-[10px] text-sky-300 font-extrabold bg-sky-500/15 px-2 py-0.5 rounded-md border border-sky-500/30">
+                  🥤 8: Frullato &amp; 7,5 U
+                </span>
+                <span className="text-[10px] text-lime-300 font-extrabold bg-lime-500/15 px-2 py-0.5 rounded-md border border-lime-500/30">
+                  ☀️ 9: Digiuno ~120
+                </span>
+                <span className="text-[10px] text-indigo-300 font-extrabold bg-indigo-500/15 px-2 py-0.5 rounded-md border border-indigo-500/30">
+                  🧬 10: Proteine &amp; Finestra
+                </span>
+                <span className="text-[10px] text-rose-200 font-extrabold bg-rose-500/20 px-2 py-0.5 rounded-md border border-rose-400/40">
+                  📌 11: Dati 19/11 &amp; Stacking
+                </span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-rose-300 transition-colors uppercase tracking-tight">
@@ -2451,7 +3352,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                ★ IMPORTANTE: Calcolo Insulina (tasto rapido Solo Calcoli: ICR ~1:11/1:12 Regola 500, Correzione ~40-45 Regola 1800 su 40-45 U/die) + Onda Lunga 3h, variabilità glicemica, bustine vs cibo vero e gestione allenamento serale.
+                ★ Calcolo Insulina + Onda Lunga 3h, Frullato 40–41g CHO, Digiuno ~120, Proteine &amp; Finestra 24–48h + Nota 11: Dati Reali 19/11 (6U+3U mattina &amp; Mensa 16,5U / Insulin Stacking).
               </p>
             </div>
 
@@ -2465,7 +3366,7 @@ export const NoteTab: React.FC = () => {
               <span>Tocca per aprire guida e calcoli insulina</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">★ Calcolo Insulina + 7 Note + 5 Sezioni</span>
+            <span className="text-[10px] text-gray-400 font-semibold">★ Calcolo Insulina + 11 Note + 5 Sezioni</span>
           </div>
         </div>
       </div>
@@ -2475,7 +3376,7 @@ export const NoteTab: React.FC = () => {
       {/* ------------------------------------------------------------- */}
       <div className="space-y-2">
         <span className="text-[11px] font-bold text-lime-400 uppercase tracking-wider block pl-1">
-          Nuova Nota Personale • Longevità, Articolazioni, Lavoro &amp; Diabete
+          Nuova Nota Personale • Longevità, Ossa, Ossigeno, Capelli, Collagene &amp; Diabete
         </span>
 
         <div
@@ -2492,22 +3393,31 @@ export const NoteTab: React.FC = () => {
                   ★ Note Scritte Da Me
                 </span>
                 <span className="text-[10px] text-emerald-300 font-extrabold bg-emerald-500/15 px-2 py-0.5 rounded-md border border-emerald-500/30">
-                  🦴 1. Età &amp; Mionuclei
+                  🦴 Ossa &amp; Età
                 </span>
-                <span className="text-[10px] text-amber-300 font-extrabold bg-amber-500/15 px-2 py-0.5 rounded-md border border-amber-500/30">
-                  💼 2. Lavoro &amp; 3 Età
+                <span className="text-[10px] text-sky-300 font-extrabold bg-sky-500/15 px-2 py-0.5 rounded-md border border-sky-500/30">
+                  🫁 Ossigeno &amp; Bici
+                </span>
+                <span className="text-[10px] text-teal-300 font-extrabold bg-teal-500/15 px-2 py-0.5 rounded-md border border-teal-500/30">
+                  💇 Capelli
+                </span>
+                <span className="text-[10px] text-purple-300 font-extrabold bg-purple-500/15 px-2 py-0.5 rounded-md border border-purple-500/30">
+                  🧬 Collagene &amp; Dieta
                 </span>
                 <span className="text-[10px] text-rose-300 font-extrabold bg-rose-500/15 px-2 py-0.5 rounded-md border border-rose-500/30">
-                  🩸 3. Scienza Diabete
+                  🩸 Diabete
+                </span>
+                <span className="text-[10px] text-yellow-300 font-extrabold bg-yellow-500/15 px-2 py-0.5 rounded-md border border-yellow-500/30">
+                  ☀️ Sole &amp; Vit. D
                 </span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-lime-300 transition-colors uppercase tracking-tight">
-                Prevenzione età, articolazioni &amp; diabete
+                Prevenzione età, ossa, collagene, sole &amp; diabete
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Nota 1: Banca muscoli/ossa, mobilità, Super-Aging e mionuclei. Nota 2: Lavoro manuale e gestione nelle 3 età (Giovane, Adulto, Anziano con diabete). Nota 3: Cosa succede scientificamente col diabete (AGEs, collagene, GLUT4, microcircolazione e recupero).
+                7 sezioni scientifiche e pratiche calibrate sul diabete: ossa (Wolff), lavoro &amp; 3 età, AGEs/GLUT4, ossigeno &amp; bici, capelli, collagene + dieta anti-AGEs, digiuno mattutino + luce circadiana &amp; Vitamina D UVB sicura.
               </p>
             </div>
 
@@ -2518,10 +3428,10 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-lime-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire le 3 note complete</span>
+              <span>Tocca per aprire le 7 sezioni complete</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">1. Età • 2. Lavoro &amp; 3 Età • 3. Diabete</span>
+            <span className="text-[10px] text-gray-400 font-semibold">Ossa • Ossigeno &amp; Bici • Collagene • Sole &amp; Vit. D</span>
           </div>
         </div>
       </div>

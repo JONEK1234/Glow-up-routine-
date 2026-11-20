@@ -32,7 +32,7 @@ interface PalestraPerditaGrassoViewProps {
 }
 
 export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps> = ({ onBack, initialTab }) => {
-  type PalestraTab = 'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra' | 'piegamenti_lavoro' | 'strategia_personale' | 'volume_calisthenics' | 'pap_seconda_serie';
+  type PalestraTab = 'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra' | 'piegamenti_lavoro' | 'strategia_personale' | 'volume_calisthenics' | 'pap_seconda_serie' | 'flessioni_riposo' | 'henneman_leve_compensi' | 'pesi_camminata_giorno' | 'rbe_limite_terza_serie';
   const [activeTab, setActiveTab] = useState<PalestraTab>((initialTab as PalestraTab) || 'tutte');
   const noteContentRef = useRef<HTMLDivElement>(null);
 
@@ -430,10 +430,10 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
               </span>
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-fuchsia-400 flex items-center gap-1.5">
-                  <Zap className="w-3 h-3 text-fuchsia-400" /> 11# Info: Seconda Serie più "Leggera" (PAP) & Efficienza 3 Serie
+                  <Zap className="w-3 h-3 text-fuchsia-400" /> 11# Info: Seconda Serie più &quot;Leggera&quot; (PAP) &amp; Efficienza 3 Serie
                 </span>
                 <h3 className="text-xs sm:text-sm font-black text-white group-hover:text-fuchsia-200 transition-colors">
-                  Neurofisiologia PAP, Viscosità & Pump + Perché NON Tornare su un Muscolo Già Allenato (Tricipiti / Sinergici)
+                  Neurofisiologia PAP, Viscosità &amp; Pump + Perché NON Tornare su un Muscolo Già Allenato (Tricipiti / Sinergici)
                 </h3>
                 <p className="text-[11px] text-gray-300 line-clamp-1 mt-0.5">
                   Reclutamento fibre rapide, liquido sinoviale, finestra magica 2ª-3ª serie e massima intensità sulle 3 serie a cedimento.
@@ -441,6 +441,110 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
               </div>
             </div>
             <span className="text-xs font-black px-3 py-1.5 rounded-xl bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/30 group-hover:bg-fuchsia-500 group-hover:text-black transition-all shrink-0 ml-2">
+              Apri ➔
+            </span>
+          </div>
+
+          {/* 12# Informazioni: Piegamenti nei Giorni Off, Richiamo Sanguigno (Pump) vs Crescita & Protocollo 2 Fasi */}
+          <div
+            onClick={() => handleSelectTab('flessioni_riposo')}
+            className="p-3.5 rounded-2xl bg-gradient-to-r from-sky-950/60 via-cyan-950/40 to-black/80 border-2 border-sky-400/50 hover:border-sky-300 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-sky-500/25 col-span-1 sm:col-span-2 lg:col-span-3"
+          >
+            <div className="flex items-center space-x-3">
+              <span className="p-2.5 rounded-xl bg-sky-500/20 text-sky-300 border border-sky-500/30 group-hover:bg-sky-500 group-hover:text-black transition-all shrink-0">
+                <Activity className="w-4 h-4 text-sky-400 group-hover:text-black" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-sky-300 flex items-center gap-1.5">
+                  <Sparkles className="w-3 h-3 text-sky-300" /> 12# Info (19 Nov): Flessioni Giorni Off, Pump vs Ipertrofia &amp; Protocollo 2 Fasi
+                </span>
+                <h3 className="text-xs sm:text-sm font-black text-white group-hover:text-sky-200 transition-colors">
+                  Richiamo Sanguigno (Iperemia) vs Stimolo Crescita, Sistema Nervoso/Gomiti &amp; Fase 1 Casa (4–5 RIR) → Fase 2 Palestra
+                </h3>
+                <p className="text-[11px] text-gray-300 line-clamp-1 mt-0.5">
+                  Spiegazione scientifica completa di cosa accade con flessioni a casa nei giorni di riposo + come gestirle senza rovinare il recupero.
+                </p>
+              </div>
+            </div>
+            <span className="text-xs font-black px-3 py-1.5 rounded-xl bg-sky-500/20 text-sky-300 border border-sky-500/30 group-hover:bg-sky-500 group-hover:text-black transition-all shrink-0 ml-2">
+              Apri ➔
+            </span>
+          </div>
+
+          {/* 13# Informazioni: Principio di Henneman, Pochi kg, Curl & Leve Lunghe/Compensi */}
+          <div
+            onClick={() => handleSelectTab('henneman_leve_compensi')}
+            className="p-3.5 rounded-2xl bg-gradient-to-r from-violet-950/60 via-indigo-950/40 to-black/80 border-2 border-violet-400/50 hover:border-violet-300 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-violet-500/25 col-span-1 sm:col-span-2 lg:col-span-3"
+          >
+            <div className="flex items-center space-x-3">
+              <span className="p-2.5 rounded-xl bg-violet-500/20 text-violet-300 border border-violet-500/30 group-hover:bg-violet-500 group-hover:text-black transition-all shrink-0">
+                <Dumbbell className="w-4 h-4 text-violet-400 group-hover:text-black" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-violet-300 flex items-center gap-1.5">
+                  <Sparkles className="w-3 h-3 text-violet-300" /> 13# Info (19 Nov): Biomeccanica, Henneman &amp; Leve Lunghe
+                </span>
+                <h3 className="text-xs sm:text-sm font-black text-white group-hover:text-violet-200 transition-colors">
+                  Principio di Henneman (&quot;Pochi kg&quot; vs Peso Sporco), Curl Manubri vs Cavi, Momento Torcente &amp; Compensi Spalla/Schiena
+                </h3>
+                <p className="text-[11px] text-gray-300 line-clamp-1 mt-0.5">
+                  Autoregolazione del peso, fisica M = Forza × Braccio di leva sulle braccia lunghe, curva di resistenza e zero colpi di reni.
+                </p>
+              </div>
+            </div>
+            <span className="text-xs font-black px-3 py-1.5 rounded-xl bg-violet-500/20 text-violet-300 border border-violet-500/30 group-hover:bg-violet-500 group-hover:text-black transition-all shrink-0 ml-2">
+              Apri ➔
+            </span>
+          </div>
+
+          {/* 14# Informazioni: Pesi + Camminata Stesso Giorno (AMPK vs mTOR) */}
+          <div
+            onClick={() => handleSelectTab('pesi_camminata_giorno')}
+            className="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/60 via-teal-950/40 to-black/80 border-2 border-emerald-400/50 hover:border-emerald-300 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-emerald-500/25 col-span-1 sm:col-span-2 lg:col-span-3"
+          >
+            <div className="flex items-center space-x-3">
+              <span className="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 group-hover:bg-emerald-500 group-hover:text-black transition-all shrink-0">
+                <HeartPulse className="w-4 h-4 text-emerald-400 group-hover:text-black" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-300 flex items-center gap-1.5">
+                  <Sparkles className="w-3 h-3 text-emerald-300" /> 14# Info (19 Nov): Stesso Giorno Pesi + Camminata
+                </span>
+                <h3 className="text-xs sm:text-sm font-black text-white group-hover:text-emerald-200 transition-colors">
+                  Concurrent Training Senza Interferenza (AMPK vs mTORC1), Timing Esatto (Dopo vs Prima vs Separato) &amp; Ricomposizione
+                </h3>
+                <p className="text-[11px] text-gray-300 line-clamp-1 mt-0.5">
+                  Perché camminare nello stesso giorno sblocca i grassi e migliora ritorno venoso/GLUT4 senza rubare crescita ai pesi.
+                </p>
+              </div>
+            </div>
+            <span className="text-xs font-black px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 group-hover:bg-emerald-500 group-hover:text-black transition-all shrink-0 ml-2">
+              Apri ➔
+            </span>
+          </div>
+
+          {/* 15# Informazioni: RBE Crampi Giorno 1, Sussulti (Rate Coding) & Cedimento Solo sulla 3ª Serie */}
+          <div
+            onClick={() => handleSelectTab('rbe_limite_terza_serie')}
+            className="p-3.5 rounded-2xl bg-gradient-to-r from-amber-950/60 via-orange-950/40 to-black/80 border-2 border-amber-400/50 hover:border-amber-300 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-amber-500/25 col-span-1 sm:col-span-2 lg:col-span-3"
+          >
+            <div className="flex items-center space-x-3">
+              <span className="p-2.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30 group-hover:bg-amber-500 group-hover:text-black transition-all shrink-0">
+                <Zap className="w-4 h-4 text-amber-400 group-hover:text-black" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                  <Sparkles className="w-3 h-3 text-amber-300" /> 15# Info (19 Nov): Crampi Giorno 1, Sussulti &amp; Regola 3ª Serie
+                </span>
+                <h3 className="text-xs sm:text-sm font-black text-white group-hover:text-amber-200 transition-colors">
+                  Repeated Bout Effect (Crampi Iniziali vs Adattamento), Tecnica Filtro, Sussulti/Rate Coding &amp; Cedimento Solo sull&apos;Ultima Serie
+                </h3>
+                <p className="text-[11px] text-gray-300 line-clamp-1 mt-0.5">
+                  Neurofisiologia dello sforzo al limite (H+, Pi, Ca2+) e perché tenere 1–2 reps in canna su 1ª e 2ª serie moltiplica i risultati sulla 3ª.
+                </p>
+              </div>
+            </div>
+            <span className="text-xs font-black px-3 py-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30 group-hover:bg-amber-500 group-hover:text-black transition-all shrink-0 ml-2">
               Apri ➔
             </span>
           </div>
@@ -694,6 +798,62 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           >
             <Zap className="w-3.5 h-3.5 text-fuchsia-400" />
             18. 11# Info: PAP 2ª Serie & Regola 3 Serie
+          </button>
+
+          {/* 19. 12# Info: Pump vs Crescita, SNC & Protocollo 2 Fasi Flessioni */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('flessioni_riposo')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'flessioni_riposo'
+                ? 'bg-sky-400 text-black shadow-md shadow-sky-500/30 font-extrabold'
+                : 'bg-sky-500/10 text-sky-300 hover:text-white border border-sky-500/30'
+            }`}
+          >
+            <Activity className="w-3.5 h-3.5 text-sky-400" />
+            19. 12# Info: Pump, SNC & 2 Fasi Flessioni
+          </button>
+
+          {/* 20. 13# Info: Henneman, Curl, Leve Lunghe & Compensi */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('henneman_leve_compensi')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'henneman_leve_compensi'
+                ? 'bg-violet-400 text-black shadow-md shadow-violet-500/30 font-extrabold'
+                : 'bg-violet-500/10 text-violet-300 hover:text-white border border-violet-500/30'
+            }`}
+          >
+            <Dumbbell className="w-3.5 h-3.5 text-violet-400" />
+            20. 13# Info: Henneman, Curl &amp; Leve Lunghe
+          </button>
+
+          {/* 21. 14# Info: Pesi + Camminata Stesso Giorno */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('pesi_camminata_giorno')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'pesi_camminata_giorno'
+                ? 'bg-emerald-400 text-black shadow-md shadow-emerald-500/30 font-extrabold'
+                : 'bg-emerald-500/10 text-emerald-300 hover:text-white border border-emerald-500/30'
+            }`}
+          >
+            <HeartPulse className="w-3.5 h-3.5 text-emerald-400" />
+            21. 14# Info: Pesi + Camminata Stesso Giorno
+          </button>
+
+          {/* 22. 15# Info: RBE Crampi, Sussulti & Cedimento 3ª Serie */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('rbe_limite_terza_serie')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'rbe_limite_terza_serie'
+                ? 'bg-amber-400 text-black shadow-md shadow-amber-500/30 font-extrabold'
+                : 'bg-amber-500/10 text-amber-300 hover:text-white border border-amber-500/30'
+            }`}
+          >
+            <Zap className="w-3.5 h-3.5 text-amber-400" />
+            22. 15# Info: RBE, Sussulti &amp; 3ª Serie
           </button>
         </div>
       </div>
@@ -3797,6 +3957,409 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
                 <p className="text-[11px] text-gray-300 leading-relaxed">
                   Invece di aggiungere esercizi a caso a fine seduta perché ti senti fresco, incanala tutta quella cattiveria nel rendere le <strong>3 serie principali così pesanti e tirate</strong> che, alla fine dell'esercizio, alzare le braccia anche solo per bere l'acqua diventi un'impresa. Così si stimola la crescita vera!
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 12: PIEGAMENTI GIORNI OFF, PUMP VS CRESCITA & 2 FASI  */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'flessioni_riposo') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                <Activity className="w-4 h-4 text-sky-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-sky-400">
+                  12# Info • Fisiologia Vascolare, SNC &amp; Protocollo 2 Fasi (19 Nov)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Piegamenti nei Giorni Off: Richiamo Sanguigno (Pump) vs Crescita Reale &amp; 2 Fasi
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-sky-500/15 text-sky-300 border border-sky-500/30">
+              4–5 RIR • SNC &amp; Tendini
+            </span>
+          </div>
+
+          <div className="p-5 sm:p-6 rounded-3xl glass-card border-2 border-sky-400/45 space-y-5 bg-gradient-to-br from-sky-950/35 via-cyan-950/20 to-black/90 text-xs text-gray-200 leading-relaxed">
+            {/* 1. Richiamo Sanguigno (Pump) vs Ipertrofia Reale */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-sky-500/30 space-y-3">
+              <strong className="text-sky-300 uppercase tracking-wider text-[11px] block">
+                1. Perché Sentirsi &quot;Pieni&quot; (Pump) NON Significa Stare Crescendo di Più
+              </strong>
+              <p>
+                Quando fai piegamenti leggeri a casa senti subito i pettorali e i tricipiti più duri e gonfi. In fisiologia questa sensazione ha due meccanismi completamente diversi tra loro:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                <div className="p-3 rounded-xl bg-sky-950/25 border border-sky-500/30 space-y-1.5">
+                  <strong className="text-sky-300 block">Richiamo Sanguigno (Iperemia / Pump)</strong>
+                  <p className="text-gray-300">
+                    La contrazione muscolare libera <strong>Ossido Nitrico (NO)</strong> e metaboliti locali che dilatano i capillari, richiamando sangue, acqua e plasma dentro la fascia muscolare. Il muscolo appare più pieno e caldo per 1–2 ore, facilitando lo smaltimento delle scorie di allenamenti precedenti, ma <strong className="text-white">non costruisce nuove fibre contrattili da solo</strong>.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-emerald-950/25 border border-emerald-500/30 space-y-1.5">
+                  <strong className="text-emerald-300 block">Vera Crescita Muscolare (Ipertrofia Miofibrillare)</strong>
+                  <p className="text-gray-300">
+                    Richiede <strong>alta tensione meccanica progressiva</strong> vicino al cedimento (fibre rapide Tipo II), che attiva il sensore cellulare <strong>mTORC1</strong> e mantiene accesa la sintesi proteica (MPS) per 24–48 ore. Se nei giorni off stanchi il muscolo con serie tirate, disturbi esattamente quella ricostruzione che stava avvenendo dal Lunedì/Mercoledì!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Sistema Nervoso Centrale (SNC), Gomiti e Spalle */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-amber-500/35 space-y-2.5 text-[11px]">
+              <strong className="text-amber-300 uppercase tracking-wider block">
+                2. Cosa Succede a Sistema Nervoso (SNC), Gomiti e Spalle con Giorni Consecutivi di Spinta
+              </strong>
+              <ul className="space-y-1.5 list-disc pl-5 text-gray-200">
+                <li>
+                  <strong>Recupero Asimmetrico (Muscoli vs Tendini/SNC):</strong> il muscolo smaltisce il dolore (DOMS) in 24–48 ore grazie al flusso sanguigno abbondante; invece <strong>tendini del gomito, cuffia dei rotatori e Sistema Nervoso Centrale</strong> ricevono meno sangue e richiedono più tempo. In deficit calorico (~1.400–1.600 kcal), fare serie intense tutti i giorni crea micro-infiammazione tendinea cumulativa e fatica neurale.
+                </li>
+                <li>
+                  <strong>La Regola Scientifica:</strong> nei giorni off il muscolo cresce <strong>mentre riposa</strong>, non mentre lo ri-martelli. I piegamenti a casa hanno senso SOLO se tenuti puramente tecnici e lontanissimi dalla fatica!
+                </li>
+              </ul>
+            </div>
+
+            {/* 3. Protocollo a 2 Fasi */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-cyan-950/40 via-sky-950/30 to-black/80 border border-cyan-400/40 space-y-3">
+              <strong className="text-cyan-300 uppercase tracking-wider text-[11px] block">
+                3. Il Protocollo Pratico a 2 Fasi (Casa → Palestra)
+              </strong>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                <div className="p-3.5 rounded-2xl bg-black/70 border border-cyan-500/35 space-y-1.5">
+                  <span className="text-[10px] font-black uppercase text-cyan-300 block">
+                    Fase 1 · A Casa (Apprendimento Motorio Puro)
+                  </span>
+                  <ul className="space-y-1 list-disc pl-4 text-gray-200">
+                    <li><strong>Volume minimo:</strong> 1–2 mini-set da <strong>3–5 ripetizioni pulite</strong>.</li>
+                    <li><strong>Buffer altissimo (4–5 RIR):</strong> devi finire fresco come prima di iniziare (zero bruciore, zero cedimento, 4–5 ripetizioni di margine).</li>
+                    <li><strong>Focus tecnico totale:</strong> scapole stabili (non insaccate), gomiti a freccia 45° (mai 90°), core + glutei duri per tenere la schiena in blocco.</li>
+                  </ul>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-black/70 border border-emerald-500/35 space-y-1.5">
+                  <span className="text-[10px] font-black uppercase text-emerald-300 block">
+                    Fase 2 · Integrazione in Palestra (Giorno Spinta)
+                  </span>
+                  <ul className="space-y-1 list-disc pl-4 text-gray-200">
+                    <li>Quando il gesto è fluido e automatico, <strong>togli i piegamenti dai giorni di riposo</strong>.</li>
+                    <li>Li sposti direttamente dentro la sessione di spinta in palestra (come serie di attivazione prima della panca o come finisher metabolico controllato).</li>
+                    <li>Risultato: spingi di più in palestra, zero usura ai gomiti e recupero al 100% nei giorni off (dove lasci solo i 10.000 passi!).</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 13: HENNEMAN, "POCHI KG", CURL, LEVE LUNGHE & COMPENSI */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'henneman_leve_compensi') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-violet-500/20 text-violet-300 border border-violet-500/30">
+                <Dumbbell className="w-4 h-4 text-violet-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-violet-400">
+                  13# Info • Biomeccanica Avanzata &amp; Neurofisiologia del Carico (19 Nov)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Principio di Henneman (&quot;Pochi kg&quot;), Autoregolazione, Curl Manubri vs Cavi &amp; Leve Lunghe
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-violet-500/15 text-violet-300 border border-violet-500/30">
+              Fisica &amp; Tensione Reale
+            </span>
+          </div>
+
+          <div className="p-5 sm:p-6 rounded-3xl glass-card border-2 border-violet-400/45 space-y-5 bg-gradient-to-br from-violet-950/35 via-indigo-950/20 to-black/90 text-xs text-gray-200 leading-relaxed">
+            {/* 1. Principio di Henneman & Pochi kg */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-violet-500/35 space-y-3">
+              <strong className="text-violet-300 uppercase tracking-wider text-[11px] block">
+                1. &quot;Fibre Anche Con Pochi kg, Ma Spaccate al Massimo&quot;: Il Principio di Henneman
+              </strong>
+              <p>
+                Il tuo muscolo è cieco: <strong>non sa leggere il numero stampato sul manubrio o sul pacco pesi</strong>. Sente esclusivamente due segnali fisici: la <strong>tensione meccanica</strong> sulle fibre attive e la <strong>prossimità al cedimento tecnico</strong>.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                <div className="p-3 rounded-xl bg-violet-950/25 border border-violet-500/30 space-y-1.5">
+                  <strong className="text-violet-300 block">Come Recluta il Cervello (Size Principle)</strong>
+                  <p className="text-gray-300">
+                    Per la legge neurofisiologica di <strong>Henneman</strong>, il sistema nervoso attiva prima le <em>unità motorie piccole e resistenti</em> (Tipo I, soglia bassa) e accende le <em>unità motorie grandi, forti e ipertrofiche</em> (Tipo IIa/IIx, alta soglia) solo quando la richiesta di forza è altissima oppure man mano che le fibre piccole si stancano nelle ultime ripetizioni vicino al cedimento.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-emerald-950/25 border border-emerald-500/30 space-y-1.5">
+                  <strong className="text-emerald-300 block">Pochi kg Puliti vs Peso &quot;Da Macho&quot; Sporco</strong>
+                  <p className="text-gray-300">
+                    Un peso moderato (ad es. su alzate laterali o curl) portato vicino al limite con traiettoria inchiodata recluta il 100% delle fibre alte e le fa crescere. Al contrario, un peso esagerato che strappi di schiena o accorci nel ROM toglie tensione al bersaglio regalandola a gomiti, spalle e vertebre! L&apos;unica trappola dei &quot;pochi kg&quot; è se fai così poche ripetizioni rispetto al margine reale da non avvicinarti mai allo sforzo vero.
+                  </p>
+                </div>
+              </div>
+              <p className="text-[11px] text-amber-200 bg-amber-950/25 border border-amber-500/30 rounded-xl p-2.5">
+                <strong>Significato reale di &quot;spaccare al massimo&quot;:</strong> dare il massimo stimolo meccanico vicino al cedimento tecnico <em>mantenendo intatto l&apos;assetto</em> — mai distruggere la tecnica, irritare tendini o cuocere il recupero fino a rovinare la seduta successiva.
+              </p>
+            </div>
+
+            {/* 2. Il paradosso "Massimo peso possibile" vs "Non c'entra un peso preciso" */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-indigo-500/35 space-y-2.5">
+              <strong className="text-indigo-300 uppercase tracking-wider text-[11px] block">
+                2. Il Paradosso Apparente: &quot;Massimo Peso&quot; vs &quot;Non Importa un Numero Fisso&quot; (Autoregolazione)
+              </strong>
+              <p className="text-[11px] text-gray-300">
+                Non c&apos;è nessuna contraddizione: il peso giusto non è una cifra scolpita nella pietra, è <strong>il carico massimo con cui oggi riesci a mantenere tecnica pulita, controllo eccentrico e sforzo centrato sul muscolo target</strong>.
+              </p>
+              <ul className="list-disc pl-5 space-y-1 text-[11px] text-gray-200">
+                <li><strong>Giorno al 100% (sonno buono, glicogeno pieno, glicemia stabile):</strong> il Sistema Nervoso Centrale spara al massimo, quel manubrio scorre fluido e puoi aumentare leggermente carico o ripetizioni.</li>
+                <li><strong>Giorno scarico (poco sonno, stress scolastico, traiettoria nuova):</strong> incaponirsi sul numero fisso porta subito a sporcare il movimento. Il peso è uno strumento al servizio di tecnica e stimolo, mai il padrone.</li>
+              </ul>
+            </div>
+
+            {/* 3. Curl con manubri vs curl ai cavi */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-cyan-500/35 space-y-3">
+              <strong className="text-cyan-300 uppercase tracking-wider text-[11px] block">
+                3. Biomeccanica del Curl: Manubri vs Cavi (Curve di Resistenza &amp; Eccentrica)
+              </strong>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                <div className="p-3 rounded-xl bg-cyan-950/20 border border-cyan-500/25 space-y-1.5">
+                  <strong className="text-cyan-300 block">Curl con Manubri (Vettore Gravitazionale)</strong>
+                  <p className="text-gray-300">
+                    La gravità tira sempre dritto verso il basso: quindi la resistenza sul bicipite è massima a metà movimento (avambraccio parallelo al suolo, braccio di leva massimo) e si alleggerisce in basso e in cima. Se dondoli il busto o porti avanti il gomito, crei inerzia e scarichi il bicipite nei punti più duri.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-blue-950/20 border border-blue-500/25 space-y-1.5">
+                  <strong className="text-blue-300 block">Curl ai Cavi (Tensione Continua della Carrucola)</strong>
+                  <p className="text-gray-300">
+                    Il cavo tira lungo la linea della carrucola anziché solo in verticale: mantiene una tensione quasi costante lungo tutto l&apos;arco eliminando i &quot;punti morti&quot; in basso e in alto (ottimo anche col cavo posizionato leggermente dietro i fianchi per allungare il capo lungo del bicipite). Colpisce bicipite brachiale, brachiale e brachioradiale a seconda della presa.
+                  </p>
+                </div>
+              </div>
+              <p className="text-[11px] text-cyan-200 bg-black/50 border border-white/10 rounded-xl p-2.5">
+                <strong>Chiave tecnica su entrambi:</strong> gomito relativamente stabile lungo i fianchi (un micro-accompagnamento fisiologico in cima ci sta, mai uno slancio), <strong>discesa eccentrica lenta e controllata (2–3 secondi)</strong> e zero colpi di reni.
+              </p>
+            </div>
+
+            {/* 4. Spalla di alzata, micromovimenti schiena e leve lunghe */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-rose-950/35 via-amber-950/25 to-black/80 border border-rose-500/40 space-y-3">
+              <strong className="text-rose-300 uppercase tracking-wider text-[11px] block">
+                4. Fisica delle Leve Lunghe, &quot;Spalla di Alzata&quot; &amp; Micromovimenti della Schiena
+              </strong>
+              <p className="text-[11px] text-gray-200">
+                In fisica vale una legge implacabile: <strong className="text-white">Momento Torcente = Forza × Braccio di leva</strong>. Se hai braccia relativamente lunghe rispetto al tronco e tieni un manubrio lontano dal fulcro (spalla o gomito), lo stesso identico chilo genera un momento di forza molto più grande sul muscolo target rispetto a chi ha leve corte! Ecco perché quei &quot;pochi kg&quot; sulle alzate pesano davvero tanto sul deltoide o sul bicipite.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[11px]">
+                <div className="p-3 rounded-xl bg-black/70 border border-rose-500/30 space-y-1">
+                  <strong className="text-rose-300 block">Perché Spuntano i Compensi Involontari</strong>
+                  <ul className="list-disc pl-4 space-y-1 text-gray-300">
+                    <li><strong>Spalla che si alza (Elevazione scapolare):</strong> il cervello recluta il trapezio superiore e ruota avanti la spalla per aiutare a sollevare il braccio quando il muscolo target brucia.</li>
+                    <li><strong>Micromovimenti della schiena:</strong> bastano 5–10 mm di estensione lombare o micro-oscillazione del tronco per accorciare il braccio di leva e creare micro-slancio inerziale, rubando carico al bersaglio e scaricandolo sulle vertebre.</li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded-xl bg-black/70 border border-emerald-500/30 space-y-1">
+                  <strong className="text-emerald-300 block">Come Trasformare la Grinta in Vantaggio Reale</strong>
+                  <ul className="list-disc pl-4 space-y-1 text-gray-300">
+                    <li>Quando punti solo a &quot;chiudere la rep a ogni costo&quot;, il cervello nasconde questi micromovimenti in automatico.</li>
+                    <li><strong>Il Volante Tecnico:</strong> abbassa e fissa le scapole prima della serie, tieni addome e glutei duri per bloccare la schiena e filma ogni tanto una serie di lato. La tua spinta competitiva con tecnica pulita diventa pura costruzione muscolare senza infortuni!</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 14: STESSO GIORNO PESI + CAMMINATA (AMPK VS MTORC1)    */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'pesi_camminata_giorno') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                <HeartPulse className="w-4 h-4 text-emerald-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400">
+                  14# Info • Concurrent Training &amp; Metabolismo Quotidiano (19 Nov)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Pesi e Camminata Nello Stesso Giorno: Perché Funzionano Insieme (AMPK vs mTOR) &amp; Timing
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+              Zero Interferenza
+            </span>
+          </div>
+
+          <div className="p-5 sm:p-6 rounded-3xl glass-card border-2 border-emerald-400/45 space-y-5 bg-gradient-to-br from-emerald-950/35 via-teal-950/20 to-black/90 text-xs text-gray-200 leading-relaxed">
+            <div className="p-4 rounded-2xl bg-black/65 border border-emerald-500/35 space-y-3">
+              <strong className="text-emerald-300 uppercase tracking-wider text-[11px] block">
+                1. Perché Pesi + Camminata Nello Stesso Giorno Sono Una delle Combo Più Intelligenti
+              </strong>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-[11px]">
+                <div className="p-3 rounded-xl bg-emerald-950/25 border border-emerald-500/25 space-y-1">
+                  <strong className="text-emerald-300 block">Nessuna Interferenza (AMPK vs mTOR)</strong>
+                  <p className="text-gray-300">
+                    Il celebre &quot;effetto interferenza&quot; (dove l&apos;enzima energetico aerobico <strong>AMPK</strong> frena il segnale anabolico <strong>mTORC1</strong> dei pesi) riguarda lavori intensi/sfinenti come corse lunghe o HIIT vicino ai pesi. La camminata lavora a bassissimo impatto su fibre lente e acidi grassi: zero danno cellulare e zero blocco alla crescita!
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-cyan-950/25 border border-cyan-500/25 space-y-1">
+                  <strong className="text-cyan-300 block">Consumo Pulito Senza Fame Nervosa</strong>
+                  <p className="text-gray-300">
+                    I pesi proteggono/costruiscono il muscolo; la camminata alza il dispendio energetico giornaliero bruciando acidi grassi senza svuotare il glicogeno né scatenare tempeste di grelina (la fame da lupi post-corsa). Con il diabete attiva anche i canali GLUT4!
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-teal-950/25 border border-teal-500/25 space-y-1">
+                  <strong className="text-teal-300 block">Ritorno Venoso &amp; &quot;Pulizia&quot; Articolare</strong>
+                  <p className="text-gray-300">
+                    La contrazione ritmica dei polpacci spinge il sangue venoso e la linfa verso l&apos;alto, scioglie la rigidità della colonna vertebrale post-seduta e irrora i tessuti favorendo il recupero.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Timing Prima vs Dopo vs Separato */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-cyan-500/35 space-y-3">
+              <strong className="text-cyan-300 uppercase tracking-wider text-[11px] block">
+                2. Quando Farla Nello Stesso Giorno (Prima, Dopo o Separata)
+              </strong>
+              <p className="text-[11px] text-gray-300">
+                La legge fondamentale del Sistema Nervoso Centrale è una sola: <strong className="text-white">prima ciò che richiede precisione tecnica, forza massima e SNC fresco (i pesi); dopo ciò che è ciclico e a bassa intensità (la camminata)</strong>.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-[11px]">
+                <div className="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/35 space-y-1">
+                  <span className="text-[10px] font-black uppercase text-emerald-300">Scelta N° 1</span>
+                  <strong className="text-white block">Dopo i Pesi (o Più Tardi)</strong>
+                  <p className="text-gray-300">Arrivi sui carichi al 100% della lucidità mentale e qualità esecutiva; dopo scarichi lo stress, consumi calorie pulite e faciliti il ritorno venoso.</p>
+                </div>
+                <div className="p-3 rounded-xl bg-amber-950/25 border border-amber-500/35 space-y-1">
+                  <span className="text-[10px] font-black uppercase text-amber-300">Solo Riscaldamento</span>
+                  <strong className="text-white block">Prima: Max 10 Min Leggeri</strong>
+                  <p className="text-gray-300">Ottimi 10 minuti blandi per alzare temperatura e lubrificare le articolazioni. <strong>Evita</strong> camminate lunghe/dure subito prima dei pesi o ti porti dietro fatica locale.</p>
+                </div>
+                <div className="p-3 rounded-xl bg-sky-950/25 border border-sky-500/35 space-y-1">
+                  <span className="text-[10px] font-black uppercase text-sky-300">Doppio Momento</span>
+                  <strong className="text-white block">Mattina / Sera Separati</strong>
+                  <p className="text-gray-300">Perfetto dividere i pesi al pomeriggio e i passi al mattino/sera, purché non tolga ore di sonno notturno (è nel sonno che costruisci muscolo!).</p>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Unico limite */}
+            <div className="p-3.5 rounded-2xl bg-amber-950/25 border border-amber-500/35 text-[11px] text-amber-100">
+              <strong className="text-amber-300 uppercase tracking-wider block mb-1">
+                3. L&apos;Unico Limite da Rispettare: Sostenibilità Realistica
+              </strong>
+              <p>
+                Se la sera sei già stanco, hai dormito poco o esci da una seduta pesante di gambe/schiena, <strong>non forzare pendenze estreme né andature da gara</strong> pur di chiudere i passi a ogni costo: mantieni un ritmo naturale e gestibile, così la camminata resta un alleato per la ricomposizione corporea e la longevità anziché un peso sul recupero (ricorda sempre: ~1.600 kcal pulite + 115–120g proteine + pesi seri + sonno regolare lavorano in squadra!).
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 15: RBE CRAMPI GIORNO 1, SUSSULTI & CEDIMENTO 3ª SERIE */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'rbe_limite_terza_serie') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                <Zap className="w-4 h-4 text-amber-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
+                  15# Info • Fisiologia dell&apos;Adattamento &amp; Dosaggio del Cedimento (19 Nov)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Crampi del Primo Giorno (Repeated Bout Effect), Sussulti al Limite &amp; Regola della 3ª Serie
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30">
+              Rate Coding &amp; RIR
+            </span>
+          </div>
+
+          <div className="p-5 sm:p-6 rounded-3xl glass-card border-2 border-amber-400/45 space-y-5 bg-gradient-to-br from-amber-950/35 via-orange-950/20 to-black/90 text-xs text-gray-200 leading-relaxed">
+            {/* 1. Repeated Bout Effect */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-amber-500/35 space-y-2.5">
+              <strong className="text-amber-300 uppercase tracking-wider text-[11px] block">
+                1. Perché il Primo Giorno Ti &quot;Scoppiava&quot; (Con Crampi) e Dopo No: Repeated Bout Effect
+              </strong>
+              <p className="text-[11px] text-gray-300">
+                Quando affronti movimenti o stimoli nuovi (anche prima della scheda fissa), né i sarcomeri né il sistema nervoso possiedono ancora lo scudo adattativo chiamato <strong className="text-white">Repeated Bout Effect (RBE)</strong>:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[11px]">
+                <div className="p-3 rounded-xl bg-amber-950/20 border border-amber-500/25 space-y-1">
+                  <strong className="text-amber-300 block">Giorno 1 (Reazione d&apos;Emergenza)</strong>
+                  <p className="text-gray-300">
+                    Reclutamento disordinato, micro-danno strutturale acuto, brusco accumulo di metaboliti e richiamo locale di sangue/liquidi. L&apos;affaticamento dei fusi neuromuscolari e degli organi tendinei del Golgi altera il riflesso spinale scatenando <strong>crampi e contratture riflesse</strong>.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/25 space-y-1">
+                  <strong className="text-emerald-300 block">Settimane Dopo (Crescita Strutturale Ordinata)</strong>
+                  <p className="text-gray-300">
+                    Il corpo aggiunge sarcomeri, rinforza il citoscheletro muscolare e coordina meglio i motoneuroni. <strong>Non sentire più i crampi o lo shock del giorno 1 NON significa che il muscolo non cresca:</strong> significa che ha smesso di difendersi dall&apos;emergenza ed è passato a costruire tessuto stabile!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Tecnica Filtro & Sussulti al limite (Rate Coding) */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-rose-500/35 space-y-3">
+              <strong className="text-rose-300 uppercase tracking-wider text-[11px] block">
+                2. &quot;Senza Tecnica Non Farò Niente&quot; + Cosa Succede Nei &quot;Sussulti di Sforzo&quot; al Limite
+              </strong>
+              <p className="text-[11px] text-gray-200">
+                <strong>La tecnica è il filtro che decide quale tessuto paga il conto dello sforzo:</strong> con forma sporca il carico migra su tendini, gomiti, cuffia dei rotatori e dischi lombari; con traiettoria pulita ogni grammo di tensione resta inchiodato sulle fibre del muscolo bersaglio.
+              </p>
+              <div className="p-3.5 rounded-xl bg-rose-950/25 border border-rose-500/30 space-y-2 text-[11px]">
+                <strong className="text-rose-200 block">Fisiologia Reale dei &quot;Sussulti al Limite&quot; (Rate Coding &amp; Fatica):</strong>
+                <ul className="list-disc pl-5 space-y-1 text-gray-200">
+                  <li><strong>Reclutamento Totale + Rate Coding:</strong> nelle ultime ripetizioni il cervello attiva tutte le unità motorie a soglia massima e porta al tetto la <em>frequenza di scarica dei motoneuroni</em> (impulsi al secondo).</li>
+                  <li><strong>Muro Metabolico &amp; Nervoso:</strong> salgono ioni idrogeno (H+) e fosfato inorganico (Pi), cala temporaneamente la sensibilità al Calcio (Ca2+) e la velocità concentrica rallenta involontariamente.</li>
+                  <li><strong>La Linea di Confine dei Tremori/Sussulti:</strong> quei sussulti mostrano che l&apos;SNC sta raschiando il fondo del barile. Se succede <em>tenendo scapole, schiena e traiettoria ancora intatte</em>, è lo stimolo ipertrofico più alto possibile; se succede <em>strappando col busto</em>, hai già oltrepassato la tecnica pulita e stai solo pagando usura su tendini e SNC!</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* 3. Cedimento solo sulla 3ª serie vs tutte e 3 */}
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-emerald-950/35 via-black/80 to-indigo-950/30 border border-emerald-400/40 space-y-3">
+              <strong className="text-emerald-300 uppercase tracking-wider text-[11px] block">
+                3. Regola Scientifica delle 3 Serie: Cedimento Solo sull&apos;Ultima Serie (3ª) vs Tutte e 3
+              </strong>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                <div className="p-3.5 rounded-xl bg-black/70 border border-emerald-500/40 space-y-1.5">
+                  <span className="text-[10px] font-black uppercase text-emerald-300">Scelta Più Intelligente ✓</span>
+                  <strong className="text-white block">1ª e 2ª a Buffer (1–2 RIR) → 3ª al Cedimento Tecnico</strong>
+                  <ul className="list-disc pl-4 space-y-1 text-gray-200">
+                    <li><strong>1ª Serie:</strong> serie vera e seria, ti fermi con ~2 ripetizioni pulite ancora in canna. Recluti già quasi tutte le fibre alte senza friggere il sistema nervoso.</li>
+                    <li><strong>2ª Serie:</strong> stessa precisione chirurgica, ti avvicini di più al limite (1–2 reps di margine) mantenendo intatto il carico.</li>
+                    <li><strong>3ª Serie (Ultima):</strong> qui dai la spinta decisiva fino al limite/cedimento tecnico pulito, perché non devi conservare energie per un&apos;altra serie dello stesso esercizio.</li>
+                  </ul>
+                </div>
+                <div className="p-3.5 rounded-xl bg-black/70 border border-red-500/35 space-y-1.5">
+                  <span className="text-[10px] font-black uppercase text-red-300">Errore Comune ✕</span>
+                  <strong className="text-white block">Cedimento Assoluto su 1ª, 2ª e 3ª Serie</strong>
+                  <ul className="list-disc pl-4 space-y-1 text-gray-300">
+                    <li><strong>Crollo verticale:</strong> già nella 2ª serie perdi ripetizioni di botto o devi scalare il peso, totalizzando <em>meno lavoro meccanico pulito</em>.</li>
+                    <li><strong>Compensi sporchi:</strong> quando inizi stanco dalla 1ª serie, alzi subito la spalla o dai colpi con la schiena molto prima.</li>
+                    <li><strong>Conto doppio su SNC &amp; Tendini:</strong> gli studi dimostrano pari (o migliore) crescita fermandosi a 1–2 reps dal limite sulle prime serie e spingendo a fondo l&apos;ultima, con metà usura su gomiti, spalle (french press, dips, spinte) e recupero!</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
