@@ -500,6 +500,15 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     subTitle: '16# Info: Pranzo "Tappabuchi" (Fiocchi di Latte + Barretta Proteica ~300 kcal) vs Pasto Completo',
     text: 'Pranzo tappabuchi fiocchi di latte barretta proteica 300 kcal 33g carboidrati risparmiati una tantum emergenza vs tutti i giorni 16 anni 75 kg 1.75 m glicogeno palestra scuola fibre micronutrienti polioli gonfiore fame serale accumulata diabete scorta pre-workout.'
   },
+  {
+    id: 'palestra_ricomposizione_passi',
+    viewId: 'palestra_grasso',
+    sectionTitle: 'Palestra e organizzazione per perdere grasso',
+    sectionBadgeColor: 'orange',
+    subTabId: 'ricomposizione_passi_guida',
+    subTitle: '17# Info: Pesi vs Deficit (1–2 RIR), Confronto Altri Ragazzi & 10.000 Passi Tutti i Giorni',
+    text: 'Ricomposizione corporea viso addome pesi servono perdere grasso deficit calorico cedimento assoluto 1 2 ripetizioni margine RIR sleeper build altri ragazzi pesi più alti anzianità leve esecuzione ROM 10000 passi lunedì mercoledì venerdì tapis roulant giorni off martedì giovedì sabato domenica NEAT stretching postura dimagrimento localizzato 4 pilastri acqua sonno proteine.'
+  },
 
   // =========================================================================
   // 8. COSE DA COMPRARE (I MIEI REGALI DI NATALE)

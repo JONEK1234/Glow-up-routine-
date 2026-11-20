@@ -3304,7 +3304,7 @@ export const NoteTab: React.FC = () => {
                   <Dumbbell className="w-3 h-3 text-orange-400" />
                   ★ Note Scritte Da Me
                 </span>
-                <span className="text-[10px] text-gray-400 font-semibold">23 Pilastri • Include 13#–16# Info (Henneman, RBE, Pranzo Tappabuchi)</span>
+                <span className="text-[10px] text-gray-400 font-semibold">24 Pilastri • Include 13#–17# Info (Henneman, RBE, Tappabuchi, Ricomposizione &amp; 10k Passi)</span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-orange-300 transition-colors uppercase tracking-tight">
@@ -3312,7 +3312,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                Deficit 700–900 kcal, proteine/grassi, bustine, PAP, 12# Flessioni, 13# Henneman &amp; Leve, 14# Pesi+Camminata, 15# Crampi/RBE &amp; 3ª Serie, e 16# Pranzo &quot;Tappabuchi&quot; (Fiocchi + Barretta 300 kcal).
+                Deficit 700–900 kcal, proteine/grassi, bustine, PAP, 12# Flessioni, 13# Henneman, 14# Pesi+Camminata, 15# RBE, 16# Pranzo Tappabuchi e 17# Piano Chiaro Ricomposizione (1–2 RIR, confronto ragazzi &amp; 10.000 passi ogni giorno).
               </p>
             </div>
 
@@ -3326,7 +3326,7 @@ export const NoteTab: React.FC = () => {
               <span>Tocca per aprire la guida su palestra e dimagrimento</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">23 Pilastri • Include 16# Pranzo Tappabuchi</span>
+            <span className="text-[10px] text-gray-400 font-semibold">24 Pilastri • Include 17# Ricomposizione &amp; 10k Passi</span>
           </div>
         </div>
       </div>

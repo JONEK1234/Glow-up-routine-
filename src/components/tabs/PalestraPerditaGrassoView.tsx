@@ -32,7 +32,7 @@ interface PalestraPerditaGrassoViewProps {
 }
 
 export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps> = ({ onBack, initialTab }) => {
-  type PalestraTab = 'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra' | 'piegamenti_lavoro' | 'strategia_personale' | 'volume_calisthenics' | 'pap_seconda_serie' | 'flessioni_riposo' | 'henneman_leve_compensi' | 'pesi_camminata_giorno' | 'rbe_limite_terza_serie' | 'pasto_tappabuchi';
+  type PalestraTab = 'tutte' | 'palestra' | 'deficit' | 'biologia' | 'sessione' | 'nutrizione' | 'informazioni' | 'informazioni2' | 'quadro_completo' | 'proteine_scienza' | 'fabbisogno_tid' | 'fabbisogno_tid_2' | 'grassi_scienza' | 'grassi_scienza_2' | 'bustine_palestra' | 'piegamenti_lavoro' | 'strategia_personale' | 'volume_calisthenics' | 'pap_seconda_serie' | 'flessioni_riposo' | 'henneman_leve_compensi' | 'pesi_camminata_giorno' | 'rbe_limite_terza_serie' | 'pasto_tappabuchi' | 'ricomposizione_passi_guida';
   const [activeTab, setActiveTab] = useState<PalestraTab>((initialTab as PalestraTab) || 'tutte');
   const noteContentRef = useRef<HTMLDivElement>(null);
 
@@ -574,6 +574,32 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
               Apri ➔
             </span>
           </div>
+
+          {/* 17# Informazioni: Guida Chiara Ricomposizione, Carichi vs Altri & 10.000 Passi Tutti i Giorni */}
+          <div
+            onClick={() => handleSelectTab('ricomposizione_passi_guida')}
+            className="p-3.5 rounded-2xl bg-gradient-to-r from-orange-950/60 via-amber-950/40 to-black/80 border-2 border-orange-400/55 hover:border-orange-300 transition-all cursor-pointer group flex items-center justify-between shadow-md hover:shadow-orange-500/25 col-span-1 sm:col-span-2 lg:col-span-3"
+          >
+            <div className="flex items-center space-x-3">
+              <span className="p-2.5 rounded-xl bg-orange-500/20 text-orange-300 border border-orange-500/30 group-hover:bg-orange-500 group-hover:text-black transition-all shrink-0">
+                <Target className="w-4 h-4 text-orange-400 group-hover:text-black" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-orange-300 flex items-center gap-1.5">
+                  <Sparkles className="w-3 h-3 text-orange-300" /> 17# Info: Piano Chiaro Ricomposizione (Viso &amp; Addome)
+                </span>
+                <h3 className="text-xs sm:text-sm font-black text-white group-hover:text-orange-200 transition-colors">
+                  Pesi vs Deficit (1–2 Reps Margine), Confronto Altri Ragazzi &amp; 10.000 Passi Tutti i Giorni
+                </h3>
+                <p className="text-[11px] text-gray-300 line-clamp-1 mt-0.5">
+                  Sleeper Build, zero cedimento inutile, Lun/Mer/Ven + Mar/Gio/Sab/Dom e i 4 pilastri pratici senza tecnicismi inutili.
+                </p>
+              </div>
+            </div>
+            <span className="text-xs font-black px-3 py-1.5 rounded-xl bg-orange-500/20 text-orange-300 border border-orange-500/30 group-hover:bg-orange-500 group-hover:text-black transition-all shrink-0 ml-2">
+              Apri ➔
+            </span>
+          </div>
         </div>
 
         {/* Tab Filters */}
@@ -894,6 +920,20 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
           >
             <Apple className="w-3.5 h-3.5 text-teal-400" />
             23. 16# Info: Pranzo Tappabuchi vs Completo
+          </button>
+
+          {/* 24. 17# Info: Ricomposizione, Carichi vs Altri & 10.000 Passi */}
+          <button
+            type="button"
+            onClick={() => handleSelectTab('ricomposizione_passi_guida')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === 'ricomposizione_passi_guida'
+                ? 'bg-orange-400 text-black shadow-md shadow-orange-500/30 font-extrabold'
+                : 'bg-orange-500/15 text-orange-300 hover:text-white border border-orange-500/35'
+            }`}
+          >
+            <Target className="w-3.5 h-3.5 text-orange-400" />
+            24. 17# Info: Carichi, 1–2 RIR &amp; 10k Passi
           </button>
         </div>
       </div>
@@ -4489,6 +4529,136 @@ export const PalestraPerditaGrassoView: React.FC<PalestraPerditaGrassoViewProps>
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================= */}
+      {/* SEZIONE 17: RICOMPOSIZIONE CHIARA, CARICHI & 10.000 PASSI     */}
+      {/* ============================================================= */}
+      {(activeTab === 'tutte' || activeTab === 'ricomposizione_passi_guida') && (
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pl-1 border-b border-white/10 pb-2">
+            <div className="flex items-center space-x-2">
+              <span className="p-1.5 rounded-xl bg-orange-500/20 text-orange-300 border border-orange-500/30">
+                <Target className="w-4 h-4 text-orange-400" />
+              </span>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-orange-400">
+                  17# Info • Guida Pratica Ricomposizione (Viso &amp; Addome)
+                </span>
+                <h2 className="text-base sm:text-lg font-black text-white">
+                  Pesi vs Deficit, Buffer (1–2 Reps), Confronto Con Gli Altri &amp; 10.000 Passi Ogni Giorno
+                </h2>
+              </div>
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-orange-500/15 text-orange-300 border border-orange-500/30">
+              4 Pilastri Chiari
+            </span>
+          </div>
+
+          <div className="p-5 sm:p-6 rounded-3xl glass-card border-2 border-orange-400/50 space-y-5 bg-gradient-to-br from-orange-950/35 via-amber-950/20 to-black/90 text-xs text-gray-200 leading-relaxed">
+            {/* 1. Pesi & Cedimento */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-orange-500/35 space-y-3">
+              <strong className="text-orange-300 uppercase tracking-wider text-[11px] block">
+                1. I Pesi Servono Per Perdere Grasso? E Bisogna Andare a Cedimento?
+              </strong>
+              <p className="text-[11px] text-gray-200">
+                Distinzione chiave: <strong className="text-white">non sono i pesi in sé a bruciare direttamente il grasso, ma il deficit calorico</strong> (mangiare meno calorie di quelle che consumi). I pesi però sono indispensabili in ricomposizione per due motivi biologici:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                <div className="p-3 rounded-xl bg-emerald-950/25 border border-emerald-500/30 space-y-1.5">
+                  <strong className="text-emerald-300 block">A Cosa Servono i Pesi in Deficit</strong>
+                  <ul className="list-disc pl-4 space-y-1 text-gray-200">
+                    <li><strong>Conservare (e far crescere) il muscolo:</strong> senza lo stimolo meccanico dei pesi e proteine adeguate, mentre scendi di peso il corpo smonta anche tessuto muscolare. I pesi dicono al corpo: <em>&quot;Questo muscolo mi serve, tienilo e rinforzalo; prendi energia dal grasso&quot;</em>.</li>
+                    <li><strong>Forma compatta (Sleeper Build):</strong> muscolo tonico sotto meno grasso = aspetto definito e asciutto su corpo, collo e lineamenti del viso.</li>
+                  </ul>
+                </div>
+                <div className="p-3 rounded-xl bg-amber-950/25 border border-amber-500/30 space-y-1.5">
+                  <strong className="text-amber-300 block">Cedimento Assoluto vs Vicino al Cedimento</strong>
+                  <ul className="list-disc pl-4 space-y-1 text-gray-200">
+                    <li><strong>Non serve cedere su ogni serie:</strong> soprattutto mentre consolidi la tecnica, andare sempre a cedimento totale non serve.</li>
+                    <li><strong>Zona d&apos;oro (1–2 RIR):</strong> fermati quando senti che potresti fare ancora <strong>1–2 ripetizioni con forma pulita</strong> (non quando te ne restano ancora 6–7!).</li>
+                    <li><strong>Zero &quot;distruzione&quot; inutile:</strong> danni muscolari esagerati non fanno dimagrire prima, aumentano solo stanchezza, DOMS e recupero lento.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Altri ragazzi con pesi più alti */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-cyan-500/35 space-y-2.5">
+              <strong className="text-cyan-300 uppercase tracking-wider text-[11px] block">
+                2. Gli Altri Ragazzi Caricano Di Più: Come Regolarti Senza Farti Fregare
+              </strong>
+              <ul className="list-disc pl-5 space-y-1.5 text-[11px] text-gray-200">
+                <li>
+                  <strong className="text-white">Anzianità &amp; Leve:</strong> coetanei più forti spesso si allenano da più mesi/anni, hanno leve articolari più corte o una massa già avviata.
+                </li>
+                <li>
+                  <strong className="text-amber-300">Qualità vs Ego-Lifting:</strong> chi carica troppo spesso taglia il movimento a metà, slancia di schiena o perde il controllo. Un peso leggermente più basso fatto con <strong>range completo (ROM) e controllo pulito</strong> manda uno stimolo ipertrofico superiore e molto più sicuro.
+                </li>
+                <li>
+                  <strong className="text-emerald-300">Il Tuo Unico Metro Sei Tu:</strong> il peso giusto è quello che ti fa chiudere il range di ripetizioni sentendo lavorare il muscolo bersaglio con 1–2 reps di margine. Se nel tempo aumenti anche solo 1 ripetizione o 1 kg a tecnica pulita, stai facendo ricomposizione reale.
+                </li>
+              </ul>
+            </div>
+
+            {/* 3. 10.000 passi: stessi giorni vs off */}
+            <div className="p-4 rounded-2xl bg-black/65 border border-emerald-500/35 space-y-3">
+              <strong className="text-emerald-300 uppercase tracking-wider text-[11px] block">
+                3. 10.000 Passi al Giorno: Stessi Giorni dei Pesi (Lun/Mer/Ven) o Giorni Off (Mar/Gio/Sab/Dom)?
+              </strong>
+              <p className="text-[11px] text-gray-100">
+                <strong>TUTTI I GIORNI</strong> (sia nei giorni di sala pesi sia nei giorni di riposo): i 10.000 passi non sono un allenamento a parte ma il tuo <strong>NEAT quotidiano</strong> (movimento base giornaliero).
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 space-y-1">
+                  <strong className="text-cyan-300 block">Giorni Pesi (Lunedì · Mercoledì · Venerdì)</strong>
+                  <p className="text-gray-300">
+                    Fai i <strong>10 minuti di tapis roulant</strong> in palestra + gli spostamenti normali per scuola e commissioni. Non frenano il recupero muscolare, anzi migliorano circolazione, sensibilità insulinica e dispendio giornaliero.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 space-y-1">
+                  <strong className="text-lime-300 block">Giorni Off (Martedì · Giovedì · Sabato · Domenica)</strong>
+                  <p className="text-gray-300">
+                    Uniti a <strong>stretching e postura (chin tucks / mobilità)</strong>, i 10.000 passi mantengono alto il consumo energetico anche senza sala pesi, rendendo il deficit calorico molto più semplice da sostenere.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 4. La ricetta pratica dei 4 pilastri */}
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-emerald-950/35 via-black/80 to-orange-950/25 border border-emerald-400/40 space-y-3">
+              <strong className="text-emerald-300 uppercase tracking-wider text-[11px] block">
+                4. I 4 Pilastri Pratici Per Asciugare Viso e Pancia (Cosa Fare Concretamente Ogni Giorno)
+              </strong>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[11px]">
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-amber-300 block">1. Deficit Calorico Costante (No Spot Reduction)</strong>
+                  <p className="text-gray-300">
+                    Nessun esercizio scioglie grasso in un punto solo (&quot;addominali per pancia&quot; o &quot;masticazione per grasso del viso&quot;). Calando la massa grassa totale col deficit si svuotano progressivamente sia guance/sottomento sia addome.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-cyan-300 block">2. Proteine Adeguate Ogni Giorno</strong>
+                  <p className="text-gray-300">
+                    Proteggono i muscoli dal catabolismo in deficit e aumentano la sazietà, rendendo sostenibile il piano calorico tra scuola e allenamenti.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-orange-300 block">3. Pesi Puliti + Progressione Personale</strong>
+                  <p className="text-gray-300">
+                    Zero ego-lifting e zero copia dei carichi altrui: tecnica pulita, 1–2 reps di margine prima del cedimento e piccoli aumenti costanti nel tempo.
+                  </p>
+                </div>
+                <div className="p-3 rounded-xl bg-black/60 border border-white/10 space-y-1">
+                  <strong className="text-lime-300 block">4. 10.000 Passi + Acqua + Sonno</strong>
+                  <p className="text-gray-300">
+                    Passi quotidiani per bruciare senza stress articolare, 2,5–3 L di acqua per drenaggio e sazietà, e sonno regolare (21:30–22:00) per GH, recupero e controllo della fame.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
