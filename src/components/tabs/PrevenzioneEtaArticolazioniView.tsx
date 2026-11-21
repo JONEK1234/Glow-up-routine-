@@ -25,6 +25,7 @@ import { scrollToTop, scrollToElement } from '../../utils/scrollHelper';
 interface PrevenzioneEtaArticolazioniViewProps {
   onBack: () => void;
   initialTab?: string;
+  onOpenMicronutrientiMassa?: () => void;
 }
 
 type TabId =
@@ -56,7 +57,8 @@ function normalizeTabId(raw?: string): TabId {
 
 export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazioniViewProps> = ({
   onBack,
-  initialTab
+  initialTab,
+  onOpenMicronutrientiMassa
 }) => {
   const [activeTab, setActiveTab] = useState<TabId>(() => normalizeTabId(initialTab));
   const contentRef = useRef<HTMLDivElement>(null);
@@ -229,6 +231,28 @@ export const PrevenzioneEtaArticolazioniView: React.FC<PrevenzioneEtaArticolazio
           </button>
         </div>
       </div>
+
+      {onOpenMicronutrientiMassa && (
+        <button
+          type="button"
+          onClick={onOpenMicronutrientiMassa}
+          className="w-full p-4 rounded-3xl bg-gradient-to-r from-emerald-950/50 via-black/80 to-lime-950/40 hover:from-emerald-900/50 border-2 border-emerald-400/50 flex items-center justify-between gap-3 text-left transition-all cursor-pointer active:scale-98 shadow-neon"
+        >
+          <div className="space-y-0.5">
+            <span className="text-[10px] font-black uppercase tracking-wider text-emerald-300 flex items-center gap-1.5">
+              <Utensils className="w-3.5 h-3.5 text-emerald-400" />
+              ★ Nuova Nota Collegata · Prevenzione &amp; Fase Massa (Da Giugno)
+            </span>
+            <strong className="text-xs sm:text-sm font-black text-white block">
+              Tutti i Micronutrienti Una Volta Che Si Inizia la Massa e la Crescita di Muscoli
+            </strong>
+            <span className="text-[11px] text-gray-300 block">
+              Frutta, verdura, semi, brodo d&apos;ossa, molluschi/fermentati/EVO e mappa completa per pelle, capelli, corpo &amp; muscoli (+ diabete).
+            </span>
+          </div>
+          <ChevronRight className="w-5 h-5 text-emerald-300 shrink-0" />
+        </button>
+      )}
 
       <div ref={contentRef} className="space-y-6 scroll-mt-16">
         {/* ================================================================= */}

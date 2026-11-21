@@ -15,7 +15,8 @@ export type NoteSectionViewId =
   | 'palestra_grasso'
   | 'regali_natale'
   | 'diabete_glicemia'
-  | 'prevenzione_eta';
+  | 'prevenzione_eta'
+  | 'prevenzione_micronutrienti_massa';
 
 export interface NoteSearchEntry {
   id: string;
@@ -755,6 +756,28 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     subTabId: 'luce_vitamina_d',
     subTitle: '7. Digiuno Mattutino, Luce Solare & Vitamina D Sicura (UVB vs UVA)',
     text: 'Digiuno mattutino uscire senza colazione cortisolo GH lipolisi camminata GLUT4 diabete luce solare mattina occhi ipRGCs SCN ritmo circadiano melatonina sonno vitamina D UVB 280 315 nm UVA 315 400 nm 7-deidrocolesterolo colecalciferolo 25 OH D calcitriolo magnesio K2 auto-limitazione lumisterolo tachisterolo regola ombra protezione SPF 30 50 inverno ottobre marzo.'
+  },
+
+  // =========================================================================
+  // 10B. TUTTI I MICRONUTRIENTI UNA VOLTA CHE SI INIZIA LA MASSA E CRESCITA MUSCOLI
+  // =========================================================================
+  {
+    id: 'prevenzione_micro_frutta_semi_brodo',
+    viewId: 'prevenzione_micronutrienti_massa',
+    sectionTitle: 'Tutti i micronutrienti in massa e crescita muscoli',
+    sectionBadgeColor: 'emerald',
+    subTabId: 'brodo_densi',
+    subTitle: '1. Frutta, Verdura, Semi, Grassi Buoni & Brodo d\'Ossa in Massa (Da Giugno)',
+    text: 'Micronutrienti massa crescita muscoli giugno ricomposizione corporea budget calorico kiwi vitamina C frutti di bosco polifenoli agrumi banane potassio verdure foglia verde scuro spinaci bietole rucola broccoli folati B9 vitamina K magnesio peperoni licopene carote beta-carotene barbabietole nitrati ossido nitrico semi di zucca zinco chia lino omega 3 ALA girasole mandorle noci nocciole vitamina E rame noci brasiliane selenio olio EVO avocado cacao brodo d ossa collagene tipo I II III glicina prolina glicosaminoglicani glutammina legumi cereali integrali patate dolci pesce azzurro sgombro sardine salmone uova colina fegato cozze vongole kefir K2 germe di grano lievito alimentare iodio.'
+  },
+  {
+    id: 'prevenzione_micro_bersagli_diabete',
+    viewId: 'prevenzione_micronutrienti_massa',
+    sectionTitle: 'Tutti i micronutrienti in massa e crescita muscoli',
+    sectionBadgeColor: 'emerald',
+    subTabId: 'mappa_bersagli',
+    subTitle: '2. Mappa Pelle/Capelli/Muscoli, Rotazione Settimanale & Glicemia in Massa',
+    text: 'Pelle capelli corpo muscoli tendini ossa vitamina A B C D3 K2 E zinco ferro ferritina rame selenio magnesio potassio calcio iodio rotazione settimanale yogurt shake post allenamento digestione fibre graduale risposta glicemica diabete ordine piatto GLUT4 onda lunga grassi carboidrati.'
   }
 ];
 
