@@ -10,6 +10,8 @@ export type NoteSectionViewId =
   | 'shampoo_texture'
   | 'capelli_texture'
   | 'capelli_mullet'
+  | 'capelli_mullet_crescita'
+  | 'capelli_cera_cute'
   | 'palestra_grasso'
   | 'regali_natale'
   | 'diabete_glicemia'
@@ -340,8 +342,8 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     sectionTitle: 'Capelli mossi Textured Messy Mullet',
     sectionBadgeColor: 'teal',
     subTabId: 'piano_azione_finale',
-    subTitle: '★ Il Piano d\'Azione Finale (Asciugatura Anti-Spaghetti) & Diagnosi Foto/Prodotti',
-    text: 'Piano d azione finale asciugatura capelli testa dritta diffusore dall alto senza schiacciare 1 2 cm pettine denti larghi stacco radici zero prodotti frangia zero balsamo davanti quattro fili appiattiti co-wash sebo spaghetti sparati in aria low fade 3 4 settimane 1 1.5 cm spray sale marino solo dietro sopra 2 spruzzi polvere volumizzante zero frangia cera opaca matte clay Syoss Loreal Gatsby palmo mano piatto 3 secondi routine giorno dopo.'
+    subTitle: '★ Sequenza Definitiva (Lavaggio → Diffusore → Ritocco), Buchini Ai Lati & Scienza Prodotti',
+    text: 'Sequenza completa lavaggio preparazione shampoo balsamo senza risciacquo solo dietro lunghezze mai davanti frangia tamponare spray sale marino solo dietro sopra 2 spruzzi scrunch solo dietro sopra pettine denti larghi corona in avanti stacco radici fronte buchini ai lati tempie orecchio spostare ciuffetto verso il basso avanti diffusore testa dritta calore medio velocità bassa dietro corona squadrato dall alto a sfioro 1 2 cm 5 10 secondi buchini 5 8 secondi mai sotto polvere solo corona dietro 5 secondi palmo mano 2 3 secondi cera opaca matte clay cera d api carnauba caolino bentonite clumping crema ricci leva meccanica 10 12 cm asciugatura direzionale volumizzante densità follicolare.'
   },
   {
     id: 'mullet_fisica_spessore',
@@ -414,6 +416,50 @@ export const NOTES_SEARCH_INDEX: NoteSearchEntry[] = [
     subTabId: 'video_ispirazione',
     subTitle: '8. Tutti i 6 Video TikTok di Riferimento',
     text: '6 link video TikTok taglio stile diffusore ordine prodotti cera spray pettine phon senza beccuccio.'
+  },
+
+  // =========================================================================
+  // 6C. MESSY HAIR QUANDO CRESCONO & CREMA ARRICCIANTE
+  // =========================================================================
+  {
+    id: 'messy_crescita_fisica',
+    viewId: 'capelli_mullet_crescita',
+    sectionTitle: 'Messy Hair Quando Crescono & Crema Ricci',
+    sectionBadgeColor: 'emerald',
+    subTabId: 'cose_in_piu',
+    subTitle: '1. Fisica Crescita, Gravità & Cosa Puoi Fare In Più (2B)',
+    text: 'Capelli crescono fisica peso leva onde vere 2B scrunch definizione anche davanti onda S occhi sopracciglia gravità volume senza fili sparati chiudere buchini laterali tempie orecchio automatico mullet onde ampie varianti styling tendina morbida fase intermedia non accorciare mezzo centimetro.'
+  },
+  {
+    id: 'messy_crescita_crema',
+    viewId: 'capelli_mullet_crescita',
+    sectionTitle: 'Messy Hair Quando Crescono & Crema Ricci',
+    sectionBadgeColor: 'emerald',
+    subTabId: 'crema_arricciante',
+    subTitle: '2. Risultati Migliori & Ruolo della Crema Arricciante (Curl Cream)',
+    text: 'Densità visiva meno buchi onde morbide fluide tridimensionali meno fatica quotidiana crema arricciante curl cream quando serve punte secche crespe onde elastiche bilanciare cera opaca quando farne a meno oli burri pesano look squadrato opaco regola pratica testarla dopo.'
+  },
+
+  // =========================================================================
+  // 6D. CERA OPACA, CUOIO CAPELLUTO, FALSA FORFORA & NOTTE
+  // =========================================================================
+  {
+    id: 'cera_cute_forfora_cuscino',
+    viewId: 'capelli_cera_cute',
+    sectionTitle: 'Cera Opaca, Cuoio Capelluto & Falsa Forfora',
+    sectionBadgeColor: 'rose',
+    subTabId: 'forfora_falsa',
+    subTitle: '1. Falsa Forfora, Prurito, Federa Cuscino & Brufoletti sul Viso',
+    text: 'Cera opaca argille cere pesanti profumi occlusivi forfora vera Malassezia falsa forfora accumulo residui scaglie bianche grigie prurito irritazione grattamento micro desquamazioni pori ostruiti brufoletti attaccatura fronte tempie guance collo federa cuscino notte.'
+  },
+  {
+    id: 'cera_cute_regole_solo_cera',
+    viewId: 'capelli_cera_cute',
+    sectionTitle: 'Cera Opaca, Cuoio Capelluto & Falsa Forfora',
+    sectionBadgeColor: 'rose',
+    subTabId: 'solo_cera',
+    subTitle: '2. 3 Regole Pratiche & Routine con SOLO Cera (Senza Sale/Polvere)',
+    text: 'Usare pochissima micro punta scaldata mani su ciocche punte lontano dalla cute non andarci a dormire lavare prima di dormire shampoo polpastrelli mai unghie solo cera opaca senza sale senza polvere carico leggero pulito prodotto filmogeno ceroso lavata veloce sera giorni in casa.'
   },
 
   // =========================================================================

@@ -51,6 +51,8 @@ import { MasticazioneMasseteriView } from './MasticazioneMasseteriView';
 import { VisoGrassoTaglioSleeperView } from './VisoGrassoTaglioSleeperView';
 import { CapelliTextureFormaPiegaLisciaView } from './CapelliTextureFormaPiegaLisciaView';
 import { CapelliMossiTexturedMessyMulletView } from './CapelliMossiTexturedMessyMulletView';
+import { CapelliMessyCrescitaView } from './CapelliMessyCrescitaView';
+import { CapelliCeraCuteForforaView } from './CapelliCeraCuteForforaView';
 import { DiabeteGlicemiaPalestraView } from './DiabeteGlicemiaPalestraView';
 import { PrevenzioneEtaArticolazioniView } from './PrevenzioneEtaArticolazioniView';
 import { scrollToTop } from '../../utils/scrollHelper';
@@ -184,7 +186,7 @@ const UPDATED_FACE_PHOTOS = [
 ];
 
 export const NoteTab: React.FC = () => {
-  const [activeView, setActiveView] = useState<'list' | 'bussola_mente' | 'studia_oggi' | 'asimmetria' | 'ortodonzia' | 'postura_occhi' | 'sonno_posizioni' | 'peli_incarniti' | 'shampoo_texture' | 'palestra_grasso' | 'regali_natale' | 'asimmetria_masticazione' | 'asimmetria_grasso_viso' | 'capelli_texture' | 'capelli_mullet' | 'diabete_glicemia' | 'prevenzione_eta'>('list');
+  const [activeView, setActiveView] = useState<'list' | 'bussola_mente' | 'studia_oggi' | 'asimmetria' | 'ortodonzia' | 'postura_occhi' | 'sonno_posizioni' | 'peli_incarniti' | 'shampoo_texture' | 'palestra_grasso' | 'regali_natale' | 'asimmetria_masticazione' | 'asimmetria_grasso_viso' | 'capelli_texture' | 'capelli_mullet' | 'capelli_mullet_crescita' | 'capelli_cera_cute' | 'diabete_glicemia' | 'prevenzione_eta'>('list');
   const [userNotes, setUserNotes] = useState<UserNote[]>(() => storageHelper.getUserNotes());
   const [fullscreenImg, setFullscreenImg] = useState<{ url: string; title: string } | null>(null);
   const [faceComparisonMode, setFaceComparisonMode] = useState<'overlay' | 'sideBySide' | 'swipe'>('overlay');
@@ -540,7 +542,40 @@ export const NoteTab: React.FC = () => {
   // VIEW: CAPELLI MOSSI TEXTURED MESSY MULLET
   // -------------------------------------------------------------
   if (activeView === 'capelli_mullet') {
-    return <CapelliMossiTexturedMessyMulletView onBack={() => handleOpenView('list')} initialTab={initialSubTab} />;
+    return (
+      <CapelliMossiTexturedMessyMulletView
+        onBack={() => handleOpenView('list')}
+        initialTab={initialSubTab}
+        onOpenCrescitaNote={() => handleOpenView('capelli_mullet_crescita')}
+        onOpenCeraCuteNote={() => handleOpenView('capelli_cera_cute')}
+      />
+    );
+  }
+
+  // -------------------------------------------------------------
+  // VIEW: MESSY HAIR IN CRESCITA & CREMA ARRICCIANTE
+  // -------------------------------------------------------------
+  if (activeView === 'capelli_mullet_crescita') {
+    return (
+      <CapelliMessyCrescitaView
+        onBack={() => handleOpenView('list')}
+        initialTab={initialSubTab}
+        onOpenMulletGuide={() => handleOpenView('capelli_mullet')}
+      />
+    );
+  }
+
+  // -------------------------------------------------------------
+  // VIEW: CERA OPACA, CUOIO CAPELLUTO, FALSA FORFORA & NOTTE
+  // -------------------------------------------------------------
+  if (activeView === 'capelli_cera_cute') {
+    return (
+      <CapelliCeraCuteForforaView
+        onBack={() => handleOpenView('list')}
+        initialTab={initialSubTab}
+        onOpenMulletGuide={() => handleOpenView('capelli_mullet')}
+      />
+    );
   }
 
   // -------------------------------------------------------------
@@ -2744,7 +2779,7 @@ export const NoteTab: React.FC = () => {
             <Zap className="w-3 h-3 text-cyan-400" />
             Accesso Rapido • Apri Subito
           </span>
-          <span className="text-[10px] font-bold text-gray-500">13 Guide</span>
+          <span className="text-[10px] font-bold text-gray-500">15 Guide</span>
         </div>
 
         <div className="flex flex-wrap gap-1.5">
@@ -2827,6 +2862,24 @@ export const NoteTab: React.FC = () => {
           >
             <Wind className="w-3 h-3 text-teal-400 shrink-0" />
             <span>Textured Messy Mullet</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleOpenView('capelli_mullet_crescita')}
+            className="px-2.5 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-200 border border-emerald-500/30 text-[11px] font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+          >
+            <Wind className="w-3 h-3 text-emerald-400 shrink-0" />
+            <span>Messy Crescita &amp; Crema</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleOpenView('capelli_cera_cute')}
+            className="px-2.5 py-1.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-200 border border-rose-500/30 text-[11px] font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+          >
+            <ShieldCheck className="w-3 h-3 text-rose-400 shrink-0" />
+            <span>Cera, Cute &amp; Forfora</span>
           </button>
 
           <button
@@ -3264,7 +3317,7 @@ export const NoteTab: React.FC = () => {
               </h2>
 
               <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
-                ★ Piano d&apos;Azione Finale (zero prodotti sulla frangia, pettine denti larghi + diffusore leggero dall&apos;alto senza schiacciare, cera opaca/palmo, giorno dopo) + diagnosi foto/spaghetti e 8 punti completi (2B, dieta, buchi, barbiere, doccia, secco e 6 video TikTok).
+                ★ Guida Definitiva Aggiornata: sequenza completa lavaggio→diffusore (testa dritta)→ritocco, chiusura buchini ai lati (mani/phon/cera), scienza cera opaca/clumping vs crema ricci vs leva meccanica 10–12 cm + 8 guide e 6 video TikTok.
               </p>
             </div>
 
@@ -3275,10 +3328,116 @@ export const NoteTab: React.FC = () => {
 
           <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
             <span className="text-teal-300 font-bold flex items-center gap-1.5">
-              <span>Tocca per aprire Piano Finale &amp; Textured Messy Mullet</span>
+              <span>Tocca per aprire Guida Definitiva &amp; Textured Messy Mullet</span>
               <Sparkles className="w-3.5 h-3.5" />
             </span>
-            <span className="text-[10px] text-gray-400 font-semibold">9 Punti · ★ Piano d&apos;Azione Finale + 8 Guide</span>
+            <span className="text-[10px] text-gray-400 font-semibold">9 Punti · Sequenza Definitiva + Buchini + Scienza</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ------------------------------------------------------------- */}
+      {/* CARD: "MESSY HAIR QUANDO CRESCONO & CREMA RICCI"               */}
+      {/* ------------------------------------------------------------- */}
+      <div className="space-y-2">
+        <span className="text-[11px] font-bold text-emerald-300 uppercase tracking-wider block pl-1">
+          Nuova Nota Messy Hair • Fisica Lunghezza, Onde 2B &amp; Crema Arricciante
+        </span>
+
+        <div
+          onClick={() => handleOpenView('capelli_mullet_crescita')}
+          className="p-5 rounded-3xl glass-card border-2 border-emerald-400/70 hover:border-emerald-400 bg-gradient-to-br from-emerald-500/20 via-black/85 to-teal-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
+        >
+          <div className="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
+
+          <div className="flex items-start justify-between relative z-10">
+            <div className="space-y-2 flex-1 pr-3">
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300 text-[10px] font-black uppercase tracking-wider border border-emerald-400/40 shadow-sm flex items-center gap-1">
+                  <Wind className="w-3 h-3 text-emerald-400" />
+                  ★ Nota Messy Hair
+                </span>
+                <span className="text-[10px] text-cyan-300 font-extrabold bg-cyan-500/15 px-2 py-0.5 rounded-md border border-cyan-500/30">
+                  📈 Gravità &amp; Leva
+                </span>
+                <span className="text-[10px] text-teal-300 font-extrabold bg-teal-500/15 px-2 py-0.5 rounded-md border border-teal-500/30">
+                  💧 Crema Arricciante
+                </span>
+              </div>
+
+              <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-emerald-300 transition-colors uppercase tracking-tight">
+                Messy Hair in Crescita &amp; Crema Ricci
+              </h2>
+
+              <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
+                Cosa cambia fisicamente quando crescono frangia, lati e mullet: scrunch davanti, gravità anti-fili, chiusura automatica dei buchini laterali, consiglio fase intermedia e quando usare (o evitare) la crema arricciante sul 2B.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-emerald-500/20 group-hover:bg-emerald-500 text-emerald-300 group-hover:text-black border border-emerald-400/50 shadow-neon transition-all shrink-0 mt-1">
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
+            <span className="text-emerald-300 font-bold flex items-center gap-1.5">
+              <span>Tocca per aprire evoluzione crescita &amp; curl cream</span>
+              <Sparkles className="w-3.5 h-3.5" />
+            </span>
+            <span className="text-[10px] text-gray-400 font-semibold">4 Sezioni · Fisica Crescita 2B</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ------------------------------------------------------------- */}
+      {/* CARD: "CERA OPACA, CUOIO CAPELLUTO, FALSA FORFORA & NOTTE"    */}
+      {/* ------------------------------------------------------------- */}
+      <div className="space-y-2">
+        <span className="text-[11px] font-bold text-rose-300 uppercase tracking-wider block pl-1">
+          Nuova Nota Capelli • Igiene Cute, Residui &amp; Routine Serale
+        </span>
+
+        <div
+          onClick={() => handleOpenView('capelli_cera_cute')}
+          className="p-5 rounded-3xl glass-card border-2 border-rose-400/70 hover:border-rose-400 bg-gradient-to-br from-rose-500/20 via-black/85 to-amber-500/20 shadow-neon hover:shadow-neon-lg active:scale-98 transition-all cursor-pointer group relative overflow-hidden"
+        >
+          <div className="absolute -top-12 -right-12 w-32 h-32 bg-rose-500/20 rounded-full blur-2xl pointer-events-none group-hover:scale-125 transition-transform" />
+
+          <div className="flex items-start justify-between relative z-10">
+            <div className="space-y-2 flex-1 pr-3">
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full bg-rose-400/20 text-rose-300 text-[10px] font-black uppercase tracking-wider border border-rose-400/40 shadow-sm flex items-center gap-1">
+                  <ShieldCheck className="w-3 h-3 text-rose-400" />
+                  ★ Nota Cute &amp; Cera
+                </span>
+                <span className="text-[10px] text-amber-300 font-extrabold bg-amber-500/15 px-2 py-0.5 rounded-md border border-amber-500/30">
+                  🧱 Falsa Forfora vs Malassezia
+                </span>
+                <span className="text-[10px] text-indigo-300 font-extrabold bg-indigo-500/15 px-2 py-0.5 rounded-md border border-indigo-500/30">
+                  🌙 Federa &amp; Notte
+                </span>
+              </div>
+
+              <h2 className="text-xl sm:text-2xl font-black text-white group-hover:text-rose-300 transition-colors uppercase tracking-tight">
+                Cera Opaca, Cuoio Capelluto &amp; Falsa Forfora
+              </h2>
+
+              <p className="text-xs text-gray-300 leading-relaxed font-medium line-clamp-3">
+                Differenza tra forfora vera e accumulo di cera, prurito, trasferimento sul cuscino/viso (fronte, tempie, guance), 3 regole per evitarlo e come gestirti se usi SOLO la cera opaca senza sale né polvere.
+              </p>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-rose-500/20 group-hover:bg-rose-500 text-rose-300 group-hover:text-black border border-rose-400/50 shadow-neon transition-all shrink-0 mt-1">
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs relative z-10">
+            <span className="text-rose-300 font-bold flex items-center gap-1.5">
+              <span>Tocca per aprire cute, federa &amp; gestione solo cera</span>
+              <Sparkles className="w-3.5 h-3.5" />
+            </span>
+            <span className="text-[10px] text-gray-400 font-semibold">4 Sezioni · Prevenzione &amp; Lavaggio Sera</span>
           </div>
         </div>
       </div>
